@@ -2,9 +2,10 @@
  * @license
  * SPDX-License-Identifier: Apache-2.0
 */
-import React, { useState, ChangeEvent, useRef } from 'react';
+import React, { useState, ChangeEvent, useRef, useEffect } from 'react';
 import { generateImage } from '../services/geminiService';
 import { getSpecializedPrompt } from '../services/promptLibrary';
+import { getDynamicEnhancements } from '../services/promptEnhancer';
 import { ALL_STYLES_CONFIG, translations, MAGAZINE_PROMPT_DETAILS, MAGAZINE_STYLES } from '../lib/constants';
 import { useGenerationForm } from '../hooks/useGenerationForm';
 
@@ -46,6 +47,19 @@ function Editor() {
 
     const fileInputRef = useRef<HTMLInputElement>(null);
     const T = translations[language];
+
+    // Effect to manage the global app state based on the status of generated images.
+    useEffect(() => {
+        if (generatedImages.length > 0) {
+            const isGenerating = generatedImages.some(img => img.status === 'pending');
+            if (isGenerating) {
+                setAppState('generating');
+            } else if (appState === 'generating') { // Only transition from generating to results
+                setAppState('results-shown');
+            }
+        }
+    }, [generatedImages, appState]);
+
 
     const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
@@ -152,16 +166,21 @@ function Editor() {
     const handleGenerateClick = async () => {
         if (!uploadedImage) return;
 
-        setAppState('generating');
-        const prompt = buildPrompt();
+        const basePrompt = buildPrompt();
         
         const initialImages: GeneratedImage[] = Array.from({ length: formState.numberOfImages }, (_, i) => ({ id: i, status: 'pending' }));
-        setGeneratedImages(initialImages);
+        setGeneratedImages(initialImages); // This will trigger the useEffect
 
-        // Generate images sequentially to avoid rate-limiting and provide better UX
+        // Generate images sequentially, but with a unique prompt for each one.
         for (const image of initialImages) {
             try {
-                const resultUrl = await generateImage(uploadedImage, prompt);
+                // Get unique artistic direction for this specific image
+                const dynamicAdditions = getDynamicEnhancements(style, subStyle);
+                const finalPrompt = `${basePrompt}\n\n//-- UNIQUE ARTISTIC DIRECTION FOR THIS IMAGE --\n${dynamicAdditions}`;
+                
+                console.log(`Generating image #${image.id} with unique prompt:`, finalPrompt);
+                const resultUrl = await generateImage(uploadedImage, finalPrompt);
+                
                 setGeneratedImages(prev => prev.map(img => img.id === image.id ? { ...img, status: 'done', url: resultUrl } : img));
             } catch (err) {
                 const errorMessage = err instanceof Error ? err.message : "An unknown error occurred.";
@@ -169,19 +188,61 @@ function Editor() {
                 console.error(`Failed to generate image #${image.id}:`, err);
             }
         }
+    };
 
-        setAppState('results-shown');
+    const handleRegenerateImage = async (imageId: number) => {
+        if (!uploadedImage) return;
+
+        const basePrompt = buildPrompt();
+        // Generate new, unique enhancements for the regeneration
+        const dynamicAdditions = getDynamicEnhancements(style, subStyle);
+        const finalPrompt = `${basePrompt}\n\n//-- UNIQUE ARTISTIC DIRECTION FOR THIS IMAGE --\n${dynamicAdditions}`;
+
+        // Set just this image to pending
+        setGeneratedImages(prev =>
+            prev.map(img =>
+                img.id === imageId
+                    ? { ...img, status: 'pending', url: undefined, error: undefined }
+                    : img
+            )
+        );
+
+        try {
+            console.log(`Regenerating image #${imageId} with unique prompt:`, finalPrompt);
+            const resultUrl = await generateImage(uploadedImage, finalPrompt);
+            setGeneratedImages(prev =>
+                prev.map(img =>
+                    img.id === imageId ? { ...img, status: 'done', url: resultUrl } : img
+                )
+            );
+        } catch (err) {
+            const errorMessage =
+                err instanceof Error ? err.message : 'An unknown error occurred.';
+            setGeneratedImages(prev =>
+                prev.map(img =>
+                    img.id === imageId
+                        ? { ...img, status: 'error', error: errorMessage }
+                        : img
+                )
+            );
+            console.error(`Failed to regenerate image #${imageId}:`, err);
+        }
+    };
+
+    const handleDownloadSingleImage = (url: string, imageId: number) => {
+        if (!url) return;
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `retour-vers-le-futur-${style.toLowerCase().replace(/\s/g, '-')}-${imageId + 1}.jpg`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     };
 
     const handleDownloadAlbum = () => {
-        generatedImages.forEach((image, index) => {
+        generatedImages.forEach((image) => {
             if (image.status === 'done' && image.url) {
-                const link = document.createElement('a');
-                link.href = image.url;
-                link.download = `retour-vers-le-futur-${style.toLowerCase().replace(/\s/g, '-')}-${index + 1}.jpg`;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
+                handleDownloadSingleImage(image.url, image.id);
             }
         });
     };
@@ -207,6 +268,8 @@ function Editor() {
                     generatedImages={generatedImages}
                     appState={appState}
                     handleDownloadAlbum={handleDownloadAlbum}
+                    handleDownloadSingleImage={handleDownloadSingleImage}
+                    handleRegenerateImage={handleRegenerateImage}
                     setPreviewImage={setPreviewImage}
                     T={T}
                 />

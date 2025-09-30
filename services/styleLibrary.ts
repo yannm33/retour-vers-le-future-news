@@ -102,10 +102,20 @@ export const STYLE_GUIDE = {
     },
     "Photo": {
       "substyles": [
-        "Studio_Portrait",
-        "Outdoor_Lifestyle",
-        "Travel_Photography",
-        "Street_Photography"
+        "studio_portrait",
+        "outdoor_lifestyle",
+        "travel_photography",
+        "street_photography",
+        "corporate_business",
+        "dramatic_bw",
+        "vintage_sepia",
+        "double_exposure",
+        "action_sport",
+        "environmental_portrait",
+        "golden_hour",
+        "blue_hour",
+        "high_speed_splash",
+        "natural_window_light"
       ],
       "notes": "Capturer des moments réalistes, avec une lumière naturelle et des décors authentiques."
     },

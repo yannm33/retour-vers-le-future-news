@@ -53,6 +53,7 @@ export const translations = {
         square: "Carré",
         landscape: "Paysage",
         download: "TÉLÉCHARGER",
+        regenerate: "Régénérer",
         quantity: "QUT"
     },
     EN: {
@@ -96,6 +97,7 @@ export const translations = {
         square: "Square",
         landscape: "Landscape",
         download: "DOWNLOAD",
+        regenerate: "Regenerate",
         quantity: "QTY"
     }
 };
@@ -197,10 +199,20 @@ export const SUBSTYLE_TRANSLATIONS: Record<string, { FR: string, EN: string }> =
     'noir_blanc_dramatique': { FR: 'Noir & Blanc Dramatique', EN: 'Dramatic Black & White' },
     'couleur_pastel': { FR: 'Couleur Pastel', EN: 'Pastel Color' },
     'pop_art_vibrant': { FR: 'Pop Art Vibrant', EN: 'Vibrant Pop Art' },
-    'Studio_Portrait': { FR: 'Portrait Studio', EN: 'Studio Portrait' },
-    'Outdoor_Lifestyle': { FR: 'Lifestyle en Extérieur', EN: 'Outdoor Lifestyle' },
-    'Travel_Photography': { FR: 'Photographie de Voyage', EN: 'Travel Photography' },
-    'Street_Photography': { FR: 'Photographie de Rue', EN: 'Street Photography' },
+    'studio_portrait': { FR: 'Portrait Studio', EN: 'Studio Portrait' },
+    'outdoor_lifestyle': { FR: 'Lifestyle en Extérieur', EN: 'Outdoor Lifestyle' },
+    'travel_photography': { FR: 'Photographie de Voyage', EN: 'Travel Photography' },
+    'street_photography': { FR: 'Photographie de Rue', EN: 'Street Photography' },
+    'corporate_business': { FR: 'Corporate / Business', EN: 'Corporate / Business' },
+    'dramatic_bw': { FR: 'Noir & Blanc Dramatique', EN: 'Dramatic Black & White' },
+    'vintage_sepia': { FR: 'Sépia Vintage', EN: 'Vintage Sepia' },
+    'double_exposure': { FR: 'Double Exposition Artistique', EN: 'Artistic Double Exposure' },
+    'action_sport': { FR: 'Sport en Action', EN: 'Action Sport' },
+    'environmental_portrait': { FR: 'Portrait Environnemental', EN: 'Environmental Portrait' },
+    'golden_hour': { FR: 'Lumière Heure Dorée', EN: 'Golden Hour Light' },
+    'blue_hour': { FR: 'Lumière Heure Bleue', EN: 'Blue Hour Light' },
+    'high_speed_splash': { FR: 'Haute Vitesse (Splash)', EN: 'High-Speed (Splash)' },
+    'natural_window_light': { FR: 'Lumière Naturelle Fenêtre', EN: 'Natural Window Light' },
     'natation': { FR: 'Natation', EN: 'Swimming' },
     'parachutisme': { FR: 'Parachutisme', EN: 'Skydiving' },
     'plongee': { FR: 'Plongée', EN: 'Diving' },
