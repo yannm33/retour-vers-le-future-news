@@ -1,0 +1,63 @@
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+*/
+import React from 'react';
+import { IconUpload, IconLoader, IconPlayerPlay } from '@tabler/icons-react';
+import { ControlSection } from './shared/ControlSection';
+import { StyledSelect } from './shared/StyledSelect';
+import { STYLES, STYLE_TRANSLATIONS, SUBSTYLE_TRANSLATIONS } from '../../lib/constants';
+
+const MainControls = ({ formState, T, language, handleImageUpload, fileInputRef, handleGenerateClick, isLoading, uploadedImage, availableSubStyles }) => {
+    const { 
+        numberOfImages, setNumberOfImages,
+        style, setStyle,
+        subStyle, setSubStyle,
+        customPrompt, setCustomPrompt
+    } = formState;
+    
+    return (
+        <div className="bg-black rounded-xl p-4 flex flex-col gap-4">
+            <div className="grid grid-cols-3 gap-2">
+                <div className="relative">
+                    <select value={numberOfImages} onChange={e => setNumberOfImages(Number(e.target.value))} className="bg-amber-500 text-black font-bold border border-amber-600 rounded-xl px-3 py-2 pr-8 w-full appearance-none focus:outline-none focus:ring-2 focus:ring-amber-400 h-full text-center cursor-pointer">
+                        {Array.from({ length: 15 }, (_, i) => i + 1).map(n => <option className="bg-neutral-800 text-white font-bold" key={n} value={n}>{T.quantity}: {n}</option>)}
+                    </select>
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-black">
+                        <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                    </div>
+                </div>
+                <input type="file" ref={fileInputRef} className="hidden" accept="image/png, image/jpeg, image/webp" onChange={handleImageUpload} />
+                <button onClick={() => fileInputRef.current?.click()} className="bg-amber-500 hover:bg-amber-600 text-black font-bold py-2 px-3 rounded-xl h-full flex items-center justify-center gap-2 transition-colors">
+                    <IconUpload size={20}/> {T.loadPortrait}
+                </button>
+                <button 
+                    onClick={handleGenerateClick}
+                    disabled={!uploadedImage || isLoading}
+                    className="bg-gradient-to-b from-orange-400 to-orange-600 text-white font-bold py-2 px-3 rounded-xl h-full flex items-center justify-center gap-2 transition-all duration-200 border border-orange-300/50 border-t-orange-200/80 border-b-orange-700/80 shadow-[0_0_15px_2px_rgba(249,115,22,0.5),inset_0_1px_1px_rgba(255,255,255,0.2)] hover:from-orange-300 hover:to-orange-500 hover:shadow-[0_0_25px_5px_rgba(249,115,22,0.7),inset_0_1px_1px_rgba(255,255,255,0.3)] active:scale-95 active:from-orange-600 active:to-orange-500 active:shadow-[0_0_5px_1px_rgba(249,115,22,0.4),inset_0_2px_4px_rgba(0,0,0,0.3)] disabled:opacity-60 disabled:cursor-not-allowed disabled:shadow-none"
+                >
+                {isLoading ? <IconLoader size={20} className='animate-spin'/> : <IconPlayerPlay size={20}/>}
+                {isLoading ? T.generating : T.generate}
+                </button>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+                <ControlSection title={T.style}>
+                    <StyledSelect value={style} onChange={e => setStyle(e.target.value)}>
+                        {STYLES.map(s => <option key={s} value={s}>{(STYLE_TRANSLATIONS[s] && STYLE_TRANSLATIONS[s][language]) || s}</option>)}
+                    </StyledSelect>
+                </ControlSection>
+                <ControlSection title={T.substyle}>
+                    <StyledSelect value={subStyle} onChange={e => setSubStyle(e.target.value)} disabled={!availableSubStyles || availableSubStyles.length === 0}>
+                        <option value="">{T.chooseSubstyle}</option>
+                        {availableSubStyles && availableSubStyles.map(s => <option key={s} value={s}>{(SUBSTYLE_TRANSLATIONS[s] && SUBSTYLE_TRANSLATIONS[s][language]) || s.replace(/_/g, ' ')}</option>)}
+                    </StyledSelect>
+                </ControlSection>
+            </div>
+            <ControlSection title={T.customPromptTitle}>
+                <textarea placeholder={T.customPromptPlaceholder} value={customPrompt} onChange={e => setCustomPrompt(e.target.value)} rows={2} className="bg-neutral-800 border border-neutral-700 rounded-md p-2 text-white w-full focus:outline-none focus:ring-2 focus:ring-amber-500"/>
+            </ControlSection>
+        </div>
+    );
+};
+
+export default MainControls;
