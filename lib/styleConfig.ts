@@ -45,6 +45,34 @@ const toKey = (name: string): string => {
 
 export const STYLES_CONFIG: Style[] = [
     {
+        name: "Photographes",
+        notes: "S'inspirer du style visuel, de l'éclairage et de la composition des grands maîtres de la photographie.",
+        subStyles: [
+            "Peter Lindbergh",
+            "Richard Avedon",
+            "Helmut Newton",
+            "Annie Leibovitz",
+            "Edward Steichen",
+            "Nick Knight",
+            "Mario Testino",
+            "Steven Meisel",
+            "Patrick Demarchelier",
+            "Philippe Robert",
+            "Russell James",
+            "Nadine Ijewere",
+            "Nadia Lee Cohen",
+            "Studio Harcourt",
+            "Jocelyn Lee",
+            "Robert Farber",
+            "Pat Brassington",
+            "Rankin",
+            "Bettina Rheims",
+            "Arthur Tress",
+            "Tom Ford",
+            "Marc Hoppe"
+        ].map(name => ({ name, key: toKey(name) }))
+    },
+    {
         name: "Photos",
         notes: "Capturer des moments réalistes, avec une lumière naturelle et des décors authentiques.",
         subStyles: [
@@ -265,17 +293,51 @@ export const STYLES_CONFIG: Style[] = [
         ]
     },
     {
-        name: "Sportifs",
+        name: "Sportif",
         notes: "Toujours contextualiser (piscine, ciel, stade), poses dynamiques.",
         subStyles: [
-            { key: "natation", name: "Natation" },
-            { key: "parachutisme", name: "Parachutisme" },
-            { key: "plongee", name: "Plongée" },
-            { key: "course", name: "Course à pied" },
-            { key: "arts_martiaux", name: "Arts Martiaux" },
-            { key: "football", name: "Football" },
-            { key: "basketball", name: "Basketball" },
-            { key: "tennis", name: "Tennis" },
+            {
+                name: "Natation",
+                subStyles: ["Course en piscine", "Natation synchronisée", "Plongeon", "Eau libre"].map(name => ({ name, key: toKey(name) }))
+            },
+            {
+                name: "Parachutisme",
+                subStyles: [
+                    "Préparation au sol (équipement, pliage parachute)",
+                    "Embarquement dans l'avion",
+                    "Dans l'avion (en attente, visage sous tension)",
+                    "Au bord de la porte, prêt à sauter",
+                    "Saut en altitude (visage déformé par l'air, lunettes, combinaison)",
+                    "Vol en chute libre",
+                    "Ouverture du parachute",
+                    "Approche et atterrissage",
+                    "Ramassage et pliage du matériel"
+                ].map(name => ({ name, key: toKey(name) }))
+            },
+            {
+                name: "Plongée",
+                subStyles: ["Plongée bouteille loisir", "Apnée", "Plongée sous-marine avec combinaison complète", "Plongée spéléologique"].map(name => ({ name, key: toKey(name) }))
+            },
+            {
+                name: "Course à pied",
+                subStyles: ["Sprint", "Marathon", "Trail", "Athlétisme (piste)"].map(name => ({ name, key: toKey(name) }))
+            },
+            {
+                name: "Arts martiaux",
+                subStyles: ["Karaté", "Judo", "Taekwondo", "MMA", "Boxe anglaise", "Kick-boxing"].map(name => ({ name, key: toKey(name) }))
+            },
+            {
+                name: "Football",
+                subStyles: ["Match en action", "Entraînement", "Célébration de but", "Gardien en arrêt"].map(name => ({ name, key: toKey(name) }))
+            },
+            {
+                name: "Basketball",
+                subStyles: ["Match NBA", "Streetball urbain", "Dunk spectaculaire", "Entraînement intensif"].map(name => ({ name, key: toKey(name) }))
+            },
+            {
+                name: "Tennis",
+                subStyles: ["Match en tournoi", "Service puissant", "Échange en fond de court", "Victoire célébrée"].map(name => ({ name, key: toKey(name) }))
+            }
         ]
     },
     {
@@ -302,6 +364,18 @@ export const STYLES_CONFIG: Style[] = [
             { key: "patrouille", name: "Patrouille" },
             { key: "uniforme_parade", name: "Uniforme de Parade" },
             { key: "base_operationnelle_avancee", name: "Base Opérationnelle Avancée" },
+            { key: "salle_de_briefing", name: "Salle de Briefing (Avant-Mission)" },
+            { key: "checkpoint_sous_tension", name: "Checkpoint sous Tension" },
+            { key: "feu_d_artillerie_nocturne", name: "Feu d'Artillerie Nocturne" },
+            { key: "pilote_de_chasse_pre_vol", name: "Pilote de Chasse (Pré-vol)" },
+            { key: "medecin_de_combat_medevac", name: "Médecin de Combat (MEDEVAC)" },
+            { key: "combat_urbain_cqb", name: "Combat Urbain (CQB)" },
+            { key: "garde_d_honneur_ceremoniale", name: "Garde d'Honneur Cérémoniale" },
+            { key: "vie_en_caserne", name: "Vie en Caserne" },
+            { key: "maintenance_de_blinde_hangar", name: "Maintenance de Blindé (Hangar)" },
+            { key: "operations_en_milieu_arctique", name: "Opérations en Milieu Arctique" },
+            { key: "guerre_en_jungle", name: "Guerre en Jungle" },
+            { key: "operateur_de_drone_gcs", name: "Opérateur de Drone (GCS)" },
         ]
     },
     {
@@ -311,15 +385,36 @@ export const STYLES_CONFIG: Style[] = [
             { key: "sniper", name: "Sniper" },
             { key: "embarquement_helicoptere", name: "Embarquement Hélicoptère" },
             { key: "infiltration_plage", name: "Infiltration par la Plage" },
+            { key: "plongee_de_combat", name: "Plongée de Combat" },
+            { key: "raid_en_zodiac_nocturne", name: "Raid en Zodiac Nocturne" },
+            { key: "liberation_d_otage_cqb", name: "Libération d'Otage (CQB)" },
+            { key: "saut_operationnel_halo", name: "Saut Opérationnel (HALO)" },
+            { key: "extraction_vip", name: "Extraction VIP" },
+            { key: "sabotage_d_infrastructure", name: "Sabotage d'Infrastructure" },
+            { key: "poste_d_observation", name: "Poste d'Observation" },
+            { key: "assaut_vertical_rappel", name: "Assaut Vertical (Rappel)" },
+            { key: "guerre_en_tunnel", name: "Guerre en Tunnel" },
+            { key: "capture_de_cible_hvt", name: "Capture de Cible (HVT)" },
+            { key: "demolition_sous_marine", name: "Démolition Sous-Marine" },
+            { key: "preparation_clandestine", name: "Préparation Clandestine" },
         ]
     },
     {
-        name: "Neviscile (Unité Spéciale)",
-        notes: "Concept d'une unité fictive d'opérations spéciales, avec des scénarios et des équipements avancés.",
+        name: "Pilote de Chasse",
+        notes: "Scénarios centrés sur les missions et la vie des pilotes de chasse modernes, mettant l'accent sur la technologie, la vitesse et l'action.",
         subStyles: [
-            { key: "plongee_tactique", name: "Plongée Tactique" },
-            { key: "saut_haho", name: "Saut HAHO" },
-            { key: "sabotage_portuaire", name: "Sabotage portuaire" },
-        ]
+            "Préparation Pré-Vol (Tarmac)",
+            "Décollage Porte-Avions",
+            "Dogfight (Combat Aérien)",
+            "Vol en Formation",
+            "Bombardement de Précision",
+            "Retour de Mission (Débriefing)",
+            "Vol Très Basse Altitude",
+            "Ravitaillement en Vol",
+            "Éjection d'Urgence",
+            "Portrait en Cockpit",
+            "Vol Acrobatique (Airshow)",
+            "Maintenance (Hangar)",
+        ].map(name => ({ name, key: toKey(name) }))
     },
 ];

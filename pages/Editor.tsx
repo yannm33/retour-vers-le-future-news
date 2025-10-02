@@ -112,20 +112,28 @@ function Editor() {
         } else {
             const styleInfo = STYLES_CONFIG.find(s => s.name === style);
             promptParts.push('//-- STYLE & THÈME --');
-            promptParts.push(`Style Principal : "${style}".`);
-            if (subStyle) {
-                let subStyleName = subStyle.replace(/_/g, ' '); // Default fallback
-                if (styleInfo) {
-                    // Flatten the sub-styles list to find the name from the key, works for both flat and grouped structures.
-                    const allSubStyles: SubStyle[] = styleInfo.subStyles.flatMap(item => 'subStyles' in item ? item.subStyles : [item as SubStyle]);
-                    const subStyleInfo = allSubStyles.find(ss => ss.key === subStyle);
-                    if (subStyleInfo) {
-                        subStyleName = subStyleInfo.name;
-                    }
+        
+            // Find subStyleName for all styles
+            let subStyleName = '';
+            if (subStyle && styleInfo) {
+                // Flatten the sub-styles list to find the name from the key, works for both flat and grouped structures.
+                const allSubStyles: SubStyle[] = styleInfo.subStyles.flatMap(item => 'subStyles' in item ? item.subStyles : [item as SubStyle]);
+                const subStyleInfo = allSubStyles.find(ss => ss.key === subStyle);
+                if (subStyleInfo) {
+                    subStyleName = subStyleInfo.name;
                 }
-                promptParts.push(`Variation Spécifique : "${subStyleName}".`);
             }
-             if (styleInfo && styleInfo.notes) {
+        
+            if (style === "Photographes") {
+                promptParts.push(`Émuler le style photographique iconique de ${subStyleName || 'un photographe célèbre'}. Se concentrer sur sa signature visuelle, son utilisation de la lumière (naturelle ou studio), ses compositions, ses thèmes de prédilection et le rendu de ses images (grain, contraste, couleur).`);
+            } else {
+                promptParts.push(`Style Principal : "${style}".`);
+                if (subStyleName) {
+                    promptParts.push(`Variation Spécifique : "${subStyleName}".`);
+                }
+            }
+            
+            if (styleInfo && styleInfo.notes) {
                 promptParts.push(`Direction Créative : "${styleInfo.notes}".`);
             }
         }
