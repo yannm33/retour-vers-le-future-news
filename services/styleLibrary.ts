@@ -38,9 +38,13 @@ export const STYLE_GUIDE = {
       ],
       "notes": "Mettre l'accent sur des compositions éditoriales dignes de Vogue, avec une forte direction artistique."
     },
-    "Journee_Mannequin": {
+    "Journee_dun_mannequin": {
       "substyles": [
-        "scene_de_vie"
+        "reveil_matinal",
+        "preparation_salle_de_bain",
+        "backstage_fashion_week",
+        "podium_fashion_week",
+        "soiree_cosy_maison"
       ],
       "notes": "Capturer différents moments de la vie d'un mannequin, des coulisses au podium et à la maison, pour un rendu authentique et varié."
     },

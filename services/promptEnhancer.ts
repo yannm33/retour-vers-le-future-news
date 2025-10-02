@@ -58,10 +58,10 @@ const CONTEXTUAL_ENVIRONMENTS: Record<string, string[]> = {
         'dans un repaire de pirates informatiques souterrain rempli de fils emmêlés, de serveurs et de moniteurs',
         'à un bar à nouilles miteux dans une rue bondée et remplie de vapeur',
         'dans le cockpit d\'une hover-voiture futuriste lors d\'une course-poursuite à grande vitesse',
-        'naviguant dans un espace de données de réalité augmentée chatoyant et abstrait',
+        'navigant dans un espace de données de réalité augmentée chatoyant et abstrait',
         'dans une clinique de cybernétique miteuse d\'une ruelle avec des lumières chirurgicales vacillantes et des pièces de rechange',
         'à une fête d\'entreprise haut de gamme au 100ème étage d\'un gratte-ciel chromé',
-        'naviguant dans les gigantesques et bruyants puits de maintenance et tunnels d\'une mégastructure de la taille d\'une ville',
+        'navigant dans les gigantesques et bruyants puits de maintenance et tunnels d\'une mégastructure de la taille d\'une ville',
         'dans une arène de combat en apesanteur avec des obstacles lumineux au néon'
     ],
     'post_apocalyptique': [
@@ -73,10 +73,10 @@ const CONTEXTUAL_ENVIRONMENTS: Record<string, string[]> = {
         'troquant des marchandises dans un poste de traite animé et improvisé',
         'dans une tour de guet solitaire, scrutant le paysage aride avec des jumelles',
         'explorant une épave de navire abandonnée et ensablée sur ce qui était autrefois un fond marin',
-        'naviguant dans une "zone interdite" toxique et irradiée dans une combinaison de protection rafistolée',
+        'navigant dans une "zone interdite" toxique et irradiée dans une combinaison de protection rafistolée',
         's\'occupant d\'une ferme hydroponique en difficulté à l\'intérieur d\'un bunker souterrain renforcé',
         'escaladant les restes squelettiques d\'un gratte-ciel effondré pour une meilleure vue',
-        'naviguant sur un radeau de fortune à travers les rues inondées d\'une ville "aquatique"'
+        'navigant sur un radeau de fortune à travers les rues inondées d\'une ville "aquatique"'
     ],
     'fantasy': [
         'dans une forêt enchantée avec une flore lumineuse et d\'anciens arbres couverts de mousse',
@@ -190,45 +190,60 @@ const VOGUE_EDITORIALE_LIBRARY = {
       "lieux": ["fond blanc", "fond beige élégant", "fond coloré pastel", "fond noir chic"],
       "tenues": ["robe couture minimaliste", "ensemble fashion noir", "tailleur élégant", "robe colorée vibrante"],
       "expressions": ["pose sérieuse", "regard perçant", "sourire subtil", "air mystérieux"],
-      "lumières": ["softbox homogène", "éclairage diffus", "lumière cinéma douce", "spot frontal"],
+      "lumieres": ["softbox homogène", "éclairage diffus", "lumière cinéma douce", "spot frontal"],
       "accessoires": ["aucun", "boucles sobres", "collier discret", "lunettes mode"]
     },
     "urbain_chic": {
       "lieux": ["rue moderne", "métro new-yorkais", "rooftop urbain", "devant un immeuble design"],
       "tenues": ["robe noire couture", "ensemble street-chic", "robe argentée", "look couture coloré"],
       "expressions": ["regard assuré", "pose élégante", "air mystérieux", "clin d’œil"],
-      "lumières": ["golden hour", "lumière urbaine nocturne", "contre-jour dramatique", "flash studio extérieur"],
+      "lumieres": ["golden hour", "lumière urbaine nocturne", "contre-jour dramatique", "flash studio extérieur"],
       "accessoires": ["sac couture", "bijoux fashion", "aucun", "lunettes soleil"]
     },
     "mode_conceptuelle": {
       "lieux": ["décor minimaliste blanc", "installation artistique", "studio géométrique", "fond abstrait coloré"],
       "tenues": ["robe expérimentale", "ensemble géométrique", "robe couture asymétrique", "look futuriste fashion"],
       "expressions": ["pose conceptuelle", "regard intense", "expression mystérieuse", "pose exagérée"],
-      "lumières": ["néons colorés", "softbox diffuse", "contre-jour artistique", "ombres dramatiques"],
+      "lumieres": ["néons colorés", "softbox diffuse", "contre-jour artistique", "ombres dramatiques"],
       "accessoires": ["bijoux conceptuels", "lunettes oversized", "aucun", "collier imposant"]
     }
 };
 
 const HAUTE_COUTURE_LIBRARY = {
     "defile_parisien": {
-      "lieux": ["podium fashion week", "salle de défilé parisienne", "backstage couture", "entrée de gala"],
+      "lieux": [
+        "podium fashion week Paris avec foule et photographes",
+        "salle de défilé bondée avec spectateurs",
+        "entrée de gala avec public et sécurité",
+        "backstage visible avec projecteurs et rideaux"
+      ],
       "tenues": ["robe de soirée dorée", "smoking couture femme", "robe noire sculpturale", "ensemble futuriste"],
       "expressions": ["regard intense", "pose sérieuse", "expression mystérieuse", "air assuré"],
-      "lumières": ["spotlights défilé", "flashs photographes", "éclairage latéral", "contre-jour dramatique"],
+      "lumieres": ["spotlights défilé", "flashs photographes", "éclairage latéral", "contre-jour dramatique"],
       "accessoires": ["pochette haute couture", "chapeau extravagant", "bijoux luxueux", "aucun"]
     },
     "studio_editorial": {
-      "lieux": ["fond uni gris", "studio mode minimaliste", "décor géométrique coloré", "fond blanc éclatant"],
+      "lieux": [
+        "fond uni gris",
+        "studio mode minimaliste avec réflecteurs visibles",
+        "fond blanc éclatant",
+        "décor géométrique coloré"
+      ],
       "tenues": ["robe sculpturale", "tailleur noir chic", "robe asymétrique", "ensemble couture pastel"],
       "expressions": ["sourire subtil", "pose sérieuse", "regard assuré", "expression dramatique"],
-      "lumières": ["softbox diffuse", "éclairage 3 points", "projecteur unique", "éclairage coloré fashion"],
+      "lumieres": ["softbox diffuse", "éclairage 3 points", "projecteur unique", "éclairage coloré fashion"],
       "accessoires": ["boucles d’oreilles voyantes", "bracelet haute couture", "aucun", "lunettes mode"]
     },
     "couture_exterieure": {
-      "lieux": ["devant un opéra", "terrasse chic", "façade de palais", "rooftop urbain de luxe"],
+      "lieux": [
+        "façade palais parisien avec passants",
+        "terrasse chic au coucher du soleil",
+        "opéra Garnier avec foule",
+        "rooftop urbain de luxe avec skyline"
+      ],
       "tenues": ["robe longue satin", "ensemble chic blanc", "robe fendue haute couture", "manteau couture"],
       "expressions": ["sourire glamour", "regard perçant", "air mystérieux", "pose assurée"],
-      "lumières": ["golden hour", "lumière urbaine nocturne", "flashs paparazzi", "contre-jour soleil"],
+      "lumieres": ["golden hour", "lumière urbaine nocturne", "flashs paparazzi", "contre-jour soleil"],
       "accessoires": ["bijoux diamants", "pochette soirée", "écharpe élégante", "aucun"]
     }
 };
@@ -238,7 +253,7 @@ const PORTRAIT_GLAMOUR_LIBRARY = {
       "lieux": ["fond uni noir", "fond blanc", "studio pastel", "fond doré texturé"],
       "tenues": ["robe satin rouge", "smoking élégant", "robe noire moulante", "tailleur chic"],
       "expressions": ["sourire subtil", "regard perçant", "sourire coquin", "air mystérieux"],
-      "lumières": ["softbox homogène", "éclairage 3 points", "projecteur unique", "halo diffus"],
+      "lumieres": ["softbox homogène", "éclairage 3 points", "projecteur unique", "halo diffus"],
       "accessoires": ["boucles sobres", "bracelet argenté", "aucun", "lunettes de studio"]
     },
     'festival_de_cannes': {
@@ -250,78 +265,200 @@ const PORTRAIT_GLAMOUR_LIBRARY = {
       ],
       "tenues": ["robe dorée couture", "robe noire haute couture", "smoking blanc", "robe argentée scintillante"],
       "expressions": ["sourire glamour", "regard assuré", "clin d’œil", "pose dramatique"],
-      "lumières": ["flashs paparazzi multiples", "projecteurs puissants", "spotlight unique", "contre-jour glamour"],
+      "lumieres": ["flashs paparazzi multiples", "projecteurs puissants", "spotlight unique", "contre-jour glamour"],
       "accessoires": ["pochette soirée", "collier scintillant", "boucles pendantes", "aucun"]
     },
     'cinematique_noir': {
       "lieux": ["bar feutré années 50", "ruelle dramatique", "studio ombragé", "salon rétro"],
       "tenues": ["robe noire dramatique", "robe rouge satin", "costume sombre", "robe violette sombre"],
       "expressions": ["regard intense", "sourire discret", "expression dramatique", "air mystérieux"],
-      "lumières": ["contre-jour", "ombres diagonales", "projecteur unique", "lumière dramatique"],
+      "lumieres": ["contre-jour", "ombres diagonales", "projecteur unique", "lumière dramatique"],
       "accessoires": ["cigarette vintage", "gants satin", "chapeau rétro", "aucun"]
     },
     'luxe_exterieur': {
       "lieux": ["terrasse villa", "yacht", "rooftop urbain", "jardin privé"],
       "tenues": ["robe champagne", "robe bleue électrique", "smoking chic", "robe noire fendue"],
       "expressions": ["sourire franc", "regard au loin", "sourire glamour", "expression sérieuse"],
-      "lumières": ["golden hour", "lumière soirée", "contre-jour urbain", "flashs extérieurs"],
+      "lumieres": ["golden hour", "lumière soirée", "contre-jour urbain", "flashs extérieurs"],
       "accessoires": ["bijoux diamants", "sac de luxe", "lunettes soleil", "aucun"]
     },
     'hotel_glamour': {
       "lieux": ["hall luxueux", "chambre design", "bar cosy", "lounge feutré"],
       "tenues": ["robe satinée", "peignoir chic", "smoking noir", "robe dorée glamour"],
       "expressions": ["air détendu", "sourire charmeur", "regard mystérieux", "pose sensuelle"],
-      "lumières": ["lumière chaude tamisée", "lampes design", "ambiance feutrée", "golden hour baies vitrées"],
+      "lumieres": ["lumière chaude tamisée", "lampes design", "ambiance feutrée", "golden hour baies vitrées"],
       "accessoires": ["verre de champagne", "collier perles", "boucles dorées", "aucun"]
     },
     'soiree_glamour': {
       "lieux": ["club privé", "salle de bal", "fête luxueuse", "discothèque chic"],
       "tenues": ["robe à paillettes", "smoking blanc", "robe rouge fendue", "robe noire élégante"],
       "expressions": ["sourire exubérant", "clin d’œil", "rire franc", "pose élégante"],
-      "lumières": ["spot coloré", "lumière de soirée", "ambiance tamisée", "flashs improvisés"],
+      "lumieres": ["spot coloré", "lumière de soirée", "ambiance tamisée", "flashs improvisés"],
       "accessoires": ["coupe de champagne", "sac clutch", "bijoux discrets", "aucun"]
     },
     'plage_glamour': {
       "lieux": ["plage privée avec vacanciers", "transat design au bord de mer", "coucher de soleil avec silhouettes au loin", "cabane chic sur sable fin"],
       "tenues": ["robe légère blanche", "bikini chic", "robe rouge fluide", "chemise élégante"],
       "expressions": ["sourire lumineux", "regard intense", "air séducteur", "rire subtil"],
-      "lumières": ["golden hour plage", "lumière douce matin", "contre-jour océan", "reflet sur l’eau"],
+      "lumieres": ["golden hour plage", "lumière douce matin", "contre-jour océan", "reflet sur l’eau"],
       "accessoires": ["lunettes soleil", "collier coquillage chic", "chapeau large", "aucun"]
     }
 };
 
 const JOURNEE_MANNEQUIN_LIBRARY = {
-    "scene_de_vie": {
-        "lieux": [
-            "coulisses de défilé avec maquilleuses et coiffeuses",
-            "salle d’essayage remplie de vêtements et d’accessoires",
-            "podium fashion week avec public et photographes",
-            "intérieur cosy avec canapé, plaid et chat domestique"
-        ],
-        "tenues": [
-            "peignoir backstage",
-            "robe haute couture en préparation",
-            "ensemble couture porté sur podium",
-            "pull chaud oversize pour intérieur cosy"
-        ],
-        "expressions": ["air concentré", "regard assuré", "sourire épuisé mais heureux", "expression détendue à la maison"],
-        "lumières": [
-            "néons backstage",
-            "spotlights de défilé",
-            "flashs paparazzi",
-            "lumière douce d’intérieur cosy"
-        ],
-        "accessoires": ["chaussures en attente", "sac couture", "chat domestique", "tasse de café"]
-    }
+  "reveil_matinal": {
+    "scene": "Réveil dans une chambre lumineuse, draps blancs, tasse de café posée sur la table de nuit",
+    "lieux": [
+      "chambre cosy",
+      "lit défait avec oreillers",
+      "fenêtre entrouverte laissant passer la lumière"
+    ],
+    "tenues": [
+      "pyjama soyeux clair",
+      "peignoir blanc élégant",
+      "chemise de nuit satinée"
+    ],
+    "expressions": [
+      "air ensommeillé",
+      "sourire discret du matin",
+      "regard rêveur"
+    ],
+    "lumieres": [
+      "lumière douce matinale",
+      "rayons de soleil filtrant à travers des rideaux",
+      "ambiance chaude et feutrée"
+    ],
+    "accessoires": [
+      "tasse de café",
+      "chat sacré de Birmanie",
+      "livre posé",
+      "oreiller décoratif"
+    ]
+  },
+  "preparation_salle_de_bain": {
+    "scene": "Préparation dans la salle de bain, miroir éclairé, maquillage et coiffure en cours",
+    "lieux": [
+      "salle de bain moderne avec miroir lumineux",
+      "coiffeuse avec produits de beauté",
+      "salle carrelée avec grande glace"
+    ],
+    "tenues": [
+      "serviette enroulée",
+      "peignoir en coton",
+      "robe légère avant défilé"
+    ],
+    "expressions": [
+      "air concentré",
+      "sourire subtil",
+      "regard sérieux dans le miroir"
+    ],
+    "lumieres": [
+      "néons blancs",
+      "éclairage diffus",
+      "ambiance naturelle salle de bain"
+    ],
+    "accessoires": [
+      "sèche-cheveux",
+      "rouge à lèvres",
+      "brosse à cheveux",
+      "chat sacré de Birmanie"
+    ]
+  },
+  "backstage_fashion_week": {
+    "scene": "Coulisses bondées, maquilleuses et stylistes s’affairent autour des mannequins",
+    "lieux": [
+      "backstage rempli de portants",
+      "zone maquillage",
+      "coulisses animées avec projecteurs"
+    ],
+    "tenues": [
+      "peignoir backstage",
+      "robe couture en préparation",
+      "ensemble stylisé prêt pour le podium"
+    ],
+    "expressions": [
+      "air concentré",
+      "regard assuré",
+      "expression nerveuse avant le show"
+    ],
+    "lumieres": [
+      "éclairage néon",
+      "spots techniques puissants",
+      "ambiance backstage"
+    ],
+    "accessoires": [
+      "chaussures sur portants",
+      "sac couture",
+      "miroirs éclairés",
+      "pinceaux maquillage"
+    ]
+  },
+  "podium_fashion_week": {
+    "scene": "Sur le podium, devant les spectateurs et les flashs des photographes",
+    "lieux": [
+      "passerelle fashion week",
+      "podium illuminé",
+      "salle bondée avec public"
+    ],
+    "tenues": [
+      "robe haute couture dorée",
+      "smoking féminin couture",
+      "robe asymétrique spectaculaire"
+    ],
+    "expressions": [
+      "regard intense",
+      "pose assurée",
+      "sourire glamour"
+    ],
+    "lumieres": [
+      "spotlights puissants",
+      "flashs photographes",
+      "contre-jour dramatique"
+    ],
+    "accessoires": [
+      "bijoux luxueux",
+      "clutch couture",
+      "aucun (focus sur la robe)"
+    ]
+  },
+  "soiree_cosy_maison": {
+    "scene": "Retour à la maison, ambiance cosy avec plaid et chat, tasse de thé sur la table",
+    "lieux": [
+      "salon chaleureux",
+      "canapé confortable",
+      "table basse avec bougie"
+    ],
+    "tenues": [
+      "gros pull en laine",
+      "chaussettes épaisses",
+      "legging cosy"
+    ],
+    "expressions": [
+      "air détendu",
+      "sourire apaisé",
+      "expression rêveuse"
+    ],
+    "lumieres": [
+      "lumière d’intérieur douce",
+      "lampe tamisée",
+      "bougie chaude"
+    ],
+    "accessoires": [
+      "chat sacré de Birmanie",
+      "tasse de thé",
+      "livre",
+      "ordinateur portable"
+    ]
+  }
 };
 
 const DETAILED_CONTEXT_LIBRARY: Record<string, Record<string, string[]>> = {
     'architecture_moderne': {
       "lieux": ["gratte-ciel vitré", "villa design avec grandes baies vitrées", "salon minimaliste blanc", "immeuble géométrique futuriste"],
-      "vêtements": ["robe rouge satin", "ensemble blanc minimaliste", "manteau noir structuré", "robe argentée brillante"],
+      "vetements": ["robe rouge satin", "ensemble blanc minimaliste", "manteau noir structuré", "robe argentée brillante"],
       "couleurs_cheveux": ["brun long", "blond court", "cheveux attachés châtains", "brun avec frange"],
       "expressions": ["sourire coquin", "regard intense", "expression mystérieuse", "sourire franc"],
-      "lumières": ["golden hour", "studio softbox", "contre-jour dramatique", "néons discrets"],
+      "lumieres": ["golden hour", "studio softbox", "contre-jour dramatique", "néons discrets"],
       "accessoires": ["lunettes de soleil", "sac minimaliste", "bijoux argentés", "aucun accessoire"]
     }
 };
@@ -341,7 +478,7 @@ export const getDynamicEnhancements = (style: string, subStyle: string): string 
         const lieu = selectRandom(vogueEnhancements.lieux);
         const tenue = selectRandom(vogueEnhancements.tenues);
         const expression = selectRandom(vogueEnhancements.expressions);
-        const lumiere = selectRandom(vogueEnhancements.lumières);
+        const lumiere = selectRandom(vogueEnhancements.lumieres);
         const accessoire = selectRandom(vogueEnhancements.accessoires);
 
         const sentence = `Couverture de magazine Vogue d'une femme portant une ${tenue} dans un décor de ${lieu}, avec une expression ${expression}, un éclairage ${lumiere}, et accessoirisée avec : ${accessoire}.`;
@@ -360,7 +497,7 @@ export const getDynamicEnhancements = (style: string, subStyle: string): string 
         const lieu = selectRandom(coutureEnhancements.lieux);
         const tenue = selectRandom(coutureEnhancements.tenues);
         const expression = selectRandom(coutureEnhancements.expressions);
-        const lumiere = selectRandom(coutureEnhancements.lumières);
+        const lumiere = selectRandom(coutureEnhancements.lumieres);
         const accessoire = selectRandom(coutureEnhancements.accessoires);
 
         const sentence = `Photo de haute couture d'une femme portant une ${tenue} dans un décor de ${lieu}, avec une expression ${expression}, un éclairage ${lumiere}, et accessoirisée avec : ${accessoire}.`;
@@ -379,7 +516,7 @@ export const getDynamicEnhancements = (style: string, subStyle: string): string 
         const lieu = selectRandom(glamourEnhancements.lieux);
         const tenue = selectRandom(glamourEnhancements.tenues);
         const expression = selectRandom(glamourEnhancements.expressions);
-        const lumiere = selectRandom(glamourEnhancements.lumières);
+        const lumiere = selectRandom(glamourEnhancements.lumieres);
         const accessoire = selectRandom(glamourEnhancements.accessoires);
 
         const sentence = `Portrait glamour d'une femme portant une ${tenue} dans un décor de ${lieu}, avec une expression ${expression}, un éclairage ${lumiere}, et accessoirisée avec : ${accessoire}.`;
@@ -394,14 +531,18 @@ export const getDynamicEnhancements = (style: string, subStyle: string): string 
     
     // Check for "A Model's Day" enhancements
     const mannequinEnhancements = JOURNEE_MANNEQUIN_LIBRARY[subStyle as keyof typeof JOURNEE_MANNEQUIN_LIBRARY];
-    if (style === 'Journee Mannequin' && mannequinEnhancements) {
+    if (style === 'Journee Dun Mannequin' && mannequinEnhancements) {
+        // Use the new narrative scene description as the base
+        const scene = mannequinEnhancements.scene;
+        // Then add randomized details for variety
         const lieu = selectRandom(mannequinEnhancements.lieux);
         const tenue = selectRandom(mannequinEnhancements.tenues);
         const expression = selectRandom(mannequinEnhancements.expressions);
-        const lumiere = selectRandom(mannequinEnhancements.lumières);
+        const lumiere = selectRandom(mannequinEnhancements.lumieres);
         const accessoire = selectRandom(mannequinEnhancements.accessoires);
 
-        const sentence = `Photo de la journée d'un mannequin : une femme en ${tenue} dans un décor de ${lieu}, avec une expression ${expression}, un éclairage ${lumiere}, et accessoirisée avec : ${accessoire}.`;
+        // Construct a more detailed, narrative sentence
+        const sentence = `${scene}. Détails additionnels pour cette image unique : décor de ${lieu}, tenue ${tenue}, expression ${expression}, éclairage ${lumiere}, accessoirisée avec : ${accessoire}.`;
         
         enhancements.push(sentence);
         enhancements.push(`Angle de caméra : ${selectRandom(CAMERA_ANGLES)}.`);
@@ -414,11 +555,11 @@ export const getDynamicEnhancements = (style: string, subStyle: string): string 
     // Check for highly detailed, structured enhancements for 'modern_architecture'.
     const detailedEnhancements = DETAILED_CONTEXT_LIBRARY[subStyle as keyof typeof DETAILED_CONTEXT_LIBRARY];
     if (detailedEnhancements) {
-        const vetement = selectRandom(detailedEnhancements.vêtements);
+        const vetement = selectRandom(detailedEnhancements.vetements);
         const lieu = selectRandom(detailedEnhancements.lieux);
         const couleurCheveux = selectRandom(detailedEnhancements.couleurs_cheveux);
         const expression = selectRandom(detailedEnhancements.expressions);
-        const lumiere = selectRandom(detailedEnhancements.lumières);
+        const lumiere = selectRandom(detailedEnhancements.lumieres);
         const accessoire = selectRandom(detailedEnhancements.accessoires);
 
         const sentence = `femme avec ${vetement} dans un décor de ${lieu}, cheveux ${couleurCheveux}, expression ${expression}, éclairage ${lumiere}, et accessoirisée avec : ${accessoire}.`;
@@ -450,7 +591,7 @@ export const getDynamicEnhancements = (style: string, subStyle: string): string 
 export const PHOTO_REALISM_PRESET = `Photographie éditoriale ultra réaliste, 8K UHD, appareil photo moyen format, éclairage de studio professionnel,
 texture de peau impeccable, étalonnage des couleurs cinématique, ombres douces avec une lumière de remplissage parfaite, profondeur de champ,
 mise au point ultra nette, prise de vue avec un objectif Hasselblad H6D 100c + 85mm, style couverture de magazine glacé,
-photographie de luxe haut de gamme, couleurs vibrantes mais naturelles, exposition parfaitement équilibrée,
+photographie de luxe haut de gamme, couleurs vibrantes mais naturelles, exposition perfectly équilibrée,
 --pas de brouillard, --pas de brume, --pas d'éclairage fantaisiste, --pas de sursaturation`;
 
 export interface PhotoSettings {
