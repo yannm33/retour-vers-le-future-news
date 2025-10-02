@@ -40,8 +40,8 @@ function Editor() {
     const { 
         style, subStyle, aspectRatio, colorMode, renderQuality, upscale, focale,
         ouverture, vitesse, photoGrain, expression, framing, hairColor,
-        accessories, lutsCinema, dirt, speedEffect, customPrompt,
-        signatureOn, signature
+        accessories, lutsCinema, dirt, customPrompt,
+        signatureOn, signature, filmBrand, iso
     } = formState;
 
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -127,6 +127,8 @@ function Editor() {
         promptParts.push(`Ratio d'aspect : ${aspectRatio}`);
         promptParts.push(`Qualité de rendu : ${renderQuality}`);
         if (photoGrain !== 'Aucun') promptParts.push(`Grain photographique : '${photoGrain}'.`);
+        if (filmBrand !== 'Aucune') promptParts.push(`Émuler le rendu du film argentique : '${filmBrand}'.`);
+        if (iso !== 'Auto') promptParts.push(`Sensibilité ISO : ${iso}.`);
         
         // 4. Détails Créatifs
         const creativeDetails: string[] = [];
@@ -142,7 +144,6 @@ function Editor() {
                 creativeDetails.push(`Effets environnementaux : '${dirt}'.`);
             }
         }
-        if (speedEffect) creativeDetails.push(`Incorporer un flou de mouvement ou un 'effet de vitesse' pour suggérer le mouvement.`);
         
         if(creativeDetails.length > 0) {
             promptParts.push('//-- DÉTAILS CRÉATIFS --');
@@ -169,9 +170,9 @@ function Editor() {
 
         const basePrompt = buildCreativePrompt();
         const settings: PhotoSettings = {
-            focalLength: focale !== 'Auto' ? `${focale}mm` : undefined,
-            aperture: ouverture !== 'Auto' ? `f/${ouverture}` : undefined,
-            shutterSpeed: vitesse !== 'Auto' ? `1/${vitesse}s` : undefined,
+            focalLength: focale !== 'Auto' ? focale : undefined,
+            aperture: ouverture !== 'Auto' ? ouverture : undefined,
+            shutterSpeed: vitesse !== 'Auto' ? vitesse : undefined,
             resolution: upscale,
             colorMode: colorMode === 'N&B' ? 'b&w' : 'color',
         };
@@ -204,9 +205,9 @@ function Editor() {
 
         const basePrompt = buildCreativePrompt();
         const settings: PhotoSettings = {
-            focalLength: focale !== 'Auto' ? `${focale}mm` : undefined,
-            aperture: ouverture !== 'Auto' ? `f/${ouverture}` : undefined,
-            shutterSpeed: vitesse !== 'Auto' ? `1/${vitesse}s` : undefined,
+            focalLength: focale !== 'Auto' ? focale : undefined,
+            aperture: ouverture !== 'Auto' ? ouverture : undefined,
+            shutterSpeed: vitesse !== 'Auto' ? vitesse : undefined,
             resolution: upscale,
             colorMode: colorMode === 'N&B' ? 'b&w' : 'color',
         };
@@ -301,13 +302,14 @@ function Editor() {
                             availableSubStyles={availableSubStyles}
                         />
                         
-                        <div className="bg-black rounded-lg p-4 flex-grow flex flex-col justify-center items-center min-h-[50vh]">
+                        <div className="bg-black rounded-lg p-4 flex-grow flex flex-col justify-center items-center aspect-square">
                             {uploadedImage ? (
-                                <img src={uploadedImage} alt="Uploaded portrait" className="max-h-[70vh] w-auto rounded-lg object-contain"/>
+                                <img src={uploadedImage} alt="Uploaded portrait" className="max-w-full max-h-full rounded-lg object-contain"/>
                             ) : (
                                 <div className="text-center text-neutral-500 flex flex-col items-center gap-4">
                                     <IconPhoto size={64}/>
                                     <h2 className="text-xl font-semibold">{T.uploadPlaceholder}</h2>
+
                                 </div>
                             )}
                         </div>

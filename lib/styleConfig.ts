@@ -175,19 +175,26 @@ export const STYLES_CONFIG: Style[] = [
         notes: "Varier les véhicules, les angles de caméra, l'éclairage jour/nuit.",
         subStyles: [
             { key: "course_circuit", name: "Course sur Circuit" },
-            { key: "rallye_sauvage", name: "Rallye Sauvage" },
-            { key: "classique_vintage", name: "Classique Vintage" },
+            { key: "rallye_raid", name: "Rallye Raid" },
+            { key: "classic_vintage", name: "Classic Vintage" },
             { key: "luxe_moderne", name: "Luxe Moderne" },
+            { key: "stock_car", name: "Stock Car" },
+            { key: "drag_race", name: "Drag Race" },
+            { key: "tuning_street", name: "Tuning Street" },
         ]
     },
     {
         name: "Moto",
         notes: "Varier les types de motos, les angles de caméra dynamiques, l'éclairage jour/nuit.",
         subStyles: [
-            { key: "course_circuit", name: "Course sur Circuit" },
-            { key: "road_trip_sauvage", name: "Road Trip Sauvage" },
-            { key: "classique_vintage", name: "Classique Vintage" },
-            { key: "urbain_moderne", name: "Urbain Moderne" },
+            { key: "moto_piste", name: "Moto sur Piste" },
+            { key: "motocross", name: "Motocross" },
+            { key: "rallye_raid_moto", name: "Rallye Raid" },
+            { key: "biker_harley", name: "Biker / Harley" },
+            { key: "drag_race_moto", name: "Drag Race" },
+            { key: "cafe_racer", name: "Café Racer" },
+            { key: "enduro", name: "Enduro" },
+            { key: "trial", name: "Trial" },
         ]
     },
     {

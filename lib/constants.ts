@@ -2,7 +2,6 @@
  * @license
  * SPDX-License-Identifier: Apache-2.0
 */
-import { STYLE_GUIDE } from '../services/styleLibrary';
 
 // --- Types ---
 export type ColorMode = 'Couleur' | 'N&B';
@@ -41,8 +40,9 @@ export const translations = {
     framing: "Cadrage",
     luts: "LUTs Cinéma",
     dirt: "Salissure",
-    photoGrain: "Grain Photo",
-    speedEffect: "Effet de vitesse",
+    photoGrain: "Type de film",
+    filmBrand: "Marque de film",
+    iso: "Sensibilité ISO",
     signature: "Signature personnelle",
     lockedOn: "ON - VERROUILLÉ",
     off: "OFF",
@@ -72,6 +72,12 @@ export const MAGAZINE_PROMPT_DETAILS = {
 };
 export const MAGAZINE_STYLES = Object.keys(MAGAZINE_PROMPT_DETAILS);
 
+// --- Camera Settings ---
+export const SHUTTER_SPEEDS = ["2s", "1s", "1/2s", "1/4s", "1/8s", "1/15s", "1/30s", "1/60s", "1/125s", "1/250s", "1/500s", "1/1000s", "1/2000s", "1/4000s"];
+export const APERTURES = ["f/1.4", "f/1.8", "f/2", "f/2.8", "f/4", "f/5.6", "f/8", "f/11", "f/16", "f/22"];
+export const FOCAL_LENGTHS = ["14mm", "20mm", "24mm", "35mm", "50mm", "85mm", "105mm", "135mm", "200mm", "400mm", "600mm", "800mm", "1000mm"];
+
+
 // --- UI Control Options ---
 export const HAIR_COLORS = [
     'Noir Profond', 'Brun Foncé', 'Brun Clair', 'Blond Platine', 'Blond Cendré', 'Blond Doré', 'Roux Vif', 'Roux Cuivré Clair', 'Poivre et Sel', 'Gris Argenté', 'Blanc Neige', 'Rose Fantaisie', 'Bleu Fantaisie'
@@ -93,6 +99,12 @@ export const DIRTS = [
 ];
 export const GRAINS = [
     'Aucun', 'Ultra Fin', 'Fin Standard', 'Moyen', 'Grossier', 'Très Grossier', 'Bruit ISO élevé', 'Vieux film 35mm', 'Finition Mate', 'Contrasté', 'Doux', 'Pointillé', 'Granuleux', 'Flou Doux', 'Cinéma', 'Vignetté'
+];
+export const FILM_STOCKS = [
+    'Aucune', 'Kodak Portra 400', 'Kodak Ektar 100', 'Kodak Gold 200', 'Kodak Tri-X 400', 'Fujifilm Pro 400H', 'Fujifilm Velvia 50', 'Fujifilm Superia 400', 'Ilford HP5 Plus 400', 'Ilford Delta 3200', 'CineStill 800T', 'Lomography Color Negative 800'
+];
+export const ISO_SENSITIVITIES = [
+    'Auto', '50', '100', '200', '400', '800', '1600', '3200', '6400'
 ];
 
 export const ASPECT_RATIOS = {

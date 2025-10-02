@@ -60,7 +60,7 @@ const MainControls = ({ formState, T, handleImageUpload, fileInputRef, handleGen
                 </ControlSection>
             </div>
             <ControlSection title={T.customPromptTitle}>
-                <textarea placeholder={T.customPromptPlaceholder} value={customPrompt} onChange={e => setCustomPrompt(e.target.value)} rows={2} className="bg-neutral-800 border border-neutral-700 rounded-md p-2 text-white w-full focus:outline-none focus:ring-2 focus:ring-amber-500"/>
+                <textarea placeholder={T.customPromptPlaceholder} value={customPrompt} onChange={e => setCustomPrompt(e.target.value)} rows={4} className="bg-neutral-800 border border-neutral-700 rounded-md p-2 text-white w-full focus:outline-none focus:ring-2 focus:ring-amber-500"/>
             </ControlSection>
         </div>
     );

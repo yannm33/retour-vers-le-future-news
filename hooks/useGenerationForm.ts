@@ -12,9 +12,9 @@ export const useGenerationForm = () => {
     const [customPrompt, setCustomPrompt] = useState('');
     const [colorMode, setColorMode] = useState<ColorMode>('Couleur');
     const [upscale, setUpscale] = useState<Upscale>('8K');
-    const [focale, setFocale] = useState<number | 'Auto'>('Auto');
-    const [ouverture, setOuverture] = useState<number | 'Auto'>('Auto');
-    const [vitesse, setVitesse] = useState<number | 'Auto'>('Auto');
+    const [focale, setFocale] = useState('Auto');
+    const [ouverture, setOuverture] = useState('Auto');
+    const [vitesse, setVitesse] = useState('Auto');
     const [hairColor, setHairColor] = useState('Noir Profond');
     const [expression, setExpression] = useState('Neutre');
     const [accessories, setAccessories] = useState('Aucun');
@@ -22,7 +22,8 @@ export const useGenerationForm = () => {
     const [lutsCinema, setLutsCinema] = useState('Aucun');
     const [dirt, setDirt] = useState('Aucune');
     const [photoGrain, setPhotoGrain] = useState('Aucun');
-    const [speedEffect, setSpeedEffect] = useState(false);
+    const [filmBrand, setFilmBrand] = useState('Aucune');
+    const [iso, setIso] = useState('Auto');
     const [signature, setSignature] = useState('@PIXELSHOOT');
     const [signatureOn, setSignatureOn] = useState(true);
     const [aspectRatio, setAspectRatio] = useState('1:1');
@@ -49,7 +50,8 @@ export const useGenerationForm = () => {
         lutsCinema, setLutsCinema,
         dirt, setDirt,
         photoGrain, setPhotoGrain,
-        speedEffect, setSpeedEffect,
+        filmBrand, setFilmBrand,
+        iso, setIso,
         signature, setSignature,
         signatureOn, setSignatureOn,
         aspectRatio, setAspectRatio,

@@ -590,7 +590,7 @@ const COUVERTURE_ELLE_DECO_LIBRARY = {
   }
 };
 
-const DETAILED_CONTEXT_LIBRARY: Record<string, Record<string, string[]>> = {
+const PORTRAIT_MINIMALISTE_LIBRARY = {
     'architecture_moderne': {
       "lieux": ["gratte-ciel vitré", "villa design avec grandes baies vitrées", "salon minimaliste blanc", "immeuble géométrique futuriste"],
       "vetements": ["robe rouge satin", "ensemble blanc minimaliste", "manteau noir structuré", "robe argentée brillante"],
@@ -921,63 +921,319 @@ export const BOHEME_LIBRARY = {
 
 export const AUTOMOBILE_LIBRARY = {
   "course_circuit": {
-    "lieux": ["circuit de F1", "stands avec mécaniciens", "ligne de départ bondée", "virage serré à grande vitesse"],
-    "tenues": ["combinaison de pilote", "casque intégral", "tenue racing GT", "combinaison sponsorisée"],
-    "expressions": ["air concentré", "regard intense", "expression déterminée", "air victorieux"],
-    "lumieres": ["plein soleil", "lumière de projecteurs", "contre-jour dramatique", "halo nocturne"],
-    "accessoires": ["voiture de course", "drapeau à damier", "trophée", "aucun"]
+    "lieux": [
+      "piste de Formule 1 avec tribunes bondées",
+      "circuit d'endurance avec stands et mécanos",
+      "circuit GT urbain avec gratte-ciel en arrière-plan",
+      "virage serré d'un circuit de montagne"
+    ],
+    "vehicules": [
+      "monoplace F1 rouge vif",
+      "GT sportive noire",
+      "voiture d'endurance avec sponsors",
+      "prototype futuriste aérodynamique"
+    ],
+    "expressions": [
+      "concentration intense du pilote",
+      "regard déterminé",
+      "air victorieux",
+      "expression de vitesse pure"
+    ],
+    "lumieres": [
+      "spotlights nocturnes",
+      "soleil couchant dramatique",
+      "flashs des photographes",
+      "éclairage naturel du jour"
+    ],
+    "accessoires": [
+      "casque racing",
+      "combinaison pilote",
+      "drapeau à damier",
+      "aucun"
+    ]
   },
-  "rallye_sauvage": {
-    "lieux": ["piste boueuse", "route de montagne", "chemin forestier", "désert rocailleux"],
-    "tenues": ["combinaison rallye", "casque renforcé", "tenue hors piste", "look pilote décontracté"],
-    "expressions": ["air concentré", "expression tendue", "air déterminé", "sourire franc"],
-    "lumieres": ["soleil éclatant", "poussière dorée", "contre-jour dramatique", "halo du soir"],
-    "accessoires": ["voiture de rallye", "poussière", "boue sur carrosserie", "aucun"]
+  "rallye_raid": {
+    "lieux": [
+      "désert poussiéreux du Dakar",
+      "piste boueuse en forêt",
+      "montagnes rocailleuses enneigées",
+      "traversée de rivière en pleine course"
+    ],
+    "vehicules": [
+      "4x4 modifié rallye",
+      "buggy tout-terrain",
+      "camion d’assistance énorme",
+      "moto rallye raid"
+    ],
+    "expressions": [
+      "regard concentré",
+      "visage couvert de poussière",
+      "air déterminé",
+      "adrénaline intense"
+    ],
+    "lumieres": [
+      "soleil écrasant du désert",
+      "ciel orageux dramatique",
+      "golden hour dans le sable",
+      "phares puissants dans la nuit"
+    ],
+    "accessoires": [
+      "boussole",
+      "drapeau du pays",
+      "roue de secours",
+      "aucun"
+    ]
   },
-  "classique_vintage": {
-    "lieux": ["route rétro des années 60", "station essence vintage", "parking old school", "bord de mer rétro"],
-    "tenues": ["robe rétro", "costume élégant", "look casual vintage", "lunettes rétro"],
-    "expressions": ["air détendu", "regard nostalgique", "sourire doux", "expression rêveuse"],
-    "lumieres": ["golden hour rétro", "halo chaud", "soleil couchant", "clair-obscur doux"],
-    "accessoires": ["voiture vintage", "sac en cuir", "lunettes de soleil rétro", "aucun"]
+  "classic_vintage": {
+    "lieux": [
+      "rue pavée parisienne années 50",
+      "diner américain rétro",
+      "route côtière années 70",
+      "parking de collection"
+    ],
+    "vehicules": [
+      "Chevrolet Bel Air 1957",
+      "Porsche 356 argentée",
+      "Jaguar E-Type",
+      "Citroën DS noire"
+    ],
+    "expressions": [
+      "style rétro chic",
+      "sourire nostalgique",
+      "air mystérieux",
+      "pose élégante"
+    ],
+    "lumieres": [
+      "noir et blanc contrasté",
+      "golden hour nostalgique",
+      "lumière néon vintage",
+      "studio rétro"
+    ],
+    "accessoires": [
+      "lunettes vintage",
+      "foulard soie",
+      "chapeau rétro",
+      "aucun"
+    ]
   },
   "luxe_moderne": {
-    "lieux": ["rooftop urbain", "devant un hôtel 5 étoiles", "piste privée", "villa contemporaine"],
-    "tenues": ["robe de soirée", "costume sur mesure", "ensemble chic", "look glamour"],
-    "expressions": ["air confiant", "sourire élégant", "regard assuré", "pose sophistiquée"],
-    "lumieres": ["lumière urbaine nocturne", "golden hour", "flashs studio", "éclairage architectural"],
-    "accessoires": ["voiture de sport de luxe", "bijoux", "sac de luxe", "aucun"]
+    "lieux": [
+      "devant une villa moderne",
+      "sur un rooftop urbain",
+      "autoroute futuriste de nuit",
+      "devant un hôtel 5 étoiles"
+    ],
+    "vehicules": [
+      "Lamborghini Aventador",
+      "Bugatti Chiron",
+      "Ferrari SF90",
+      "Porsche 911 Turbo"
+    ],
+    "expressions": [
+      "confiance absolue",
+      "regard assuré",
+      "pose glamour",
+      "air mystérieux"
+    ],
+    "lumieres": [
+      "lumière néon urbaine",
+      "projecteurs de rue",
+      "golden hour",
+      "éclairage futuriste coloré"
+    ],
+    "accessoires": [
+      "sac de luxe",
+      "montre haut de gamme",
+      "lunettes de soleil",
+      "aucun"
+    ]
+  },
+  "stock_car": {
+    "lieux": [
+      "arène de stock-car avec tribunes",
+      "piste ovale poussiéreuse",
+      "parking improvisé en zone industrielle",
+      "terrain boueux après collision"
+    ],
+    "vehicules": [
+      "voiture cabossée",
+      "muscle car renforcée",
+      "pickup modifié",
+      "voiture peinte aux couleurs flashy"
+    ],
+    "expressions": [
+      "adrénaline brute",
+      "regard fougueux",
+      "expression agressive",
+      "air déterminé"
+    ],
+    "lumieres": [
+      "lumière de stade nocturne",
+      "soleil brûlant",
+      "phares dans la poussière",
+      "ciel orageux dramatique"
+    ],
+    "accessoires": [
+      "casque rayé",
+      "drapeau rouge",
+      "roue de secours cabossée",
+      "aucun"
+    ]
+  },
+  "drag_race": {
+    "lieux": [
+      "ligne droite urbaine",
+      "piste de drag avec public",
+      "parking de supermarché la nuit",
+      "tunnel sombre illuminé par des néons"
+    ],
+    "vehicules": [
+      "muscle car américaine",
+      "Nissan Skyline GT-R",
+      "Dodge Charger",
+      "Tesla Plaid"
+    ],
+    "expressions": [
+      "regard défiant",
+      "air confiant",
+      "concentration extrême",
+      "expression victorieuse"
+    ],
+    "lumieres": [
+      "phares éblouissants",
+      "fumée de pneus éclairée",
+      "golden hour urbaine",
+      "néons multicolores"
+    ],
+    "accessoires": [
+      "bouteille de NOS",
+      "casquette tuning",
+      "drapeau check",
+      "aucun"
+    ]
+  },
+  "tuning_street": {
+    "lieux": [
+      "parking souterrain",
+      "ruelle avec graffitis",
+      "toit urbain avec skyline",
+      "zone industrielle nocturne"
+    ],
+    "vehicules": [
+      "Honda Civic modifiée",
+      "Toyota Supra avec aileron",
+      "Nissan 350Z tunée",
+      "BMW M3 avec néons"
+    ],
+    "expressions": [
+      "air rebelle",
+      "regard provocateur",
+      "sourire complice",
+      "pose street"
+    ],
+    "lumieres": [
+      "néons violets et bleus",
+      "phares de voiture",
+      "fumée de pneus",
+      "éclairage urbain nocturne"
+    ],
+    "accessoires": [
+      "casquette street",
+      "chaîne argent",
+      "enceinte portable",
+      "aucun"
+    ]
   }
 };
 
 export const MOTO_LIBRARY = {
-  "course_circuit": {
-    "lieux": ["circuit MotoGP", "paddock avec équipe technique", "grille de départ animée", "virage en épingle à grande vitesse"],
-    "tenues": ["combinaison de pilote en cuir", "casque intégral de course", "tenue de pilote sponsorisée", "équipement de protection complet"],
-    "expressions": ["concentration extrême", "regard de prédateur", "détermination", "joie de la victoire"],
-    "lumieres": ["soleil de plomb sur l'asphalte", "lumières de projecteurs de nuit", "contre-jour sur la piste", "flou de vitesse"],
-    "accessoires": ["moto de course supersport", "drapeau à damier", "genou au sol dans un virage", "aucun"]
+  "moto_piste": {
+    "lieux": [
+      "circuit GP international avec tribunes",
+      "virage serré de circuit avec spectateurs",
+      "ligne droite à pleine vitesse",
+      "stand technique avec mécaniciens"
+    ],
+    "vehicules": ["superbike", "motoGP", "sportive carénée"],
+    "expressions": ["concentration maximale", "adrenaline pure", "regard focalisé"],
+    "ambiance": ["bruit de moteur assourdissant", "fumée de pneus", "drapeaux de course"]
   },
-  "road_trip_sauvage": {
-    "lieux": ["route de montagne sinueuse", "désert américain", "côte escarpée", "forêt dense"],
-    "tenues": ["veste en cuir de motard", "jean usé", "casque ouvert vintage", "bottes de moto"],
-    "expressions": ["sentiment de liberté", "sourire détendu", "regard vers l'horizon", "air aventureux"],
-    "lumieres": ["coucher de soleil (golden hour)", "lumière crue du désert", "brume matinale", "reflets sur le chrome"],
-    "accessoires": ["moto custom (chopper/bobber)", "bagages de voyage", "paysage épique en arrière-plan", "aucun"]
+  "motocross": {
+    "lieux": [
+      "terrain boueux avec rampes",
+      "sauts spectaculaires en pleine poussière",
+      "piste forestière accidentée",
+      "course à plusieurs motos"
+    ],
+    "vehicules": ["motocross 250cc", "motocross 450cc"],
+    "expressions": ["détermination", "frisson de vitesse", "concentration absolue"],
+    "ambiance": ["terre projetée", "fumée de boue", "cris du public"]
   },
-  "classique_vintage": {
-    "lieux": ["café rétro des années 50", "garage vintage", "route de campagne idyllique", "centre-ville historique"],
-    "tenues": ["blouson en cuir classique", "look rockabilly", "tenue de gentleman rider", "lunettes d'aviateur"],
-    "expressions": ["air nostalgique", "sourire cool", "pose décontractée", "regard confiant"],
-    "lumieres": ["tons sépia", "lumière chaude de fin de journée", "reflets sur la peinture", "éclairage de rue vintage"],
-    "accessoires": ["moto classique (Triumph/Norton)", "casque bol", "gants en cuir", "aucun"]
+  "rallye_raid_moto": {
+    "lieux": [
+      "désert infini type Dakar",
+      "pistes rocailleuses sahariennes",
+      "oasis en arrière-plan",
+      "dunes immenses au coucher du soleil"
+    ],
+    "vehicules": ["moto rallye raid KTM", "Yamaha Ténéré", "Honda Africa Twin"],
+    "expressions": ["endurant", "solitaire", "explorateur"],
+    "ambiance": ["poussière", "chaleur écrasante", "course d’endurance"]
   },
-  "urbain_moderne": {
-    "lieux": ["rue de métropole la nuit", "pont illuminé", "parking souterrain", "devant un bâtiment futuriste"],
-    "tenues": ["équipement de moto moderne et stylé", "casque design", "tenue de motard urbain", "look high-tech"],
-    "expressions": ["air déterminé", "regard concentré", "pose agressive", "prêt pour l'action"],
-    "lumieres": ["néons de la ville", "reflets sur le bitume mouillé", "éclairage architectural", "contre-jour des phares"],
-    "accessoires": ["moto sportive moderne (roadster/naked)", "lumières de la ville en bokeh", "traces de lumière", "aucun"]
+  "biker_harley": {
+    "lieux": [
+      "route 66 américaine",
+      "bar biker en néon",
+      "désert du Nevada",
+      "rassemblement moto de nuit"
+    ],
+    "vehicules": ["Harley-Davidson", "Custom chopper"],
+    "expressions": ["attitude rebelle", "cool assuré", "air libre"],
+    "ambiance": ["blouson cuir", "tatouages", "sons graves de moteur V-Twin"]
+  },
+  "drag_race_moto": {
+    "lieux": [
+      "ligne droite dragstrip",
+      "course de nuit avec néons",
+      "ligne de départ avec fumée blanche",
+      "tribunes bondées"
+    ],
+    "vehicules": ["drag bike", "moto turbo"],
+    "expressions": ["puissance brute", "adrénaline", "regard agressif"],
+    "ambiance": ["fumée de pneu", "cris du public", "compteur explosif"]
+  },
+  "cafe_racer": {
+    "lieux": [
+      "rue vintage urbaine",
+      "garage rétro",
+      "café londonien années 60",
+      "route de campagne"
+    ],
+    "vehicules": ["Triumph Bonneville", "Norton Commando", "Honda CB customisée"],
+    "expressions": ["style détaché", "attitude rebelle chic", "regard vintage"],
+    "ambiance": ["chrome poli", "cuir patiné", "lumière rétro"]
+  },
+  "enduro": {
+    "lieux": [
+      "forêt dense avec obstacles naturels",
+      "montée rocheuse en terrain difficile",
+      "rivière à franchir",
+      "piste escarpée de montagne"
+    ],
+    "vehicules": ["KTM Enduro", "Husqvarna Enduro"],
+    "expressions": ["effort physique", "concentration", "maîtrise"],
+    "ambiance": ["poussière", "rochers", "nature sauvage"]
+  },
+  "trial": {
+    "lieux": [
+      "rochers abrupts",
+      "tronc d’arbre à franchir",
+      "zone urbaine aménagée pour le trial",
+      "parcours artificiel en compétition"
+    ],
+    "vehicules": ["GasGas Trial", "Montesa Trial"],
+    "expressions": ["équilibre extrême", "maîtrise", "calme"],
+    "ambiance": ["silence avant saut", "public concentré", "mouvement millimétré"]
   }
 };
 
@@ -1004,6 +1260,7 @@ export const getDynamicEnhancements = (style: string, subStyle: string): string 
         'Couverture Elle Deco': COUVERTURE_ELLE_DECO_LIBRARY,
         'Mode Haute Couture': HAUTE_COUTURE_LIBRARY,
         'Portrait Glamour': PORTRAIT_GLAMOUR_LIBRARY,
+        'Portrait Minimaliste': PORTRAIT_MINIMALISTE_LIBRARY,
         'Journée d\'un mannequin': JOURNEE_MANNEQUIN_LIBRARY,
     };
 
@@ -1012,17 +1269,34 @@ export const getDynamicEnhancements = (style: string, subStyle: string): string 
 
     if (details) {
         const lieu = selectRandom(details.lieux);
-        const tenue = selectRandom(details.tenues);
         const expression = selectRandom(details.expressions);
-        const lumiere = selectRandom(details.lumieres);
-        const accessoire = selectRandom(details.accessoires);
 
         let sentence = details.scene ? `${details.scene}. ` : '';
 
         if (style === 'Couverture Elle Deco') {
+             const lumiere = selectRandom(details.lumieres);
+             const accessoire = selectRandom(details.accessoires);
              sentence += `Détails additionnels pour cette image unique : lieu de ${lieu}, éclairage ${lumiere}, avec les accessoires suivants : ${accessoire}.`;
+        } else if (style === 'Automobile') {
+            const vehicule = selectRandom(details.vehicules);
+            const lumiere = selectRandom(details.lumieres);
+            const accessoire = selectRandom(details.accessoires);
+            sentence += `Détails additionnels pour cette image unique : un(e) ${vehicule} dans un décor de ${lieu}. L'ambiance générale est "${expression}", avec un éclairage de type ${lumiere}. Accessoires visibles : ${accessoire}.`;
+        } else if (style === 'Moto') {
+            const vehicule = selectRandom(details.vehicules);
+            const ambiance = selectRandom(details.ambiance);
+            sentence += `Détails additionnels pour cette image unique : un(e) ${vehicule} dans un décor de ${lieu}, avec une expression de "${expression}". L'ambiance générale est : ${ambiance}.`;
+        } else if (style === 'Portrait Minimaliste' && subStyle === 'architecture_moderne') {
+             const vetement = selectRandom(details.vetements);
+             const couleurCheveux = selectRandom(details.couleurs_cheveux);
+             const lumiere = selectRandom(details.lumieres);
+             const accessoire = selectRandom(details.accessoires);
+             sentence += `femme avec ${vetement} dans un décor de ${lieu}, cheveux ${couleurCheveux}, expression ${expression}, éclairage ${lumiere}, et accessoirisée avec : ${accessoire}.`;
         } else {
-             sentence += `Détails additionnels pour cette image unique : décor de ${lieu}, tenue ${tenue}, expression ${expression}, éclairage ${lumiere}, accessoirisée avec : ${accessoire}.`;
+            const tenue = selectRandom(details.tenues);
+            const lumiere = selectRandom(details.lumieres);
+            const accessoire = selectRandom(details.accessoires);
+            sentence += `Détails additionnels pour cette image unique : décor de ${lieu}, tenue ${tenue}, expression ${expression}, éclairage ${lumiere}, accessoirisée avec : ${accessoire}.`;
         }
         
         enhancements.push(sentence);
@@ -1032,28 +1306,6 @@ export const getDynamicEnhancements = (style: string, subStyle: string): string 
 
         return enhancements.join(' ');
     }
-
-
-    // Check for highly detailed, structured enhancements for 'modern_architecture'.
-    const detailedEnhancements = DETAILED_CONTEXT_LIBRARY[subStyle as keyof typeof DETAILED_CONTEXT_LIBRARY];
-    if (detailedEnhancements) {
-        const vetement = selectRandom(detailedEnhancements.vetements);
-        const lieu = selectRandom(detailedEnhancements.lieux);
-        const couleurCheveux = selectRandom(detailedEnhancements.couleurs_cheveux);
-        const expression = selectRandom(detailedEnhancements.expressions);
-        const lumiere = selectRandom(detailedEnhancements.lumieres);
-        const accessoire = selectRandom(detailedEnhancements.accessoires);
-
-        const sentence = `femme avec ${vetement} dans un décor de ${lieu}, cheveux ${couleurCheveux}, expression ${expression}, éclairage ${lumiere}, et accessoirisée avec : ${accessoire}.`;
-
-        enhancements.push(sentence);
-        enhancements.push(`Angle de caméra : ${selectRandom(CAMERA_ANGLES)}.`);
-        enhancements.push(`Atmosphère : ${selectRandom(ATMOSPHERES)}.`);
-        enhancements.push(`Composition : Assurez-vous que cette image est unique dans sa composition par rapport aux autres de ce lot. Évitez la répétition.`);
-
-        return enhancements.join(' ');
-    }
-
 
     // 1. Select a unique environment if one is defined for the sub-style
     const environmentOptions = CONTEXTUAL_ENVIRONMENTS[subStyle];
