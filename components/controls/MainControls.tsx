@@ -6,14 +6,14 @@ import React from 'react';
 import { IconCamera, IconLoader } from '@tabler/icons-react';
 import { ControlSection } from './shared/ControlSection';
 import { StyledSelect } from './shared/StyledSelect';
-import { STYLES, SUBSTYLE_TRANSLATIONS } from '../../lib/constants';
+import { STYLES_CONFIG } from '../../lib/styleConfig';
 
 const MainControls = ({ formState, T, handleImageUpload, fileInputRef, handleGenerateClick, isLoading, uploadedImage, availableSubStyles }) => {
     const { 
-        numberOfImages, setNumberOfImages,
         style, setStyle,
         subStyle, setSubStyle,
-        customPrompt, setCustomPrompt
+        customPrompt, setCustomPrompt,
+        numberOfImages, setNumberOfImages,
     } = formState;
     
     return (
@@ -49,13 +49,13 @@ const MainControls = ({ formState, T, handleImageUpload, fileInputRef, handleGen
             <div className="grid grid-cols-2 gap-4">
                 <ControlSection title={T.style}>
                     <StyledSelect value={style} onChange={e => setStyle(e.target.value)}>
-                        {STYLES.map(s => <option key={s} value={s}>{s}</option>)}
+                        {STYLES_CONFIG.map(s => <option key={s.name} value={s.name}>{s.name}</option>)}
                     </StyledSelect>
                 </ControlSection>
                 <ControlSection title={T.substyle}>
                     <StyledSelect value={subStyle} onChange={e => setSubStyle(e.target.value)} disabled={!availableSubStyles || availableSubStyles.length === 0}>
                         <option value="">{T.chooseSubstyle}</option>
-                        {availableSubStyles && availableSubStyles.map(s => <option key={s} value={s}>{SUBSTYLE_TRANSLATIONS[s] || s.replace(/_/g, ' ')}</option>)}
+                        {availableSubStyles && availableSubStyles.map(s => <option key={s.key} value={s.key}>{s.name}</option>)}
                     </StyledSelect>
                 </ControlSection>
             </div>

@@ -648,129 +648,274 @@ export const PUNK_LIBRARY = {
 
 export const GOTHIC_LIBRARY = {
   "medieval_sombre": {
-    "lieux": ["château ancien", "corridor de pierre", "salle aux torches", "salle gothique"],
-    "tenues": ["robe noire", "cape sombre", "corset", "tenue médiévale sombre"],
-    "expressions": ["regard intense", "expression dramatique", "air mélancolique", "sourire discret"],
-    "lumieres": ["clair-obscur", "torches", "contre-jour dramatique", "ombres profondes"],
-    "accessoires": ["chandelle", "croix", "collier ancien", "aucun"]
+    "lieux": [
+      "château ancien lugubre",
+      "corridor médiéval éclairé à la torche",
+      "salle de banquet gothique abandonnée",
+      "tour de guet sombre et humide"
+    ],
+    "tenues": ["robe noire en velours", "cape sombre", "corset victorien", "costume d'époque"],
+    "expressions": ["regard intense", "air mystérieux", "expression dramatique", "sourire sombre"],
+    "lumieres": ["clair-obscur", "lumière de chandelle", "halo dramatique", "éclairage lunaire"],
+    "accessoires": ["croix en argent", "livre ancien", "gants de velours", "aucun"]
   },
   "cimetiere_victorien": {
-    "lieux": ["cimetière brumeux", "croix de pierre", "statue gothique", "allée de tombes"],
-    "tenues": ["robe longue noire", "voile sombre", "manteau victorien", "corset sombre"],
-    "expressions": ["regard sombre", "air mélancolique", "expression dramatique", "regard fixe"],
-    "lumieres": ["brouillard éclairé", "clair de lune", "éclairage dramatique", "contre-jour"],
-    "accessoires": ["fleurs fanées", "rosaire", "ombrelle noire", "aucun"]
+    "lieux": [
+      "cimetière brumeux avec croix en pierre",
+      "mausolée victorien",
+      "allée funéraire avec statues d'anges",
+      "tombes envahies par le lierre"
+    ],
+    "tenues": ["robe noire victorienne", "cape sombre", "manteau long", "robe gothique dentelle"],
+    "expressions": ["regard mélancolique", "air mystérieux", "expression dramatique", "sourire discret"],
+    "lumieres": ["brume crépusculaire", "clair de lune", "halo dramatique", "lumière diffuse"],
+    "accessoires": ["ombrelle victorienne", "fleurs fanées", "collier ancien", "aucun"]
   },
   "eglise_gothique": {
-    "lieux": ["nef gothique", "vitraux colorés", "autel", "confessionnal"],
-    "tenues": ["robe sombre", "cape longue", "corset victorien", "robe dramatique"],
-    "expressions": ["expression dramatique", "regard mystique", "air intense", "sourire discret"],
-    "lumieres": ["lumière des vitraux", "contre-jour dramatique", "ombre forte", "éclairage divin sombre"],
-    "accessoires": ["chapelet", "collier gothique", "croix ancienne", "aucun"]
+    "lieux": [
+      "nef gothique avec vitraux colorés",
+      "autel dramatique éclairé",
+      "piliers élancés",
+      "confessionnal sombre"
+    ],
+    "tenues": ["robe noire longue", "robe rouge dramatique", "cape gothique", "costume sombre"],
+    "expressions": ["regard intense", "air solennel", "expression dramatique", "regard mystérieux"],
+    "lumieres": ["lumière traversant les vitraux", "contre-jour dramatique", "clair-obscur", "halo mystique"],
+    "accessoires": ["rosaire", "collier gothique", "gants sombres", "aucun"]
   },
   "portrait_victorien": {
-    "lieux": ["salon ancien", "bibliothèque victorienne", "manoir sombre", "hall victorien"],
-    "tenues": ["robe victorienne", "corset", "costume sombre", "robe dramatique"],
-    "expressions": ["air mélancolique", "regard intense", "expression triste", "air mystérieux"],
-    "lumieres": ["clair-obscur", "lumière tamisée", "contre-jour", "halo diffus"],
-    "accessoires": ["collier ancien", "livre", "ombrelle", "aucun"]
+    "lieux": [
+      "studio victorien avec rideaux lourds",
+      "bibliothèque ancienne",
+      "salon victorien décoré",
+      "fond neutre sépia"
+    ],
+    "tenues": ["corset ancien", "robe victorienne sombre", "costume trois pièces", "robe baroque"],
+    "expressions": ["sourire discret", "air sévère", "regard perçant", "expression mystérieuse"],
+    "lumieres": ["éclairage sépia", "halo victorien", "ombre douce", "clair-obscur dramatique"],
+    "accessoires": ["montre de poche", "médaillon ancien", "ombrelle", "aucun"]
   },
   "gothique_moderne": {
-    "lieux": ["rue nocturne", "rooftop urbain", "club underground", "studio sombre"],
-    "tenues": ["robe noire urbaine", "cuir", "dentelle moderne", "ensemble gothique chic"],
-    "expressions": ["air rebelle", "regard sombre", "pose assurée", "sourire discret"],
-    "lumieres": ["néons froids", "contre-jour urbain", "lumière tamisée", "spot dramatique"],
-    "accessoires": ["lunettes noires", "bijoux gothiques", "croix moderne", "aucun"]
+    "lieux": [
+      "rue urbaine sombre avec néons",
+      "club underground",
+      "rooftop nocturne",
+      "studio minimaliste sombre"
+    ],
+    "tenues": ["cuir noir", "ensemble cyberpunk", "robe latex sombre", "look punk-goth"],
+    "expressions": ["regard rebelle", "air mystérieux", "sourire discret", "expression dramatique"],
+    "lumieres": ["néons rouges et bleus", "contre-jour urbain", "projecteur unique", "halo artificiel"],
+    "accessoires": ["piercings", "lunettes sombres", "collier métallique", "aucun"]
+  },
+  "gothique_baroque": {
+    "lieux": [
+      "salon baroque avec miroirs",
+      "salle de bal dorée",
+      "théâtre ancien",
+      "bibliothèque baroque"
+    ],
+    "tenues": ["robe baroque noire et or", "costume ancien", "robe dramatique en dentelle", "cape extravagante"],
+    "expressions": ["air théâtral", "regard intense", "sourire discret", "expression mystérieuse"],
+    "lumieres": ["chandelles multiples", "lumière dorée", "ombres dramatiques", "halo baroque"],
+    "accessoires": ["masque vénitien", "bijoux imposants", "éventail ancien", "aucun"]
+  },
+  "dark_romantique": {
+    "lieux": [
+      "salle obscure décorée de roses fanées",
+      "chambre gothique en velours",
+      "terrasse nocturne",
+      "bibliothèque sombre"
+    ],
+    "tenues": ["robe velours rouge", "robe noire romantique", "chemise ouverte sombre", "corset dramatique"],
+    "expressions": ["air séducteur", "sourire subtil", "regard mystérieux", "expression passionnée"],
+    "lumieres": ["bougies multiples", "clair-obscur romantique", "halo doux", "contre-jour dramatique"],
+    "accessoires": ["rose fanée", "collier cœur sombre", "gants élégants", "aucun"]
+  },
+  "bar_gothique": {
+    "lieux": [
+      "bar sombre avec vitraux colorés",
+      "club gothique avec jukebox ancien",
+      "salle décorée de crânes et chandelles",
+      "bar underground gothique"
+    ],
+    "tenues": ["cuir sombre", "robe en dentelle noire", "corset", "look punk-goth"],
+    "expressions": ["air mystérieux", "sourire enigmatique", "regard intense", "pose décontractée"],
+    "lumieres": ["néons rouges", "lumière tamisée", "éclairage de bar sombre", "reflets sur les verres"],
+    "accessoires": ["verre de cocktail sombre", "cendrier vintage", "bougies sur la table", "aucun"]
   }
 };
 
 export const VIKING_LIBRARY = {
   "raid_marin": {
-    "lieux": ["drakkar en mer déchaînée", "plage rocheuse balayée par le vent", "fjord brumeux", "combat naval chaotique"],
-    "tenues": ["armure en cuir", "cotte de mailles", "casque viking", "tunique nordique"],
-    "expressions": ["regard guerrier", "cri de bataille", "air intense", "air assuré"],
-    "lumieres": ["clair de lune", "brouillard dramatique", "contre-jour épique", "torches"],
-    "accessoires": ["hache", "bouclier", "épée", "aucun"]
+    "lieux": [
+      "drakkar viking luttant contre des vagues déchaînées au milieu d'une mer d'encre",
+      "débarquement spectaculaire sur une plage de sable noir balayée par le vent",
+      "combat naval chaotique au milieu d'une tempête, avec des éclairs zébrant le ciel",
+      "fjord brumeux et silencieux, avec la proue d'un drakkar à tête de dragon émergeant de la brume"
+    ],
+    "tenues": ["armure de cuir usée", "cotte de mailles étincelante", "cape en fourrure épaisse", "casque viking gravé"],
+    "expressions": ["air déterminé et sauvage", "regard féroce et perçant", "cri de guerre guttural", "air concentré avant la bataille"],
+    "lumieres": ["clair-obscur dramatique projeté par les nuages d'orage", "halo lunaire spectral sur l'eau agitée", "lueur vacillante des torches sur le pont", "contre-jour marin avec le soleil perçant la brume"],
+    "accessoires": ["hache viking à double tranchant", "bouclier en bois rond orné de motifs", "épée nordique à la garde travaillée", "aucun"]
   },
   "crique_tresor": {
-    "lieux": ["grotte runique", "plage isolée", "île mystérieuse", "forêt nordique"],
-    "tenues": ["tunique nordique", "cape sombre", "armure simple", "robe nordique"],
-    "expressions": ["air intrigué", "regard assuré", "pose dramatique", "expression concentrée"],
-    "lumieres": ["torches", "clair de lune", "contre-jour dramatique", "halo diffus"],
-    "accessoires": ["coffre d’or", "runes", "bijoux anciens", "aucun"]
+    "lieux": [
+      "caverne marine secrète dont les murs scintillent, éclairée par une seule torche",
+      "plage de sable blanc isolée avec un coffre au trésor à moitié enfoui",
+      "île volcanique désolée avec d'anciennes pierres runiques gravées dans la roche noire",
+      "crique cachée accessible uniquement à marée basse, entourée de falaises abruptes"
+    ],
+    "tenues": ["tunique sombre et pratique", "cape nordique élimée par le voyage", "armure légère en cuir", "tenue discrète pour l'exploration"],
+    "expressions": ["air méfiant, scrutant les ombres", "regard mystérieux et calculateur", "sourire triomphant à la vue du butin", "expression sérieuse et concentrée"],
+    "lumieres": ["lueur chaude et vacillante des torches", "clair de lune filtrant à travers une ouverture dans la roche", "halo doré émanant du trésor ouvert", "ombres longues et dramatiques"],
+    "accessoires": ["carte au trésor en parchemin usé", "cascade de pièces d’or et de bijoux", "artefacts vikings précieux", "aucun"]
   },
   "festin_maison_longue": {
-    "lieux": ["maison longue enfumée", "banquet viking", "foyer central", "salle décorée de boucliers"],
-    "tenues": ["tunique festive", "cape chaude", "armure légère", "robe nordique"],
-    "expressions": ["air jovial", "rire franc", "chant festif", "air solennel"],
-    "lumieres": ["torches murales", "feu central", "lueur de braises", "clair-obscur chaleureux"],
-    "accessoires": ["corne à boire", "table de banquet", "bijoux en or", "aucun"]
+    "lieux": [
+      "grande maison longue enfumée et bruyante, avec un foyer central crépitant",
+      "salle de banquet festive, les murs ornés de boucliers et de tapisseries",
+      "table de banquet massive chargée de nourriture et de cornes à boire, entourée de guerriers rieurs",
+      "intérieur sombre où les ombres dansent à la lueur vacillante des torches"
+    ],
+    "tenues": ["tunique festive brodée", "armure de cérémonie décorée", "cape de chef doublée de fourrure", "vêtements de fête rustiques mais propres"],
+    "expressions": ["rire bruyant et franc", "air jovial et fraternel", "regard fier en racontant une histoire", "expression théâtrale en chantant une saga"],
+    "lumieres": ["lumière dansante des torches murales", "lueur vive du feu central", "halo chaleureux et convivial", "ombres profondes dans les coins de la salle"],
+    "accessoires": ["corne à boire remplie d'hydromel", "hache de cérémonie posée sur la table", "bijoux nordiques opulents", "aucun"]
   },
   "explorateur_nordique": {
-    "lieux": ["falaise dominant la mer", "fjord glacé", "campement nordique", "forêt boréale"],
-    "tenues": ["tunique épaisse", "cape en fourrure", "armure nordique", "tenue de voyage"],
-    "expressions": ["regard lointain", "air songeur", "expression courageuse", "air concentré"],
-    "lumieres": ["aube polaire", "coucher de soleil nordique", "clair de lune", "ciel couvert"],
-    "accessoires": ["carte ancienne", "boussole primitive", "hache d’explorateur", "aucun"]
+    "lieux": [
+      "falaise escarpée surplombant une mer inconnue et glacée",
+      "carte ancienne déroulée sur la proue d’un drakkar fendant les vagues",
+      "campement de fortune dans une forêt boréale silencieuse et enneigée",
+      "rivage d’une terre nouvelle et sauvage sous une aurore boréale spectaculaire"
+    ],
+    "tenues": ["cape en laine épaisse pour se protéger du froid", "armure légère et fonctionnelle", "tunique nordique usée par le voyage", "manteau épais doublé de fourrure"],
+    "expressions": ["regard scrutant l’horizon avec espoir", "air concentré en étudiant la carte", "expression rêveuse face à la beauté sauvage", "air inspiré et déterminé"],
+    "lumieres": ["lumière verte et mouvante des aurores boréales", "halo doux du soleil de minuit", "ciel nocturne limpide et étoilé", "lumière diffuse et pâle d'un jour polaire"],
+    "accessoires": ["boussole solaire primitive en bois", "hache courte d'explorateur", "sac en cuir rempli de provisions", "aucun"]
   },
   "guerrier_mythologique": {
-    "lieux": ["champ de bataille épique", "falaise sacrée", "temple nordique", "paysage enneigé"],
-    "tenues": ["armure divine", "cape flamboyante", "armure nordique gravée", "tenue héroïque"],
-    "expressions": ["cri guerrier", "regard divin", "air furieux", "pose imposante"],
-    "lumieres": ["éclairs dramatiques", "halo divin", "contre-jour épique", "torches sacrées"],
-    "accessoires": ["marteau mythique", "lance sacrée", "bouclier runique", "aucun"]
+    "lieux": [
+      "champ de bataille mythologique jonché de créatures tombées, sous un ciel orageux",
+      "arène sacrée entourée de statues de dieux nordiques",
+      "forêt enchantée et sombre où se dressent des pierres runiques lumineuses",
+      "hall d'Asgard rempli de flammes éternelles et d’éclairs"
+    ],
+    "tenues": ["armure divine gravée de runes lumineuses", "cape rouge flottant au vent de manière surnaturelle", "casque ailé ou cornu emblématique", "tenue de demi-dieu"],
+    "expressions": ["regard transcendant brillant d'une lumière intérieure", "air héroïque et indomptable", "colère divine manifestée par des éclairs dans les yeux", "air mystique et sage"],
+    "lumieres": ["éclairs divins zébrant le ciel", "halo doré de puissance", "flammes sacrées illuminant la scène", "clair-obscur mystique et intense"],
+    "accessoires": ["marteau runique crépitant d'énergie", "épée légendaire brillante d'une lueur magique", "bouclier orné de symboles divins", "aucun"]
   },
-  "vie_du_village": {
-    "lieux": ["village nordique", "forge animée", "marché viking", "ferme rustique"],
-    "tenues": ["tunique simple", "tablier d’artisan", "robe nordique", "cape rustique"],
-    "expressions": ["sourire franc", "air concentré", "regard bienveillant", "air déterminé"],
-    "lumieres": ["feu de foyer", "lumière douce du matin", "coucher de soleil", "torches simples"],
-    "accessoires": ["outils", "paniers de nourriture", "armes simples", "aucun"]
+  "vie_de_village": {
+    "lieux": [
+      "village viking animé et enneigé, avec des cabanes en bois et des toits de chaume",
+      "place de marché animée avec des artisans vendant leurs marchandises",
+      "ferme rustique avec du bétail et des champs cultivés",
+      "forge active où un forgeron martèle une épée rougeoyante"
+    ],
+    "tenues": ["vêtements rustiques en laine et en lin", "tablier de forgeron en cuir", "tunique simple de paysan", "cape nordique pratique"],
+    "expressions": ["sourire simple et authentique", "air de labeur et de concentration", "regard paisible et bienveillant", "air familial et communautaire"],
+    "lumieres": ["lumière naturelle et douce d'un jour d'hiver", "lueur chaude et intense du feu de forge", "halo doux du soleil matinal", "lueur tremblotante des torches rustiques le soir"],
+    "accessoires": ["outils de forgeron", "bétail comme des chèvres ou des moutons", "paniers remplis de provisions", "aucun"]
+  },
+  "navigation_drakkar": {
+    "lieux": [
+      "drakkar majestueux fendant les vagues d'une mer agitée",
+      "fjord brumeux et étroit, traversé par une flotte de navires vikings",
+      "rivage sablonneux se préparant à un débarquement imminent",
+      "océan infini sous un ciel orageux et menaçant"
+    ],
+    "tenues": ["cape en fourrure pour se protéger des embruns", "armure légère pour la manœuvre", "tenue de marin viking usée par le sel", "casque nordique pour la bataille"],
+    "expressions": ["cri de guerre unissant l'équipage", "air concentré sur la navigation", "regard inspiré vers la destination", "air combatif et prêt à l'action"],
+    "lumieres": ["coucher de soleil flamboyant sur la mer", "clair de lune dramatique se reflétant sur les vagues", "ciel sombre d'un orage imminent", "halo marin diffus et brumeux"],
+    "accessoires": ["rames sculptées plongeant en rythme dans l'eau", "boucliers en bois colorés alignés le long de la coque", "cordages usés et tendus par le vent", "aucun"]
   }
 };
 
 export const BOHEME_LIBRARY = {
   "boheme_chic": {
-    "lieux": ["plage bohème chic", "festival en plein air", "prairie ensoleillée", "terrasse bohème"],
-    "tenues": ["robe longue fluide", "kimono bohème", "ensemble décontracté", "look bohème chic"],
-    "expressions": ["air détendu", "sourire lumineux", "expression rêveuse", "clin d’œil"],
-    "lumieres": ["golden hour", "lumière naturelle douce", "contre-jour bohème", "halo diffus"],
-    "accessoires": ["chapeau large", "collier artisanal", "fleurs", "aucun"]
+    "lieux": [
+      "terrasse ensoleillée d’un hôtel design",
+      "salon cosy avec tapis persans",
+      "plage privée au coucher du soleil",
+      "villa méditerranéenne avec bougainvilliers"
+    ],
+    "tenues": ["robe fluide blanche", "jupe longue imprimée", "kimono élégant", "ensemble bohème pastel"],
+    "expressions": ["sourire doux", "regard mystérieux", "air détendu", "pose élégante"],
+    "lumieres": ["golden hour", "lumière tamisée de bougie", "contre-jour doré", "lumière naturelle douce"],
+    "accessoires": ["chapeau de paille chic", "bijoux fins", "sac en cuir naturel", "aucun"]
+  },
+  "festival_boheme": {
+    "lieux": [
+      "festival en plein air avec foule et tentes colorées",
+      "scène musicale avec guitares et danseurs",
+      "prairie fleurie au soleil",
+      "campement bohème avec tapis et lanternes"
+    ],
+    "tenues": ["short en jean et top crochet", "robe fleurie", "kimono coloré", "franges style western"],
+    "expressions": ["rire franc", "air festif", "clin d’œil", "sourire lumineux"],
+    "lumieres": ["soleil intense", "coucher de soleil festivalier", "feu de camp", "guirlandes lumineuses"],
+    "accessoires": ["couronne de fleurs", "bracelets multiples", "sac frangé", "aucun"]
   },
   "boheme_urbain": {
-    "lieux": ["café artistique", "friperie rétro", "rue bohème", "atelier créatif"],
-    "tenues": ["robe vintage", "pantalon ample", "chemise colorée", "tenue rétro bohème"],
-    "expressions": ["regard mystérieux", "air détendu", "sourire subtil", "air poétique"],
-    "lumieres": ["lumière de ville", "contre-jour urbain", "softbox bohème", "éclairage doux"],
-    "accessoires": ["carnet de croquis", "lunettes rondes", "bijoux artisanaux", "aucun"]
-  },
-  "boheme_festival": {
-    "lieux": ["concert en plein air", "festival coloré", "prairie avec foule", "campement bohème"],
-    "tenues": ["robe fleurie", "short bohème", "haut coloré", "kimono ample"],
-    "expressions": ["air joyeux", "sourire éclatant", "danse libre", "air festif"],
-    "lumieres": ["golden hour festival", "néons colorés", "feu de camp", "halo lumineux"],
-    "accessoires": ["couronne de fleurs", "guitare", "bracelets multiples", "aucun"]
+    "lieux": [
+      "café arty en centre-ville",
+      "rooftop avec graffitis en arrière-plan",
+      "atelier de créateur bohème",
+      "rue pavée animée avec galeries d’art"
+    ],
+    "tenues": ["pantalon ample en lin", "veste vintage", "robe bohème colorée", "ensemble bohème moderne"],
+    "expressions": ["regard assuré", "pose décontractée", "air pensif", "sourire subtil"],
+    "lumieres": ["éclairage urbain de nuit", "contre-jour en ville", "golden hour urbaine", "lumière douce"],
+    "accessoires": ["sac bandoulière cuir", "collier artisanal", "lunettes rondes", "aucun"]
   },
   "boheme_vintage": {
-    "lieux": ["salon rétro", "intérieur éclectique", "marché vintage", "chambre bohème"],
-    "tenues": ["robe rétro", "chemise ample", "jupe colorée", "look des années 70"],
-    "expressions": ["air rêveur", "sourire doux", "regard nostalgique", "air apaisé"],
-    "lumieres": ["lumière tamisée", "contre-jour vintage", "halo chaud", "lampe rétro"],
-    "accessoires": ["vinyle", "lampe vintage", "bijoux anciens", "aucun"]
+    "lieux": [
+      "salon rétro avec tapisseries colorées",
+      "chambre décorée façon années 70",
+      "marché aux puces vintage",
+      "studio photo rétro avec fauteuils en velours"
+    ],
+    "tenues": ["robe imprimée psychédélique", "pantalon patte d’eph", "chemise colorée", "jupe à motifs géométriques"],
+    "expressions": ["regard nostalgique", "air mystérieux", "sourire doux", "pose exagérée rétro"],
+    "lumieres": ["éclairage jaune vintage", "spot coloré", "ombre dramatique", "halo tamisé rétro"],
+    "accessoires": ["vinyle rétro", "collier peace & love", "sac vintage", "aucun"]
   },
   "boheme_nature": {
-    "lieux": ["prairie sauvage", "forêt bohème", "bord de rivière", "colline fleurie"],
-    "tenues": ["robe fluide", "jupe longue", "haut léger", "kimono nature"],
-    "expressions": ["air apaisé", "regard contemplatif", "sourire naturel", "air détendu"],
-    "lumieres": ["lumière dorée", "clair de lune doux", "lumière naturelle", "halo diffus"],
-    "accessoires": ["fleurs sauvages", "panier", "écharpe légère", "aucun"]
+    "lieux": [
+      "clairière ensoleillée",
+      "dunes de sable au coucher de soleil",
+      "forêt enchantée avec feu de camp",
+      "bord de rivière avec lanternes suspendues"
+    ],
+    "tenues": ["robe longue en coton", "jupe fluide fleurie", "tunique en lin", "cape naturelle"],
+    "expressions": ["air rêveur", "regard vers l’horizon", "sourire détendu", "pose méditative"],
+    "lumieres": ["golden hour", "flammes du feu de camp", "clair de lune argenté", "halo naturel doux"],
+    "accessoires": ["guitare acoustique", "attrape-rêves", "bracelet artisanal", "aucun"]
   },
-  "boheme_romantique": {
-    "lieux": ["jardin bohème", "terrasse fleurie", "intérieur cosy", "prairie au coucher du soleil"],
-    "tenues": ["robe romantique", "jupe fluide", "ensemble bohème chic", "robe pastel"],
-    "expressions": ["sourire doux", "air rêveur", "expression tendre", "regard amoureux"],
-    "lumieres": ["golden hour", "lumière douce", "halo rosé", "lumière tamisée"],
-    "accessoires": ["bouquet de fleurs", "collier fin", "bracelet romantique", "aucun"]
+  "boheme_luxe": {
+    "lieux": [
+      "suite d’hôtel design",
+      "terrasse privée avec vue sur mer",
+      "intérieur minimaliste avec touches bohèmes",
+      "salle de gala décorée de tapis orientaux"
+    ],
+    "tenues": ["robe couture fluide", "ensemble chic inspiré boho", "kimono de luxe", "robe longue satinée"],
+    "expressions": ["regard intense", "air sophistiqué", "sourire subtil", "pose glamour"],
+    "lumieres": ["spot doux", "éclairage doré", "halo feutré", "projecteurs tamisés"],
+    "accessoires": ["bijoux en or", "sac de luxe", "boucles élégantes", "aucun"]
+  },
+  "boheme_baba_cool": {
+    "lieux": [
+      "campement improvisé en forêt",
+      "prairie avec tapis posés à même le sol",
+      "rue animée avec peintures murales",
+      "bord de mer sauvage avec feu improvisé"
+    ],
+    "tenues": ["pantalon ample froissé", "top tie-dye", "jupe patchwork", "chemise ouverte colorée"],
+    "expressions": ["rire désinvolte", "air nonchalant", "sourire naturel", "expression rêveuse"],
+    "lumieres": ["soleil cru", "lumière de fin d’après-midi", "halo de feu improvisé", "clair de lune brut"],
+    "accessoires": ["tresses dans les cheveux", "colliers multiples", "sac tissé", "aucun"]
   }
 };
 
@@ -805,6 +950,37 @@ export const AUTOMOBILE_LIBRARY = {
   }
 };
 
+export const MOTO_LIBRARY = {
+  "course_circuit": {
+    "lieux": ["circuit MotoGP", "paddock avec équipe technique", "grille de départ animée", "virage en épingle à grande vitesse"],
+    "tenues": ["combinaison de pilote en cuir", "casque intégral de course", "tenue de pilote sponsorisée", "équipement de protection complet"],
+    "expressions": ["concentration extrême", "regard de prédateur", "détermination", "joie de la victoire"],
+    "lumieres": ["soleil de plomb sur l'asphalte", "lumières de projecteurs de nuit", "contre-jour sur la piste", "flou de vitesse"],
+    "accessoires": ["moto de course supersport", "drapeau à damier", "genou au sol dans un virage", "aucun"]
+  },
+  "road_trip_sauvage": {
+    "lieux": ["route de montagne sinueuse", "désert américain", "côte escarpée", "forêt dense"],
+    "tenues": ["veste en cuir de motard", "jean usé", "casque ouvert vintage", "bottes de moto"],
+    "expressions": ["sentiment de liberté", "sourire détendu", "regard vers l'horizon", "air aventureux"],
+    "lumieres": ["coucher de soleil (golden hour)", "lumière crue du désert", "brume matinale", "reflets sur le chrome"],
+    "accessoires": ["moto custom (chopper/bobber)", "bagages de voyage", "paysage épique en arrière-plan", "aucun"]
+  },
+  "classique_vintage": {
+    "lieux": ["café rétro des années 50", "garage vintage", "route de campagne idyllique", "centre-ville historique"],
+    "tenues": ["blouson en cuir classique", "look rockabilly", "tenue de gentleman rider", "lunettes d'aviateur"],
+    "expressions": ["air nostalgique", "sourire cool", "pose décontractée", "regard confiant"],
+    "lumieres": ["tons sépia", "lumière chaude de fin de journée", "reflets sur la peinture", "éclairage de rue vintage"],
+    "accessoires": ["moto classique (Triumph/Norton)", "casque bol", "gants en cuir", "aucun"]
+  },
+  "urbain_moderne": {
+    "lieux": ["rue de métropole la nuit", "pont illuminé", "parking souterrain", "devant un bâtiment futuriste"],
+    "tenues": ["équipement de moto moderne et stylé", "casque design", "tenue de motard urbain", "look high-tech"],
+    "expressions": ["air déterminé", "regard concentré", "pose agressive", "prêt pour l'action"],
+    "lumieres": ["néons de la ville", "reflets sur le bitume mouillé", "éclairage architectural", "contre-jour des phares"],
+    "accessoires": ["moto sportive moderne (roadster/naked)", "lumières de la ville en bokeh", "traces de lumière", "aucun"]
+  }
+};
+
 
 /**
  * The "AI Art Director". Generates a unique set of creative instructions to ensure image diversity.
@@ -821,13 +997,14 @@ export const getDynamicEnhancements = (style: string, subStyle: string): string 
         'Viking': VIKING_LIBRARY,
         'Boheme': BOHEME_LIBRARY,
         'Automobile': AUTOMOBILE_LIBRARY,
+        'Moto': MOTO_LIBRARY,
         'Couverture Vogue Editoriale': VOGUE_EDITORIALE_LIBRARY,
         'Couverture Vogue': COUVERTURE_VOGUE_LIBRARY,
         'Couverture Elle': COUVERTURE_ELLE_LIBRARY,
         'Couverture Elle Deco': COUVERTURE_ELLE_DECO_LIBRARY,
         'Mode Haute Couture': HAUTE_COUTURE_LIBRARY,
         'Portrait Glamour': PORTRAIT_GLAMOUR_LIBRARY,
-        'Journee Dun Mannequin': JOURNEE_MANNEQUIN_LIBRARY,
+        'Journée d\'un mannequin': JOURNEE_MANNEQUIN_LIBRARY,
     };
 
     const library = detailedLibraries[style];

@@ -7,7 +7,8 @@ import { generateImage } from '../services/geminiService';
 import { getSpecializedPrompt } from '../services/promptLibrary';
 import { getDynamicEnhancements, buildPrompt } from '../services/promptEnhancer';
 import type { PhotoSettings } from '../services/promptEnhancer';
-import { ALL_STYLES_CONFIG, translations as T, MAGAZINE_PROMPT_DETAILS, MAGAZINE_STYLES } from '../lib/constants';
+import { translations as T, MAGAZINE_PROMPT_DETAILS, MAGAZINE_STYLES } from '../lib/constants';
+import { STYLES_CONFIG } from '../lib/styleConfig';
 import { useGenerationForm } from '../hooks/useGenerationForm';
 
 import Footer from '../components/Footer';
@@ -39,7 +40,7 @@ function Editor() {
     const { 
         style, subStyle, aspectRatio, colorMode, renderQuality, upscale, focale,
         ouverture, vitesse, photoGrain, expression, framing, hairColor,
-        accessories, lutsCinema, dirt, sweat, speedEffect, customPrompt,
+        accessories, lutsCinema, dirt, speedEffect, customPrompt,
         signatureOn, signature
     } = formState;
 
@@ -109,13 +110,14 @@ function Editor() {
             promptParts.push(`Incorporer plusieurs titres secondaires avec un texte de remplissage plausible mais illisible (similaire à 'lorem ipsum') pour compléter la mise en page professionnelle de la couverture.`);
             promptParts.push(`Le style de la typographie doit correspondre à l'image de marque établie du magazine.`);
         } else {
-            const styleInfo = ALL_STYLES_CONFIG[style as keyof typeof ALL_STYLES_CONFIG];
+            const styleInfo = STYLES_CONFIG.find(s => s.name === style);
             promptParts.push('//-- STYLE & THÈME --');
             promptParts.push(`Style Principal : "${style}".`);
             if (subStyle) {
-                promptParts.push(`Variation Spécifique : "${subStyle.replace(/_/g, ' ')}".`);
+                const subStyleInfo = styleInfo?.subStyles.find(ss => ss.key === subStyle);
+                promptParts.push(`Variation Spécifique : "${subStyleInfo?.name || subStyle.replace(/_/g, ' ')}".`);
             }
-            if (styleInfo && styleInfo.notes) {
+             if (styleInfo && styleInfo.notes) {
                 promptParts.push(`Direction Créative : "${styleInfo.notes}".`);
             }
         }
@@ -133,8 +135,13 @@ function Editor() {
         if (hairColor !== 'Noir Profond') creativeDetails.push(`Couleur de cheveux : '${hairColor}'.`);
         if (accessories !== 'Aucun') creativeDetails.push(`Accessoires : '${accessories}'.`);
         if (lutsCinema !== 'Aucun') creativeDetails.push(`Étalonnage couleur cinématique (LUT) : '${lutsCinema}'.`);
-        if (dirt !== 'Aucune') creativeDetails.push(`Effets environnementaux : '${dirt}'.`);
-        if (sweat) creativeDetails.push(`Ajouter des perles de sueur sur la peau de la personne.`);
+        if (dirt !== 'Aucune') {
+            if (dirt === 'Sueur') {
+                creativeDetails.push(`Ajouter des perles de sueur sur la peau de la personne.`);
+            } else {
+                creativeDetails.push(`Effets environnementaux : '${dirt}'.`);
+            }
+        }
         if (speedEffect) creativeDetails.push(`Incorporer un flou de mouvement ou un 'effet de vitesse' pour suggérer le mouvement.`);
         
         if(creativeDetails.length > 0) {
@@ -259,12 +266,8 @@ function Editor() {
     };
     
     const isLoading = appState === 'generating';
-    const styleConfig = ALL_STYLES_CONFIG[style as keyof typeof ALL_STYLES_CONFIG];
-    
-    // Handle both array and object for substyles
-    const availableSubStyles = styleConfig?.substyles 
-        ? (Array.isArray(styleConfig.substyles) ? styleConfig.substyles : Object.keys(styleConfig.substyles))
-        : [];
+    const selectedStyleObject = STYLES_CONFIG.find(s => s.name === style);
+    const availableSubStyles = selectedStyleObject ? selectedStyleObject.subStyles : [];
     
     return (
         <main className="bg-gradient-to-t from-orange-900 via-orange-500 to-orange-200 text-neutral-800 min-h-screen w-full flex flex-col items-center p-4 font-sans selection:bg-amber-500 selection:text-black">

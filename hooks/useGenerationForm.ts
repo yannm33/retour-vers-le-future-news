@@ -1,4 +1,3 @@
-
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
@@ -8,7 +7,7 @@ import type { ColorMode, Upscale, RenderQuality } from '../lib/constants';
 
 export const useGenerationForm = () => {
     const [numberOfImages, setNumberOfImages] = useState(5);
-    const [style, setStyle] = useState('Portrait Glamour');
+    const [style, setStyle] = useState('Photos');
     const [subStyle, setSubStyle] = useState('');
     const [customPrompt, setCustomPrompt] = useState('');
     const [colorMode, setColorMode] = useState<ColorMode>('Couleur');
@@ -23,7 +22,6 @@ export const useGenerationForm = () => {
     const [lutsCinema, setLutsCinema] = useState('Aucun');
     const [dirt, setDirt] = useState('Aucune');
     const [photoGrain, setPhotoGrain] = useState('Aucun');
-    const [sweat, setSweat] = useState(false);
     const [speedEffect, setSpeedEffect] = useState(false);
     const [signature, setSignature] = useState('@PIXELSHOOT');
     const [signatureOn, setSignatureOn] = useState(true);
@@ -51,7 +49,6 @@ export const useGenerationForm = () => {
         lutsCinema, setLutsCinema,
         dirt, setDirt,
         photoGrain, setPhotoGrain,
-        sweat, setSweat,
         speedEffect, setSpeedEffect,
         signature, setSignature,
         signatureOn, setSignatureOn,

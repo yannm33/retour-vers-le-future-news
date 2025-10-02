@@ -146,6 +146,15 @@ export const STYLE_GUIDE = {
       ],
       "notes": "Varier les véhicules, les angles de caméra, l'éclairage jour/nuit."
     },
+    "Moto": {
+      "substyles": [
+        "course_circuit",
+        "road_trip_sauvage",
+        "classique_vintage",
+        "urbain_moderne"
+      ],
+      "notes": "Varier les types de motos, les angles de caméra dynamiques, l'éclairage jour/nuit."
+    },
     "Photo_Mode_Minimaliste": {
       "substyles": [
         "studio_blanc",

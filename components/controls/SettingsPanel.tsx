@@ -1,4 +1,3 @@
-
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
@@ -27,7 +26,6 @@ const SettingsPanel = ({ formState, T }) => {
         lutsCinema, setLutsCinema,
         dirt, setDirt,
         photoGrain, setPhotoGrain,
-        sweat, setSweat,
         speedEffect, setSpeedEffect,
         signature, setSignature,
         signatureOn, setSignatureOn,
@@ -76,7 +74,6 @@ const SettingsPanel = ({ formState, T }) => {
                <ControlSection title={T.dirt}><StyledSelect value={dirt} onChange={e => setDirt(e.target.value)}>{DIRTS.map(d=><option key={d} value={d}>{d}</option>)}</StyledSelect></ControlSection>
                <ControlSection title={T.grain}><StyledSelect value={photoGrain} onChange={e => setPhotoGrain(e.target.value)}>{GRAINS.map(g=><option key={g} value={g}>{g}</option>)}</StyledSelect></ControlSection>
                <div className="flex flex-col justify-center items-start gap-2 pt-5">
-                 <label className="flex items-center gap-2 text-white cursor-pointer"><input type="checkbox" checked={sweat} onChange={e => setSweat(e.target.checked)} className="form-checkbox bg-neutral-700 border-neutral-600 text-amber-500 h-4 w-4 rounded focus:ring-amber-500" /> {T.sweat}</label>
                  <label className="flex items-center gap-2 text-white cursor-pointer"><input type="checkbox" checked={speedEffect} onChange={e => setSpeedEffect(e.target.checked)} className="form-checkbox bg-neutral-700 border-neutral-600 text-amber-500 h-4 w-4 rounded focus:ring-amber-500" /> {T.speedEffect}</label>
                </div>
             </div>
