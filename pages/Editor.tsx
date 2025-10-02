@@ -8,7 +8,7 @@ import { getSpecializedPrompt } from '../services/promptLibrary';
 import { getDynamicEnhancements, buildPrompt } from '../services/promptEnhancer';
 import type { PhotoSettings } from '../services/promptEnhancer';
 import { translations as T, MAGAZINE_PROMPT_DETAILS, MAGAZINE_STYLES } from '../lib/constants';
-import { STYLES_CONFIG } from '../lib/styleConfig';
+import { STYLES_CONFIG, SubStyle } from '../lib/styleConfig';
 import { useGenerationForm } from '../hooks/useGenerationForm';
 
 import Footer from '../components/Footer';
@@ -114,8 +114,16 @@ function Editor() {
             promptParts.push('//-- STYLE & THÈME --');
             promptParts.push(`Style Principal : "${style}".`);
             if (subStyle) {
-                const subStyleInfo = styleInfo?.subStyles.find(ss => ss.key === subStyle);
-                promptParts.push(`Variation Spécifique : "${subStyleInfo?.name || subStyle.replace(/_/g, ' ')}".`);
+                let subStyleName = subStyle.replace(/_/g, ' '); // Default fallback
+                if (styleInfo) {
+                    // Flatten the sub-styles list to find the name from the key, works for both flat and grouped structures.
+                    const allSubStyles: SubStyle[] = styleInfo.subStyles.flatMap(item => 'subStyles' in item ? item.subStyles : [item as SubStyle]);
+                    const subStyleInfo = allSubStyles.find(ss => ss.key === subStyle);
+                    if (subStyleInfo) {
+                        subStyleName = subStyleInfo.name;
+                    }
+                }
+                promptParts.push(`Variation Spécifique : "${subStyleName}".`);
             }
              if (styleInfo && styleInfo.notes) {
                 promptParts.push(`Direction Créative : "${styleInfo.notes}".`);

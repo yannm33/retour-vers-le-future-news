@@ -7,6 +7,7 @@ import { IconCamera, IconLoader } from '@tabler/icons-react';
 import { ControlSection } from './shared/ControlSection';
 import { StyledSelect } from './shared/StyledSelect';
 import { STYLES_CONFIG } from '../../lib/styleConfig';
+import type { SubStyle, SubStyleGroup } from '../../lib/styleConfig';
 
 const MainControls = ({ formState, T, handleImageUpload, fileInputRef, handleGenerateClick, isLoading, uploadedImage, availableSubStyles }) => {
     const { 
@@ -15,6 +16,8 @@ const MainControls = ({ formState, T, handleImageUpload, fileInputRef, handleGen
         customPrompt, setCustomPrompt,
         numberOfImages, setNumberOfImages,
     } = formState;
+
+    const isGrouped = availableSubStyles.length > 0 && 'subStyles' in availableSubStyles[0];
     
     return (
         <div className="bg-black rounded-xl p-4 flex flex-col gap-4">
@@ -53,9 +56,19 @@ const MainControls = ({ formState, T, handleImageUpload, fileInputRef, handleGen
                     </StyledSelect>
                 </ControlSection>
                 <ControlSection title={T.substyle}>
-                    <StyledSelect value={subStyle} onChange={e => setSubStyle(e.target.value)} disabled={!availableSubStyles || availableSubStyles.length === 0}>
+                    <StyledSelect value={subStyle} onChange={e => setSubStyle(e.target.value)} disabled={availableSubStyles.length === 0}>
                         <option value="">{T.chooseSubstyle}</option>
-                        {availableSubStyles && availableSubStyles.map(s => <option key={s.key} value={s.key}>{s.name}</option>)}
+                        {isGrouped ? (
+                             (availableSubStyles as SubStyleGroup[]).map(group => (
+                                <optgroup key={group.name} label={group.name}>
+                                    {group.subStyles.map(sub => (
+                                        <option key={sub.key} value={sub.key}>{sub.name}</option>
+                                    ))}
+                                </optgroup>
+                            ))
+                        ) : (
+                            (availableSubStyles as SubStyle[]).map(s => <option key={s.key} value={s.key}>{s.name}</option>)
+                        )}
                     </StyledSelect>
                 </ControlSection>
             </div>

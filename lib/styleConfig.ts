@@ -3,16 +3,45 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 
+// --- Type Definitions for Style Configuration ---
+
+/** Represents a single, selectable sub-style. */
 export interface SubStyle {
     key: string;
     name: string;
 }
 
-export interface Style {
+/** Represents a group of sub-styles, used for creating <optgroup> in dropdowns. */
+export interface SubStyleGroup {
     name: string;
     subStyles: SubStyle[];
-    notes?: string;
 }
+
+/** Represents a top-level style category. Its sub-styles can be a flat list or a list of groups. */
+export interface Style {
+    name: string;
+    notes: string;
+    subStyles: SubStyle[] | SubStyleGroup[];
+}
+
+// --- Helper Function ---
+
+/**
+ * Converts a display name into a URL-friendly key.
+ * e.g., "Grèce antique" -> "grece_antique"
+ */
+const toKey = (name: string): string => {
+    return name
+        .toLowerCase()
+        .normalize("NFD") // Decompose accented characters
+        .replace(/[\u0300-\u036f]/g, "") // Remove diacritics
+        .replace(/[^a-z0-9\s-]/g, "") // Remove non-alphanumeric chars
+        .trim()
+        .replace(/\s+/g, "_");
+};
+
+
+// --- Master Style Configuration ---
 
 export const STYLES_CONFIG: Style[] = [
     {
@@ -119,6 +148,44 @@ export const STYLES_CONFIG: Style[] = [
         ]
     },
     {
+        name: "Costume de Film",
+        notes: "Création de costumes fidèles à travers les âges et les genres pour des productions cinématographiques.",
+        subStyles: [
+            {
+                name: "Préhistoire",
+                subStyles: ["Tribus primitives", "Peaux de bêtes", "Peintures corporelles", "Armes rudimentaires"].map(name => ({ name, key: toKey(name) }))
+            },
+            {
+                name: "Antiquité",
+                subStyles: ["Égypte antique (pharaons, prêtres)", "Grèce antique (citoyens, hoplites)", "Rome antique (gladiateurs, sénateurs)", "Empire perse & babylonien"].map(name => ({ name, key: toKey(name) }))
+            },
+            {
+                name: "Moyen-Âge",
+                subStyles: ["Chevaliers & armures", "Paysans & artisans", "Noblesse médiévale", "Vie religieuse (moines, prêtres)"].map(name => ({ name, key: toKey(name) }))
+            },
+            {
+                name: "Renaissance & Baroque",
+                subStyles: ["Renaissance italienne", "Cour française (Henri IV, Louis XIV)", "Rococo & Lumières", "Costumes élisabéthains"].map(name => ({ name, key: toKey(name) }))
+            },
+            {
+                name: "XIXe siècle",
+                subStyles: ["Empire Napoléonien", "Époque Victorienne", "Belle Époque 1900", "Costumes militaires XIXe"].map(name => ({ name, key: toKey(name) }))
+            },
+            {
+                name: "XXe siècle",
+                subStyles: ["Années 20 Gatsby & Prohibition", "Années 30-40 Films noirs & Aviation", "Années 50-60 Rock’n’roll", "Années 70 Hippie & Disco", "Années 80 Flashy & Pop", "Années 90 Grunge & Alternatif"].map(name => ({ name, key: toKey(name) }))
+            },
+            {
+                name: "Cultures du monde",
+                subStyles: ["Samouraï Japon féodal", "Chine impériale", "Épopée indienne", "Civilisations amérindiennes", "Costumes africains traditionnels"].map(name => ({ name, key: toKey(name) }))
+            },
+            {
+                name: "Genres de cinéma",
+                subStyles: ["Western", "Film d’espionnage", "Fantaisie médiévale", "Pirates & Corsaires", "Science-fiction rétro", "Post-apocalyptique", "Super-héros modernes"].map(name => ({ name, key: toKey(name) }))
+            }
+        ]
+    },
+    {
         name: "Punk",
         notes: "Attitudes rebelles, atmosphère urbaine brute.",
         subStyles: [
@@ -198,28 +265,6 @@ export const STYLES_CONFIG: Style[] = [
         ]
     },
     {
-        name: "Cinéma & Costumes",
-        notes: "Varier par décennies, genres et époques. Chaque sous-style doit être cinématique, avec des accessoires et des décors appropriés.",
-        subStyles: [
-            { key: "gatsby_1920s", name: "Gatsby Années 1920" },
-            { key: "film_noir_1930s_40s", name: "Film Noir Années 1930-40" },
-            { key: "espionnage_guerre_froide", name: "Espionnage Guerre Froide" },
-            { key: "rococo_baroque", name: "Rococo Baroque" },
-            { key: "western", name: "Western" },
-            { key: "annees_1950_60", name: "Années 1950-60" },
-            { key: "annees_1970_disco", name: "Années 1970 Disco" },
-            { key: "annees_1980_flashy", name: "Années 1980 Flashy" },
-            { key: "annees_1990_grunge", name: "Années 1990 Grunge" },
-            { key: "medieval", name: "Médiéval" },
-            { key: "fantasy", name: "Fantasy" },
-            { key: "antiquite_rome_grece", name: "Antiquité Rome/Grèce" },
-            { key: "samourai_japon_feodal", name: "Samouraï Japon Féodal" },
-            { key: "pirates", name: "Pirates" },
-            { key: "science_fiction_cyberpunk", name: "Science-Fiction Cyberpunk" },
-            { key: "post_apocalyptique", name: "Post-Apocalyptique" },
-        ]
-    },
-    {
         name: "Sportifs",
         notes: "Toujours contextualiser (piscine, ciel, stade), poses dynamiques.",
         subStyles: [
@@ -251,7 +296,7 @@ export const STYLES_CONFIG: Style[] = [
     },
     {
         name: "Militaire",
-        notes: "",
+        notes: "Scénarios militaires conventionnels, mettant l'accent sur l'équipement, les véhicules et les uniformes.",
         subStyles: [
             { key: "vehicule_blinde", name: "Véhicule Blindé" },
             { key: "patrouille", name: "Patrouille" },
@@ -261,7 +306,7 @@ export const STYLES_CONFIG: Style[] = [
     },
     {
         name: "Commando",
-        notes: "",
+        notes: "Missions d'opérations spéciales, mettant l'accent sur la furtivité, l'équipement spécialisé et les environnements tactiques.",
         subStyles: [
             { key: "sniper", name: "Sniper" },
             { key: "embarquement_helicoptere", name: "Embarquement Hélicoptère" },
@@ -270,7 +315,7 @@ export const STYLES_CONFIG: Style[] = [
     },
     {
         name: "Neviscile (Unité Spéciale)",
-        notes: "",
+        notes: "Concept d'une unité fictive d'opérations spéciales, avec des scénarios et des équipements avancés.",
         subStyles: [
             { key: "plongee_tactique", name: "Plongée Tactique" },
             { key: "saut_haho", name: "Saut HAHO" },
