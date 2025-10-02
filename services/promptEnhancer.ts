@@ -138,50 +138,6 @@ const CONTEXTUAL_ENVIRONMENTS: Record<string, string[]> = {
         'marchant silencieusement à travers une forêt de bambous dense enveloppée de brume',
         'défendant un petit village d\'une attaque de bandits, aux côtés des paysans',
         's\'engageant dans un duel formel au clair de lune sur un pont en bois au-dessus d\'une rivière tumultueuse'
-    ],
-    'medieval_sombre': [
-      "portrait gothique, robe noire, château ancien en arrière-plan, chandelles, regard intense",
-      "femme gothique avec cape, bibliothèque médiévale, livre ancien dans les mains",
-      "personnage gothique, vitraux colorés derrière, ambiance dramatique",
-      "robe sombre en dentelle, corridor de château, chandeliers au mur"
-    ],
-    'cimetiere_victorien': [
-      "robe gothique, cimetière brumeux, croix de pierre",
-      "femme gothique portant un chapeau victorien, rosier fané à la main",
-      "portrait gothique près d'une tombe, ambiance crépusculaire"
-    ],
-    'eglise_gothique': [
-      "robe noire longue, nef d’église gothique, lumière traversant les vitraux",
-      "portrait gothique avec collier ancien, autel en arrière-plan",
-      "personnage gothique assis dans un confessionnal, lumière dramatique"
-    ],
-    'raid_marin_viking': [
-        'menant un abordage sur un navire marchand dans une mer déchaînée, avec des vagues qui s\'écrasent',
-        'à la barre d\'un drakkar à tête de dragon, naviguant à travers un fjord brumeux',
-        'dans une bataille navale chaotique, avec des haches qui s\'entrechoquent et des flèches qui volent',
-        'effectuant un débarquement spectaculaire sur une plage rocheuse balayée par le vent, prêt pour un raid',
-        'réparant la voile d\'un drakkar sur une mer calme sous un ciel étoilé'
-    ],
-    'crique_tresor_viking': [
-        'découvrant un coffre au trésor caché débordant d\'or dans une grotte marine éclairée à la torche',
-        'examinant une carte au trésor usée par le temps sur la plage d\'une île volcanique',
-        'défendant un trésor contre des pirates rivaux dans une crique cachée',
-        'faisant la fête autour d\'un feu de joie sur une plage tropicale, entouré de butin',
-        'enterrant un coffre au trésor sur une île déserte marquée par une pierre runique'
-    ],
-    'festin_maison_longue_viking': [
-        'présidant un festin bruyant dans une grande maison longue viking enfumée, avec des boucliers sur les murs',
-        'levant une corne à boire pour un toast, entouré de compagnons guerriers et de trésors',
-        'écoutant un scalde raconter des contes d\'aventure près d\'un foyer central',
-        'gravant des runes sur une poutre en bois de la maison longue pour commémorer un voyage réussi',
-        'jouant une partie de Hnefatafl (échecs vikings) au milieu de la fête'
-    ],
-    'explorateur_nordique': [
-        'debout seul au bord d\'une falaise, regardant une mer inconnue et inexplorée',
-        'cartographiant une côte nouvellement découverte depuis la proue d\'un petit navire d\'exploration',
-        'établissant le premier contact avec une tribu indigène sur un rivage luxuriant et étranger',
-        'naviguant grâce au soleil et aux étoiles en utilisant d\'anciennes méthodes nordiques',
-        'installant un petit campement temporaire dans un paysage sauvage et indompté'
     ]
 };
 
@@ -241,7 +197,12 @@ const HAUTE_COUTURE_LIBRARY = {
         "opéra Garnier avec foule",
         "rooftop urbain de luxe avec skyline"
       ],
-      "tenues": ["robe longue satin", "ensemble chic blanc", "robe fendue haute couture", "manteau couture"],
+      "tenues": [
+        "robe longue satin",
+        "ensemble chic blanc",
+        "robe fendue haute couture",
+        "manteau couture"
+      ],
       "expressions": ["sourire glamour", "regard perçant", "air mystérieux", "pose assurée"],
       "lumieres": ["golden hour", "lumière urbaine nocturne", "flashs paparazzi", "contre-jour soleil"],
       "accessoires": ["bijoux diamants", "pochette soirée", "écharpe élégante", "aucun"]
@@ -452,6 +413,183 @@ const JOURNEE_MANNEQUIN_LIBRARY = {
   }
 };
 
+const COUVERTURE_VOGUE_LIBRARY = {
+  "noir_blanc_iconique": {
+    "scene": "Portrait intemporel en noir et blanc, poses marquées, inspiration Avedon",
+    "lieux": ["studio photo neutre", "fond blanc éclatant", "fond gris uni"],
+    "tenues": ["robe noire minimaliste", "smoking femme", "tailleur blanc élégant"],
+    "expressions": ["regard intense", "pose sérieuse", "air mystérieux"],
+    "lumieres": ["éclairage contrasté", "lumière dure latérale", "projecteur unique"],
+    "accessoires": ["aucun", "chapeau noir", "boucles sobres", "cigarette vintage"]
+  },
+  "glamour_dore": {
+    "scene": "Couverture éclatante avec robes scintillantes et lumière chaude",
+    "lieux": ["studio luxueux doré", "salle de gala", "podium illuminé"],
+    "tenues": ["robe dorée couture", "robe argentée scintillante", "smoking blanc chic"],
+    "expressions": ["sourire glamour", "regard assuré", "clin d’œil séducteur"],
+    "lumieres": ["spotlights chauds", "éclairage doré diffus", "halo lumineux"],
+    "accessoires": ["pochette brillante", "bijoux diamants", "bracelet doré", "aucun"]
+  },
+  "vogue_de_rue": {
+    "scene": "Shooting urbain haute couture en extérieur, style brut",
+    "lieux": ["rue new-yorkais", "métro bondé", "rooftop moderne", "façade design"],
+    "tenues": ["robe noire couture", "ensemble street-chic", "look asymétrique coloré"],
+    "expressions": ["regard confiant", "pose élégante", "sourire subtil"],
+    "lumieres": ["golden hour urbaine", "flashs improvisés", "lumière néon de rue"],
+    "accessoires": ["sac couture", "lunettes de soleil", "chapeau mode", "aucun"]
+  },
+  "revival_retro": {
+    "scene": "Look rétro inspiré des années 60-70 avec couleurs pop et cadrages vintage",
+    "lieux": ["studio coloré", "salle rétro avec mobilier 70s", "mur texturé pastel"],
+    "tenues": ["robe trapèze années 60", "ensemble psychédélique", "robe pop colorée"],
+    "expressions": ["sourire exubérant", "clin d’œil complice", "pose dramatique rétro"],
+    "lumieres": ["néons colorés", "éclairage diffus rétro", "projecteur vintage"],
+    "accessoires": ["boucles rondes oversized", "lunettes rétro", "sac pop coloré", "aucun"]
+  },
+  "studio_luxe_minimaliste": {
+    "scene": "Fond neutre et luxe sobre, silhouette mise en valeur",
+    "lieux": ["fond uni blanc", "fond beige minimaliste", "studio pastel épuré"],
+    "tenues": ["robe couture minimaliste", "tailleur élégant", "ensemble noir chic"],
+    "expressions": ["regard sérieux", "pose statique élégante", "air mystérieux"],
+    "lumieres": ["softbox homogène", "éclairage 3 points neutre", "spot frontal"],
+    "accessoires": ["aucun", "collier discret", "bracelet fin", "boucles sobres"]
+  },
+  "avant_garde_conceptuel": {
+    "scene": "Expérimentation artistique et futuriste avec décors abstraits",
+    "lieux": ["installation artistique", "studio géométrique", "fond abstrait coloré"],
+    "tenues": ["robe futuriste", "ensemble conceptuel asymétrique", "look expérimental"],
+    "expressions": ["pose conceptuelle", "regard intense", "expression exagérée"],
+    "lumieres": ["néons colorés", "contre-jour dramatique", "éclairage artistique"],
+    "accessoires": ["bijoux conceptuels", "lunettes oversized", "aucun", "collier imposant"]
+  },
+  "podium_couture": {
+    "scene": "Scène captée en direct du défilé comme une couverture instantanée",
+    "lieux": ["podium fashion week", "salle bondée avec public", "passerelle illuminée"],
+    "tenues": ["robe haute couture spectaculaire", "ensemble couture futuriste", "robe asymétrique couture"],
+    "expressions": ["regard assuré", "pose confiante", "expression glamour"],
+    "lumieres": ["spotlights puissants", "flashs photographes", "contre-jour podium"],
+    "accessoires": ["aucun", "bijoux couture", "clutch élégante"]
+  }
+};
+
+const COUVERTURE_ELLE_LIBRARY = {
+  "plage_ete": {
+    "scene": "Shooting mode sur une plage ensoleillée avec sable, mer et accessoires colorés",
+    "lieux": ["plage de sable fin", "bord de mer avec parasols", "transats design au soleil"],
+    "tenues": ["maillot une pièce élégant", "robe fluide légère", "paréo chic", "bikini couture"],
+    "expressions": ["sourire lumineux", "regard séducteur", "air détendu"],
+    "lumieres": ["golden hour plage", "soleil éclatant", "lumière douce matin"],
+    "accessoires": ["lunettes de soleil", "chapeau large", "sac de plage couture", "serviette colorée"]
+  },
+  "chic_decontracte": {
+    "scene": "Look urbain décontracté mais sophistiqué, ambiance street-style parisien",
+    "lieux": ["terrasse de café parisien", "rue chic", "rooftop urbain"],
+    "tenues": ["jean taille haute avec blazer", "robe simple stylisée", "ensemble casual couture"],
+    "expressions": ["sourire naturel", "regard assuré", "clin d’œil complice"],
+    "lumieres": ["lumière naturelle urbaine", "golden hour en ville", "éclairage doux extérieur"],
+    "accessoires": ["sac à main chic", "lunettes rondes", "boucles sobres", "aucun"]
+  },
+  "pastel_romantique": {
+    "scene": "Couleurs douces, robes fluides, ambiance rêveuse et poétique",
+    "lieux": ["jardin fleuri", "studio pastel", "terrasse ensoleillée avec fleurs"],
+    "tenues": ["robe longue pastel", "jupe fluide romantique", "ensemble léger rose pâle"],
+    "expressions": ["sourire subtil", "regard rêveur", "air mystérieux"],
+    "lumieres": ["softbox diffuse", "golden hour douce", "éclairage naturel tamisé"],
+    "accessoires": ["fleurs à la main", "couronne florale", "sac pastel", "aucun"]
+  },
+  "look_fete": {
+    "scene": "Ambiance festive, soirée glamour avec paillettes et danse",
+    "lieux": ["discothèque chic", "soirée cocktail", "salle de fête élégante"],
+    "tenues": ["robe à paillettes", "smoking féminin", "robe rouge glamour"],
+    "expressions": ["rire franc", "clin d’œil", "sourire exubérant"],
+    "lumieres": ["spots colorés", "lumière tamisée soirée", "flash improvisé"],
+    "accessoires": ["coupe de champagne", "sac clutch", "boucles voyantes", "aucun"]
+  },
+  "mode_lifestyle_urbain": {
+    "scene": "Photos de mode ancrées dans la vie réelle, cafés et terrasses citadines",
+    "lieux": ["terrasse de café parisien", "bar cosy urbain", "rue commerçante chic"],
+    "tenues": ["robe élégante quotidienne", "ensemble city-chic", "look fashion street"],
+    "expressions": ["sourire léger", "pose élégante", "air détendu"],
+    "lumieres": ["éclairage naturel extérieur", "soleil de fin d’après-midi", "lampadaires urbains doux"],
+    "accessoires": ["sac couture", "journal", "lunettes soleil", "tasse de café"]
+  },
+  "cocooning_interieur": {
+    "scene": "Ambiance cosy à l’intérieur, confort chic et mode cocooning",
+    "lieux": ["salon chaleureux", "chambre avec plaid", "canapé confortable"],
+    "tenues": ["pull oversize", "chaussettes épaisses", "legging doux"],
+    "expressions": ["air apaisé", "sourire détendu", "expression rêveuse"],
+    "lumieres": ["lampe tamisée", "lumière naturelle intérieure", "bougie chaude"],
+    "accessoires": ["tasse de thé", "livre", "ordinateur portable", "chat sacré de Birmanie"]
+  },
+  "sport_chic": {
+    "scene": "Mode activewear élégante, entre sport et style urbain",
+    "lieux": ["studio minimaliste", "salle de sport chic", "rooftop en plein effort"],
+    "tenues": ["legging couture", "brassière élégante", "ensemble sport stylisé"],
+    "expressions": ["air concentré", "regard intense", "sourire en mouvement"],
+    "lumieres": ["lumière crue de studio", "éclairage naturel sportif", "contre-jour dynamique"],
+    "accessoires": ["tapis de yoga", "casque audio", "bouteille design", "aucun"]
+  }
+};
+
+const COUVERTURE_ELLE_DECO_LIBRARY = {
+  "moderne_minimaliste": {
+    "scene": "Intérieur contemporain épuré avec lignes droites et baies vitrées",
+    "lieux": ["salon design blanc", "pièce ouverte minimaliste", "villa moderne avec vue mer"],
+    "tenues": ["aucun (focus déco)"],
+    "expressions": ["aucun (focus déco)"],
+    "lumieres": ["lumière naturelle abondante", "éclairage indirect doux", "baies vitrées plein soleil"],
+    "accessoires": ["table basse design", "canapé modulable", "sculpture minimaliste", "aucun"]
+  },
+  "boheme_chic": {
+    "scene": "Ambiance chaleureuse et cosy avec tapis ethniques et plantes vertes",
+    "lieux": ["salon bohème avec coussins colorés", "terrasse cosy bohème", "pièce avec tapis persans et tentures"],
+    "tenues": ["aucun"],
+    "expressions": ["aucun"],
+    "lumieres": ["lumière chaude tamisée", "lumière naturelle filtrée par rideaux", "bougies et lampes"],
+    "accessoires": ["plantes suspendues", "paniers tressés", "tapis ethnique", "miroir soleil"]
+  },
+  "elegant_bord_de_mer": {
+    "scene": "Maison raffinée en bord de mer, ambiance marine et élégante",
+    "lieux": ["salon bord de mer", "terrasse avec vue océan", "chambre blanche avec déco marine"],
+    "tenues": ["aucun"],
+    "expressions": ["aucun"],
+    "lumieres": ["soleil méditerranéen", "lumière douce de fin de journée", "ambiance lumineuse marine"],
+    "accessoires": ["bois flotté sculptural", "coussins bleus et blancs", "coquillages décoratifs", "tapis en lin naturel"]
+  },
+  "loft_urbain": {
+    "scene": "Loft industriel revisité avec briques et mobilier design",
+    "lieux": ["salon avec murs en briques", "atelier reconverti design", "loft new-yorkais spacieux"],
+    "tenues": ["aucun"],
+    "expressions": ["aucun"],
+    "lumieres": ["lumière naturelle par verrière", "spots industriels suspendus", "éclairage urbain nocturne"],
+    "accessoires": ["mobilier en métal noir", "table industrielle bois brut", "fauteuil cuir vintage", "plantes modernes en pots design"]
+  },
+  "vintage_subtil": {
+    "scene": "Mobilier et couleurs rétro (50s/70s) revisités avec élégance",
+    "lieux": ["salon vintage avec buffet 60s", "salle à manger rétro chic", "chambre aux tons orange et vert pastel"],
+    "tenues": ["aucun"],
+    "expressions": ["aucun"],
+    "lumieres": ["lampes rétro globe", "lumière naturelle filtrée", "spots design vintage"],
+    "accessoires": ["buffet scandinave", "lampe boule", "fauteuil rétro", "vinyle posé sur une platine"]
+  },
+  "fusion_contemporaine": {
+    "scene": "Mélange harmonieux entre ancien et moderne, moulures classiques et mobilier design",
+    "lieux": ["salon haussmannien avec déco moderne", "chambre classique avec touches contemporaines", "salle à manger avec contraste ancien/ultra-moderne"],
+    "tenues": ["aucun"],
+    "expressions": ["aucun"],
+    "lumieres": ["lustre classique", "spots encastrés modernes", "lumière naturelle par grandes fenêtres"],
+    "accessoires": ["table design moderne", "canapé contemporain", "miroir ancien doré", "sculpture abstraite"]
+  },
+  "nature_lumiere": {
+    "scene": "Maison ouverte sur l’extérieur, intégration du bois, pierre et végétal",
+    "lieux": ["salon avec baies vitrées donnant sur la forêt", "terrasse bois et pierre", "pièce avec jardin intérieur"],
+    "tenues": ["aucun"],
+    "expressions": ["aucun"],
+    "lumieres": ["lumière naturelle abondante", "reflets doux sur bois et pierre", "ambiance lumineuse zen"],
+    "accessoires": ["bois brut sculptural", "plantes vertes imposantes", "table pierre naturelle", "tapis en fibres naturelles"]
+  }
+};
+
 const DETAILED_CONTEXT_LIBRARY: Record<string, Record<string, string[]>> = {
     'architecture_moderne': {
       "lieux": ["gratte-ciel vitré", "villa design avec grandes baies vitrées", "salon minimaliste blanc", "immeuble géométrique futuriste"],
@@ -463,6 +601,211 @@ const DETAILED_CONTEXT_LIBRARY: Record<string, Record<string, string[]>> = {
     }
 };
 
+export const PUNK_LIBRARY = {
+  "punk_urbain": {
+    "lieux": ["rue taguée", "squat underground", "concert de rue", "ruelle sombre"],
+    "tenues": ["cuir clouté", "t-shirt déchiré", "pantalon tartan", "chaussures montantes"],
+    "expressions": ["regard provocateur", "air rebelle", "cri de scène", "sourire ironique"],
+    "lumieres": ["néons colorés", "spot brut", "flash improvisé", "contre-jour dramatique"],
+    "accessoires": ["guitare électrique", "crête colorée", "chaînes métalliques", "aucun"]
+  },
+  "punk_uk_70s": {
+    "lieux": ["club londonien", "rue de Camden", "pub underground", "salle de concert enfumée"],
+    "tenues": ["cuir noir", "t-shirt à slogan", "pantalon serré", "chaussures Doc Martens"],
+    "expressions": ["air défiant", "sourire narquois", "grimace punk", "regard fixe"],
+    "lumieres": ["flash brutal", "contre-jour", "spot unique", "éclairage de scène"],
+    "accessoires": ["pogo", "épingle à nourrice", "boucles métalliques", "aucun"]
+  },
+  "punk_80s_glam": {
+    "lieux": ["scène colorée", "club flashy", "studio photo", "soirée underground"],
+    "tenues": ["paillettes", "maquillage outrancier", "vestes cuir cloutées", "legging métallisé"],
+    "expressions": ["air exubérant", "pose théâtrale", "sourire provocateur", "rire franc"],
+    "lumieres": ["spots multicolores", "néons saturés", "projecteurs scintillants", "flash disco"],
+    "accessoires": ["lunettes oversized", "bracelets multiples", "collier extravagant", "aucun"]
+  },
+  "concert_punk": {
+    "lieux": ["salle de concert bondée", "festival en plein air", "club sombre", "scène improvisée"],
+    "tenues": ["t-shirt de groupe", "veste cloutée", "short usé", "bottes montantes"],
+    "expressions": ["cri intense", "rage scénique", "air en transe", "rire sauvage"],
+    "lumieres": ["stroboscope", "flash de scène", "spots rouges", "fumée éclairée"],
+    "accessoires": ["microphone", "basse électrique", "canette écrasée", "aucun"]
+  },
+  "grunge_90s": {
+    "lieux": ["garage", "sous-sol musical", "salle de répète", "rue pluvieuse"],
+    "tenues": ["chemise à carreaux", "jean troué", "t-shirt gris", "pull loose"],
+    "expressions": ["air détaché", "regard fatigué", "expression mélancolique", "air nostalgique"],
+    "lumieres": ["lumière diffuse", "projecteurs froids", "clair-obscur", "lumière naturelle faible"],
+    "accessoires": ["guitare usée", "café à emporter", "chaussures usées", "aucun"]
+  },
+  "punk_avant_garde": {
+    "lieux": ["studio artistique", "podium expérimental", "décor abstrait", "galerie alternative"],
+    "tenues": ["costumes déstructurés", "matériaux non conventionnels", "robes asymétriques", "tenues futuristes punk"],
+    "expressions": ["air théâtral", "pose exagérée", "sourire mystérieux", "regard fixe"],
+    "lumieres": ["néons violets", "projecteurs artistiques", "contre-jour futuriste", "lumière colorée"],
+    "accessoires": ["accessoires conceptuels", "bijoux démesurés", "lunettes extravagantes", "aucun"]
+  }
+};
+
+export const GOTHIC_LIBRARY = {
+  "medieval_sombre": {
+    "lieux": ["château ancien", "corridor de pierre", "salle aux torches", "salle gothique"],
+    "tenues": ["robe noire", "cape sombre", "corset", "tenue médiévale sombre"],
+    "expressions": ["regard intense", "expression dramatique", "air mélancolique", "sourire discret"],
+    "lumieres": ["clair-obscur", "torches", "contre-jour dramatique", "ombres profondes"],
+    "accessoires": ["chandelle", "croix", "collier ancien", "aucun"]
+  },
+  "cimetiere_victorien": {
+    "lieux": ["cimetière brumeux", "croix de pierre", "statue gothique", "allée de tombes"],
+    "tenues": ["robe longue noire", "voile sombre", "manteau victorien", "corset sombre"],
+    "expressions": ["regard sombre", "air mélancolique", "expression dramatique", "regard fixe"],
+    "lumieres": ["brouillard éclairé", "clair de lune", "éclairage dramatique", "contre-jour"],
+    "accessoires": ["fleurs fanées", "rosaire", "ombrelle noire", "aucun"]
+  },
+  "eglise_gothique": {
+    "lieux": ["nef gothique", "vitraux colorés", "autel", "confessionnal"],
+    "tenues": ["robe sombre", "cape longue", "corset victorien", "robe dramatique"],
+    "expressions": ["expression dramatique", "regard mystique", "air intense", "sourire discret"],
+    "lumieres": ["lumière des vitraux", "contre-jour dramatique", "ombre forte", "éclairage divin sombre"],
+    "accessoires": ["chapelet", "collier gothique", "croix ancienne", "aucun"]
+  },
+  "portrait_victorien": {
+    "lieux": ["salon ancien", "bibliothèque victorienne", "manoir sombre", "hall victorien"],
+    "tenues": ["robe victorienne", "corset", "costume sombre", "robe dramatique"],
+    "expressions": ["air mélancolique", "regard intense", "expression triste", "air mystérieux"],
+    "lumieres": ["clair-obscur", "lumière tamisée", "contre-jour", "halo diffus"],
+    "accessoires": ["collier ancien", "livre", "ombrelle", "aucun"]
+  },
+  "gothique_moderne": {
+    "lieux": ["rue nocturne", "rooftop urbain", "club underground", "studio sombre"],
+    "tenues": ["robe noire urbaine", "cuir", "dentelle moderne", "ensemble gothique chic"],
+    "expressions": ["air rebelle", "regard sombre", "pose assurée", "sourire discret"],
+    "lumieres": ["néons froids", "contre-jour urbain", "lumière tamisée", "spot dramatique"],
+    "accessoires": ["lunettes noires", "bijoux gothiques", "croix moderne", "aucun"]
+  }
+};
+
+export const VIKING_LIBRARY = {
+  "raid_marin": {
+    "lieux": ["drakkar en mer déchaînée", "plage rocheuse balayée par le vent", "fjord brumeux", "combat naval chaotique"],
+    "tenues": ["armure en cuir", "cotte de mailles", "casque viking", "tunique nordique"],
+    "expressions": ["regard guerrier", "cri de bataille", "air intense", "air assuré"],
+    "lumieres": ["clair de lune", "brouillard dramatique", "contre-jour épique", "torches"],
+    "accessoires": ["hache", "bouclier", "épée", "aucun"]
+  },
+  "crique_tresor": {
+    "lieux": ["grotte runique", "plage isolée", "île mystérieuse", "forêt nordique"],
+    "tenues": ["tunique nordique", "cape sombre", "armure simple", "robe nordique"],
+    "expressions": ["air intrigué", "regard assuré", "pose dramatique", "expression concentrée"],
+    "lumieres": ["torches", "clair de lune", "contre-jour dramatique", "halo diffus"],
+    "accessoires": ["coffre d’or", "runes", "bijoux anciens", "aucun"]
+  },
+  "festin_maison_longue": {
+    "lieux": ["maison longue enfumée", "banquet viking", "foyer central", "salle décorée de boucliers"],
+    "tenues": ["tunique festive", "cape chaude", "armure légère", "robe nordique"],
+    "expressions": ["air jovial", "rire franc", "chant festif", "air solennel"],
+    "lumieres": ["torches murales", "feu central", "lueur de braises", "clair-obscur chaleureux"],
+    "accessoires": ["corne à boire", "table de banquet", "bijoux en or", "aucun"]
+  },
+  "explorateur_nordique": {
+    "lieux": ["falaise dominant la mer", "fjord glacé", "campement nordique", "forêt boréale"],
+    "tenues": ["tunique épaisse", "cape en fourrure", "armure nordique", "tenue de voyage"],
+    "expressions": ["regard lointain", "air songeur", "expression courageuse", "air concentré"],
+    "lumieres": ["aube polaire", "coucher de soleil nordique", "clair de lune", "ciel couvert"],
+    "accessoires": ["carte ancienne", "boussole primitive", "hache d’explorateur", "aucun"]
+  },
+  "guerrier_mythologique": {
+    "lieux": ["champ de bataille épique", "falaise sacrée", "temple nordique", "paysage enneigé"],
+    "tenues": ["armure divine", "cape flamboyante", "armure nordique gravée", "tenue héroïque"],
+    "expressions": ["cri guerrier", "regard divin", "air furieux", "pose imposante"],
+    "lumieres": ["éclairs dramatiques", "halo divin", "contre-jour épique", "torches sacrées"],
+    "accessoires": ["marteau mythique", "lance sacrée", "bouclier runique", "aucun"]
+  },
+  "vie_du_village": {
+    "lieux": ["village nordique", "forge animée", "marché viking", "ferme rustique"],
+    "tenues": ["tunique simple", "tablier d’artisan", "robe nordique", "cape rustique"],
+    "expressions": ["sourire franc", "air concentré", "regard bienveillant", "air déterminé"],
+    "lumieres": ["feu de foyer", "lumière douce du matin", "coucher de soleil", "torches simples"],
+    "accessoires": ["outils", "paniers de nourriture", "armes simples", "aucun"]
+  }
+};
+
+export const BOHEME_LIBRARY = {
+  "boheme_chic": {
+    "lieux": ["plage bohème chic", "festival en plein air", "prairie ensoleillée", "terrasse bohème"],
+    "tenues": ["robe longue fluide", "kimono bohème", "ensemble décontracté", "look bohème chic"],
+    "expressions": ["air détendu", "sourire lumineux", "expression rêveuse", "clin d’œil"],
+    "lumieres": ["golden hour", "lumière naturelle douce", "contre-jour bohème", "halo diffus"],
+    "accessoires": ["chapeau large", "collier artisanal", "fleurs", "aucun"]
+  },
+  "boheme_urbain": {
+    "lieux": ["café artistique", "friperie rétro", "rue bohème", "atelier créatif"],
+    "tenues": ["robe vintage", "pantalon ample", "chemise colorée", "tenue rétro bohème"],
+    "expressions": ["regard mystérieux", "air détendu", "sourire subtil", "air poétique"],
+    "lumieres": ["lumière de ville", "contre-jour urbain", "softbox bohème", "éclairage doux"],
+    "accessoires": ["carnet de croquis", "lunettes rondes", "bijoux artisanaux", "aucun"]
+  },
+  "boheme_festival": {
+    "lieux": ["concert en plein air", "festival coloré", "prairie avec foule", "campement bohème"],
+    "tenues": ["robe fleurie", "short bohème", "haut coloré", "kimono ample"],
+    "expressions": ["air joyeux", "sourire éclatant", "danse libre", "air festif"],
+    "lumieres": ["golden hour festival", "néons colorés", "feu de camp", "halo lumineux"],
+    "accessoires": ["couronne de fleurs", "guitare", "bracelets multiples", "aucun"]
+  },
+  "boheme_vintage": {
+    "lieux": ["salon rétro", "intérieur éclectique", "marché vintage", "chambre bohème"],
+    "tenues": ["robe rétro", "chemise ample", "jupe colorée", "look des années 70"],
+    "expressions": ["air rêveur", "sourire doux", "regard nostalgique", "air apaisé"],
+    "lumieres": ["lumière tamisée", "contre-jour vintage", "halo chaud", "lampe rétro"],
+    "accessoires": ["vinyle", "lampe vintage", "bijoux anciens", "aucun"]
+  },
+  "boheme_nature": {
+    "lieux": ["prairie sauvage", "forêt bohème", "bord de rivière", "colline fleurie"],
+    "tenues": ["robe fluide", "jupe longue", "haut léger", "kimono nature"],
+    "expressions": ["air apaisé", "regard contemplatif", "sourire naturel", "air détendu"],
+    "lumieres": ["lumière dorée", "clair de lune doux", "lumière naturelle", "halo diffus"],
+    "accessoires": ["fleurs sauvages", "panier", "écharpe légère", "aucun"]
+  },
+  "boheme_romantique": {
+    "lieux": ["jardin bohème", "terrasse fleurie", "intérieur cosy", "prairie au coucher du soleil"],
+    "tenues": ["robe romantique", "jupe fluide", "ensemble bohème chic", "robe pastel"],
+    "expressions": ["sourire doux", "air rêveur", "expression tendre", "regard amoureux"],
+    "lumieres": ["golden hour", "lumière douce", "halo rosé", "lumière tamisée"],
+    "accessoires": ["bouquet de fleurs", "collier fin", "bracelet romantique", "aucun"]
+  }
+};
+
+export const AUTOMOBILE_LIBRARY = {
+  "course_circuit": {
+    "lieux": ["circuit de F1", "stands avec mécaniciens", "ligne de départ bondée", "virage serré à grande vitesse"],
+    "tenues": ["combinaison de pilote", "casque intégral", "tenue racing GT", "combinaison sponsorisée"],
+    "expressions": ["air concentré", "regard intense", "expression déterminée", "air victorieux"],
+    "lumieres": ["plein soleil", "lumière de projecteurs", "contre-jour dramatique", "halo nocturne"],
+    "accessoires": ["voiture de course", "drapeau à damier", "trophée", "aucun"]
+  },
+  "rallye_sauvage": {
+    "lieux": ["piste boueuse", "route de montagne", "chemin forestier", "désert rocailleux"],
+    "tenues": ["combinaison rallye", "casque renforcé", "tenue hors piste", "look pilote décontracté"],
+    "expressions": ["air concentré", "expression tendue", "air déterminé", "sourire franc"],
+    "lumieres": ["soleil éclatant", "poussière dorée", "contre-jour dramatique", "halo du soir"],
+    "accessoires": ["voiture de rallye", "poussière", "boue sur carrosserie", "aucun"]
+  },
+  "classique_vintage": {
+    "lieux": ["route rétro des années 60", "station essence vintage", "parking old school", "bord de mer rétro"],
+    "tenues": ["robe rétro", "costume élégant", "look casual vintage", "lunettes rétro"],
+    "expressions": ["air détendu", "regard nostalgique", "sourire doux", "expression rêveuse"],
+    "lumieres": ["golden hour rétro", "halo chaud", "soleil couchant", "clair-obscur doux"],
+    "accessoires": ["voiture vintage", "sac en cuir", "lunettes de soleil rétro", "aucun"]
+  },
+  "luxe_moderne": {
+    "lieux": ["rooftop urbain", "devant un hôtel 5 étoiles", "piste privée", "villa contemporaine"],
+    "tenues": ["robe de soirée", "costume sur mesure", "ensemble chic", "look glamour"],
+    "expressions": ["air confiant", "sourire élégant", "regard assuré", "pose sophistiquée"],
+    "lumieres": ["lumière urbaine nocturne", "golden hour", "flashs studio", "éclairage architectural"],
+    "accessoires": ["voiture de sport de luxe", "bijoux", "sac de luxe", "aucun"]
+  }
+};
+
+
 /**
  * The "AI Art Director". Generates a unique set of creative instructions to ensure image diversity.
  * @param style The main style (e.g., 'Cinema & Costumes').
@@ -472,16 +815,38 @@ const DETAILED_CONTEXT_LIBRARY: Record<string, Record<string, string[]>> = {
 export const getDynamicEnhancements = (style: string, subStyle: string): string => {
     const enhancements: string[] = [];
 
-    // Check for "Vogue Editorial Cover" enhancements
-    const vogueEnhancements = VOGUE_EDITORIALE_LIBRARY[subStyle as keyof typeof VOGUE_EDITORIALE_LIBRARY];
-    if (style === 'Couverture Vogue Editoriale' && vogueEnhancements) {
-        const lieu = selectRandom(vogueEnhancements.lieux);
-        const tenue = selectRandom(vogueEnhancements.tenues);
-        const expression = selectRandom(vogueEnhancements.expressions);
-        const lumiere = selectRandom(vogueEnhancements.lumieres);
-        const accessoire = selectRandom(vogueEnhancements.accessoires);
+    const detailedLibraries: Record<string, any> = {
+        'Punk': PUNK_LIBRARY,
+        'Gothique': GOTHIC_LIBRARY,
+        'Viking': VIKING_LIBRARY,
+        'Boheme': BOHEME_LIBRARY,
+        'Automobile': AUTOMOBILE_LIBRARY,
+        'Couverture Vogue Editoriale': VOGUE_EDITORIALE_LIBRARY,
+        'Couverture Vogue': COUVERTURE_VOGUE_LIBRARY,
+        'Couverture Elle': COUVERTURE_ELLE_LIBRARY,
+        'Couverture Elle Deco': COUVERTURE_ELLE_DECO_LIBRARY,
+        'Mode Haute Couture': HAUTE_COUTURE_LIBRARY,
+        'Portrait Glamour': PORTRAIT_GLAMOUR_LIBRARY,
+        'Journee Dun Mannequin': JOURNEE_MANNEQUIN_LIBRARY,
+    };
 
-        const sentence = `Couverture de magazine Vogue d'une femme portant une ${tenue} dans un décor de ${lieu}, avec une expression ${expression}, un éclairage ${lumiere}, et accessoirisée avec : ${accessoire}.`;
+    const library = detailedLibraries[style];
+    const details = library ? library[subStyle] : null;
+
+    if (details) {
+        const lieu = selectRandom(details.lieux);
+        const tenue = selectRandom(details.tenues);
+        const expression = selectRandom(details.expressions);
+        const lumiere = selectRandom(details.lumieres);
+        const accessoire = selectRandom(details.accessoires);
+
+        let sentence = details.scene ? `${details.scene}. ` : '';
+
+        if (style === 'Couverture Elle Deco') {
+             sentence += `Détails additionnels pour cette image unique : lieu de ${lieu}, éclairage ${lumiere}, avec les accessoires suivants : ${accessoire}.`;
+        } else {
+             sentence += `Détails additionnels pour cette image unique : décor de ${lieu}, tenue ${tenue}, expression ${expression}, éclairage ${lumiere}, accessoirisée avec : ${accessoire}.`;
+        }
         
         enhancements.push(sentence);
         enhancements.push(`Angle de caméra : ${selectRandom(CAMERA_ANGLES)}.`);
@@ -491,66 +856,6 @@ export const getDynamicEnhancements = (style: string, subStyle: string): string 
         return enhancements.join(' ');
     }
 
-    // Check for "High Fashion" enhancements
-    const coutureEnhancements = HAUTE_COUTURE_LIBRARY[subStyle as keyof typeof HAUTE_COUTURE_LIBRARY];
-    if (style === 'Mode Haute Couture' && coutureEnhancements) {
-        const lieu = selectRandom(coutureEnhancements.lieux);
-        const tenue = selectRandom(coutureEnhancements.tenues);
-        const expression = selectRandom(coutureEnhancements.expressions);
-        const lumiere = selectRandom(coutureEnhancements.lumieres);
-        const accessoire = selectRandom(coutureEnhancements.accessoires);
-
-        const sentence = `Photo de haute couture d'une femme portant une ${tenue} dans un décor de ${lieu}, avec une expression ${expression}, un éclairage ${lumiere}, et accessoirisée avec : ${accessoire}.`;
-        
-        enhancements.push(sentence);
-        enhancements.push(`Angle de caméra : ${selectRandom(CAMERA_ANGLES)}.`);
-        enhancements.push(`Atmosphère : ${selectRandom(ATMOSPHERES)}.`);
-        enhancements.push(`Composition : Assurez-vous que cette image est unique dans sa composition. Évitez la répétition.`);
-
-        return enhancements.join(' ');
-    }
-
-    // Check for "Glamour Portrait" detailed enhancements.
-    const glamourEnhancements = PORTRAIT_GLAMOUR_LIBRARY[subStyle as keyof typeof PORTRAIT_GLAMOUR_LIBRARY];
-    if (style === 'Portrait Glamour' && glamourEnhancements) {
-        const lieu = selectRandom(glamourEnhancements.lieux);
-        const tenue = selectRandom(glamourEnhancements.tenues);
-        const expression = selectRandom(glamourEnhancements.expressions);
-        const lumiere = selectRandom(glamourEnhancements.lumieres);
-        const accessoire = selectRandom(glamourEnhancements.accessoires);
-
-        const sentence = `Portrait glamour d'une femme portant une ${tenue} dans un décor de ${lieu}, avec une expression ${expression}, un éclairage ${lumiere}, et accessoirisée avec : ${accessoire}.`;
-        
-        enhancements.push(sentence);
-        enhancements.push(`Angle de caméra : ${selectRandom(CAMERA_ANGLES)}.`);
-        enhancements.push(`Atmosphère : ${selectRandom(ATMOSPHERES)}.`);
-        enhancements.push(`Composition : Assurez-vous que cette image est unique dans sa composition. Évitez la répétition.`);
-
-        return enhancements.join(' ');
-    }
-    
-    // Check for "A Model's Day" enhancements
-    const mannequinEnhancements = JOURNEE_MANNEQUIN_LIBRARY[subStyle as keyof typeof JOURNEE_MANNEQUIN_LIBRARY];
-    if (style === 'Journee Dun Mannequin' && mannequinEnhancements) {
-        // Use the new narrative scene description as the base
-        const scene = mannequinEnhancements.scene;
-        // Then add randomized details for variety
-        const lieu = selectRandom(mannequinEnhancements.lieux);
-        const tenue = selectRandom(mannequinEnhancements.tenues);
-        const expression = selectRandom(mannequinEnhancements.expressions);
-        const lumiere = selectRandom(mannequinEnhancements.lumieres);
-        const accessoire = selectRandom(mannequinEnhancements.accessoires);
-
-        // Construct a more detailed, narrative sentence
-        const sentence = `${scene}. Détails additionnels pour cette image unique : décor de ${lieu}, tenue ${tenue}, expression ${expression}, éclairage ${lumiere}, accessoirisée avec : ${accessoire}.`;
-        
-        enhancements.push(sentence);
-        enhancements.push(`Angle de caméra : ${selectRandom(CAMERA_ANGLES)}.`);
-        enhancements.push(`Atmosphère : ${selectRandom(ATMOSPHERES)}.`);
-        enhancements.push(`Composition : Assurez-vous que cette image est unique dans sa composition. Évitez la répétition.`);
-
-        return enhancements.join(' ');
-    }
 
     // Check for highly detailed, structured enhancements for 'modern_architecture'.
     const detailedEnhancements = DETAILED_CONTEXT_LIBRARY[subStyle as keyof typeof DETAILED_CONTEXT_LIBRARY];

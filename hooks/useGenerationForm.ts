@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import type { ColorMode, Upscale, RenderQuality } from '../lib/constants';
 
 export const useGenerationForm = () => {
-    const [numberOfImages, setNumberOfImages] = useState(10);
+    const [numberOfImages, setNumberOfImages] = useState(5);
     const [style, setStyle] = useState('Portrait Glamour');
     const [subStyle, setSubStyle] = useState('');
     const [customPrompt, setCustomPrompt] = useState('');

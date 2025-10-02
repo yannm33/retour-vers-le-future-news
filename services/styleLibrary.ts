@@ -52,8 +52,11 @@ export const STYLE_GUIDE = {
       "substyles": [
         "noir_blanc_iconique",
         "glamour_dore",
-        "vogue_rue",
-        "revival_retro"
+        "vogue_de_rue",
+        "revival_retro",
+        "studio_luxe_minimaliste",
+        "avant_garde_conceptuel",
+        "podium_couture"
       ],
       "notes": "Toujours inclure une typographie réaliste, des angles variés."
     },
@@ -62,7 +65,10 @@ export const STYLE_GUIDE = {
         "plage_ete",
         "chic_decontracte",
         "pastel_romantique",
-        "look_fete"
+        "look_fete",
+        "mode_lifestyle_urbain",
+        "cocooning_interieur",
+        "sport_chic"
       ],
       "notes": "Ambiance lifestyle, sourires, looks accessibles."
     },
@@ -70,10 +76,13 @@ export const STYLE_GUIDE = {
       "substyles": [
         "moderne_minimaliste",
         "boheme_chic",
-        "elegance_bord_de_mer",
-        "loft_urbain"
+        "elegant_bord_de_mer",
+        "loft_urbain",
+        "vintage_subtil",
+        "fusion_contemporaine",
+        "nature_lumiere"
       ],
-      "notes": "Décors intérieurs design, mannequins intégrés au décor."
+      "notes": "Focus exclusif sur des intérieurs de design, sans personnages. Chaque scène doit être une composition photographique digne d'un magazine de décoration, mettant en valeur l'atmosphère, les matériaux et la lumière."
     },
     "Editorial_Chic": {
       "substyles": [
@@ -83,11 +92,14 @@ export const STYLE_GUIDE = {
       ],
       "notes": "Accessoires stylisés, éclairages expérimentaux."
     },
-    "Punk_Grunge": {
+    "Punk": {
       "substyles": [
         "punk_urbain",
+        "punk_uk_70s",
+        "punk_80s_glam",
+        "concert_punk",
         "grunge_90s",
-        "glam_punk"
+        "punk_avant_garde"
       ],
       "notes": "Attitudes rebelles, atmosphère urbaine brute."
     },
@@ -95,28 +107,44 @@ export const STYLE_GUIDE = {
       "substyles": [
         "medieval_sombre",
         "cimetiere_victorien",
-        "eglise_gothique"
+        "eglise_gothique",
+        "portrait_victorien",
+        "gothique_moderne",
+        "gothique_baroque",
+        "dark_romantic"
       ],
       "notes": "Ambiance sombre et romantique, avec des éléments architecturaux médiévaux, victoriens ou religieux. Mettre l'accent sur un éclairage dramatique et des tenues élaborées."
     },
-    "Boheme_Viking": {
+    "Viking": {
       "substyles": [
-        "boheme_chic_viking",
-        "hall_viking",
-        "mer_viking"
+        "raid_marin",
+        "crique_tresor",
+        "festin_maison_longue",
+        "explorateur_nordique",
+        "guerrier_mythologique",
+        "vie_du_village"
       ],
-      "notes": "Ambiances cinématiques, accessoires contextuels (torches, capes, bateaux)."
+      "notes": "Mélanger l'esthétique historique des Vikings. Se concentrer sur l'action cinématique, les paysages spectaculaires et un équipement détaillé et usé."
     },
-    "Automobile_Moto": {
+    "Boheme": {
       "substyles": [
-        "rallye_raid",
-        "24h_mans",
-        "paddock_formule1",
-        "moto_gp",
-        "motocross",
-        "biker"
+        "boheme_chic",
+        "boheme_urbain",
+        "boheme_festival",
+        "boheme_vintage",
+        "boheme_nature",
+        "boheme_romantique"
       ],
-      "notes": "Changer les véhicules, les angles de caméra, l'éclairage jour/nuit."
+      "notes": "Ambiances cinématiques, accessoires contextuels (franges, motifs floraux, lumière naturelle)."
+    },
+    "Automobile": {
+      "substyles": [
+        "course_circuit",
+        "rallye_sauvage",
+        "classique_vintage",
+        "luxe_moderne"
+      ],
+      "notes": "Varier les véhicules, les angles de caméra, l'éclairage jour/nuit."
     },
     "Photo_Mode_Minimaliste": {
       "substyles": [
@@ -180,15 +208,6 @@ export const STYLE_GUIDE = {
         "post_apocalyptique"
       ],
       "notes": "Varier par décennies, genres et époques. Chaque sous-style doit être cinématique, avec des accessoires et des décors appropriés."
-    },
-    "Viking_Pirate": {
-      "substyles": [
-        "raid_marin_viking",
-        "crique_tresor_viking",
-        "festin_maison_longue_viking",
-        "explorateur_nordique"
-      ],
-      "notes": "Mélanger l'esthétique historique des Vikings avec les tropes classiques des pirates. Se concentrer sur l'action cinématique, les paysages spectaculaires et un équipement détaillé et usé."
     },
     "Navy_SEAL": {
       "substyles": [

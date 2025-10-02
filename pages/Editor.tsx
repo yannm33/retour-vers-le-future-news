@@ -1,4 +1,3 @@
-
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
@@ -85,7 +84,9 @@ function Editor() {
 
         // 1. Objectif Principal
         promptParts.push('//-- OBJECTIF PRINCIPAL --');
-        if (isMagazineCover) {
+        if (style === 'Couverture Elle Deco') {
+             promptParts.push(`Générer une photo d'intérieur hyper-réaliste pour un magazine de décoration. L'image fournie sert uniquement de référence de style de base ; la personne ne doit PAS apparaître. La scène doit correspondre à la description suivante.`);
+        } else if (isMagazineCover) {
             promptParts.push(`Générer une couverture de magazine hyper-réaliste avec la personne de la photo fournie. Ses traits de visage et sa ressemblance doivent être fidèlement représentés.`);
         } else {
             promptParts.push(`Générer une image hyper-réaliste de la personne sur la photo fournie, en assurant une représentation fidèle de ses traits de visage et de sa ressemblance.`);
