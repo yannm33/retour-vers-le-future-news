@@ -1,3 +1,4 @@
+
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
@@ -18,77 +19,77 @@ interface PromptOptions {
  */
 const PROMPT_DATABASE: Record<string, Record<string, (opts: PromptOptions) => string>> = {
     'Militaire': {
-        'véhicule blindé': (opts) => 
-            `Scène : blindé MRAP en ville, officier en tenue d’apparat au premier plan (galons visibles, médailles), équipe en tenue opérationnelle autour, caisses ammo, radios PRC-148, ambiance crépusculaire, photoréaliste, look cinéma, profondeur de champ, détails de l’usure. L'officier au premier plan doit être une représentation fidèle de la personne sur la photo fournie.
-            Technical Specs: Aspect ratio ${opts.aspectRatio}. Color mode: ${opts.colorMode}. Render quality: ${opts.renderQuality}. Upscale target: ${opts.upscale}.`,
+        'vehicule_blinde': (opts) => 
+            `Scène : Véhicule blindé MRAP en ville, officier en tenue de cérémonie au premier plan (insignes de grade visibles, médailles), équipe en tenue opérationnelle autour, caisses de munitions, radios PRC-148, ambiance crépusculaire, aspect photoréaliste, cinématique, profondeur de champ, détails d'usure. L'officier au premier plan doit être une représentation fidèle de la personne sur la photo fournie.
+            Spécifications techniques : Format ${opts.aspectRatio}. Mode couleur : ${opts.colorMode}. Qualité de rendu : ${opts.renderQuality}. Cible d'upscale : ${opts.upscale}.`,
         
         'patrouille': (opts) =>
-            `Create an ultra-realistic 8k image with a cinematic style reminiscent of Kodak Vision3 500T film stock.
-            Scene & Ambiance: Exterior, dense temperate forest, late afternoon with long shadows ("golden hour").
-            Personnage(s): A 4-man fire team on patrol. The point man, who must be a faithful representation of the person in the provided photo, is kneeling, checking a paper map against a Garmin Foretrex 701 GPS on his wrist. All are wearing full operational gear (tenue opérationnelle) with modern camouflage, plate carriers, and carrying HK416 14.5" rifles with EOTech sights.
-            Équipements: Gear includes PRC-148 style tactical radios, Camelbak hydration packs, and packed rucksacks.
-            Core Request: Faithfully represent the person from the provided photo as the point man.
-            Technical Specs: Aspect ratio ${opts.aspectRatio}. Color mode: ${opts.colorMode}. Render quality: ${opts.renderQuality}. Upscale target: ${opts.upscale}.`,
+            `Créer une image 8k ultra-réaliste avec un style cinématique rappelant la pellicule Kodak Vision3 500T.
+            Scène & Ambiance : Extérieur, forêt tempérée dense, fin d'après-midi avec de longues ombres ("golden hour").
+            Personnage(s) : Une équipe de feu de 4 hommes en patrouille. L'homme de tête, qui doit être une représentation fidèle de la personne sur la photo fournie, est agenouillé, vérifiant une carte papier par rapport à un GPS Garmin Foretrex 701 à son poignet. Tous portent un équipement opérationnel complet avec un camouflage moderne, des porte-plaques, et des fusils HK416 14.5" avec des viseurs EOTech.
+            Équipement : L'équipement inclut des radios tactiques de type PRC-148, des sacs d'hydratation Camelbak, et des sacs à dos remplis.
+            Requête principale : Représenter fidèlement la personne de la photo fournie en tant qu'homme de tête.
+            Spécifications techniques : Format ${opts.aspectRatio}. Mode couleur : ${opts.colorMode}. Qualité de rendu : ${opts.renderQuality}. Cible d'upscale : ${opts.upscale}.`,
 
-        'uniforme parade': (opts) =>
-            `Create an ultra-realistic 8k photo with a very shallow depth of field, focusing on the subject.
-            Scene & Ambiance: Interior, a formal military hall or office. A large flag is artfully draped in the background.
-            Personnage(s): A single high-ranking officer in a pristine tenue d’apparat (formal dress uniform). Details are critical: precise rank insignias on the shoulders, a full rack of medals on the chest, golden embroidery on the collar and cuffs, and a formal képi held under the arm. The officer's expression is confident and serious.
-            Core Request: The officer must be a hyper-realistic representation of the person in the provided photo.
-            Technical Specs: Aspect ratio ${opts.aspectRatio}. Color mode: ${opts.colorMode}. Render quality: ${opts.renderQuality}. Upscale target: ${opts.upscale}.`,
+        'uniforme_parade': (opts) =>
+            `Créer une photo 8k ultra-réaliste avec une très faible profondeur de champ, se concentrant sur le sujet.
+            Scène & Ambiance : Intérieur, un hall ou bureau militaire formel. Un grand drapeau est artistement drapé en arrière-plan.
+            Personnage(s) : Un unique officier de haut rang dans un uniforme de cérémonie impeccable. Les détails sont essentiels : insignes de grade précis sur les épaules, une rangée complète de médailles sur la poitrine, des broderies dorées sur le col et les poignets, et un képi de cérémonie tenu sous le bras. L'expression de l'officier est confiante et sérieuse.
+            Requête principale : L'officier doit être une représentation hyper-réaliste de la personne sur la photo fournie.
+            Spécifications techniques : Format ${opts.aspectRatio}. Mode couleur : ${opts.colorMode}. Qualité de rendu : ${opts.renderQuality}. Cible d'upscale : ${opts.upscale}.`,
         
-        'base avancée': (opts) =>
-            `Scène : petit aéroport militaire improvisé, Cessna Caravan cargo, palettes NATO, personnel en gilets de chargement, chariot élévateur, drapeau discret, poussière en suspension, rendu photographique, lumière chaude du matin, hyper-réalisme. L'un des membres du personnel doit être une représentation fidèle de la personne sur la photo fournie.
-            Technical Specs: Aspect ratio ${opts.aspectRatio}. Color mode: ${opts.colorMode}. Render quality: ${opts.renderQuality}. Upscale target: ${opts.upscale}.`,
+        'base_operationnelle_avancee': (opts) =>
+            `Scène : petit aérodrome militaire improvisé, avion cargo Cessna Caravan, palettes de l'OTAN, personnel en gilets de chargement, chariot élévateur, drapeau discret, poussière en suspension, rendu photographique, lumière chaude du matin, hyper-réalisme. Un des membres du personnel doit être une représentation fidèle de la personne sur la photo fournie.
+            Spécifications techniques : Format ${opts.aspectRatio}. Mode couleur : ${opts.colorMode}. Qualité de rendu : ${opts.renderQuality}. Cible d'upscale : ${opts.upscale}.`,
     },
     'Commando': {
         'sniper': (opts) =>
-            `Create an ultra-realistic 8k image with a shallow depth of field and a cinematic style: Kodak Vision3 500T, high contrast, noticeable grain.
-            Scene & Ambiance: Exterior, misty forest at dawn (golden hour).
-            Personnage(s): A two-man commando sniper team in full ghillie suits is in a concealed, prone firing position. The sniper, who must be a faithful representation of the person in the provided photo, is looking through the scope of an M110 SASS 7.62mm rifle equipped with a Leupold Mark 5HD scope and suppressor. The spotter is observing with binoculars.
-            Équipements: A Kestrel weather meter and a ruggedized tactical tablet displaying ballistic data are visible next to the spotter. Their PRC-152 radio with throat mic is visible.
-            Core Request: The sniper must be a faithful representation of the person in the provided photo.
-            Technical Specs: Aspect ratio ${opts.aspectRatio}. Color mode: ${opts.colorMode}. Render quality: ${opts.renderQuality}. Upscale target: ${opts.upscale}.`,
+            `Créer une image 8k ultra-réaliste avec une faible profondeur de champ et un style cinématique : Kodak Vision3 500T, contraste élevé, grain notable.
+            Scène & Ambiance : Extérieur, forêt brumeuse à l'aube (golden hour).
+            Personnage(s) : Une équipe de sniper commando de deux hommes en tenue ghillie complète est en position de tir dissimulée et couchée. Le tireur, qui doit être une représentation fidèle de la personne sur la photo fournie, regarde à travers la lunette d'un fusil M110 SASS 7.62mm équipé d'une lunette Leupold Mark 5HD et d'un silencieux. L'observateur observe avec des jumelles.
+            Équipement : Un anémomètre Kestrel et une tablette tactique robuste affichant des données balistiques sont visibles à côté de l'observateur. Leur radio PRC-152 avec micro laryngophone est visible.
+            Requête principale : Le tireur doit être une représentation fidèle de la personne sur la photo fournie.
+            Spécifications techniques : Format ${opts.aspectRatio}. Mode couleur : ${opts.colorMode}. Qualité de rendu : ${opts.renderQuality}. Cible d'upscale : ${opts.upscale}.`,
 
-        'embarquement hélico': (opts) =>
-            `Create an ultra-realistic 8k image with dynamic motion blur and cinematic lens flare.
-            Scene & Ambiance: Night, exterior. A commando team is being extracted via fast-rope from an MH-60 Black Hawk helicopter hovering low. The rotor wash is kicking up dust and debris.
-            Personnage(s): One commando is on the rope, halfway up. This person must be a faithful representation of the person from the provided photo. They are in full operational kit, night vision goggles (GPNVG-18) flipped down, and carrying a silenced HK416.
-            Véhicules & Transport: The MH-60 Black Hawk is visible, with door gunners providing cover.
-            Core Request: The commando on the rope must be a faithful representation of the person in the provided photo.
-            Technical Specs: Aspect ratio ${opts.aspectRatio}. Color mode: ${opts.colorMode}. Render quality: ${opts.renderQuality}. Upscale target: ${opts.upscale}.`,
+        'embarquement_helicoptere': (opts) =>
+            `Créer une image 8k ultra-réaliste avec un flou de mouvement dynamique et un lens flare cinématique.
+            Scène & Ambiance : Nuit, extérieur. Une équipe de commandos est extraite par corde lisse depuis un hélicoptère MH-60 Black Hawk en vol stationnaire bas. Le souffle du rotor soulève de la poussière et des débris.
+            Personnage(s) : Un commando est sur la corde, à mi-hauteur. Cette personne doit être une représentation fidèle de la personne de la photo fournie. Il porte un équipement opérationnel complet, des lunettes de vision nocturne (GPNVG-18) abaissées, et un HK416 avec silencieux.
+            Véhicules & Transport : Le MH-60 Black Hawk est visible, avec des mitrailleurs de porte assurant la couverture.
+            Requête principale : Le commando sur la corde doit être une représentation fidèle de la personne de la photo fournie.
+            Spécifications techniques : Format ${opts.aspectRatio}. Mode couleur : ${opts.colorMode}. Qualité de rendu : ${opts.renderQuality}. Cible d'upscale : ${opts.upscale}.`,
         
-        'infiltration plage': (opts) =>
-            `Create an ultra-realistic 8k image with a high-contrast, moonlit noir style.
-            Scene & Ambiance: Night, beach landing, rough sea with white-capped waves.
-            Personnage(s): A team of combat swimmers emerging from the surf. The team leader, who must be a faithful representation of the person from the provided photo, is giving hand signals. They are wearing dark, wet combat gear over their wetsuits.
-            Équipements: They carry silenced weapons (HK416) in waterproof bags.
-            Véhicules & Transport: In the background, a rigid-hulled inflatable boat (RHIB) is visible waiting just beyond the breakers.
-            Core Request: The team leader must be a faithful representation of the person from the provided photo.
-            Technical Specs: Aspect ratio ${opts.aspectRatio}. Color mode: ${opts.colorMode}. Render quality: ${opts.renderQuality}. Upscale target: ${opts.upscale}.`,
+        'infiltration_plage': (opts) =>
+            `Créer une image 8k ultra-réaliste avec un style noir à fort contraste, éclairé par la lune.
+            Scène & Ambiance : Nuit, débarquement sur une plage, mer agitée avec des vagues à crête blanche.
+            Personnage(s) : Une équipe de nageurs de combat sortant des vagues. Le chef d'équipe, qui doit être une représentation fidèle de la personne de la photo fournie, donne des signaux manuels. Ils portent un équipement de combat sombre et humide par-dessus leurs combinaisons.
+            Équipement : Ils transportent des armes avec silencieux (HK416) dans des sacs étanches.
+            Véhicules & Transport : En arrière-plan, un bateau pneumatique à coque rigide (RHIB) est visible, attendant juste au-delà des brisants.
+            Requête principale : Le chef d'équipe doit être une représentation fidèle de la personne de la photo fournie.
+            Spécifications techniques : Format ${opts.aspectRatio}. Mode couleur : ${opts.colorMode}. Qualité de rendu : ${opts.renderQuality}. Cible d'upscale : ${opts.upscale}.`,
     },
-    'Néviscile (unité spéciale)': {
-        'plongée sous-marine': (opts) => 
-            `Scène : insertion maritime de nuit, deux opérateurs en tenue tactique, rigs de plongée fermés (rebreather CCR, pas de bulles), combinaisons drysuit, RHIB 8 places, moteur hors-bord visible, lampes IR, mer calme, reflet de la lune, hyper-réaliste, rendu 8K, détails mécaniques (valves, raccords), attitude : préparation silencieuse. L'un des opérateurs doit être une représentation fidèle de la personne sur la photo fournie.
-            Technical Specs: Aspect ratio ${opts.aspectRatio}. Color mode: ${opts.colorMode}. Render quality: ${opts.renderQuality}. Upscale target: ${opts.upscale}.`,
+    'Neviscile (Unité Spéciale)': {
+        'plongee_tactique': (opts) => 
+            `Scène : insertion maritime de nuit, deux opérateurs en équipement tactique, recycleurs de plongée en circuit fermé (CCR, pas de bulles), combinaisons étanches, RHIB pour 8 personnes, moteur hors-bord visible, lampes IR, mer calme, reflet de la lune, hyper-réaliste, rendu 8K, détails mécaniques (vannes, raccords), attitude : préparation silencieuse. Un des opérateurs doit être une représentation fidèle de la personne sur la photo fournie.
+            Spécifications techniques : Format ${opts.aspectRatio}. Mode couleur : ${opts.colorMode}. Qualité de rendu : ${opts.renderQuality}. Cible d'upscale : ${opts.upscale}.`,
 
-        'saut HAHO': (opts) =>
-            `Create an ultra-realistic 8k image from a dramatic low-angle perspective.
-            Scene & Ambiance: High altitude (30,000 ft), clear sky at dusk. The curvature of the Earth is visible below.
-            Personnage(s): A Néviscile operator in mid-air during a High Altitude High Opening (HAHO) jump. This person must be a faithful representation of the person from the provided photo.
-            Équipements personnels: They are wearing a full HALO/HAHO jump rig, including an oxygen mask connected to a console, a specialized parachute pack, and a wrist-mounted GPS/altimeter. Their combat gear is strapped securely.
-            Action: They are stable in freefall, just before deploying their parachute.
-            Core Request: The operator must be a faithful representation of the person in the provided photo.
-            Technical Specs: Aspect ratio ${opts.aspectRatio}. Color mode: ${opts.colorMode}. Render quality: ${opts.renderQuality}. Upscale target: ${opts.upscale}.`,
+        'saut_haho': (opts) =>
+            `Créer une image 8k ultra-réaliste depuis une perspective en contre-plongée dramatique.
+            Scène & Ambiance : Haute altitude (30 000 pieds), ciel clair au crépuscule. La courbure de la Terre est visible en dessous.
+            Personnage(s) : Un opérateur de Neviscile en plein vol lors d'un saut à Haute Altitude et Haute Ouverture (HAHO). Cette personne doit être une représentation fidèle de la personne de la photo fournie.
+            Équipement personnel : Il porte un équipement de saut HALO/HAHO complet, incluant un masque à oxygène connecté à une console, un parachute spécialisé, et un GPS/altimètre au poignet. Son équipement de combat est solidement attaché.
+            Action : Il est stable en chute libre, juste avant de déployer son parachute.
+            Requête principale : L'opérateur doit être une représentation fidèle de la personne sur la photo fournie.
+            Spécifications techniques : Format ${opts.aspectRatio}. Mode couleur : ${opts.colorMode}. Qualité de rendu : ${opts.renderQuality}. Cible d'upscale : ${opts.upscale}.`,
 
-        'sabotage portuaire': (opts) =>
-            `Create an ultra-realistic 8k image with a gritty, industrial, and tense atmosphere.
-            Scene & Ambiance: Night, within a busy but poorly lit commercial port. Rain is falling, creating reflections on the wet concrete.
-            Personnage(s): A single Néviscile operator, who must be a faithful representation of the person from the provided photo, is covertly moving between shipping containers. They are wearing a black operational uniform.
-            Équipements: They are carrying a silenced pistol and a backpack containing demolition charges. A tactical radio with an earpiece is visible.
-            Logistique & accessoires: The scene is filled with realistic port elements: stacked shipping containers with logos (Maersk, Hapag-Lloyd), cranes, and puddles of oily water.
-            Core Request: The operator must be a faithful representation of the person in the provided photo.
-            Technical Specs: Aspect ratio ${opts.aspectRatio}. Color mode: ${opts.colorMode}. Render quality: ${opts.renderQuality}. Upscale target: ${opts.upscale}.`
+        'sabotage_portuaire': (opts) =>
+            `Créer une image 8k ultra-réaliste avec une atmosphère industrielle, granuleuse et tendue.
+            Scène & Ambiance : Nuit, dans un port commercial animé mais mal éclairé. La pluie tombe, créant des reflets sur le béton mouillé.
+            Personnage(s) : Un unique opérateur de Neviscile, qui doit être une représentation fidèle de la personne de la photo fournie, se déplace furtivement entre des conteneurs d'expédition. Il porte un uniforme opérationnel noir.
+            Équipement : Il transporte un pistolet avec silencieux et un sac à dos contenant des charges de démolition. Une radio tactique avec une oreillette est visible.
+            Logistique & accessoires : La scène est remplie d'éléments portuaires réalistes : conteneurs empilés avec des logos (Maersk, Hapag-Lloyd), grues, et des flaques d'eau huileuse.
+            Requête principale : L'opérateur doit être une représentation fidèle de la personne sur la photo fournie.
+            Spécifications techniques : Format ${opts.aspectRatio}. Mode couleur : ${opts.colorMode}. Qualité de rendu : ${opts.renderQuality}. Cible d'upscale : ${opts.upscale}.`
     }
 };
 

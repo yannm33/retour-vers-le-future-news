@@ -12,83 +12,107 @@ export const STYLE_GUIDE = {
   "styles": {
     "Portrait_Glamour": {
       "substyles": [
-        "classic_studio",
-        "red_carpet",
-        "cinematic_noir",
-        "outdoor_luxe"
+        "studio_classique",
+        "festival_de_cannes",
+        "cinematique_noir",
+        "luxe_exterieur",
+        "hotel_glamour",
+        "soiree_glamour",
+        "plage_glamour"
       ],
-      "notes": "Varier coiffures, couleurs de robes, accessoires discrets, éviter répétitions."
+      "notes": "Varier les coiffures, les couleurs de robes, les accessoires discrets, éviter la répétition."
     },
     "Mode_Haute_Couture": {
       "substyles": [
-        "avant_garde",
-        "runway_show",
-        "futuristic",
-        "retro_couture"
+        "defile_parisien",
+        "studio_editorial",
+        "couture_exterieure"
       ],
-      "notes": "Alterner couleurs dominantes, positions variées."
+      "notes": "Alterner les couleurs dominantes, les positions variées."
+    },
+    "Couverture_Vogue_Editoriale": {
+      "substyles": [
+        "studio_magazine",
+        "urbain_chic",
+        "mode_conceptuelle"
+      ],
+      "notes": "Mettre l'accent sur des compositions éditoriales dignes de Vogue, avec une forte direction artistique."
+    },
+    "Journee_Mannequin": {
+      "substyles": [
+        "scene_de_vie"
+      ],
+      "notes": "Capturer différents moments de la vie d'un mannequin, des coulisses au podium et à la maison, pour un rendu authentique et varié."
     },
     "Couverture_Vogue": {
       "substyles": [
-        "black_white_iconic",
-        "golden_glamour",
-        "street_vogue",
-        "retro_revival"
+        "noir_blanc_iconique",
+        "glamour_dore",
+        "vogue_rue",
+        "revival_retro"
       ],
-      "notes": "Toujours inclure typographie réaliste, angles variés."
+      "notes": "Toujours inclure une typographie réaliste, des angles variés."
     },
     "Couverture_Elle": {
       "substyles": [
-        "summer_beach",
-        "casual_chic",
-        "romantic_pastel",
-        "party_look"
+        "plage_ete",
+        "chic_decontracte",
+        "pastel_romantique",
+        "look_fete"
       ],
       "notes": "Ambiance lifestyle, sourires, looks accessibles."
     },
     "Couverture_Elle_Deco": {
       "substyles": [
-        "minimalist_modern",
-        "boho_chic",
-        "seaside_elegance",
-        "urban_loft"
+        "moderne_minimaliste",
+        "boheme_chic",
+        "elegance_bord_de_mer",
+        "loft_urbain"
       ],
       "notes": "Décors intérieurs design, mannequins intégrés au décor."
     },
     "Editorial_Chic": {
       "substyles": [
-        "cinematic_storytelling",
-        "conceptual_art",
-        "power_chic"
+        "storytelling_cinematique",
+        "art_conceptuel",
+        "chic_puissant"
       ],
-      "notes": "Accessoires stylisés, lumières expérimentales."
+      "notes": "Accessoires stylisés, éclairages expérimentaux."
     },
     "Punk_Grunge": {
       "substyles": [
-        "urban_punk",
+        "punk_urbain",
         "grunge_90s",
         "glam_punk"
       ],
-      "notes": "Attitudes rebelles, ambiance urbaine brute."
+      "notes": "Attitudes rebelles, atmosphère urbaine brute."
+    },
+    "Gothique": {
+      "substyles": [
+        "medieval_sombre",
+        "cimetiere_victorien",
+        "eglise_gothique"
+      ],
+      "notes": "Ambiance sombre et romantique, avec des éléments architecturaux médiévaux, victoriens ou religieux. Mettre l'accent sur un éclairage dramatique et des tenues élaborées."
     },
     "Boheme_Viking": {
       "substyles": [
-        "boheme_chic",
-        "viking_hall",
-        "viking_sea"
+        "boheme_chic_viking",
+        "hall_viking",
+        "mer_viking"
       ],
       "notes": "Ambiances cinématiques, accessoires contextuels (torches, capes, bateaux)."
     },
     "Automobile_Moto": {
       "substyles": [
-        "rally_raid",
+        "rallye_raid",
         "24h_mans",
-        "formula1_paddock",
+        "paddock_formule1",
         "moto_gp",
         "motocross",
         "biker"
       ],
-      "notes": "Changer véhicules, angles de vue, lumières jour/nuit."
+      "notes": "Changer les véhicules, les angles de caméra, l'éclairage jour/nuit."
     },
     "Photo_Mode_Minimaliste": {
       "substyles": [
@@ -98,24 +122,24 @@ export const STYLE_GUIDE = {
         "couleur_pastel",
         "pop_art_vibrant"
       ],
-      "notes": "Minimalisme + variantes pop-art, accessoires simples, fonds graphiques."
+      "notes": "Variations minimalisme + pop-art, accessoires simples, fonds graphiques."
     },
     "Photo": {
       "substyles": [
-        "studio_portrait",
-        "outdoor_lifestyle",
-        "travel_photography",
-        "street_photography",
-        "corporate_business",
-        "dramatic_bw",
-        "vintage_sepia",
-        "double_exposure",
-        "action_sport",
-        "environmental_portrait",
-        "golden_hour",
-        "blue_hour",
-        "high_speed_splash",
-        "natural_window_light"
+        "portrait_studio",
+        "lifestyle_exterieur",
+        "photographie_voyage",
+        "photographie_rue",
+        "corporate_affaires",
+        "nb_dramatique",
+        "sepia_vintage",
+        "double_exposition_artistique",
+        "sport_action",
+        "portrait_environnemental",
+        "lumiere_golden_hour",
+        "lumiere_blue_hour",
+        "haute_vitesse_eclaboussure",
+        "lumiere_naturelle_fenetre"
       ],
       "notes": "Capturer des moments réalistes, avec une lumière naturelle et des décors authentiques."
     },
@@ -136,7 +160,7 @@ export const STYLE_GUIDE = {
       "substyles": [
         "gatsby_1920s",
         "film_noir_1930s_40s",
-        "espionnage_cold_war",
+        "espionnage_guerre_froide",
         "rococo_baroque",
         "western",
         "annees_1950_60",
@@ -151,24 +175,33 @@ export const STYLE_GUIDE = {
         "science_fiction_cyberpunk",
         "post_apocalyptique"
       ],
-      "notes": "Varier par décennies, genres et époques. Chaque sous-style doit être cinématographique, avec accessoires et décors adaptés."
+      "notes": "Varier par décennies, genres et époques. Chaque sous-style doit être cinématique, avec des accessoires et des décors appropriés."
+    },
+    "Viking_Pirate": {
+      "substyles": [
+        "raid_marin_viking",
+        "crique_tresor_viking",
+        "festin_maison_longue_viking",
+        "explorateur_nordique"
+      ],
+      "notes": "Mélanger l'esthétique historique des Vikings avec les tropes classiques des pirates. Se concentrer sur l'action cinématique, les paysages spectaculaires et un équipement détaillé et usé."
     },
     "Navy_SEAL": {
       "substyles": [
-        "Airborne insertion",
-        "Amphibious landing",
-        "Combat diving",
-        "Port sabotage",
-        "Urban ops",
-        "Desert recon",
-        "Forest / jungle ops",
-        "Snow / mountain ops",
-        "Night raid",
-        "Ceremonial dress"
+        "insertion_aeroportee",
+        "debarquement_amphibie",
+        "plongee_combat",
+        "sabotage_portuaire",
+        "operations_urbaines",
+        "reconnaissance_desert",
+        "operations_foret_jungle",
+        "operations_neige_montagne",
+        "raid_nocturne",
+        "tenue_ceremonie"
       ],
-      "notes": "Hyper-realistic scenarios focusing on specific Navy SEAL missions and environments. Each sub-style requires accurate gear, settings, and operational context."
+      "notes": "Scénarios hyper-réalistes axés sur des missions et des environnements spécifiques des Navy SEALs. Chaque sous-style nécessite un équipement, des décors et un contexte opérationnel précis."
     }
   },
-  "usage": "scenographic_visuals",
-  "instruction": "Chaque style et sous-style doit générer des rendus cinématographiques ou photographiques, hyper-réalistes, avec variations systématiques pour éviter redondance. Respecter contexte visuel et accessoire cohérent."
+  "usage": "visuels_scenographiques",
+  "instruction": "Chaque style et sous-style doit générer des rendus cinématiques ou photographiques, hyper-réalistes, avec des variations systématiques pour éviter la redondance. Respecter le contexte visuel et les accessoires cohérents."
 };

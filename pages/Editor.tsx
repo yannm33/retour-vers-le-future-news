@@ -1,3 +1,4 @@
+
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
@@ -5,12 +6,12 @@
 import React, { useState, ChangeEvent, useRef, useEffect } from 'react';
 import { generateImage } from '../services/geminiService';
 import { getSpecializedPrompt } from '../services/promptLibrary';
-import { getDynamicEnhancements } from '../services/promptEnhancer';
-import { ALL_STYLES_CONFIG, translations, MAGAZINE_PROMPT_DETAILS, MAGAZINE_STYLES } from '../lib/constants';
+import { getDynamicEnhancements, buildPrompt } from '../services/promptEnhancer';
+import type { PhotoSettings } from '../services/promptEnhancer';
+import { ALL_STYLES_CONFIG, translations as T, MAGAZINE_PROMPT_DETAILS, MAGAZINE_STYLES } from '../lib/constants';
 import { useGenerationForm } from '../hooks/useGenerationForm';
 
 import Footer from '../components/Footer';
-import Header from '../components/shared/Header';
 import ImageGallery from '../components/ImageGallery';
 import ImagePreviewModal from '../components/shared/ImagePreviewModal';
 import MainControls from '../components/controls/MainControls';
@@ -27,11 +28,9 @@ export interface GeneratedImage {
     error?: string;
 }
 export type AppState = 'idle' | 'image-uploaded' | 'generating' | 'results-shown';
-export type Language = 'FR' | 'EN';
 
 function Editor() {
     // --- App State ---
-    const [language, setLanguage] = useState<Language>('FR');
     const [uploadedImage, setUploadedImage] = useState<string | null>(null);
     const [generatedImages, setGeneratedImages] = useState<GeneratedImage[]>([]);
     const [appState, setAppState] = useState<AppState>('idle');
@@ -46,7 +45,6 @@ function Editor() {
     } = formState;
 
     const fileInputRef = useRef<HTMLInputElement>(null);
-    const T = translations[language];
 
     // Effect to manage the global app state based on the status of generated images.
     useEffect(() => {
@@ -74,90 +72,85 @@ function Editor() {
         }
     };
     
-    const buildPrompt = () => {
+    const buildCreativePrompt = () => {
         const promptOptions = { aspectRatio, colorMode, renderQuality, upscale };
         const specializedPrompt = getSpecializedPrompt(style, subStyle, promptOptions);
         if (specializedPrompt) {
-            console.log("Using specialized prompt:", specializedPrompt);
+            console.log("Utilisation du prompt spécialisé :", specializedPrompt);
             return specializedPrompt;
         }
 
         const isMagazineCover = MAGAZINE_STYLES.includes(style);
         let promptParts: string[] = [];
 
-        // 1. Primary Goal
-        promptParts.push('//-- PRIMARY GOAL --');
+        // 1. Objectif Principal
+        promptParts.push('//-- OBJECTIF PRINCIPAL --');
         if (isMagazineCover) {
-            promptParts.push(`Generate a hyper-realistic magazine cover featuring the person from the provided photo. Their facial features and likeness must be faithfully represented.`);
+            promptParts.push(`Générer une couverture de magazine hyper-réaliste avec la personne de la photo fournie. Ses traits de visage et sa ressemblance doivent être fidèlement représentés.`);
         } else {
-            promptParts.push(`Generate a hyper-realistic image of the person in the provided photo, ensuring faithful representation of their facial features and likeness.`);
+            promptParts.push(`Générer une image hyper-réaliste de la personne sur la photo fournie, en assurant une représentation fidèle de ses traits de visage et de sa ressemblance.`);
         }
 
-        // 2. Style & Theme / Magazine Identity
+        // 2. Style & Thème / Identité du Magazine
         if (isMagazineCover) {
             const magazineDetails = MAGAZINE_PROMPT_DETAILS[style as keyof typeof MAGAZINE_PROMPT_DETAILS];
-            promptParts.push('//-- MAGAZINE & BRAND IDENTITY --');
-            promptParts.push(`The image must be a professional front cover for "${magazineDetails.masthead}".`);
-            promptParts.push(`Adhere to the brand's core aesthetic: ${magazineDetails.description}`);
+            promptParts.push('//-- MAGAZINE & IDENTITÉ DE MARQUE --');
+            promptParts.push(`L'image doit être une couverture professionnelle pour "${magazineDetails.masthead}".`);
+            promptParts.push(`Respecter l'esthétique de base de la marque : ${magazineDetails.description}`);
             
-            promptParts.push('//-- COVER THEME & COMPOSITION --');
+            promptParts.push('//-- THÈME & COMPOSITION DE LA COUVERTURE --');
             if (subStyle) {
-                promptParts.push(`The specific theme for this cover is: "${subStyle.replace(/_/g, ' ')}". Adapt the scene, clothing, lighting, and mood to perfectly match this theme.`);
+                promptParts.push(`Le thème spécifique pour cette couverture est : "${subStyle.replace(/_/g, ' ')}". Adapter la scène, les vêtements, l'éclairage et l'ambiance pour correspondre parfaitement à ce thème.`);
             }
 
-            promptParts.push('//-- TYPOGRAPHY & LAYOUT --');
-            promptParts.push(`The composition must include a prominent, realistic masthead (the magazine title: "${magazineDetails.masthead}").`);
-            promptParts.push(`Incorporate several smaller cover lines with plausible-looking but ultimately unreadable placeholder text (similar to 'lorem ipsum') to complete the professional cover layout.`);
-            promptParts.push(`The typography style must match the magazine's established branding.`);
+            promptParts.push('//-- TYPOGRAPHIE & MISE EN PAGE --');
+            promptParts.push(`La composition doit inclure un titre de magazine (masthead) proéminent et réaliste : "${magazineDetails.masthead}".`);
+            promptParts.push(`Incorporer plusieurs titres secondaires avec un texte de remplissage plausible mais illisible (similaire à 'lorem ipsum') pour compléter la mise en page professionnelle de la couverture.`);
+            promptParts.push(`Le style de la typographie doit correspondre à l'image de marque établie du magazine.`);
         } else {
             const styleInfo = ALL_STYLES_CONFIG[style as keyof typeof ALL_STYLES_CONFIG];
-            promptParts.push('//-- STYLE & THEME --');
-            promptParts.push(`Main Style: "${style}".`);
+            promptParts.push('//-- STYLE & THÈME --');
+            promptParts.push(`Style Principal : "${style}".`);
             if (subStyle) {
-                promptParts.push(`Specific Variation: "${subStyle.replace(/_/g, ' ')}".`);
+                promptParts.push(`Variation Spécifique : "${subStyle.replace(/_/g, ' ')}".`);
             }
             if (styleInfo && styleInfo.notes) {
-                promptParts.push(`Creative Direction: "${styleInfo.notes}".`);
+                promptParts.push(`Direction Créative : "${styleInfo.notes}".`);
             }
         }
 
-        // 3. Technical & Camera Settings
-        promptParts.push('//-- TECHNICAL & CAMERA --');
-        promptParts.push(`Aspect Ratio: ${aspectRatio}`);
-        promptParts.push(`Color Mode: ${colorMode}`);
-        promptParts.push(`Render Quality: ${renderQuality}`);
-        promptParts.push(`Upscale Target: ${upscale}`);
-        if (focale !== 'Auto') promptParts.push(`Focal Length: approximately ${focale}mm.`);
-        if (ouverture !== 'Auto') promptParts.push(`Aperture: f/${ouverture}.`);
-        if (vitesse !== 'Auto') promptParts.push(`Shutter Speed: 1/${vitesse}s.`);
-        if (photoGrain !== 'Aucun') promptParts.push(`Photographic Grain: '${photoGrain}'.`);
+        // 3. Réglages Techniques & Caméra (créatifs uniquement)
+        promptParts.push('//-- TECHNIQUE & CAMÉRA --');
+        promptParts.push(`Ratio d'aspect : ${aspectRatio}`);
+        promptParts.push(`Qualité de rendu : ${renderQuality}`);
+        if (photoGrain !== 'Aucun') promptParts.push(`Grain photographique : '${photoGrain}'.`);
         
-        // 4. Creative Details
+        // 4. Détails Créatifs
         const creativeDetails: string[] = [];
-        if (expression !== 'Neutre') creativeDetails.push(`Expression: '${expression}'.`);
-        if (framing !== 'Plan en pied') creativeDetails.push(`Framing: '${framing}'.`);
-        if (hairColor !== 'Noir profond') creativeDetails.push(`Hair Color: '${hairColor}'.`);
-        if (accessories !== 'Aucun') creativeDetails.push(`Accessories: '${accessories}'.`);
-        if (lutsCinema !== 'Aucun') creativeDetails.push(`Cinematic Color Grade (LUT): '${lutsCinema}'.`);
-        if (dirt !== 'Aucune') creativeDetails.push(`Environmental Effects: '${dirt}'.`);
-        if (sweat) creativeDetails.push(`Add beads of sweat to the person's skin.`);
-        if (speedEffect) creativeDetails.push(`Incorporate a motion blur or 'speed effect' to suggest movement.`);
+        if (expression !== 'Neutre') creativeDetails.push(`Expression : '${expression}'.`);
+        if (framing !== 'Plan pied') creativeDetails.push(`Cadrage : '${framing}'.`);
+        if (hairColor !== 'Noir Profond') creativeDetails.push(`Couleur de cheveux : '${hairColor}'.`);
+        if (accessories !== 'Aucun') creativeDetails.push(`Accessoires : '${accessories}'.`);
+        if (lutsCinema !== 'Aucun') creativeDetails.push(`Étalonnage couleur cinématique (LUT) : '${lutsCinema}'.`);
+        if (dirt !== 'Aucune') creativeDetails.push(`Effets environnementaux : '${dirt}'.`);
+        if (sweat) creativeDetails.push(`Ajouter des perles de sueur sur la peau de la personne.`);
+        if (speedEffect) creativeDetails.push(`Incorporer un flou de mouvement ou un 'effet de vitesse' pour suggérer le mouvement.`);
         
         if(creativeDetails.length > 0) {
-            promptParts.push('//-- CREATIVE DETAILS --');
+            promptParts.push('//-- DÉTAILS CRÉATIFS --');
             promptParts.push(...creativeDetails);
         }
 
-        // 5. User Override
+        // 5. Surcharge Utilisateur
         if (customPrompt) {
-            promptParts.push('//-- USER OVERRIDE --');
-            promptParts.push(`Follow these custom instructions carefully: "${customPrompt}".`);
+            promptParts.push('//-- CONSIGNE UTILISATEUR --');
+            promptParts.push(`Suivre attentivement ces instructions personnalisées : "${customPrompt}".`);
         }
         
         // 6. Signature
         if (signatureOn && signature) {
             promptParts.push('//-- SIGNATURE --');
-            promptParts.push(`Subtly embed the signature or watermark '${signature}' in a lower corner of the image.`);
+            promptParts.push(`Incruster subtilement la signature ou le filigrane '${signature}' dans un coin inférieur de l'image.`);
         }
 
         return promptParts.join('\n');
@@ -166,7 +159,14 @@ function Editor() {
     const handleGenerateClick = async () => {
         if (!uploadedImage) return;
 
-        const basePrompt = buildPrompt();
+        const basePrompt = buildCreativePrompt();
+        const settings: PhotoSettings = {
+            focalLength: focale !== 'Auto' ? `${focale}mm` : undefined,
+            aperture: ouverture !== 'Auto' ? `f/${ouverture}` : undefined,
+            shutterSpeed: vitesse !== 'Auto' ? `1/${vitesse}s` : undefined,
+            resolution: upscale,
+            colorMode: colorMode === 'N&B' ? 'b&w' : 'color',
+        };
         
         const initialImages: GeneratedImage[] = Array.from({ length: formState.numberOfImages }, (_, i) => ({ id: i, status: 'pending' }));
         setGeneratedImages(initialImages); // This will trigger the useEffect
@@ -176,16 +176,17 @@ function Editor() {
             try {
                 // Get unique artistic direction for this specific image
                 const dynamicAdditions = getDynamicEnhancements(style, subStyle);
-                const finalPrompt = `${basePrompt}\n\n//-- UNIQUE ARTISTIC DIRECTION FOR THIS IMAGE --\n${dynamicAdditions}`;
+                const userPrompt = `${basePrompt}\n\n//-- DIRECTION ARTISTIQUE UNIQUE POUR CETTE IMAGE --\n${dynamicAdditions}`;
+                const finalPrompt = buildPrompt(userPrompt, settings);
                 
-                console.log(`Generating image #${image.id} with unique prompt:`, finalPrompt);
+                console.log(`Génération de l'image #${image.id} avec un prompt unique :`, finalPrompt);
                 const resultUrl = await generateImage(uploadedImage, finalPrompt);
                 
                 setGeneratedImages(prev => prev.map(img => img.id === image.id ? { ...img, status: 'done', url: resultUrl } : img));
             } catch (err) {
-                const errorMessage = err instanceof Error ? err.message : "An unknown error occurred.";
+                const errorMessage = err instanceof Error ? err.message : "Une erreur inconnue est survenue.";
                 setGeneratedImages(prev => prev.map(img => img.id === image.id ? { ...img, status: 'error', error: errorMessage } : img));
-                console.error(`Failed to generate image #${image.id}:`, err);
+                console.error(`Échec de la génération de l'image #${image.id}:`, err);
             }
         }
     };
@@ -193,10 +194,19 @@ function Editor() {
     const handleRegenerateImage = async (imageId: number) => {
         if (!uploadedImage) return;
 
-        const basePrompt = buildPrompt();
+        const basePrompt = buildCreativePrompt();
+        const settings: PhotoSettings = {
+            focalLength: focale !== 'Auto' ? `${focale}mm` : undefined,
+            aperture: ouverture !== 'Auto' ? `f/${ouverture}` : undefined,
+            shutterSpeed: vitesse !== 'Auto' ? `1/${vitesse}s` : undefined,
+            resolution: upscale,
+            colorMode: colorMode === 'N&B' ? 'b&w' : 'color',
+        };
+
         // Generate new, unique enhancements for the regeneration
         const dynamicAdditions = getDynamicEnhancements(style, subStyle);
-        const finalPrompt = `${basePrompt}\n\n//-- UNIQUE ARTISTIC DIRECTION FOR THIS IMAGE --\n${dynamicAdditions}`;
+        const userPrompt = `${basePrompt}\n\n//-- DIRECTION ARTISTIQUE UNIQUE POUR CETTE IMAGE --\n${dynamicAdditions}`;
+        const finalPrompt = buildPrompt(userPrompt, settings);
 
         // Set just this image to pending
         setGeneratedImages(prev =>
@@ -208,7 +218,7 @@ function Editor() {
         );
 
         try {
-            console.log(`Regenerating image #${imageId} with unique prompt:`, finalPrompt);
+            console.log(`Régénération de l'image #${imageId} avec un prompt unique :`, finalPrompt);
             const resultUrl = await generateImage(uploadedImage, finalPrompt);
             setGeneratedImages(prev =>
                 prev.map(img =>
@@ -217,7 +227,7 @@ function Editor() {
             );
         } catch (err) {
             const errorMessage =
-                err instanceof Error ? err.message : 'An unknown error occurred.';
+                err instanceof Error ? err.message : 'Une erreur inconnue est survenue.';
             setGeneratedImages(prev =>
                 prev.map(img =>
                     img.id === imageId
@@ -225,7 +235,7 @@ function Editor() {
                         : img
                 )
             );
-            console.error(`Failed to regenerate image #${imageId}:`, err);
+            console.error(`Échec de la régénération de l'image #${imageId}:`, err);
         }
     };
 
@@ -258,7 +268,6 @@ function Editor() {
     return (
         <main className="bg-gradient-to-t from-orange-900 via-orange-500 to-orange-200 text-neutral-800 min-h-screen w-full flex flex-col items-center p-4 font-sans selection:bg-amber-500 selection:text-black">
             <div className="w-full max-w-screen-2xl mx-auto z-10 relative">
-                <Header language={language} setLanguage={setLanguage} T={T} />
                 <header className="text-center my-6 md:my-8">
                     <h1 className="text-4xl md:text-5xl font-bold text-neutral-900 uppercase tracking-widest">{T.title}</h1>
                     <p className="text-neutral-700 mt-2 text-sm uppercase tracking-widest">{T.subtitle}</p>
@@ -280,7 +289,6 @@ function Editor() {
                         <MainControls
                             formState={formState}
                             T={T}
-                            language={language}
                             handleImageUpload={handleImageUpload}
                             fileInputRef={fileInputRef}
                             handleGenerateClick={handleGenerateClick}
@@ -302,7 +310,7 @@ function Editor() {
                     </div>
 
                     {/* Right Column */}
-                    <SettingsPanel formState={formState} T={T} language={language} />
+                    <SettingsPanel formState={formState} T={T} />
                 </div>
             </div>
 

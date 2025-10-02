@@ -1,3 +1,4 @@
+
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
@@ -15,10 +16,10 @@ export const useGenerationForm = () => {
     const [focale, setFocale] = useState<number | 'Auto'>('Auto');
     const [ouverture, setOuverture] = useState<number | 'Auto'>('Auto');
     const [vitesse, setVitesse] = useState<number | 'Auto'>('Auto');
-    const [hairColor, setHairColor] = useState('Noir profond');
+    const [hairColor, setHairColor] = useState('Noir Profond');
     const [expression, setExpression] = useState('Neutre');
     const [accessories, setAccessories] = useState('Aucun');
-    const [framing, setFraming] = useState('Plan en pied');
+    const [framing, setFraming] = useState('Plan pied');
     const [lutsCinema, setLutsCinema] = useState('Aucun');
     const [dirt, setDirt] = useState('Aucune');
     const [photoGrain, setPhotoGrain] = useState('Aucun');
@@ -27,7 +28,7 @@ export const useGenerationForm = () => {
     const [signature, setSignature] = useState('@PIXELSHOOT');
     const [signatureOn, setSignatureOn] = useState(true);
     const [aspectRatio, setAspectRatio] = useState('1:1');
-    const [renderQuality, setRenderQuality] = useState<RenderQuality>('UHD (Réalisme)');
+    const [renderQuality, setRenderQuality] = useState<RenderQuality>('UHD (RÉALISME)');
 
     useEffect(() => {
         setSubStyle('');

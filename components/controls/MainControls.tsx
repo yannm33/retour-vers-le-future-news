@@ -1,3 +1,4 @@
+
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
@@ -6,9 +7,9 @@ import React from 'react';
 import { IconUpload, IconLoader, IconPlayerPlay } from '@tabler/icons-react';
 import { ControlSection } from './shared/ControlSection';
 import { StyledSelect } from './shared/StyledSelect';
-import { STYLES, STYLE_TRANSLATIONS, SUBSTYLE_TRANSLATIONS } from '../../lib/constants';
+import { STYLES, SUBSTYLE_TRANSLATIONS } from '../../lib/constants';
 
-const MainControls = ({ formState, T, language, handleImageUpload, fileInputRef, handleGenerateClick, isLoading, uploadedImage, availableSubStyles }) => {
+const MainControls = ({ formState, T, handleImageUpload, fileInputRef, handleGenerateClick, isLoading, uploadedImage, availableSubStyles }) => {
     const { 
         numberOfImages, setNumberOfImages,
         style, setStyle,
@@ -43,13 +44,13 @@ const MainControls = ({ formState, T, language, handleImageUpload, fileInputRef,
             <div className="grid grid-cols-2 gap-4">
                 <ControlSection title={T.style}>
                     <StyledSelect value={style} onChange={e => setStyle(e.target.value)}>
-                        {STYLES.map(s => <option key={s} value={s}>{(STYLE_TRANSLATIONS[s] && STYLE_TRANSLATIONS[s][language]) || s}</option>)}
+                        {STYLES.map(s => <option key={s} value={s}>{s}</option>)}
                     </StyledSelect>
                 </ControlSection>
                 <ControlSection title={T.substyle}>
                     <StyledSelect value={subStyle} onChange={e => setSubStyle(e.target.value)} disabled={!availableSubStyles || availableSubStyles.length === 0}>
                         <option value="">{T.chooseSubstyle}</option>
-                        {availableSubStyles && availableSubStyles.map(s => <option key={s} value={s}>{(SUBSTYLE_TRANSLATIONS[s] && SUBSTYLE_TRANSLATIONS[s][language]) || s.replace(/_/g, ' ')}</option>)}
+                        {availableSubStyles && availableSubStyles.map(s => <option key={s} value={s}>{SUBSTYLE_TRANSLATIONS[s] || s.replace(/_/g, ' ')}</option>)}
                     </StyledSelect>
                 </ControlSection>
             </div>
