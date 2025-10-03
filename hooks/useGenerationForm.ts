@@ -10,6 +10,7 @@ export const useGenerationForm = () => {
     const [style, setStyle] = useState('photos'); // Use key instead of name
     const [subStyle, setSubStyle] = useState(''); // Use key instead of name
     const [customPrompt, setCustomPrompt] = useState('');
+    const [provider, setProvider] = useState<'google' | 'ideogram' | 'revart'>('google');
     const [colorMode, setColorMode] = useState<ColorMode>('Couleur');
     const [upscale, setUpscale] = useState<Upscale>('8K');
     const [focale, setFocale] = useState('Auto');
@@ -39,8 +40,6 @@ export const useGenerationForm = () => {
     useEffect(() => {
         if (subStyle === 'nb_dramatique') {
             setColorMode('N&B');
-        } else {
-            setColorMode('Couleur');
         }
     }, [subStyle]);
 
@@ -49,6 +48,7 @@ export const useGenerationForm = () => {
         style, setStyle,
         subStyle, setSubStyle,
         customPrompt, setCustomPrompt,
+        provider, setProvider,
         colorMode, setColorMode,
         upscale, setUpscale,
         focale, setFocale,

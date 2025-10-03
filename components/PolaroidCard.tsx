@@ -2,10 +2,9 @@
  * @license
  * SPDX-License-Identifier: Apache-2.0
 */
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DraggableCardContainer, DraggableCardBody } from './ui/draggable-card';
 import { cn } from '../lib/utils';
-import type { PanInfo } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
 
 type ImageStatus = 'pending' | 'done' | 'error';
@@ -16,7 +15,7 @@ interface PolaroidCardProps {
     status: ImageStatus;
     error?: string;
     dragConstraintsRef?: React.RefObject<HTMLElement>;
-    onShake?: (caption: string) => void;
+    onRegenerate?: (caption: string) => void;
     onDownload?: (caption: string) => void;
     isMobile?: boolean;
 }
@@ -64,11 +63,9 @@ const Placeholder = () => {
 };
 
 
-const PolaroidCard: React.FC<PolaroidCardProps> = ({ imageUrl, caption, status, error, dragConstraintsRef, onShake, onDownload, isMobile }) => {
+const PolaroidCard: React.FC<PolaroidCardProps> = ({ imageUrl, caption, status, error, dragConstraintsRef, onRegenerate, onDownload, isMobile }) => {
     const [isDeveloped, setIsDeveloped] = useState(false);
     const [isImageLoaded, setIsImageLoaded] = useState(false);
-    const lastShakeTime = useRef(0);
-    const lastVelocity = useRef({ x: 0, y: 0 });
 
     // Reset states when the image URL changes or status goes to pending.
     useEffect(() => {
@@ -91,35 +88,6 @@ const PolaroidCard: React.FC<PolaroidCardProps> = ({ imageUrl, caption, status, 
             return () => clearTimeout(timer);
         }
     }, [isImageLoaded]);
-
-    const handleDragStart = () => {
-        // Reset velocity on new drag to prevent false triggers from old data
-        lastVelocity.current = { x: 0, y: 0 };
-    };
-
-    const handleDrag = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-        if (!onShake || isMobile) return;
-
-        const velocityThreshold = 1500; // Require a high velocity to be considered a "shake".
-        const shakeCooldown = 2000; // 2 seconds cooldown to prevent spamming.
-
-        const { x, y } = info.velocity;
-        const { x: prevX, y: prevY } = lastVelocity.current;
-        const now = Date.now();
-
-        // A true "shake" is a rapid movement AND a sharp change in direction.
-        // We detect this by checking if the velocity is high and if its direction
-        // has reversed from the last frame (i.e., the dot product is negative).
-        const magnitude = Math.sqrt(x * x + y * y);
-        const dotProduct = (x * prevX) + (y * prevY);
-
-        if (magnitude > velocityThreshold && dotProduct < 0 && (now - lastShakeTime.current > shakeCooldown)) {
-            lastShakeTime.current = now;
-            onShake(caption);
-        }
-
-        lastVelocity.current = { x, y };
-    };
 
     const cardInnerContent = (
         <>
@@ -146,11 +114,11 @@ const PolaroidCard: React.FC<PolaroidCardProps> = ({ imageUrl, caption, status, 
                                     </svg>
                                 </button>
                             )}
-                             {isMobile && onShake && (
+                             {isMobile && onRegenerate && (
                                 <button
                                     onClick={(e) => {
                                         e.stopPropagation();
-                                        onShake(caption);
+                                        onRegenerate(caption);
                                     }}
                                     className="p-2 bg-black/50 rounded-full text-white hover:bg-black/75 focus:outline-none focus:ring-2 focus:ring-white"
                                     aria-label={`Regenerate image for ${caption}`}
@@ -212,8 +180,6 @@ const PolaroidCard: React.FC<PolaroidCardProps> = ({ imageUrl, caption, status, 
             <DraggableCardBody 
                 className="bg-neutral-100 dark:bg-neutral-100 !p-4 !pb-16 flex flex-col items-center justify-start aspect-[3/4] w-80 max-w-full"
                 dragConstraintsRef={dragConstraintsRef}
-                onDragStart={handleDragStart}
-                onDrag={handleDrag}
             >
                 {cardInnerContent}
             </DraggableCardBody>

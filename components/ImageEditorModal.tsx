@@ -14,7 +14,7 @@ interface ImageEditorModalProps {
     image: GeneratedImage | null;
     onClose: () => void;
     onSave: (imageId: number, newUrl: string) => void;
-    apiKey?: string;
+    apiKey: string;
 }
 
 const ImageEditorModal: React.FC<ImageEditorModalProps> = ({ image, onClose, onSave, apiKey }) => {

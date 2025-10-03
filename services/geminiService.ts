@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 import { GoogleGenAI, Modality } from "@google/genai";
-import type { GenerateContentResponse, GenerateContentParameters, VideosOperation } from "@google/genai";
+import type { GenerateContentResponse, GenerateContentParameters } from "@google/genai";
 
-// FIX: Updated ApiKeys interface to manage keys for Gemini, Ideogram, and RevArt as per user request.
+// --- Type Definitions ---
 export interface ApiKeys {
-    gemini: string;
+    google: string;
     ideogram: string;
     revart: string;
 }
@@ -35,15 +35,14 @@ function processGeminiResponse(response: GenerateContentResponse): string {
 /**
  * A generic wrapper for the Gemini API call that includes a retry mechanism for internal server errors.
  * @param request The complete request payload for the generateContent API.
- * @param apiKey An optional user-provided API key.
+ * @param apiKey The user-provided Google API key.
  * @returns The GenerateContentResponse from the API.
  */
-async function callGeminiApi(request: GenerateContentParameters, apiKey?: string): Promise<GenerateContentResponse> {
-    const finalApiKey = apiKey || process.env.API_KEY;
-    if (!finalApiKey) {
+async function callGeminiApi(request: GenerateContentParameters, apiKey: string): Promise<GenerateContentResponse> {
+    if (!apiKey) {
         throw new Error("Google API key is not configured.");
     }
-    const ai = new GoogleGenAI({ apiKey: finalApiKey });
+    const ai = new GoogleGenAI({ apiKey });
     const maxRetries = 3;
     const initialDelay = 1000;
 
@@ -72,12 +71,10 @@ async function callGeminiApi(request: GenerateContentParameters, apiKey?: string
 /**
  * Generates an image using Google's Gemini or Imagen models.
  */
-async function generateWithGemini(imageDataUrl: string | null, prompt: string, apiKey?: string): Promise<string> {
-    const finalApiKey = apiKey || process.env.API_KEY;
-    if (!finalApiKey) {
+async function generateWithGemini(imageDataUrl: string | null, prompt: string, apiKey: string): Promise<string> {
+    if (!apiKey) {
         throw new Error("Google API key is not configured.");
     }
-    const ai = new GoogleGenAI({ apiKey: finalApiKey });
 
     // Case 1: Image-to-Image generation/modification (using the provided image)
     if (imageDataUrl) {
@@ -112,6 +109,7 @@ async function generateWithGemini(imageDataUrl: string | null, prompt: string, a
     }
     // Case 2: Text-to-Image generation (no image provided)
     else {
+        const ai = new GoogleGenAI({ apiKey });
         const aspectRatioMatch = prompt.match(/Ratio d'aspect : ([\d:]+)/);
         const aspectRatio = aspectRatioMatch ? aspectRatioMatch[1] : '1:1';
 
@@ -145,15 +143,60 @@ async function generateWithGemini(imageDataUrl: string | null, prompt: string, a
 }
 
 /**
+ * Placeholder for Ideogram image generation.
+ */
+async function generateWithIdeogram(imageDataUrl: string | null, prompt: string, apiKey: string): Promise<string> {
+    if (!apiKey) {
+        throw new Error("Ideogram API key is not configured.");
+    }
+    console.log("Routing to Ideogram with prompt:", prompt);
+    // TODO: Implement actual API call to Ideogram
+    throw new Error("Ideogram generation is not yet implemented.");
+}
+
+/**
+ * Placeholder for RevArt image generation.
+ */
+async function generateWithRevArt(imageDataUrl: string | null, prompt: string, apiKey: string): Promise<string> {
+    if (!apiKey) {
+        throw new Error("RevArt API key is not configured.");
+    }
+    console.log("Routing to RevArt with prompt:", prompt);
+    // TODO: Implement actual API call to RevArt
+    throw new Error("RevArt generation is not yet implemented.");
+}
+
+
+/**
  * Main image generation router.
- * Calls the Gemini generation function.
+ * Calls the appropriate generation function based on the selected provider.
  */
 export async function generateImage(
     imageDataUrl: string | null,
     prompt: string,
-    apiKey?: string,
+    provider: 'google' | 'ideogram' | 'revart',
+    apiKeys?: ApiKeys,
 ): Promise<string> {
-    return generateWithGemini(imageDataUrl, prompt, apiKey);
+    if (!apiKeys) {
+        throw new Error("API keys are missing.");
+    }
+
+    switch (provider) {
+        case 'google':
+            const googleKey = apiKeys?.google;
+            if (!googleKey) throw new Error("A Google API key is required. Please set it in the API key manager.");
+            return generateWithGemini(imageDataUrl, prompt, googleKey);
+        case 'ideogram':
+            const ideogramKey = apiKeys?.ideogram;
+            if (!ideogramKey) throw new Error("An Ideogram API key is required. Please set it in the API key manager.");
+            return generateWithIdeogram(imageDataUrl, prompt, ideogramKey);
+        case 'revart':
+            const revartKey = apiKeys?.revart;
+            if (!revartKey) throw new Error("A RevArt API key is required. Please set it in the API key manager.");
+            return generateWithRevArt(imageDataUrl, prompt, revartKey);
+        default:
+            throw new Error(`Unknown or unsupported provider: ${provider}`);
+    }
 }
 
 
@@ -165,7 +208,7 @@ export async function editImageWithMask(
     originalImageUrl: string,
     maskImageUrl: string,
     prompt: string,
-    apiKey?: string,
+    apiKey: string,
 ): Promise<string> {
     const originalMatch = originalImageUrl.match(/^data:(image\/\w+);base64,(.*)$/);
     const maskMatch = maskImageUrl.match(/^data:(image\/\w+);base64,(.*)$/);
@@ -205,70 +248,4 @@ export async function editImageWithMask(
         const errorMessage = error instanceof Error ? error.message : String(error);
         throw new Error(`The AI model failed to edit the image. Details: ${errorMessage}`);
     }
-}
-
-/**
- * Generates a video using Google's Veo model.
- * @param prompt The text prompt for the video.
- * @param imageDataUrl An optional base64 image data URL to use as a starting point.
- * @param onProgress A callback function to report progress updates.
- * @param apiKey An optional user-provided API key.
- * @returns A promise that resolves to the URL of the generated video.
- */
-export async function generateVideo(
-    prompt: string,
-    imageDataUrl: string | null,
-    onProgress: (key: string) => void,
-    apiKey?: string,
-): Promise<string> {
-    const finalApiKey = apiKey || process.env.API_KEY;
-    if (!finalApiKey) {
-        throw new Error("Google API key is not configured.");
-    }
-    const ai = new GoogleGenAI({ apiKey: finalApiKey });
-
-    onProgress('videoProgress_initializing');
-
-    let image;
-    if (imageDataUrl) {
-        const match = imageDataUrl.match(/^data:(image\/\w+);base64,(.*)$/);
-        if (!match) {
-            throw new Error("Invalid image data URL format.");
-        }
-        const [, mimeType, base64Data] = match;
-        image = { imageBytes: base64Data, mimeType };
-    }
-
-    let operation: VideosOperation = await ai.models.generateVideos({
-        model: 'veo-2.0-generate-001',
-        prompt: prompt,
-        ...(image && { image }), // Conditionally add image if it exists
-        config: {
-            numberOfVideos: 1
-        }
-    });
-
-    onProgress('videoProgress_polling');
-
-    // Poll for the result
-    while (!operation.done) {
-        await new Promise(resolve => setTimeout(resolve, 10000));
-        operation = await ai.operations.getVideosOperation({ operation: operation });
-    }
-
-    onProgress('videoProgress_almostDone');
-
-    const downloadLink = operation.response?.generatedVideos?.[0]?.video?.uri;
-
-    if (!downloadLink) {
-        throw new Error("Video generation completed, but no download link was provided.");
-    }
-
-    // Fetch the video content and create a blob URL
-    const response = await fetch(`${downloadLink}&key=${finalApiKey}`);
-    if (!response.ok) {
-        throw new Error(`Failed to download the generated video. Status: ${response.status}`);
-    }
-    const videoBlob = await response.blob();
-    return URL.createObjectURL(videoBlob);
 }

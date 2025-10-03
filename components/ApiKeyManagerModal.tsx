@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 import React, { useState, useEffect } from 'react';
-import { IconX, IconLock } from '@tabler/icons-react';
+import { IconX, IconDeviceFloppy } from '@tabler/icons-react';
 import { ApiKeys } from '../services/geminiService';
 import { useLanguage } from '../contexts/LanguageContext';
 
@@ -11,18 +11,18 @@ interface ApiKeyManagerModalProps {
     isOpen: boolean;
     onClose: () => void;
     currentKeys: ApiKeys;
-    onSave: (newKeys: Partial<ApiKeys>) => void;
+    onSave: (newKeys: ApiKeys) => void;
 }
 
 const ApiKeyManagerModal: React.FC<ApiKeyManagerModalProps> = ({ isOpen, onClose, currentKeys, onSave }) => {
     const { t } = useLanguage();
-    const [geminiKey, setGeminiKey] = useState('');
+    const [googleKey, setGoogleKey] = useState('');
     const [ideogramKey, setIdeogramKey] = useState('');
     const [revartKey, setRevartKey] = useState('');
 
     useEffect(() => {
         if (isOpen) {
-            setGeminiKey(currentKeys.gemini);
+            setGoogleKey(currentKeys.google);
             setIdeogramKey(currentKeys.ideogram);
             setRevartKey(currentKeys.revart);
         }
@@ -32,8 +32,9 @@ const ApiKeyManagerModal: React.FC<ApiKeyManagerModalProps> = ({ isOpen, onClose
         return null;
     }
 
-    const handleLock = (keyName: keyof ApiKeys, value: string) => {
-        onSave({ [keyName]: value });
+    const handleSave = () => {
+        onSave({ google: googleKey, ideogram: ideogramKey, revart: revartKey });
+        onClose();
     };
 
     return (
@@ -55,63 +56,52 @@ const ApiKeyManagerModal: React.FC<ApiKeyManagerModalProps> = ({ isOpen, onClose
                     {t('apiKeyManagerDesc')}
                 </p>
 
-                <div className="flex flex-col gap-5">
-                    {/* Gemini Key */}
+                <div className="flex flex-col gap-4">
                     <div className="flex flex-col gap-2">
-                        <label htmlFor="gemini-key" className="font-semibold text-neutral-300">{t('googleApiKey')}</label>
-                        <div className="flex gap-2">
-                            <input 
-                                id="gemini-key"
-                                type="password" 
-                                value={geminiKey} 
-                                onChange={e => setGeminiKey(e.target.value)}
-                                placeholder={t('googleApiPlaceholder')}
-                                className="bg-neutral-800 border border-neutral-700 rounded-md p-2 text-white w-full focus:outline-none focus:ring-2 focus:ring-amber-500"
-                            />
-                            <button onClick={() => handleLock('gemini', geminiKey)} title={t('lock')} className="bg-amber-500 hover:bg-amber-600 text-black font-bold p-2.5 rounded-lg flex items-center justify-center">
-                                <IconLock size={20} />
-                            </button>
-                        </div>
+                        <label htmlFor="google-key" className="font-semibold text-neutral-300">{t('googleGeminiApiKey')}</label>
+                        <input 
+                            id="google-key"
+                            type="password" 
+                            value={googleKey} 
+                            onChange={e => setGoogleKey(e.target.value)}
+                            placeholder={t('googleApiPlaceholder')}
+                            className="bg-neutral-800 border border-neutral-700 rounded-md p-2 text-white w-full focus:outline-none focus:ring-2 focus:ring-amber-500"
+                        />
+                        <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" className="text-xs text-white font-bold underline self-end hover:text-amber-400 transition-colors">
+                            {t('getApiKeyLink')}
+                        </a>
                     </div>
-                    {/* Ideogram Key */}
-                    <div className="flex flex-col gap-2">
+                     <div className="flex flex-col gap-2">
                         <label htmlFor="ideogram-key" className="font-semibold text-neutral-300">{t('ideogramApiKey')}</label>
-                        <div className="flex gap-2">
-                            <input 
-                                id="ideogram-key"
-                                type="password" 
-                                value={ideogramKey} 
-                                onChange={e => setIdeogramKey(e.target.value)}
-                                placeholder={t('ideogramApiPlaceholder')}
-                                className="bg-neutral-800 border border-neutral-700 rounded-md p-2 text-white w-full focus:outline-none focus:ring-2 focus:ring-amber-500"
-                            />
-                            <button onClick={() => handleLock('ideogram', ideogramKey)} title={t('lock')} className="bg-amber-500 hover:bg-amber-600 text-black font-bold p-2.5 rounded-lg flex items-center justify-center">
-                                <IconLock size={20} />
-                            </button>
-                        </div>
+                        <input 
+                            id="ideogram-key"
+                            type="password" 
+                            value={ideogramKey} 
+                            onChange={e => setIdeogramKey(e.target.value)}
+                            placeholder={t('ideogramApiPlaceholder')}
+                            className="bg-neutral-800 border border-neutral-700 rounded-md p-2 text-white w-full focus:outline-none focus:ring-2 focus:ring-amber-500"
+                        />
                     </div>
-                    {/* RevArt Key */}
-                    <div className="flex flex-col gap-2">
-                        <label htmlFor="revart-key" className="font-semibold text-neutral-300">{t('revartApiKey')}</label>
-                        <div className="flex gap-2">
-                            <input 
-                                id="revart-key"
-                                type="password" 
-                                value={revartKey} 
-                                onChange={e => setRevartKey(e.target.value)}
-                                placeholder={t('revartApiPlaceholder')}
-                                className="bg-neutral-800 border border-neutral-700 rounded-md p-2 text-white w-full focus:outline-none focus:ring-2 focus:ring-amber-500"
-                            />
-                             <button onClick={() => handleLock('revart', revartKey)} title={t('lock')} className="bg-amber-500 hover:bg-amber-600 text-black font-bold p-2.5 rounded-lg flex items-center justify-center">
-                                <IconLock size={20} />
-                            </button>
-                        </div>
+                     <div className="flex flex-col gap-2">
+                        <label htmlFor="revart-key" className="font-semibold text-neutral-300">{t('revArtApiKey')}</label>
+                        <input 
+                            id="revart-key"
+                            type="password" 
+                            value={revartKey} 
+                            onChange={e => setRevartKey(e.target.value)}
+                            placeholder={t('revArtApiPlaceholder')}
+                            className="bg-neutral-800 border border-neutral-700 rounded-md p-2 text-white w-full focus:outline-none focus:ring-2 focus:ring-amber-500"
+                        />
                     </div>
                 </div>
 
-                <div className="flex justify-end mt-4">
+
+                <div className="flex justify-end gap-3 mt-4">
                      <button onClick={onClose} className="bg-neutral-700 hover:bg-neutral-600 text-white font-bold py-2 px-4 rounded-lg">
-                        {t('close')}
+                        {t('cancel')}
+                    </button>
+                    <button onClick={handleSave} className="bg-amber-500 hover:bg-amber-600 text-black font-bold py-2 px-4 rounded-lg flex items-center gap-2">
+                        <IconDeviceFloppy size={20} /> {t('lockApiKeys')}
                     </button>
                 </div>
             </div>

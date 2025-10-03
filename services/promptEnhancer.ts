@@ -29,30 +29,6 @@ export function buildPrompt(userPrompt: string, settings: PhotoSettings): string
     return parts.join('\n');
 }
 
-// FIX: Export the getDynamicEnhancements function to resolve import error.
-/**
- * Generates a string of dynamic, randomized creative enhancements to ensure prompt variety.
- * @param style The main style category.
- * @param subStyle The specific sub-style selected.
- * @returns A string containing randomized artistic directions.
- */
-export function getDynamicEnhancements(style: string, subStyle: string): string {
-    const enhancements: string[] = [];
-
-    // Select a random element from each creative library
-    enhancements.push(`Angle de caméra : ${selectRandom(CAMERA_ANGLES)}.`);
-    enhancements.push(`Style d'éclairage : ${selectRandom(LIGHTING_STYLES)}.`);
-    enhancements.push(`Atmosphère : ${selectRandom(ATMOSPHERES)}.`);
-    
-    // Check for a specific contextual environment based on the sub-style key
-    if (subStyle in CONTEXTUAL_ENVIRONMENTS) {
-        enhancements.push(`Environnement contextuel : ${selectRandom(CONTEXTUAL_ENVIRONMENTS[subStyle])}.`);
-    }
-    
-    return enhancements.join('\n');
-}
-
-
 // --- Helper Function ---
 /**
  * Selects a random element from an array.
@@ -1229,38 +1205,255 @@ export const AUTOMOBILE_LIBRARY = {
       "air déterminé"
     ],
     "lumieres": [
-      "lumière crue de projecteurs",
-      "soleil couchant sur la piste",
-      "fumée éclairée par les phares",
-      "éclairage artificiel de nuit"
+      "lumière de stade nocturne",
+      "soleil brûlant",
+      "phares dans la poussière",
+      "ciel orageux dramatique"
     ],
     "accessoires": [
-        "casque intégral",
-        "volant renforcé",
-        "filet de sécurité",
-        "aucun"
+      "casque rayé",
+      "drapeau rouge",
+      "roue de secours cabossée",
+      "aucun"
     ],
-    "poses": [
-        "Voiture percutant une autre dans un fracas de tôle.",
-        "Pilote célébrant la victoire sur le toit de sa voiture cabossée.",
-        "Voiture dérapant dans la boue, projetant des gerbes de terre.",
-        "Réparation en urgence dans les stands avec des outils lourds."
-    ]
+    "poses": ["En pleine collision avec une autre voiture, des étincelles jaillissant.", "Célébrant une victoire sur le toit de sa voiture cabossée.", "Effectuant des réparations rapides dans les stands avec du ruban adhésif.", "Dérapant dans un virage, projetant de la terre."]
   },
   "drag_race": {
-    "lieux": [ "piste de dragster la nuit", "ligne de départ avec feux de signalisation", "hangar de préparation", "zone d'arrivée avec parachute de freinage" ],
-    "vehicules": [ "dragster Top Fuel suralimenté", "muscle car préparée", "voiture Pro Mod avec carrosserie en fibre de carbone", "voiture électrique surpuissante" ],
-    "expressions": [ "concentration extrême avant le départ", "explosion de puissance au démarrage", "visage déformé par l'accélération", "soulagement et joie après la course" ],
-    "lumieres": [ "lumière crue des projecteurs de la piste", "flammes sortant des échappements", "lumière verte du 'sapin' de départ", "fumée des pneus illuminée par derrière" ],
-    "accessoires": [ "parachute de freinage déployé", "casque avec système HANS", "énormes pneus arrière (slicks)", "aucun" ],
-    "poses": [ "Burnout intense pour chauffer les pneus, créant un nuage de fumée.", "Départ explosif, les roues avant se soulèvent.", "Le véhicule franchit la ligne d'arrivée à une vitesse floue.", "Pilote sortant du cockpit après une course victorieuse." ]
+    "lieux": [
+      "ligne droite urbaine",
+      "piste de drag avec public",
+      "parking de supermarché la nuit",
+      "tunnel sombre illuminé par des néons"
+    ],
+    "vehicules": [
+      "muscle car américaine",
+      "Nissan Skyline GT-R",
+      "Dodge Charger",
+      "Tesla Plaid"
+    ],
+    "expressions": [
+      "regard défiant",
+      "air confiant",
+      "concentration extrême",
+      "expression victorieuse"
+    ],
+    "lumieres": [
+      "phares éblouissants",
+      "fumée de pneus éclairée",
+      "golden hour urbaine",
+      "néons multicolores"
+    ],
+    "accessoires": [
+      "bouteille de NOS",
+      "casquette tuning",
+      "drapeau check",
+      "aucun"
+    ],
+    "poses": ["La voiture cabrée au démarrage, les pneus avant décollant du sol.", "Laissant des traces de pneu noires sur l'asphalte.", "Déployant un parachute de freinage à la fin de la course.", "Posant fièrement à côté de son bolide, les bras croisés."]
   },
   "tuning_street": {
-    "lieux": [ "parking souterrain éclairé au néon", "rassemblement de voitures de nuit", "rue de centre-ville de Tokyo", "route de montagne sinueuse (touge)" ],
-    "vehicules": [ "Nissan Skyline GT-R modifiée", "Honda Civic avec kit carrosserie", "Toyota Supra avec un énorme aileron", "Mazda RX-7 en plein drift" ],
-    "expressions": [ "air cool et confiant", "pose décontractée appuyé sur la voiture", "concentration pendant un drift", "fierté en montrant le moteur" ],
-    "lumieres": [ "néons sous la voiture (underglow)", "reflets des lumières de la ville sur la carrosserie", "phares au xénon dans la nuit", "lumière d'un parking souterrain" ],
-    "accessoires": [ "ordinateur portable pour le réglage moteur", "jantes customisées brillantes", "intérieur avec sièges baquets", "aucun" ],
-    "poses": [ "Voiture en plein drift dans un virage, fumée des pneus.", "Posant avec une 'crew' devant leurs voitures alignées.", "Capot ouvert, montrant un moteur impeccablement préparé.", "Conduite de nuit en ville, les lumières se transformant en traînées." ]
+    "lieux": [
+      "parking souterrain",
+      "ruelle avec graffitis",
+      "toit urbain avec skyline",
+      "zone industrielle nocturne"
+    ],
+    "vehicules": [
+      "Honda Civic modifiée",
+      "Toyota Supra avec aileron",
+      "Nissan 350Z tunée",
+      "BMW M3 avec néons"
+    ],
+    "expressions": [
+      "air rebelle",
+      "regard provocateur",
+      "sourire complice",
+      "pose street"
+    ],
+    "lumieres": [
+      "néons violets et bleus",
+      "phares de voiture",
+      "fumée de pneus",
+      "éclairage urbain nocturne"
+    ],
+    "accessoires": [
+      "casquette street",
+      "chaîne argent",
+      "enceinte portable",
+      "aucun"
+    ],
+    "poses": ["Montrant le moteur customisé, le capot ouvert.", "Faisant crisser les pneus en effectuant un donut.", "Assis sur le capot de la voiture, écoutant de la musique.", "Participant à un rassemblement de voitures tunées, entouré d'admirateurs."]
   }
 };
+
+export const MOTO_LIBRARY = {
+  "moto_piste": {
+    "lieux": [
+      "circuit GP international avec tribunes",
+      "virage serré de circuit avec spectateurs",
+      "ligne droite à pleine vitesse",
+      "stand technique avec mécaniciens"
+    ],
+    "vehicules": ["superbike", "motoGP", "sportive carénée"],
+    "expressions": ["concentration maximale", "adrenaline pure", "regard focalisé"],
+    "ambiance": ["bruit de moteur assourdissant", "fumée de pneus", "drapeaux de course"],
+    "poses": ["Genou à terre dans un virage serré.", "En wheeling en passant la ligne d'arrivée.", "Dépassant un adversaire à l'intérieur d'un virage.", "Célébrant sur le podium, bouteille de champagne à la main."]
+  },
+  "motocross": {
+    "lieux": [
+      "terrain boueux avec rampes",
+      "sauts spectaculaires en pleine poussière",
+      "piste forestière accidentée",
+      "course à plusieurs motos"
+    ],
+    "vehicules": ["motocross 250cc", "motocross 450cc"],
+    "expressions": ["détermination", "frisson de vitesse", "concentration absolue"],
+    "ambiance": ["terre projetée", "fumée de boue", "cris du public"],
+    "poses": ["En plein saut, la moto parallèle au sol (whip).", "Glissant dans un virage relevé, projetant de la terre.", "Luttant coude à coude avec d'autres pilotes au départ.", "Couvert de boue à l'arrivée, le poing levé."]
+  },
+  "rallye_raid_moto": {
+    "lieux": [
+      "désert infini type Dakar",
+      "pistes rocailleuses sahariennes",
+      "oasis en arrière-plan",
+      "dunes immenses au coucher du soleil"
+    ],
+    "vehicules": ["moto rallye raid KTM", "Yamaha Ténéré", "Honda Africa Twin"],
+    "expressions": ["endurant", "solitaire", "explorateur"],
+    "ambiance": ["poussière", "chaleur écrasante", "course d’endurance"],
+    "poses": ["Naviguant au roadbook à travers les dunes.", "Réparant sa moto au milieu du désert.", "Sautant par-dessus une dune de sable.", "S'arrêtant pour boire de l'eau, le visage fatigué mais déterminé."]
+  },
+  "biker_harley": {
+    "lieux": [
+      "route 66 américaine",
+      "bar biker en néon",
+      "désert du Nevada",
+      "rassemblement moto de nuit"
+    ],
+    "vehicules": ["Harley-Davidson", "Custom chopper"],
+    "expressions": ["attitude rebelle", "cool assuré", "air libre"],
+    "ambiance": ["blouson cuir", "tatouages", "sons graves de moteur V-Twin"],
+    "poses": ["Conduisant en groupe sur une route déserte.", "Garé devant un bar, s'appuyant sur sa moto.", "Personnalisant sa moto dans un garage.", "Participant à un bras de fer dans un bar de motards."]
+  },
+  "drag_race_moto": {
+    "lieux": [
+      "ligne droite dragstrip",
+      "course de nuit avec néons",
+      "ligne de départ avec fumée blanche",
+      "tribunes bondées"
+    ],
+    "vehicules": ["drag bike", "moto turbo"],
+    "expressions": ["puissance brute", "adrénaline", "regard agressif"],
+    "ambiance": ["fumée de pneu", "cris du public", "compteur explosif"],
+    "poses": ["Démarrage explosif, la roue avant se levant.", "Allongé sur la moto pour un aérodynamisme maximal.", "Déployant un parachute de freinage à l'arrivée.", "Faisant chauffer le pneu arrière avant le départ (burnout)."]
+  },
+  "cafe_racer": {
+    "lieux": [
+      "rue vintage urbaine",
+      "garage rétro",
+      "café londonien années 60",
+      "route de campagne"
+    ],
+    "vehicules": ["Triumph Bonneville", "Norton Commando", "Honda CB customisée"],
+    "expressions": ["style détaché", "attitude rebelle chic", "regard vintage"],
+    "ambiance": ["chrome poli", "cuir patiné", "lumière rétro"],
+    "poses": ["Garé devant un café, une tasse à la main.", "Prenant un virage à grande vitesse sur une route sinueuse.", "Travaillant sur sa moto avec des outils vintage.", "Posant avec sa moto, vêtu d'un blouson en cuir et d'un casque jet."]
+  },
+  "enduro": {
+    "lieux": [
+      "forêt dense avec obstacles naturels",
+      "montée rocheuse en terrain difficile",
+      "rivière à franchir",
+      "piste escarpée de montagne"
+    ],
+    "vehicules": ["KTM Enduro", "Husqvarna Enduro"],
+    "expressions": ["effort physique", "concentration", "maîtrise"],
+    "ambiance": ["poussière", "rochers", "nature sauvage"],
+    "poses": ["Franchissant un tronc d'arbre couché.", "Montant une pente abrupte, la roue avant délestée.", "Traversant une rivière, de l'eau jusqu'au moteur.", "Poussant la moto dans une section difficile."]
+  },
+  "trial": {
+    "lieux": [
+      "rochers abrupts",
+      "tronc d’arbre à franchir",
+      "zone urbaine aménagée pour le trial",
+      "parcours artificiel en compétition"
+    ],
+    "vehicules": ["GasGas Trial", "Montesa Trial"],
+    "expressions": ["équilibre extrême", "maîtrise", "calme"],
+    "ambiance": ["silence avant saut", "public concentré", "mouvement millimétré"],
+    "poses": ["En équilibre sur la roue arrière sur un rocher.", "Sautant d'un obstacle à un autre sans poser le pied.", "Franchissant un mur vertical.", "Se concentrant intensément avant une section difficile."]
+  }
+};
+
+// --- Dynamic Enhancement Logic ---
+
+const styleLibraryMap: Record<string, Record<string, any>> = {
+    'portrait_glamour': PORTRAIT_GLAMOUR_LIBRARY,
+    'mode_haute_couture': HAUTE_COUTURE_LIBRARY,
+    'journee_dun_mannequin': JOURNEE_MANNEQUIN_LIBRARY,
+    'couverture_vogue': COUVERTURE_VOGUE_LIBRARY,
+    'couverture_elle': COUVERTURE_ELLE_LIBRARY,
+    'couverture_elle_deco': COUVERTURE_ELLE_DECO_LIBRARY,
+    'portrait_minimaliste': PORTRAIT_MINIMALISTE_LIBRARY,
+    'punk': PUNK_LIBRARY,
+    'gothique': GOTHIC_LIBRARY,
+    'viking': VIKING_LIBRARY,
+    'boheme': BOHEME_LIBRARY,
+    'automobile': AUTOMOBILE_LIBRARY,
+    'moto': MOTO_LIBRARY,
+    'costume_de_film': COSTUME_DE_FILM_LIBRARY,
+};
+
+const keyToPrefix: Record<string, string> = {
+    lieux: 'Lieu',
+    tenues: 'Tenue',
+    expressions: 'Expression',
+    lumieres: 'Lumière',
+    accessoires: 'Accessoire',
+    poses: 'Pose',
+    vehicules: 'Véhicule',
+    ambiance: 'Ambiance',
+    scenes: 'Scène',
+    lighting: 'Éclairage',
+};
+
+/**
+ * Generates a unique set of creative directions for a prompt based on style and sub-style.
+ * @param style The main style category.
+ * @param subStyle The specific sub-style.
+ * @returns A string of dynamic creative enhancements to be added to the prompt.
+ */
+export function getDynamicEnhancements(style: string, subStyle: string): string {
+    const enhancements: string[] = [];
+    let specificEnhancementsFound = false;
+
+    const libraryForStyle = styleLibraryMap[style];
+    if (libraryForStyle && subStyle && libraryForStyle[subStyle]) {
+        const subStyleLibrary = libraryForStyle[subStyle];
+        for (const key in subStyleLibrary) {
+            if (key === 'scene' && typeof subStyleLibrary[key] === 'string') {
+                enhancements.push(`Scène: ${subStyleLibrary[key]}.`);
+                specificEnhancementsFound = true;
+            } else if (Array.isArray(subStyleLibrary[key]) && subStyleLibrary[key].length > 0) {
+                const prefix = keyToPrefix[key] || (key.charAt(0).toUpperCase() + key.slice(1));
+                enhancements.push(`${prefix}: ${selectRandom(subStyleLibrary[key])}.`);
+                specificEnhancementsFound = true;
+            }
+        }
+    }
+    
+    // Contextual environments can add more detail.
+    if (subStyle && CONTEXTUAL_ENVIRONMENTS[subStyle]) {
+        enhancements.push(`Environnement: ${selectRandom(CONTEXTUAL_ENVIRONMENTS[subStyle])}.`);
+        specificEnhancementsFound = true;
+    }
+
+    // Fallback to generic enhancements if no specific ones were found, or for general styles.
+    if (!specificEnhancementsFound || style === 'photos' || style === 'photographers') {
+        enhancements.push(`Angle de caméra: ${selectRandom(CAMERA_ANGLES)}.`);
+        enhancements.push(`Style d'éclairage: ${selectRandom(LIGHTING_STYLES)}.`);
+        enhancements.push(`Atmosphère: ${selectRandom(ATMOSPHERES)}.`);
+    }
+
+    return enhancements.filter(e => e).join('\n');
+}

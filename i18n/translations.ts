@@ -8,7 +8,7 @@ export const translations = {
     // Header & Footer
     title: "Back to the Future",
     subtitle: "Cinematic & Photographic Preview",
-    footer_text: "© 2025 Pixelshoot — All rights reserved. Developed by Pixelshoot AI for image creators.",
+    footer_text: "© 2025 Pixelshoot — All rights reserved. Developed by Pixelshoot AI.",
 
     // Main Controls
     imageMode: "Image",
@@ -85,16 +85,17 @@ export const translations = {
     save: "SAVE",
 
     // API Key Modals
-    cancel: "Cancel",
-    lock: "Lock",
     apiKeyManagerTitle: "API Key Manager",
-    apiKeyManagerDesc: "These keys are stored locally in your browser and are never sent to our servers.",
-    googleApiKey: "Google Gemini 2.5 API Key",
-    googleApiPlaceholder: "Enter your Gemini API key",
+    apiKeyManagerDesc: "These keys are required to use the different AI generation services (Google Gemini, Ideogram, RevArt). They are stored securely in your browser and are never sent to our servers.",
     ideogramApiKey: "Ideogram API Key",
-    ideogramApiPlaceholder: "Enter your Ideogram API key",
-    revartApiKey: "RevArt API Key",
-    revartApiPlaceholder: "Enter your RevArt API key",
+    revArtApiKey: "RevArt API Key",
+    googleGeminiApiKey: "Google Gemini 2.5 API Key",
+    ideogramApiPlaceholder: "Enter your Ideogram key...",
+    revArtApiPlaceholder: "Enter your RevArt key...",
+    googleApiPlaceholder: "Enter your Google Gemini key here",
+    getApiKeyLink: 'Get your key from Google AI Studio',
+    cancel: "Cancel",
+    lockApiKeys: "Lock Keys",
 
     // Style Names
     style_photographers: "Photographers",
@@ -431,7 +432,7 @@ export const translations = {
     journee_dun_mannequin_notes: "Capture different moments in a model's life, from backstage to the catwalk and at home, for an authentic and varied rendering.",
     costume_de_film_notes: "Creation of faithful costumes across ages and genres for film productions.",
     punk_notes: "Rebellious attitudes, raw urban atmosphere.",
-    gothique_notes: "Dark and romantic atmosphere, with medieval, Victorian, or religious architectural elements. Focus on dramatic lighting and elaborate outfits.",
+    gothique_notes: "Ambiance sombre et romantique, avec des éléments architecturaux médiévaux, victoriens ou religieux. Mettre l'accent sur un éclairage dramatique et des tenues élaborées.",
     viking_notes: "Mix the historical aesthetics of the Vikings. Focus on cinematic action, spectacular landscapes, and detailed, worn equipment.",
     boheme_notes: "Cinematic atmospheres, contextual accessories (fringes, floral patterns, natural light).",
     automobile_notes: "Vary vehicles, camera angles, day/night lighting.",
@@ -446,7 +447,7 @@ export const translations = {
     // Header & Footer
     title: "Retour vers le futur",
     subtitle: "Aperçu cinématique et photographique",
-    footer_text: "© 2025 Pixelshoot — Tous droits réservés. Développé par Pixelshoot AI pour les créateurs d'images.",
+    footer_text: "© 2025 Pixelshoot — Tous droits réservés. Développé par Pixelshoot AI.",
 
     // Main Controls
     imageMode: "Image",
@@ -465,7 +466,7 @@ export const translations = {
     // Gallery & Modals
     uploadPlaceholder: "Chargez un portrait pour commencer",
     downloadAlbum: "TOUT TÉLECHARGER",
-    download: "TÉLÉCHARGER",
+    download: "TÉLECHARGER",
     regenerate: "Régénérer",
     edit: "Éditer",
     close: "Fermer",
@@ -523,16 +524,17 @@ export const translations = {
     save: "SAUVEGARDER",
 
     // API Key Modals
-    cancel: "Annuler",
-    lock: "Verrouiller",
     apiKeyManagerTitle: "Gestionnaire de Clés API",
-    apiKeyManagerDesc: "Ces clés sont stockées localement dans votre navigateur et ne sont jamais envoyées à nos serveurs.",
-    googleApiKey: "Clé API Google Gemini 2.5",
-    googleApiPlaceholder: "Entrez votre clé API Gemini",
+    apiKeyManagerDesc: "Ces clés sont nécessaires pour utiliser les différents services de génération IA (Google Gemini, Ideogram, RevArt). Elles sont stockées de manière sécurisée dans votre navigateur et ne sont jamais envoyées sur nos serveurs.",
     ideogramApiKey: "Clé API Ideogram",
-    ideogramApiPlaceholder: "Entrez votre clé API Ideogram",
-    revartApiKey: "Clé API RevArt",
-    revartApiPlaceholder: "Entrez votre clé API RevArt",
+    revArtApiKey: "Clé API RevArt",
+    googleGeminiApiKey: "Clé API Google Gemini 2.5",
+    ideogramApiPlaceholder: "Entrez votre clé Ideogram...",
+    revArtApiPlaceholder: "Entrez votre clé RevArt...",
+    googleApiPlaceholder: "Entrez votre clé Google Gemini ici",
+    getApiKeyLink: "Obtenez votre clé sur Google AI Studio",
+    cancel: "Annuler",
+    lockApiKeys: "Verrouiller les clés",
 
     // Style Names
     style_photographers: "Photographes",

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 import React, { useState } from 'react';
-import { IconCamera, IconLoader, IconPlus, IconMinus, IconPhoto, IconVideo } from '@tabler/icons-react';
+import { IconCamera, IconLoader, IconPlus, IconMinus } from '@tabler/icons-react';
 import { ControlSection } from './shared/ControlSection';
 import { StyledSelect } from './shared/StyledSelect';
 import { STYLES_CONFIG } from '../../lib/styleConfig';
@@ -11,27 +11,15 @@ import type { SubStyle, SubStyleGroup } from '../../lib/styleConfig';
 import { cn } from '../../lib/utils';
 import SpeechToTextButton from './SpeechToTextButton';
 import { useLanguage } from '../../contexts/LanguageContext';
-import { GenerationMode } from '../../pages/Editor';
 
-interface MainControlsProps {
-    formState: any;
-    handleImageUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    fileInputRef: React.RefObject<HTMLInputElement>;
-    handleGenerateClick: () => void;
-    isLoading: boolean;
-    uploadedImage: string | null;
-    availableSubStyles: SubStyle[] | SubStyleGroup[];
-    generationMode: GenerationMode;
-    setGenerationMode: (mode: GenerationMode) => void;
-}
-
-const MainControls: React.FC<MainControlsProps> = ({ formState, handleImageUpload, fileInputRef, handleGenerateClick, isLoading, uploadedImage, availableSubStyles, generationMode, setGenerationMode }) => {
+const MainControls = ({ formState, handleImageUpload, fileInputRef, handleGenerateClick, isLoading, uploadedImage, availableSubStyles }) => {
     const { t, language } = useLanguage();
     const { 
         style, setStyle,
         subStyle, setSubStyle,
         customPrompt, setCustomPrompt,
         numberOfImages, setNumberOfImages,
+        provider, setProvider,
     } = formState;
     const [isListening, setIsListening] = useState(false);
 
@@ -57,24 +45,8 @@ const MainControls: React.FC<MainControlsProps> = ({ formState, handleImageUploa
     
     const isGrouped = availableSubStyles.length > 0 && 'subStyles' in availableSubStyles[0];
 
-    const modeButtonClasses = (isActive: boolean) => cn(
-        "w-full flex items-center justify-center gap-2 py-3 text-sm font-bold rounded-lg transition-all border-b-4",
-        isActive
-            ? "bg-amber-500 text-black border-amber-700"
-            : "bg-neutral-800 text-white border-neutral-700 hover:bg-neutral-700"
-    );
-
     return (
         <div className="bg-black rounded-xl p-4 flex flex-col gap-4 flex-grow">
-            <div className="grid grid-cols-2 gap-2">
-                <button onClick={() => setGenerationMode('image')} className={modeButtonClasses(generationMode === 'image')}>
-                    <IconPhoto size={18}/> {t('imageMode')}
-                </button>
-                <button onClick={() => setGenerationMode('video')} className={modeButtonClasses(generationMode === 'video')}>
-                    <IconVideo size={18}/> {t('videoMode')}
-                </button>
-            </div>
-            
             <div className="grid grid-cols-3 gap-2">
                 <div className="group col-span-1 bg-transparent rounded-xl border border-amber-500 text-amber-500 p-2 transition-colors duration-300 flex flex-col items-center justify-center h-full">
                     <span className="text-xs font-bold uppercase select-none text-amber-500">{t('quantity')}</span>
@@ -128,6 +100,14 @@ const MainControls: React.FC<MainControlsProps> = ({ formState, handleImageUploa
                 )}
                 </button>
             </div>
+
+             <ControlSection title={t('provider')}>
+                <StyledSelect value={provider} onChange={e => setProvider(e.target.value as any)}>
+                    <option value="google">Google Gemini</option>
+                    <option value="ideogram">Ideogram</option>
+                    <option value="revart">RevArt</option>
+                </StyledSelect>
+            </ControlSection>
 
             <div className="grid grid-cols-2 gap-4">
                 <ControlSection title={t('style')}>

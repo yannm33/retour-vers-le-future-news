@@ -15,10 +15,9 @@ interface ImageGalleryProps {
     handleRegenerateImage: (id: number) => void;
     setPreviewImage: (url: string) => void;
     setEditingImage: (image: GeneratedImage) => void;
-    isAlbumGenerating: boolean;
 }
 
-const ImageGallery: React.FC<ImageGalleryProps> = ({ generatedImages, appState, handleDownloadAlbum, handleDownloadSingleImage, handleRegenerateImage, setPreviewImage, setEditingImage, isAlbumGenerating }) => {
+const ImageGallery: React.FC<ImageGalleryProps> = ({ generatedImages, appState, handleDownloadAlbum, handleDownloadSingleImage, handleRegenerateImage, setPreviewImage, setEditingImage }) => {
     const { t } = useLanguage();
 
     if (generatedImages.length === 0) {
@@ -84,9 +83,8 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ generatedImages, appState, 
             </div>
             {appState === 'results-shown' && generatedImages.some(img => img.status === 'done') && (
                  <div className="text-center">
-                    <button onClick={handleDownloadAlbum} disabled={isAlbumGenerating} className="bg-amber-500 hover:bg-amber-600 text-black font-bold py-2 px-6 rounded-lg mt-8 flex items-center gap-2 transition-all duration-200 mx-auto shadow-amber-500/30 shadow-[0_0_15px_2px] hover:shadow-amber-500/50 disabled:bg-neutral-500 disabled:cursor-not-allowed disabled:shadow-none">
-                        {isAlbumGenerating ? <IconLoader size={20} className="animate-spin" /> : <IconDownload size={20}/>}
-                        {isAlbumGenerating ? t('generating') : t('downloadAlbum')}
+                    <button onClick={handleDownloadAlbum} className="bg-amber-500 hover:bg-amber-600 text-black font-bold py-2 px-6 rounded-lg mt-8 flex items-center gap-2 transition-all duration-200 mx-auto shadow-amber-500/30 shadow-[0_0_15px_2px] hover:shadow-amber-500/50">
+                        <IconDownload size={20}/> {t('downloadAlbum')}
                     </button>
                 </div>
             )}

@@ -3,11 +3,10 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 import React, { useState, ChangeEvent, useRef, useEffect, useCallback } from 'react';
-import { generateImage, generateVideo } from '../services/geminiService';
+import { generateImage } from '../services/geminiService';
 import { getSpecializedPrompt } from '../services/promptLibrary';
 import { getDynamicEnhancements, buildPrompt } from '../services/promptEnhancer';
 import type { PhotoSettings } from '../services/promptEnhancer';
-import { createAlbumPage } from '../lib/albumUtils';
 import { MAGAZINE_PROMPT_DETAILS, MAGAZINE_STYLES } from '../lib/constants';
 import { STYLES_CONFIG, SubStyle, SubStyleGroup } from '../lib/styleConfig';
 import { useGenerationForm } from '../hooks/useGenerationForm';
@@ -16,7 +15,6 @@ import { useLanguage } from '../contexts/LanguageContext';
 
 import Footer from '../components/Footer';
 import ImageGallery from '../components/ImageGallery';
-import VideoResult from '../components/VideoResult';
 import ImagePreviewModal from '../components/shared/ImagePreviewModal';
 import MainControls from '../components/controls/MainControls';
 import SettingsPanel from '../components/controls/SettingsPanel';
@@ -24,7 +22,8 @@ import ImageEditorModal from '../components/ImageEditorModal';
 import ApiKeyManagerModal from '../components/ApiKeyManagerModal';
 import LanguageSwitcher from '../components/LanguageSwitcher';
 
-import { IconPhoto, IconChevronDown, IconLoader } from '@tabler/icons-react';
+
+import { IconPhoto, IconChevronDown } from '@tabler/icons-react';
 import { cn } from '../lib/utils';
 
 // --- Types ---
@@ -35,29 +34,18 @@ export interface GeneratedImage {
     url?: string;
     error?: string;
 }
-export interface GeneratedVideo {
-    id: number;
-    status: 'pending' | 'done' | 'error';
-    url?: string;
-    error?: string;
-    progressMessage?: string;
-}
-export type GenerationMode = 'image' | 'video';
 export type AppState = 'idle' | 'image-uploaded' | 'generating' | 'results-shown';
 
 function Editor() {
     // --- App State ---
     const { t } = useLanguage();
-    const [generationMode, setGenerationMode] = useState<GenerationMode>('image');
     const [uploadedImage, setUploadedImage] = useState<string | null>(null);
     const [generatedImages, setGeneratedImages] = useState<GeneratedImage[]>([]);
-    const [generatedVideos, setGeneratedVideos] = useState<GeneratedVideo[]>([]);
     const [appState, setAppState] = useState<AppState>('idle');
     const [previewImage, setPreviewImage] = useState<string | null>(null);
     const [editingImage, setEditingImage] = useState<GeneratedImage | null>(null);
     const [isSettingsPanelOpen, setIsSettingsPanelOpen] = useState(false);
     const [isApiKeyManagerModalOpen, setIsApiKeyManagerModalOpen] = useState(false);
-    const [isAlbumGenerating, setIsAlbumGenerating] = useState(false);
 
     const { apiKeys, saveApiKeys } = useApiKeys();
 
@@ -67,36 +55,26 @@ function Editor() {
         ouverture, vitesse, photoGrain, expression, framing, hairColor,
         accessories, lutsCinema, dirt, customPrompt,
         signatureOn, signature, filmBrand, iso, timeTravelOn, year,
-        setStyle
+        provider,
     } = formState;
 
     const fileInputRef = useRef<HTMLInputElement>(null);
     const headerClickTimeout = useRef<number | null>(null);
     const headerClickCount = useRef(0);
     
-    // When switching generation modes, clear previous results and select a default style.
-    useEffect(() => {
-        setGeneratedImages([]);
-        setGeneratedVideos([]);
-        if (generationMode === 'video') {
-            setStyle('costume_de_film');
-        } else {
-            setStyle('photos');
-        }
-    }, [generationMode, setStyle]);
+    const effectiveApiKey = apiKeys.google;
 
     // Effect to manage the global app state based on the status of generated items.
     useEffect(() => {
-        const items = generationMode === 'image' ? generatedImages : generatedVideos;
-        if (items.length > 0) {
-            const isGenerating = items.some(item => item.status === 'pending');
+        if (generatedImages.length > 0) {
+            const isGenerating = generatedImages.some(item => item.status === 'pending');
             if (isGenerating) {
                 setAppState('generating');
             } else if (appState === 'generating') {
                 setAppState('results-shown');
             }
         }
-    }, [generatedImages, generatedVideos, appState, generationMode]);
+    }, [generatedImages, appState]);
 
 
     const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
@@ -133,9 +111,9 @@ function Editor() {
         } else if (isMagazineCover) {
             promptParts.push(`Générer une couverture de magazine hyper-réaliste avec la personne de la photo fournie, en assurant une ressemblance fidèle.`);
         } else if (uploadedImage) {
-            promptParts.push(`Générer un(e) ${generationMode} hyper-réaliste de la personne sur la photo fournie, en assurant une ressemblance fidèle.`);
+            promptParts.push(`Générer une image hyper-réaliste de la personne sur la photo fournie, en assurant une ressemblance fidèle.`);
         } else {
-            promptParts.push(`Générer un(e) ${generationMode} hyper-réaliste basé sur la description textuelle suivante.`);
+            promptParts.push(`Générer une image hyper-réaliste basé sur la description textuelle suivante.`);
         }
 
         promptParts.push('//-- INSTRUCTION ANTI-RÉPÉTITION --');
@@ -168,27 +146,20 @@ function Editor() {
             if (styleInfo) promptParts.push(`Direction Créative : "${t(styleInfo.notesKey)}".`);
         }
 
-        if (generationMode === 'image') {
-            promptParts.push('//-- TECHNIQUE & CAMÉRA --');
-            promptParts.push(`Ratio d'aspect : ${aspectRatio}`);
-            promptParts.push(`Qualité : ${renderQuality}`);
-            if (photoGrain !== 'Aucun') promptParts.push(`Grain : '${photoGrain}'.`);
-            if (filmBrand !== 'Aucune') promptParts.push(`Film : '${filmBrand}'.`);
-            if (iso !== 'Auto') promptParts.push(`ISO : ${iso}.`);
-        } else {
-             promptParts.push('//-- TECHNIQUE VIDÉO --');
-             promptParts.push(`Ratio d'aspect : ${aspectRatio}`);
-        }
+        promptParts.push('//-- TECHNIQUE & CAMÉRA --');
+        promptParts.push(`Ratio d'aspect : ${aspectRatio}`);
+        promptParts.push(`Qualité : ${renderQuality}`);
+        if (photoGrain !== 'Aucun') promptParts.push(`Grain : '${photoGrain}'.`);
+        if (filmBrand !== 'Aucune') promptParts.push(`Film : '${filmBrand}'.`);
+        if (iso !== 'Auto') promptParts.push(`ISO : ${iso}.`);
 
         const creativeDetails: string[] = [];
         if (expression !== 'Neutre') creativeDetails.push(`Expression : '${expression}'.`);
         if (framing !== 'Plan pied') creativeDetails.push(`Cadrage : '${framing}'.`);
         if (hairColor !== 'Noir Profond') creativeDetails.push(`Couleur de cheveux : '${hairColor}'.`);
         if (accessories !== 'Aucun') creativeDetails.push(`Accessoires : '${accessories}'.`);
-        if (generationMode === 'image') {
-             if (lutsCinema !== 'Aucun') creativeDetails.push(`Étalonnage (LUT) : '${lutsCinema}'.`);
-             if (dirt !== 'Aucune') creativeDetails.push(dirt === 'Sueur' ? `Ajouter des perles de sueur.` : `Effets : '${dirt}'.`);
-        }
+        if (lutsCinema !== 'Aucun') creativeDetails.push(`Étalonnage (LUT) : '${lutsCinema}'.`);
+        if (dirt !== 'Aucune') creativeDetails.push(dirt === 'Sueur' ? `Ajouter des perles de sueur.` : `Effets : '${dirt}'.`);
         
         if(creativeDetails.length > 0) {
             promptParts.push('//-- DÉTAILS CRÉATIFS --');
@@ -200,7 +171,7 @@ function Editor() {
             promptParts.push(`"${customPrompt}".`);
         }
         
-        if (generationMode === 'image' && signatureOn && signature) {
+        if (signatureOn && signature) {
             promptParts.push('//-- SIGNATURE --');
             promptParts.push(`Incruster subtilement la signature '${signature}' dans un coin.`);
         }
@@ -209,11 +180,12 @@ function Editor() {
     }, [
         style, subStyle, customPrompt, aspectRatio, colorMode, renderQuality,
         upscale, timeTravelOn, year, uploadedImage, expression, framing, hairColor,
-        accessories, lutsCinema, dirt, photoGrain, filmBrand, iso, signatureOn, signature, t, generationMode
+        accessories, lutsCinema, dirt, photoGrain, filmBrand, iso, signatureOn, signature, t
     ]);
 
     const handleGenerateImageClick = async () => {
-        if (!uploadedImage && !customPrompt.trim()) return;
+        const imageInput = uploadedImage;
+        if (!imageInput && !customPrompt.trim()) return;
 
         const basePrompt = buildCreativePrompt();
         const settings: PhotoSettings = {
@@ -233,7 +205,7 @@ function Editor() {
                 const userPrompt = `${basePrompt}\n\n//-- DIRECTION ARTISTIQUE UNIQUE --\n${dynamicAdditions}`;
                 const finalPrompt = buildPrompt(userPrompt, settings);
                 
-                const resultUrl = await generateImage(uploadedImage, finalPrompt, apiKeys.gemini);
+                const resultUrl = await generateImage(imageInput, finalPrompt, provider, apiKeys);
                 
                 setGeneratedImages(prev => prev.map(img => img.id === image.id ? { ...img, status: 'done', url: resultUrl } : img));
             } catch (err) {
@@ -243,51 +215,14 @@ function Editor() {
         }
     };
 
-    const handleGenerateVideoClick = async () => {
-        if (!customPrompt.trim() && !uploadedImage) return;
-    
-        const basePrompt = buildCreativePrompt();
-        
-        const batchId = Date.now();
-        const initialVideos: GeneratedVideo[] = Array.from({ length: formState.numberOfImages }, (_, i) => ({ 
-            id: batchId + i, 
-            status: 'pending', 
-            progressMessage: t('videoProgress_initializing') 
-        }));
-        
-        setGeneratedVideos(initialVideos);
-    
-        for (const video of initialVideos) {
-            try {
-                const dynamicAdditions = getDynamicEnhancements(style, subStyle);
-                const finalPrompt = `${basePrompt}\n\n//-- DIRECTION ARTISTIQUE UNIQUE POUR CETTE VIDÉO --\n${dynamicAdditions}`;
-    
-                const onProgress = (key: string) => {
-                    setGeneratedVideos(prev => prev.map(v => v.id === video.id ? { ...v, progressMessage: t(key) } : v));
-                };
-    
-                const resultUrl = await generateVideo(finalPrompt, uploadedImage, onProgress, apiKeys.gemini);
-                
-                setGeneratedVideos(prev => prev.map(v => v.id === video.id ? { ...v, status: 'done', url: resultUrl } : v));
-            } catch (err) {
-                const errorMessage = err instanceof Error ? err.message : "An unknown error occurred.";
-                console.error(`Failed to generate video #${video.id}:`, err);
-                setGeneratedVideos(prev => prev.map(v => v.id === video.id ? { ...v, status: 'error', error: errorMessage } : v));
-            }
-        }
-    };
-    
     const handleMasterGenerateClick = () => {
-        if (generationMode === 'image') {
-            handleGenerateImageClick();
-        } else {
-            handleGenerateVideoClick();
-        }
+        handleGenerateImageClick();
     };
 
     const handleRegenerateImage = async (imageId: number) => {
-        if (!uploadedImage && !customPrompt.trim()) return;
-
+        const imageInput = uploadedImage;
+        if (!imageInput && !customPrompt.trim()) return;
+        
         const basePrompt = buildCreativePrompt();
         const settings: PhotoSettings = {
             focalLength: focale !== 'Auto' ? focale : undefined,
@@ -304,7 +239,7 @@ function Editor() {
         setGeneratedImages(prev => prev.map(img => img.id === imageId ? { ...img, status: 'pending', url: undefined, error: undefined } : img));
 
         try {
-            const resultUrl = await generateImage(uploadedImage, finalPrompt, apiKeys.gemini);
+            const resultUrl = await generateImage(imageInput, finalPrompt, provider, apiKeys);
             setGeneratedImages(prev => prev.map(img => img.id === imageId ? { ...img, status: 'done', url: resultUrl } : img));
         } catch (err) {
             const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred.';
@@ -332,31 +267,12 @@ function Editor() {
         document.body.removeChild(link);
     };
 
-    const handleDownloadAlbum = async () => {
-        const imagesToInclude = generatedImages
-            .filter(img => img.status === 'done' && img.url)
-            .reduce((acc, img, index) => {
-                // Use a generic but unique caption for each image
-                acc[`${subStyle.replace(/_/g, ' ')} #${index + 1}`] = img.url!;
-                return acc;
-            }, {} as Record<string, string>);
-
-        if (Object.keys(imagesToInclude).length === 0) return;
-
-        setIsAlbumGenerating(true);
-        try {
-            const albumUrl = await createAlbumPage(imagesToInclude);
-            const link = document.createElement('a');
-            link.href = albumUrl;
-            link.download = `album-retour-vers-le-futur.jpg`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        } catch (error) {
-            console.error("Failed to create album page:", error);
-        } finally {
-            setIsAlbumGenerating(false);
-        }
+    const handleDownloadAlbum = () => {
+        generatedImages.forEach((image) => {
+            if (image.status === 'done' && image.url) {
+                handleDownloadSingleImage(image.url, image.id);
+            }
+        });
     };
 
     const handleSaveEdit = (imageId: number, newUrl: string) => {
@@ -376,30 +292,24 @@ function Editor() {
     return (
         <main className="bg-orange-500 text-neutral-800 min-h-screen w-full flex flex-col items-center py-4 font-sans selection:bg-amber-500 selection:text-black">
             <div className="w-full max-w-screen-2xl mx-auto z-10 relative px-4">
-                 <div className="absolute top-4 right-4 z-20">
+                 <div className="absolute top-4 left-4 right-4 z-20 flex justify-end items-center">
                     <LanguageSwitcher />
                 </div>
 
                 <header className="text-center my-6 md:my-8 pt-12">
-                    <h1 onClick={handleHeaderClick} className="font-orbitron text-4xl md:text-5xl font-bold text-neutral-900 uppercase tracking-widest text-outline-white cursor-pointer select-none">{t('title')}</h1>
+                    <h1 onClick={handleHeaderClick} className="font-open-sans text-4xl md:text-5xl font-bold text-neutral-900 uppercase tracking-widest text-outline-white cursor-pointer select-none">{t('title')}</h1>
                     <p className="font-pixel text-white mt-2 text-lg uppercase tracking-[1px]">{t('subtitle')}</p>
                 </header>
 
-                {generationMode === 'image' ? (
-                    <ImageGallery
-                        generatedImages={generatedImages}
-                        appState={appState}
-                        handleDownloadAlbum={handleDownloadAlbum}
-                        handleDownloadSingleImage={handleDownloadSingleImage}
-                        handleRegenerateImage={handleRegenerateImage}
-                        setPreviewImage={setPreviewImage}
-                        setEditingImage={setEditingImage}
-                        isAlbumGenerating={isAlbumGenerating}
-                    />
-                ) : (
-                    <VideoResult generatedVideos={generatedVideos} />
-                )}
-
+                <ImageGallery
+                    generatedImages={generatedImages}
+                    appState={appState}
+                    handleDownloadAlbum={handleDownloadAlbum}
+                    handleDownloadSingleImage={handleDownloadSingleImage}
+                    handleRegenerateImage={handleRegenerateImage}
+                    setPreviewImage={setPreviewImage}
+                    setEditingImage={setEditingImage}
+                />
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full mt-6">
                     {/* Left Column */}
@@ -412,8 +322,6 @@ function Editor() {
                             isLoading={isLoading}
                             uploadedImage={uploadedImage}
                             availableSubStyles={availableSubStyles}
-                            generationMode={generationMode}
-                            setGenerationMode={setGenerationMode}
                         />
 
                         {/* Mobile-only button to show settings */}
@@ -450,7 +358,7 @@ function Editor() {
                         "lg:block",
                         isSettingsPanelOpen ? "block" : "hidden"
                     )}>
-                        <SettingsPanel formState={formState} generationMode={generationMode} />
+                        <SettingsPanel formState={formState} generationMode="image" />
                     </div>
                 </div>
             </div>
@@ -463,7 +371,7 @@ function Editor() {
                 image={editingImage}
                 onClose={() => setEditingImage(null)}
                 onSave={handleSaveEdit}
-                apiKey={apiKeys.gemini}
+                apiKey={effectiveApiKey}
             />
             <ApiKeyManagerModal
                 isOpen={isApiKeyManagerModalOpen}
