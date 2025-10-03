@@ -6,8 +6,10 @@ import React from 'react';
 import { ControlSection } from './shared/ControlSection';
 import { RoundCameraDial } from './shared/RoundCameraDial';
 import { SHUTTER_SPEEDS, APERTURES, FOCAL_LENGTHS } from '../../lib/constants';
+import { useLanguage } from '../../contexts/LanguageContext';
 
-const PhotoSettingsPanel = ({ formState, T }) => {
+const PhotoSettingsPanel = ({ formState }) => {
+    const { t } = useLanguage();
     const {
         focale, setFocale,
         ouverture, setOuverture,
@@ -15,7 +17,7 @@ const PhotoSettingsPanel = ({ formState, T }) => {
     } = formState;
 
     return (
-        <ControlSection title={T.photoSettings}>
+        <ControlSection title={t('photoSettings')}>
             <div className="bg-neutral-900 p-4 rounded-lg grid grid-cols-3 gap-2 justify-items-center">
                 <RoundCameraDial value={focale} setValue={setFocale} values={FOCAL_LENGTHS} />
                 <RoundCameraDial value={ouverture} setValue={setOuverture} values={APERTURES} />

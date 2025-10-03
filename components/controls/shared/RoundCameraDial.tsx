@@ -60,6 +60,44 @@ export const RoundCameraDial: React.FC<{
         window.addEventListener('mouseup', handleMouseUp);
     };
 
+    const handleTouchStart = (e: React.TouchEvent) => {
+        if ((e.target as HTMLElement).closest('button')) {
+            return;
+        }
+        isDraggingRef.current = true;
+        dragStartXRef.current = e.touches[0].clientX;
+        
+        const currentIndex = values.indexOf(value);
+        valueIndexOnDragStartRef.current = currentIndex === -1 ? Math.floor(values.length / 2) : currentIndex;
+
+        document.body.style.cursor = 'ew-resize';
+        document.body.style.userSelect = 'none';
+
+        const handleTouchMove = (event: TouchEvent) => {
+            if (!isDraggingRef.current) return;
+            event.preventDefault(); // Prevent page scroll
+
+            const sensitivity = 8; // Pixels moved per value change
+            const deltaX = event.touches[0].clientX - dragStartXRef.current;
+            const valueChange = Math.round(deltaX / sensitivity);
+
+            const newIndex = Math.max(0, Math.min(values.length - 1, valueIndexOnDragStartRef.current + valueChange));
+            
+            setValue(values[newIndex]);
+        };
+
+        const handleTouchEnd = () => {
+            isDraggingRef.current = false;
+            document.body.style.cursor = 'default';
+            document.body.style.userSelect = 'auto';
+            window.removeEventListener('touchmove', handleTouchMove);
+            window.removeEventListener('touchend', handleTouchEnd);
+        };
+
+        window.addEventListener('touchmove', handleTouchMove, { passive: false });
+        window.addEventListener('touchend', handleTouchEnd);
+    };
+
     const handleWheel = (e: React.WheelEvent) => {
         e.preventDefault();
         const direction = e.deltaY > 0 ? 1 : -1;
@@ -94,9 +132,10 @@ export const RoundCameraDial: React.FC<{
             <div
                 className="relative w-20 h-20 flex items-center justify-center cursor-ew-resize group"
                 onMouseDown={handleMouseDown}
+                onTouchStart={handleTouchStart}
                 onWheel={handleWheel}
             >
-                <div className="w-full h-full rounded-full bg-neutral-800 border-2 border-neutral-700 shadow-inner flex items-center justify-center relative overflow-hidden">
+                <div className="w-full h-full rounded-full bg-neutral-800 border border-amber-500 shadow-inner flex items-center justify-center relative overflow-hidden">
                     <div 
                         className="absolute w-full h-full"
                         style={{

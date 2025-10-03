@@ -8,19 +8,19 @@
 /** Represents a single, selectable sub-style. */
 export interface SubStyle {
     key: string;
-    name: string;
+    name?: string; // Proper nouns that don't need translation can be hardcoded here
 }
 
 /** Represents a group of sub-styles, used for creating <optgroup> in dropdowns. */
 export interface SubStyleGroup {
-    name: string;
+    nameKey: string;
     subStyles: SubStyle[];
 }
 
 /** Represents a top-level style category. Its sub-styles can be a flat list or a list of groups. */
 export interface Style {
-    name: string;
-    notes: string;
+    key: string;
+    notesKey: string;
     subStyles: SubStyle[] | SubStyleGroup[];
 }
 
@@ -42,11 +42,13 @@ const toKey = (name: string): string => {
 
 
 // --- Master Style Configuration ---
+// The `name` property is now derived from translation keys like `style_photos` or `substyle_portrait_studio`.
+// Proper nouns (like photographer names) that don't need translation can still use the `name` property.
 
 export const STYLES_CONFIG: Style[] = [
     {
-        name: "Photographes",
-        notes: "S'inspirer du style visuel, de l'éclairage et de la composition des grands maîtres de la photographie.",
+        key: "photographers",
+        notesKey: "photographers_notes",
         subStyles: [
             "Peter Lindbergh",
             "Richard Avedon",
@@ -73,348 +75,348 @@ export const STYLES_CONFIG: Style[] = [
         ].map(name => ({ name, key: toKey(name) }))
     },
     {
-        name: "Photos",
-        notes: "Capturer des moments réalistes, avec une lumière naturelle et des décors authentiques.",
+        key: "photos",
+        notesKey: "photos_notes",
         subStyles: [
-            { key: "portrait_studio", name: "Portrait en Studio" },
-            { key: "lifestyle_exterieur", name: "Lifestyle en Extérieur" },
-            { key: "photographie_voyage", name: "Photographie de Voyage" },
-            { key: "photographie_rue", name: "Photographie de Rue" },
-            { key: "corporate_affaires", name: "Corporate / Affaires" },
-            { key: "nb_dramatique", name: "N&B Dramatique" },
-            { key: "sepia_vintage", name: "Sépia Vintage" },
-            { key: "double_exposition_artistique", name: "Double Exposition Artistique" },
-            { key: "sport_action", name: "Sport d'Action" },
-            { key: "portrait_environnemental", name: "Portrait Environnemental" },
-            { key: "lumiere_golden_hour", name: "Lumière Golden Hour" },
-            { key: "lumiere_blue_hour", name: "Lumière Blue Hour" },
-            { key: "haute_vitesse_eclaboussure", name: "Haute Vitesse (Éclaboussure)" },
-            { key: "lumiere_naturelle_fenetre", name: "Lumière Naturelle de Fenêtre" },
+            { key: "portrait_studio" },
+            { key: "lifestyle_exterieur" },
+            { key: "photographie_voyage" },
+            { key: "photographie_rue" },
+            { key: "corporate_affaires" },
+            { key: "nb_dramatique" },
+            { key: "sepia_vintage" },
+            { key: "double_exposition_artistique" },
+            { key: "sport_action" },
+            { key: "portrait_environnemental" },
+            { key: "lumiere_golden_hour" },
+            { key: "lumiere_blue_hour" },
+            { key: "haute_vitesse_eclaboussure" },
+            { key: "lumiere_naturelle_fenetre" },
         ]
     },
     {
-        name: "Portrait Glamour",
-        notes: "Varier les coiffures, les couleurs de robes, les accessoires discrets, éviter la répétition.",
+        key: "portrait_glamour",
+        notesKey: "portrait_glamour_notes",
         subStyles: [
-            { key: "studio_classique", name: "Studio Classique" },
-            { key: "festival_de_cannes", name: "Festival de Cannes" },
-            { key: "cinematique_noir", name: "Cinématique Noir" },
-            { key: "luxe_exterieur", name: "Luxe Extérieur" },
-            { key: "hotel_glamour", name: "Hôtel Glamour" },
-            { key: "soiree_glamour", name: "Soirée Glamour" },
-            { key: "plage_glamour", name: "Plage Glamour" },
+            { key: "studio_classique" },
+            { key: "festival_de_cannes" },
+            { key: "cinematique_noir" },
+            { key: "luxe_exterieur" },
+            { key: "hotel_glamour" },
+            { key: "soiree_glamour" },
+            { key: "plage_glamour" },
+        ]
+    },
+     {
+        key: "portrait_minimaliste",
+        notesKey: "portrait_minimaliste_notes",
+        subStyles: [
+            { key: "studio_blanc" },
+            { key: "architecture_moderne" },
+            { key: "noir_blanc_dramatique" },
+            { key: "couleur_pastel" },
+            { key: "pop_art_vibrant" },
         ]
     },
     {
-        name: "Portrait Minimaliste",
-        notes: "Variations minimalisme + pop-art, accessoires simples, fonds graphiques.",
+        key: "mode_haute_couture",
+        notesKey: "mode_haute_couture_notes",
         subStyles: [
-            { key: "studio_blanc", name: "Studio Blanc" },
-            { key: "architecture_moderne", name: "Architecture Moderne" },
-            { key: "noir_blanc_dramatique", name: "Noir & Blanc Dramatique" },
-            { key: "couleur_pastel", name: "Couleur Pastel" },
-            { key: "pop_art_vibrant", name: "Pop Art Vibrant" },
+            { key: "defile_parisien" },
+            { key: "studio_editorial" },
+            { key: "couture_exterieure" },
         ]
     },
     {
-        name: "Mode Haute Couture",
-        notes: "Alterner les couleurs dominantes, les positions variées.",
+        key: "couverture_vogue",
+        notesKey: "couverture_vogue_notes",
         subStyles: [
-            { key: "defile_parisien", name: "Défilé Parisien" },
-            { key: "studio_editorial", name: "Studio Éditorial" },
-            { key: "couture_exterieure", name: "Couture Extérieure" },
+            { key: "noir_blanc_iconique" },
+            { key: "glamour_dore" },
+            { key: "vogue_de_rue" },
+            { key: "revival_retro" },
+            { key: "studio_luxe_minimaliste" },
+            { key: "avant_garde_conceptuel" },
+            { key: "podium_couture" },
         ]
     },
     {
-        name: "Couverture Vogue",
-        notes: "Toujours inclure une typographie réaliste, des angles variés.",
+        key: "couverture_elle",
+        notesKey: "couverture_elle_notes",
         subStyles: [
-            { key: "noir_blanc_iconique", name: "Noir & Blanc Iconique" },
-            { key: "glamour_dore", name: "Glamour Doré" },
-            { key: "vogue_de_rue", name: "Vogue de Rue" },
-            { key: "revival_retro", name: "Revival Rétro" },
-            { key: "studio_luxe_minimaliste", name: "Studio Luxe Minimaliste" },
-            { key: "avant_garde_conceptuel", name: "Avant-Garde Conceptuel" },
-            { key: "podium_couture", name: "Podium Couture" },
+            { key: "plage_ete" },
+            { key: "chic_decontracte" },
+            { key: "pastel_romantique" },
+            { key: "look_fete" },
+            { key: "mode_lifestyle_urbain" },
+            { key: "cocooning_interieur" },
+            { key: "sport_chic" },
         ]
     },
     {
-        name: "Couverture Elle",
-        notes: "Ambiance lifestyle, sourires, looks accessibles.",
+        key: "couverture_elle_deco",
+        notesKey: "couverture_elle_deco_notes",
         subStyles: [
-            { key: "plage_ete", name: "Plage d'Été" },
-            { key: "chic_decontracte", name: "Chic Décontracté" },
-            { key: "pastel_romantique", name: "Pastel Romantique" },
-            { key: "look_fete", name: "Look de Fête" },
-            { key: "mode_lifestyle_urbain", name: "Mode Lifestyle Urbain" },
-            { key: "cocooning_interieur", name: "Cocooning Intérieur" },
-            { key: "sport_chic", name: "Sport Chic" },
+            { key: "moderne_minimaliste" },
+            { key: "boheme_chic" },
+            { key: "elegant_bord_de_mer" },
+            { key: "loft_urbain" },
+            { key: "vintage_subtil" },
+            { key: "fusion_contemporaine" },
+            { key: "nature_lumiere" },
         ]
     },
     {
-        name: "Couverture Elle Deco",
-        notes: "Focus exclusif sur des intérieurs de design, sans personnages. Chaque scène doit être une composition photographique digne d'un magazine de décoration, mettant en valeur l'atmosphère, les matériaux et la lumière.",
+        key: "journee_dun_mannequin",
+        notesKey: "journee_dun_mannequin_notes",
         subStyles: [
-            { key: "moderne_minimaliste", name: "Moderne Minimaliste" },
-            { key: "boheme_chic", name: "Bohème Chic" },
-            { key: "elegant_bord_de_mer", name: "Élégant Bord de Mer" },
-            { key: "loft_urbain", name: "Loft Urbain" },
-            { key: "vintage_subtil", name: "Vintage Subtil" },
-            { key: "fusion_contemporaine", name: "Fusion Contemporaine" },
-            { key: "nature_lumiere", name: "Nature & Lumière" },
+            { key: "reveil_matinal" },
+            { key: "preparation_salle_de_bain" },
+            { key: "backstage_fashion_week" },
+            { key: "podium_fashion_week" },
+            { key: "soiree_cosy_maison" },
         ]
     },
     {
-        name: "Journée d'un mannequin",
-        notes: "Capturer différents moments de la vie d'un mannequin, des coulisses au podium et à la maison, pour un rendu authentique et varié.",
-        subStyles: [
-            { key: "reveil_matinal", name: "Réveil Matinal" },
-            { key: "preparation_salle_de_bain", name: "Préparation Salle de Bain" },
-            { key: "backstage_fashion_week", name: "Backstage Fashion Week" },
-            { key: "podium_fashion_week", name: "Podium Fashion Week" },
-            { key: "soiree_cosy_maison", name: "Soirée Cosy Maison" },
-        ]
-    },
-    {
-        name: "Costume de Film",
-        notes: "Création de costumes fidèles à travers les âges et les genres pour des productions cinématographiques.",
+        key: "costume_de_film",
+        notesKey: "costume_de_film_notes",
         subStyles: [
             {
-                name: "Préhistoire",
-                subStyles: ["Tribus primitives", "Peaux de bêtes", "Peintures corporelles", "Armes rudimentaires"].map(name => ({ name, key: toKey(name) }))
+                nameKey: "group_prehistoire",
+                subStyles: ["tribus_primitives", "peaux_de_betes", "peintures_corporelles", "armes_rudimentaires"].map(key => ({ key }))
             },
             {
-                name: "Antiquité",
-                subStyles: ["Égypte antique (pharaons, prêtres)", "Grèce antique (citoyens, hoplites)", "Rome antique (gladiateurs, sénateurs)", "Empire perse & babylonien"].map(name => ({ name, key: toKey(name) }))
+                nameKey: "group_antiquite",
+                subStyles: ["egypte_antique", "grece_antique", "rome_antique", "empire_perse_babylonien"].map(key => ({ key }))
             },
             {
-                name: "Moyen-Âge",
-                subStyles: ["Chevaliers & armures", "Paysans & artisans", "Noblesse médiévale", "Vie religieuse (moines, prêtres)"].map(name => ({ name, key: toKey(name) }))
+                nameKey: "group_moyen_age",
+                subStyles: ["chevaliers_armures", "paysans_artisans", "noblesse_medievale", "vie_religieuse"].map(key => ({ key }))
             },
             {
-                name: "Renaissance & Baroque",
-                subStyles: ["Renaissance italienne", "Cour française (Henri IV, Louis XIV)", "Rococo & Lumières", "Costumes élisabéthains"].map(name => ({ name, key: toKey(name) }))
+                nameKey: "group_renaissance_baroque",
+                subStyles: ["renaissance_italienne", "cour_francaise", "rococo_lumieres", "costumes_elisabethains"].map(key => ({ key }))
             },
             {
-                name: "XIXe siècle",
-                subStyles: ["Empire Napoléonien", "Époque Victorienne", "Belle Époque 1900", "Costumes militaires XIXe"].map(name => ({ name, key: toKey(name) }))
+                nameKey: "group_xixe_siecle",
+                subStyles: ["empire_napoleonien", "epoque_victorienne", "belle_epoque_1900", "costumes_militaires_xixe"].map(key => ({ key }))
             },
             {
-                name: "XXe siècle",
-                subStyles: ["Années 20 Gatsby & Prohibition", "Années 30-40 Films noirs & Aviation", "Années 50-60 Rock’n’roll", "Années 70 Hippie & Disco", "Années 80 Flashy & Pop", "Années 90 Grunge & Alternatif"].map(name => ({ name, key: toKey(name) }))
+                nameKey: "group_xxe_siecle",
+                subStyles: ["annees_20_gatsby", "annees_30_40_films_noirs", "annees_50_60_rocknroll", "annees_70_hippie_disco", "annees_80_flashy_pop", "annees_90_grunge"].map(key => ({ key }))
             },
             {
-                name: "Cultures du monde",
-                subStyles: ["Samouraï Japon féodal", "Chine impériale", "Épopée indienne", "Civilisations amérindiennes", "Costumes africains traditionnels"].map(name => ({ name, key: toKey(name) }))
+                nameKey: "group_cultures_du_monde",
+                subStyles: ["samourai_japon_feodal", "chine_imperiale", "epopee_indienne", "civilisations_amerindiennes", "costumes_africains_traditionnels"].map(key => ({ key }))
             },
             {
-                name: "Genres de cinéma",
-                subStyles: ["Western", "Film d’espionnage", "Fantaisie médiévale", "Pirates & Corsaires", "Science-fiction rétro", "Post-apocalyptique", "Super-héros modernes"].map(name => ({ name, key: toKey(name) }))
+                nameKey: "group_genres_de_cinema",
+                subStyles: ["western", "film_espionnage", "fantaisie_medievale", "pirates_corsaires", "science_fiction_retro", "post_apocalyptique", "super_heros_modernes"].map(key => ({ key }))
             }
         ]
     },
     {
-        name: "Punk",
-        notes: "Attitudes rebelles, atmosphère urbaine brute.",
+        key: "punk",
+        notesKey: "punk_notes",
         subStyles: [
-            { key: "punk_urbain", name: "Punk Urbain" },
-            { key: "punk_uk_70s", name: "Punk UK 70s" },
-            { key: "punk_80s_glam", name: "Punk 80s Glam" },
-            { key: "concert_punk", name: "Concert Punk" },
-            { key: "grunge_90s", name: "Grunge 90s" },
-            { key: "punk_avant_garde", name: "Punk Avant-Garde" },
+            { key: "punk_urbain" },
+            { key: "punk_uk_70s" },
+            { key: "punk_80s_glam" },
+            { key: "concert_punk" },
+            { key: "grunge_90s" },
+            { key: "punk_avant_garde" },
         ]
     },
     {
-        name: "Gothique",
-        notes: "Ambiance sombre et romantique, avec des éléments architecturaux médiévaux, victoriens ou religieux. Mettre l'accent sur un éclairage dramatique et des tenues élaborées.",
+        key: "gothique",
+        notesKey: "gothique_notes",
         subStyles: [
-            { key: "medieval_sombre", name: "Médiéval Sombre" },
-            { key: "cimetiere_victorien", name: "Cimetière Victorien" },
-            { key: "eglise_gothique", name: "Église Gothique" },
-            { key: "portrait_victorien", name: "Portrait Victorien" },
-            { key: "gothique_moderne", name: "Gothique Moderne" },
-            { key: "gothique_baroque", name: "Gothique Baroque" },
-            { key: "dark_romantic", name: "Dark Romantic" },
-            { key: "bar_gothique", name: "Bar Gothique" },
+            { key: "medieval_sombre" },
+            { key: "cimetiere_victorien" },
+            { key: "eglise_gothique" },
+            { key: "portrait_victorien" },
+            { key: "gothique_moderne" },
+            { key: "gothique_baroque" },
+            { key: "dark_romantic" },
+            { key: "bar_gothique" },
         ]
     },
     {
-        name: "Viking",
-        notes: "Mélanger l'esthétique historique des Vikings. Se concentrer sur l'action cinématique, les paysages spectaculaires et un équipement détaillé et usé.",
+        key: "viking",
+        notesKey: "viking_notes",
         subStyles: [
-            { key: "raid_marin", name: "Raid Marin" },
-            { key: "crique_tresor", name: "Crique au Trésor" },
-            { key: "festin_maison_longue", name: "Festin en Maison Longue" },
-            { key: "explorateur_nordique", name: "Explorateur Nordique" },
-            { key: "guerrier_mythologique", name: "Guerrier Mythologique" },
-            { key: "vie_du_village", name: "Vie du Village" },
-            { key: "navigation_drakkar", name: "Navigation en Drakkar" },
+            { key: "raid_marin" },
+            { key: "crique_tresor" },
+            { key: "festin_maison_longue" },
+            { key: "explorateur_nordique" },
+            { key: "guerrier_mythologique" },
+            { key: "vie_du_village" },
+            { key: "navigation_drakkar" },
         ]
     },
     {
-        name: "Bohème",
-        notes: "Ambiances cinématiques, accessoires contextuels (franges, motifs floraux, lumière naturelle).",
+        key: "boheme",
+        notesKey: "boheme_notes",
         subStyles: [
-            { key: "boheme_chic", name: "Bohème Chic" },
-            { key: "festival_boheme", name: "Festival Bohème" },
-            { key: "boheme_urbain", name: "Bohème Urbain" },
-            { key: "boheme_vintage", name: "Bohème Vintage" },
-            { key: "boheme_nature", name: "Bohème Nature" },
-            { key: "boheme_luxe", name: "Bohème Luxe" },
-            { key: "boheme_baba_cool", name: "Bohème Baba Cool" },
+            { key: "boheme_chic" },
+            { key: "festival_boheme" },
+            { key: "boheme_urbain" },
+            { key: "boheme_vintage" },
+            { key: "boheme_nature" },
+            { key: "boheme_luxe" },
+            { key: "boheme_baba_cool" },
         ]
     },
     {
-        name: "Automobile",
-        notes: "Varier les véhicules, les angles de caméra, l'éclairage jour/nuit.",
+        key: "automobile",
+        notesKey: "automobile_notes",
         subStyles: [
-            { key: "course_circuit", name: "Course sur Circuit" },
-            { key: "rallye_raid", name: "Rallye Raid" },
-            { key: "classic_vintage", name: "Classic Vintage" },
-            { key: "luxe_moderne", name: "Luxe Moderne" },
-            { key: "stock_car", name: "Stock Car" },
-            { key: "drag_race", name: "Drag Race" },
-            { key: "tuning_street", name: "Tuning Street" },
+            { key: "course_circuit" },
+            { key: "rallye_raid" },
+            { key: "classic_vintage" },
+            { key: "luxe_moderne" },
+            { key: "stock_car" },
+            { key: "drag_race" },
+            { key: "tuning_street" },
         ]
     },
     {
-        name: "Moto",
-        notes: "Varier les types de motos, les angles de caméra dynamiques, l'éclairage jour/nuit.",
+        key: "moto",
+        notesKey: "moto_notes",
         subStyles: [
-            { key: "moto_piste", name: "Moto sur Piste" },
-            { key: "motocross", name: "Motocross" },
-            { key: "rallye_raid_moto", name: "Rallye Raid" },
-            { key: "biker_harley", name: "Biker / Harley" },
-            { key: "drag_race_moto", name: "Drag Race" },
-            { key: "cafe_racer", name: "Café Racer" },
-            { key: "enduro", name: "Enduro" },
-            { key: "trial", name: "Trial" },
+            { key: "moto_piste" },
+            { key: "motocross" },
+            { key: "rallye_raid_moto" },
+            { key: "biker_harley" },
+            { key: "drag_race_moto" },
+            { key: "cafe_racer" },
+            { key: "enduro" },
+            { key: "trial" },
         ]
     },
     {
-        name: "Sportif",
-        notes: "Toujours contextualiser (piscine, ciel, stade), poses dynamiques.",
+        key: "sportif",
+        notesKey: "sportif_notes",
         subStyles: [
             {
-                name: "Natation",
-                subStyles: ["Course en piscine", "Natation synchronisée", "Plongeon", "Eau libre"].map(name => ({ name, key: toKey(name) }))
+                nameKey: "group_natation",
+                subStyles: ["course_en_piscine", "natation_synchronisee", "plongeon", "eau_libre"].map(key => ({ key }))
             },
             {
-                name: "Parachutisme",
+                nameKey: "group_parachutisme",
                 subStyles: [
-                    "Préparation au sol (équipement, pliage parachute)",
-                    "Embarquement dans l'avion",
-                    "Dans l'avion (en attente, visage sous tension)",
-                    "Au bord de la porte, prêt à sauter",
-                    "Saut en altitude (visage déformé par l'air, lunettes, combinaison)",
-                    "Vol en chute libre",
-                    "Ouverture du parachute",
-                    "Approche et atterrissage",
-                    "Ramassage et pliage du matériel"
-                ].map(name => ({ name, key: toKey(name) }))
+                    "preparation_au_sol",
+                    "embarquement_avion",
+                    "dans_avion",
+                    "pret_a_sauter",
+                    "saut_en_altitude",
+                    "vol_en_chute_libre",
+                    "ouverture_parachute",
+                    "approche_atterrissage",
+                    "ramassage_materiel"
+                ].map(key => ({ key }))
             },
             {
-                name: "Plongée",
-                subStyles: ["Plongée bouteille loisir", "Apnée", "Plongée sous-marine avec combinaison complète", "Plongée spéléologique"].map(name => ({ name, key: toKey(name) }))
+                nameKey: "group_plongee",
+                subStyles: ["plongee_bouteille", "apnee", "plongee_combinaison", "plongee_speleologique"].map(key => ({ key }))
             },
             {
-                name: "Course à pied",
-                subStyles: ["Sprint", "Marathon", "Trail", "Athlétisme (piste)"].map(name => ({ name, key: toKey(name) }))
+                nameKey: "group_course_a_pied",
+                subStyles: ["sprint", "marathon", "trail", "athletisme_piste"].map(key => ({ key }))
             },
             {
-                name: "Arts martiaux",
-                subStyles: ["Karaté", "Judo", "Taekwondo", "MMA", "Boxe anglaise", "Kick-boxing"].map(name => ({ name, key: toKey(name) }))
+                nameKey: "group_arts_martiaux",
+                subStyles: ["karate", "judo", "taekwondo", "mma", "boxe_anglaise", "kick_boxing"].map(key => ({ key }))
             },
             {
-                name: "Football",
-                subStyles: ["Match en action", "Entraînement", "Célébration de but", "Gardien en arrêt"].map(name => ({ name, key: toKey(name) }))
+                nameKey: "group_football",
+                subStyles: ["match_action", "entrainement", "celebration_but", "gardien_arret"].map(key => ({ key }))
             },
             {
-                name: "Basketball",
-                subStyles: ["Match NBA", "Streetball urbain", "Dunk spectaculaire", "Entraînement intensif"].map(name => ({ name, key: toKey(name) }))
+                nameKey: "group_basketball",
+                subStyles: ["match_nba", "streetball_urbain", "dunk_spectaculaire", "entrainement_intensif"].map(key => ({ key }))
             },
             {
-                name: "Tennis",
-                subStyles: ["Match en tournoi", "Service puissant", "Échange en fond de court", "Victoire célébrée"].map(name => ({ name, key: toKey(name) }))
+                nameKey: "group_tennis",
+                subStyles: ["match_tournoi", "service_puissant", "echange_fond_court", "victoire_celebree"].map(key => ({ key }))
             }
         ]
     },
     {
-        name: "Navy SEAL",
-        notes: "Scénarios hyper-réalistes axés sur des missions et des environnements spécifiques des Navy SEALs. Chaque sous-style nécessite un équipement, des décors et un contexte opérationnel précis.",
+        key: "navy_seal",
+        notesKey: "navy_seal_notes",
         subStyles: [
-            { key: "insertion_aeroportee", name: "Insertion aéroportée" },
-            { key: "debarquement_amphibie", name: "Débarquement amphibie" },
-            { key: "plongee_combat", name: "Plongée de combat" },
-            { key: "sabotage_portuaire", name: "Sabotage portuaire" },
-            { key: "operations_urbaines", name: "Opérations urbaines" },
-            { key: "reconnaissance_desert", name: "Reconnaissance désert" },
-            { key: "operations_foret_jungle", name: "Opérations forêt/jungle" },
-            { key: "operations_neige_montagne", name: "Opérations neige/montagne" },
-            { key: "raid_nocturne", name: "Raid nocturne" },
-            { key: "tenue_ceremonie", name: "Tenue de cérémonie" },
+            { key: "insertion_aeroportee" },
+            { key: "debarquement_amphibie" },
+            { key: "plongee_combat" },
+            { key: "sabotage_portuaire" },
+            { key: "operations_urbaines" },
+            { key: "reconnaissance_desert" },
+            { key: "operations_foret_jungle" },
+            { key: "operations_neige_montagne" },
+            { key: "raid_nocturne" },
+            { key: "tenue_ceremonie" },
         ]
     },
     {
-        name: "Militaire",
-        notes: "Scénarios militaires conventionnels, mettant l'accent sur l'équipement, les véhicules et les uniformes.",
+        key: "militaire",
+        notesKey: "militaire_notes",
         subStyles: [
-            { key: "vehicule_blinde", name: "Véhicule Blindé" },
-            { key: "patrouille", name: "Patrouille" },
-            { key: "uniforme_parade", name: "Uniforme de Parade" },
-            { key: "base_operationnelle_avancee", name: "Base Opérationnelle Avancée" },
-            { key: "salle_de_briefing", name: "Salle de Briefing (Avant-Mission)" },
-            { key: "checkpoint_sous_tension", name: "Checkpoint sous Tension" },
-            { key: "feu_d_artillerie_nocturne", name: "Feu d'Artillerie Nocturne" },
-            { key: "pilote_de_chasse_pre_vol", name: "Pilote de Chasse (Pré-vol)" },
-            { key: "medecin_de_combat_medevac", name: "Médecin de Combat (MEDEVAC)" },
-            { key: "combat_urbain_cqb", name: "Combat Urbain (CQB)" },
-            { key: "garde_d_honneur_ceremoniale", name: "Garde d'Honneur Cérémoniale" },
-            { key: "vie_en_caserne", name: "Vie en Caserne" },
-            { key: "maintenance_de_blinde_hangar", name: "Maintenance de Blindé (Hangar)" },
-            { key: "operations_en_milieu_arctique", name: "Opérations en Milieu Arctique" },
-            { key: "guerre_en_jungle", name: "Guerre en Jungle" },
-            { key: "operateur_de_drone_gcs", name: "Opérateur de Drone (GCS)" },
+            { key: "vehicule_blinde" },
+            { key: "patrouille" },
+            { key: "uniforme_parade" },
+            { key: "base_operationnelle_avancee" },
+            { key: "salle_de_briefing" },
+            { key: "checkpoint_sous_tension" },
+            { key: "feu_d_artillerie_nocturne" },
+            { key: "pilote_de_chasse_pre_vol" },
+            { key: "medecin_de_combat_medevac" },
+            { key: "combat_urbain_cqb" },
+            { key: "garde_d_honneur_ceremoniale" },
+            { key: "vie_en_caserne" },
+            { key: "maintenance_de_blinde_hangar" },
+            { key: "operations_en_milieu_arctique" },
+            { key: "guerre_en_jungle" },
+            { key: "operateur_de_drone_gcs" },
         ]
     },
     {
-        name: "Commando",
-        notes: "Missions d'opérations spéciales, mettant l'accent sur la furtivité, l'équipement spécialisé et les environnements tactiques.",
+        key: "commando",
+        notesKey: "commando_notes",
         subStyles: [
-            { key: "sniper", name: "Sniper" },
-            { key: "embarquement_helicoptere", name: "Embarquement Hélicoptère" },
-            { key: "infiltration_plage", name: "Infiltration par la Plage" },
-            { key: "plongee_de_combat", name: "Plongée de Combat" },
-            { key: "raid_en_zodiac_nocturne", name: "Raid en Zodiac Nocturne" },
-            { key: "liberation_d_otage_cqb", name: "Libération d'Otage (CQB)" },
-            { key: "saut_operationnel_halo", name: "Saut Opérationnel (HALO)" },
-            { key: "extraction_vip", name: "Extraction VIP" },
-            { key: "sabotage_d_infrastructure", name: "Sabotage d'Infrastructure" },
-            { key: "poste_d_observation", name: "Poste d'Observation" },
-            { key: "assaut_vertical_rappel", name: "Assaut Vertical (Rappel)" },
-            { key: "guerre_en_tunnel", name: "Guerre en Tunnel" },
-            { key: "capture_de_cible_hvt", name: "Capture de Cible (HVT)" },
-            { key: "demolition_sous_marine", name: "Démolition Sous-Marine" },
-            { key: "preparation_clandestine", name: "Préparation Clandestine" },
+            { key: "sniper" },
+            { key: "embarquement_helicoptere" },
+            { key: "infiltration_plage" },
+            { key: "plongee_de_combat" },
+            { key: "raid_en_zodiac_nocturne" },
+            { key: "liberation_d_otage_cqb" },
+            { key: "saut_operationnel_halo" },
+            { key: "extraction_vip" },
+            { key: "sabotage_d_infrastructure" },
+            { key: "poste_d_observation" },
+            { key: "assaut_vertical_rappel" },
+            { key: "guerre_en_tunnel" },
+            { key: "capture_de_cible_hvt" },
+            { key: "demolition_sous_marine" },
+            { key: "preparation_clandestine" },
         ]
     },
     {
-        name: "Pilote de Chasse",
-        notes: "Scénarios centrés sur les missions et la vie des pilotes de chasse modernes, mettant l'accent sur la technologie, la vitesse et l'action.",
+        key: "pilote_de_chasse",
+        notesKey: "pilote_de_chasse_notes",
         subStyles: [
-            "Préparation Pré-Vol (Tarmac)",
-            "Décollage Porte-Avions",
-            "Dogfight (Combat Aérien)",
-            "Vol en Formation",
-            "Bombardement de Précision",
-            "Retour de Mission (Débriefing)",
-            "Vol Très Basse Altitude",
-            "Ravitaillement en Vol",
-            "Éjection d'Urgence",
-            "Portrait en Cockpit",
-            "Vol Acrobatique (Airshow)",
-            "Maintenance (Hangar)",
-        ].map(name => ({ name, key: toKey(name) }))
+            "preparation_pre_vol",
+            "decollage_porte_avions",
+            "dogfight",
+            "vol_en_formation",
+            "bombardement_precision",
+            "retour_mission",
+            "vol_tres_basse_altitude",
+            "ravitaillement_en_vol",
+            "ejection_urgence",
+            "portrait_cockpit",
+            "vol_acrobatique",
+            "maintenance_hangar",
+        ].map(name => ({ key: toKey(name) }))
     },
 ];

@@ -4,7 +4,8 @@
 */
 import React from 'react';
 import { GeneratedImage, AppState } from '../pages/Editor';
-import { IconLoader, IconAlertTriangle, IconDownload, IconRefresh } from '@tabler/icons-react';
+import { IconLoader, IconAlertTriangle, IconDownload, IconRefresh, IconBrush } from '@tabler/icons-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface ImageGalleryProps {
     generatedImages: GeneratedImage[];
@@ -13,10 +14,13 @@ interface ImageGalleryProps {
     handleDownloadSingleImage: (url: string, id: number) => void;
     handleRegenerateImage: (id: number) => void;
     setPreviewImage: (url: string) => void;
-    T: any;
+    setEditingImage: (image: GeneratedImage) => void;
+    isAlbumGenerating: boolean;
 }
 
-const ImageGallery: React.FC<ImageGalleryProps> = ({ generatedImages, appState, handleDownloadAlbum, handleDownloadSingleImage, handleRegenerateImage, setPreviewImage, T }) => {
+const ImageGallery: React.FC<ImageGalleryProps> = ({ generatedImages, appState, handleDownloadAlbum, handleDownloadSingleImage, handleRegenerateImage, setPreviewImage, setEditingImage, isAlbumGenerating }) => {
+    const { t } = useLanguage();
+
     if (generatedImages.length === 0) {
         return null;
     }
@@ -34,18 +38,29 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ generatedImages, appState, 
                                     <img 
                                         src={image.url} 
                                         alt={`Generated image ${image.id + 1}`} 
-                                        className="w-full h-full object-cover cursor-pointer group-hover:scale-105 transition-transform duration-300" 
+                                        className="w-full h-full object-contain cursor-pointer group-hover:scale-105 transition-transform duration-300" 
                                         onClick={() => setPreviewImage(image.url!)}
                                     />
-                                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
+                                    <div className="absolute inset-0 bg-black/60 flex items-center justify-center gap-2 md:gap-4 md:opacity-0 group-hover:md:opacity-100 transition-opacity duration-300">
+                                        <button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                setEditingImage(image);
+                                            }}
+                                            className="p-3 bg-black/50 rounded-full text-white hover:bg-amber-500 hover:text-black focus:outline-none focus:ring-2 focus:ring-amber-400 transition-colors"
+                                            aria-label={t('edit')}
+                                            title={t('edit')}
+                                        >
+                                            <IconBrush size={20} />
+                                        </button>
                                         <button
                                             onClick={(e) => {
                                                 e.stopPropagation();
                                                 handleRegenerateImage(image.id);
                                             }}
                                             className="p-3 bg-black/50 rounded-full text-white hover:bg-amber-500 hover:text-black focus:outline-none focus:ring-2 focus:ring-amber-400 transition-colors"
-                                            aria-label="Regenerate image"
-                                            title={T.regenerate}
+                                            aria-label={t('regenerate')}
+                                            title={t('regenerate')}
                                         >
                                             <IconRefresh size={20} />
                                         </button>
@@ -55,8 +70,8 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ generatedImages, appState, 
                                                 handleDownloadSingleImage(image.url!, image.id);
                                             }}
                                             className="p-3 bg-black/50 rounded-full text-white hover:bg-amber-500 hover:text-black focus:outline-none focus:ring-2 focus:ring-amber-400 transition-colors"
-                                            aria-label="Download image"
-                                            title={T.download}
+                                            aria-label={t('download')}
+                                            title={t('download')}
                                         >
                                             <IconDownload size={20} />
                                         </button>
@@ -69,8 +84,9 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ generatedImages, appState, 
             </div>
             {appState === 'results-shown' && generatedImages.some(img => img.status === 'done') && (
                  <div className="text-center">
-                    <button onClick={handleDownloadAlbum} className="bg-amber-500 hover:bg-amber-600 text-black font-bold py-2 px-6 rounded-lg mt-8 flex items-center gap-2 transition-all duration-200 mx-auto shadow-amber-500/30 shadow-[0_0_15px_2px] hover:shadow-amber-500/50">
-                        <IconDownload size={20}/> {T.downloadAlbum}
+                    <button onClick={handleDownloadAlbum} disabled={isAlbumGenerating} className="bg-amber-500 hover:bg-amber-600 text-black font-bold py-2 px-6 rounded-lg mt-8 flex items-center gap-2 transition-all duration-200 mx-auto shadow-amber-500/30 shadow-[0_0_15px_2px] hover:shadow-amber-500/50 disabled:bg-neutral-500 disabled:cursor-not-allowed disabled:shadow-none">
+                        {isAlbumGenerating ? <IconLoader size={20} className="animate-spin" /> : <IconDownload size={20}/>}
+                        {isAlbumGenerating ? t('generating') : t('downloadAlbum')}
                     </button>
                 </div>
             )}

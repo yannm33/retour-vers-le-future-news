@@ -6,9 +6,9 @@ import { useState, useEffect } from 'react';
 import type { ColorMode, Upscale, RenderQuality } from '../lib/constants';
 
 export const useGenerationForm = () => {
-    const [numberOfImages, setNumberOfImages] = useState(5);
-    const [style, setStyle] = useState('Photos');
-    const [subStyle, setSubStyle] = useState('');
+    const [numberOfImages, setNumberOfImages] = useState(1);
+    const [style, setStyle] = useState('photos'); // Use key instead of name
+    const [subStyle, setSubStyle] = useState(''); // Use key instead of name
     const [customPrompt, setCustomPrompt] = useState('');
     const [colorMode, setColorMode] = useState<ColorMode>('Couleur');
     const [upscale, setUpscale] = useState<Upscale>('8K');
@@ -28,10 +28,21 @@ export const useGenerationForm = () => {
     const [signatureOn, setSignatureOn] = useState(true);
     const [aspectRatio, setAspectRatio] = useState('1:1');
     const [renderQuality, setRenderQuality] = useState<RenderQuality>('UHD (RÉALISME)');
+    const [timeTravelOn, setTimeTravelOn] = useState(false);
+    const [year, setYear] = useState(1985);
 
     useEffect(() => {
         setSubStyle('');
     }, [style]);
+
+    // Automatically set color mode for specific sub-styles
+    useEffect(() => {
+        if (subStyle === 'nb_dramatique') {
+            setColorMode('N&B');
+        } else {
+            setColorMode('Couleur');
+        }
+    }, [subStyle]);
 
     return {
         numberOfImages, setNumberOfImages,
@@ -56,5 +67,7 @@ export const useGenerationForm = () => {
         signatureOn, setSignatureOn,
         aspectRatio, setAspectRatio,
         renderQuality, setRenderQuality,
+        timeTravelOn, setTimeTravelOn,
+        year, setYear,
     };
 };

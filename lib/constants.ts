@@ -8,53 +8,6 @@ export type ColorMode = 'Couleur' | 'N&B';
 export type Upscale = 'Standard' | '4K' | '6K' | '8K';
 export type RenderQuality = 'APERÇU (RAPIDE)' | 'HD (QUALITÉ)' | 'UHD (RÉALISME)';
 
-
-// --- I18n Translations ---
-export const translations = {
-    title: "Retour vers le futur",
-    subtitle: "Aperçu cinématique et photographique",
-    downloadAlbum: "TOUT TÉLÉCHARGER",
-    loadPortrait: "Portrait",
-    generating: "GÉNÉRATION...",
-    generate: "GÉNÉRER",
-    style: "Style",
-    substyle: "Sous-style",
-    chooseSubstyle: "Choisir un sous-style",
-    customPromptTitle: "Votre prompt personnalisé",
-    customPromptPlaceholder: "Collez votre prompt ici (scène, style, lumière...)",
-    uploadPlaceholder: "Chargez un portrait pour commencer",
-    renderQuality: "Qualité de rendu",
-    preview: "APERÇU (RAPIDE)",
-    hd: "HD (QUALITÉ)",
-    uhd: "UHD (RÉALISME)",
-    color: "COULEUR",
-    bw: "N&B",
-    upscale: "Upscale",
-    photoSettings: "Réglages Photographiques",
-    focal: "FOCALE",
-    aperture: "OUVERTURE",
-    speed: "VITESSE",
-    hairColor: "Couleur des cheveux",
-    expression: "Expression",
-    glasses: "Lunettes",
-    framing: "Cadrage",
-    luts: "LUTs Cinéma",
-    dirt: "Salissure",
-    photoGrain: "Type de film",
-    filmBrand: "Marque de film",
-    iso: "Sensibilité ISO",
-    signature: "Signature personnelle",
-    lockedOn: "ON - VERROUILLÉ",
-    off: "OFF",
-    formatSize: "Format & Taille",
-    portrait: "Portrait",
-    square: "Carré",
-    landscape: "Paysage",
-    download: "TÉLÉCHARGER",
-    regenerate: "Régénérer",
-    quantity: "QTÉ"
-};
-
 // --- Magazine Cover Prompt Details ---
 export const MAGAZINE_PROMPT_DETAILS = {
     'Couverture Vogue': {
@@ -101,7 +54,7 @@ export const GRAINS = [
     'Aucun', 'Ultra Fin', 'Fin Standard', 'Moyen', 'Grossier', 'Très Grossier', 'Bruit ISO élevé', 'Vieux film 35mm', 'Finition Mate', 'Contrasté', 'Doux', 'Pointillé', 'Granuleux', 'Flou Doux', 'Cinéma', 'Vignetté'
 ];
 export const FILM_STOCKS = [
-    'Aucune', 'Kodak Portra 400', 'Kodak Ektar 100', 'Kodak Gold 200', 'Kodak Tri-X 400', 'Fujifilm Pro 400H', 'Fujifilm Velvia 50', 'Fujifilm Superia 400', 'Ilford HP5 Plus 400', 'Ilford Delta 3200', 'CineStill 800T', 'Lomography Color Negative 800'
+    'Aucune', 'Kodak Portra 400', 'Kodak Ektar 100', 'Kodak Gold 200', 'Kodak Tri-X 400', 'Kodak Vision3 500T', 'Fujifilm Pro 400H', 'Fujifilm Velvia 50', 'Fujifilm Superia 400', 'Fujifilm Acros 100', 'Ilford HP5 Plus 400', 'Ilford Delta 3200', 'Agfa Vista 200', 'CineStill 800T', 'CineStill 50D', 'Lomography Color Negative 800', 'Polaroid 600'
 ];
 export const ISO_SENSITIVITIES = [
     'Auto', '50', '100', '200', '400', '800', '1600', '3200', '6400'

@@ -1,18 +1,20 @@
 
+
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
 */
 import React from 'react';
 import { IconX, IconDownload } from '@tabler/icons-react';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 interface ImagePreviewModalProps {
     previewImage: string | null;
     setPreviewImage: (url: string | null) => void;
-    T: any;
 }
 
-const ImagePreviewModal: React.FC<ImagePreviewModalProps> = ({ previewImage, setPreviewImage, T }) => {
+const ImagePreviewModal: React.FC<ImagePreviewModalProps> = ({ previewImage, setPreviewImage }) => {
+    const { t } = useLanguage();
     if (!previewImage) {
         return null;
     }
@@ -22,7 +24,7 @@ const ImagePreviewModal: React.FC<ImagePreviewModalProps> = ({ previewImage, set
             className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
             onClick={() => setPreviewImage(null)}
         >
-            <button className="absolute top-4 right-4 text-white hover:text-amber-500" aria-label="Close preview">
+            <button className="absolute top-4 right-4 text-white hover:text-amber-500" aria-label={t('close')}>
                 <IconX size={32} />
             </button>
             <img 
@@ -39,7 +41,7 @@ const ImagePreviewModal: React.FC<ImagePreviewModalProps> = ({ previewImage, set
                 link.click();
                 document.body.removeChild(link);
              }} className="absolute bottom-4 right-4 bg-amber-500 hover:bg-amber-600 text-black font-bold py-2 px-4 rounded-lg flex items-center gap-2 transition-colors">
-                <IconDownload size={20}/> {T.download}
+                <IconDownload size={20}/> {t('download')}
             </button>
         </div>
     );

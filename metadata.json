@@ -1,5 +1,7 @@
 {
   "name": "Retour vers le futur",
   "description": "Un outil d'aperçu cinématique et photographique pour générer et manipuler des portraits et des scènes IA à travers divers styles et époques.",
-  "requestFramePermissions": []
+  "requestFramePermissions": [
+    "microphone"
+  ]
 }
