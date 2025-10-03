@@ -26,6 +26,7 @@ export const translations = {
     
     // Gallery & Modals
     uploadPlaceholder: "Upload a portrait to start",
+    dragAndDropPrompt: "or drag and drop an image here",
     downloadAlbum: "DOWNLOAD ALL",
     download: "DOWNLOAD",
     regenerate: "Regenerate",
@@ -538,6 +539,7 @@ export const translations = {
 
     // Gallery & Modals
     uploadPlaceholder: "Chargez un portrait pour commencer",
+    dragAndDropPrompt: "ou glissez-déposez une image ici",
     downloadAlbum: "TOUT TÉLECHARGER",
     download: "TÉLECHARGER",
     regenerate: "Régénérer",

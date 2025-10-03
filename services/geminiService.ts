@@ -121,7 +121,6 @@ async function generateWithGemini(imageDataUrl: string | null, prompt: string, a
         };
 
         try {
-            console.log("Attempting image re-imagination with prompt:", editInstruction);
             const response = await callGeminiApi(request, apiKey);
             return processGeminiResponse(response);
         } catch (error) {
@@ -147,7 +146,6 @@ async function generateWithGemini(imageDataUrl: string | null, prompt: string, a
         };
 
         try {
-            console.log("Attempting text-to-image generation with prompt:", request.prompt);
             const response = await ai.models.generateImages(request);
 
             if (response.generatedImages && response.generatedImages.length > 0 && response.generatedImages[0].image?.imageBytes) {
@@ -172,7 +170,6 @@ async function generateWithIdeogram(imageDataUrl: string | null, prompt: string,
     if (!apiKey) {
         throw new Error("Ideogram API key is not configured.");
     }
-    console.log("Routing to Ideogram with prompt:", prompt);
     // TODO: Implement actual API call to Ideogram
     throw new Error("Ideogram generation is not yet implemented.");
 }
@@ -184,7 +181,6 @@ async function generateWithRevArt(imageDataUrl: string | null, prompt: string, a
     if (!apiKey) {
         throw new Error("RevArt API key is not configured.");
     }
-    console.log("Routing to RevArt with prompt:", prompt);
     // TODO: Implement actual API call to RevArt
     throw new Error("RevArt generation is not yet implemented.");
 }

@@ -46,6 +46,8 @@ function Editor() {
     const [previewImage, setPreviewImage] = useState<string | null>(null);
     const [isSettingsPanelOpen, setIsSettingsPanelOpen] = useState(false);
     const [isApiKeyManagerModalOpen, setIsApiKeyManagerModalOpen] = useState(false);
+    const [isDraggingOver, setIsDraggingOver] = useState(false);
+
 
     const { apiKeys, saveApiKeys } = useApiKeys();
 
@@ -74,10 +76,8 @@ function Editor() {
         }
     }, [generatedImages, appState]);
 
-
-    const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            const file = e.target.files[0];
+    const processImageFile = (file: File) => {
+        if (file && file.type.startsWith('image/')) {
             const reader = new FileReader();
             reader.onloadend = () => {
                 setUploadedImage(reader.result as string);
@@ -86,12 +86,39 @@ function Editor() {
             reader.readAsDataURL(file);
         }
     };
+
+    const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+            processImageFile(e.target.files[0]);
+        }
+    };
     
+    const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault(); // Necessary to allow dropping
+    };
+
+    const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        setIsDraggingOver(true);
+    };
+
+    const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        setIsDraggingOver(false);
+    };
+
+    const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        setIsDraggingOver(false);
+        if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+            processImageFile(e.dataTransfer.files[0]);
+        }
+    };
+
     const buildCreativePrompt = useCallback(() => {
         const promptOptions = { aspectRatio, colorMode, renderQuality, upscale };
         const specializedPrompt = getSpecializedPrompt(style, subStyle, promptOptions);
         if (specializedPrompt) {
-            console.log("Using specialized prompt:", specializedPrompt);
             return specializedPrompt;
         }
 
@@ -286,23 +313,14 @@ function Editor() {
     const availableSubStyles = selectedStyleObject ? selectedStyleObject.subStyles : [];
     
     const getAspectRatioClass = (ratio: string) => {
-        switch (ratio) {
-            case '1:1': return 'aspect-square';
-            case '4:5': return 'aspect-[4/5]';
-            case '3:4': return 'aspect-[3/4]';
-            case '2:3': return 'aspect-[2/3]';
-            case '10:16': return 'aspect-[10/16]';
-            case '9:16': return 'aspect-[9/16]';
-            case '1:2': return 'aspect-[1/2]';
-            case '5:4': return 'aspect-[5/4]';
-            case '4:3': return 'aspect-[4/3]';
-            case '3:2': return 'aspect-[3/2]';
-            case '16:10': return 'aspect-[16/10]';
-            case '16:9': return 'aspect-[16/9]';
-            case '2:1': return 'aspect-[2/1]';
-            case '3:1': return 'aspect-[3/1]';
-            default: return 'aspect-square';
-        }
+        const aspectClasses: { [key: string]: string } = {
+            '1:1': 'aspect-square', '4:5': 'aspect-[4/5]', '3:4': 'aspect-[3/4]',
+            '2:3': 'aspect-[2/3]', '10:16': 'aspect-[10/16]', '9:16': 'aspect-[9/16]',
+            '1:2': 'aspect-[1/2]', '5:4': 'aspect-[5/4]', '4:3': 'aspect-[4/3]',
+            '3:2': 'aspect-[3/2]', '16:10': 'aspect-[16/10]', '16:9': 'aspect-[16/9]',
+            '2:1': 'aspect-[2/1]', '3:1': 'aspect-[3/1]'
+        };
+        return aspectClasses[ratio] || 'aspect-square';
     };
 
     return (
@@ -352,17 +370,24 @@ function Editor() {
                             </button>
                         </div>
                         
-                        <div className={cn(
-                            "bg-black rounded-lg p-4 flex flex-col justify-center items-center shrink-0",
-                            getAspectRatioClass(aspectRatio)
-                        )}>
+                        <div
+                            className={cn(
+                                "bg-black rounded-lg p-4 flex flex-col justify-center items-center shrink-0 transition-all duration-300",
+                                getAspectRatioClass(aspectRatio),
+                                isDraggingOver && "border-2 border-dashed border-amber-500 bg-amber-500/10 scale-105"
+                            )}
+                            onDragOver={handleDragOver}
+                            onDragEnter={handleDragEnter}
+                            onDragLeave={handleDragLeave}
+                            onDrop={handleDrop}
+                        >
                             {uploadedImage ? (
-                                <img src={uploadedImage} alt="Uploaded portrait" className="max-w-full max-h-full rounded-lg object-contain"/>
+                                <img src={uploadedImage} alt="Uploaded portrait" className="max-w-full max-h-full rounded-lg object-contain pointer-events-none"/>
                             ) : (
-                                <div className="text-center text-neutral-500 flex flex-col items-center gap-4">
+                                <div className="text-center text-neutral-500 flex flex-col items-center gap-4 pointer-events-none">
                                     <IconPhoto size={64}/>
                                     <h2 className="text-xl font-semibold">{t('uploadPlaceholder')}</h2>
-
+                                    <p className="text-sm text-neutral-600">{t('dragAndDropPrompt')}</p>
                                 </div>
                             )}
                         </div>
