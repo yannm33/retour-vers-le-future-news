@@ -15,22 +15,41 @@ export interface ApiKeys {
 // --- Helper Functions ---
 
 /**
- * Processes the Gemini API response, extracting the image or throwing an error if none is found.
+ * Processes the Gemini API response, extracting the image or throwing a detailed error if issues occur.
  * @param response The response from the generateContent call.
  * @returns A data URL string for the generated image.
  */
 function processGeminiResponse(response: GenerateContentResponse): string {
-    const imagePartFromResponse = response.candidates?.[0]?.content?.parts?.find(part => part.inlineData);
+    // Check for safety blocks or other reasons for no candidates.
+    if (!response.candidates || response.candidates.length === 0) {
+        const blockReason = response.promptFeedback?.blockReason;
+        if (blockReason) {
+            const blockMessage = `Request was blocked due to ${blockReason}. See safety ratings for details.`;
+            console.error(blockMessage, response.promptFeedback);
+            // Provide a user-friendly error message.
+            throw new Error(`The AI model blocked the request for safety reasons (${blockReason}). Please adjust your prompt or image.`);
+        }
+        // Handle cases where there are no candidates without a specific block reason.
+        throw new Error("The AI model returned an empty response. This may be due to a content filter or an internal server error. Please try a different prompt.");
+    }
+
+    const imagePartFromResponse = response.candidates[0]?.content?.parts?.find(part => part.inlineData);
 
     if (imagePartFromResponse?.inlineData) {
         const { mimeType, data } = imagePartFromResponse.inlineData;
         return `data:${mimeType};base64,${data}`;
     }
 
+    // If there are candidates but no image, extract the text response for debugging.
     const textResponse = response.text;
-    console.error("API did not return an image. Response:", textResponse);
-    throw new Error(`The AI model responded with text instead of an image: "${textResponse || 'No text response received.'}"`);
+    console.error("API did not return an image. Text response:", textResponse);
+    
+    const errorMessage = textResponse
+        ? `The AI model responded with text instead of an image: "${textResponse}"`
+        : "The AI model did not return an image and provided no text explanation. This could be due to a content filter or an issue with the prompt.";
+    throw new Error(errorMessage);
 }
+
 
 /**
  * A generic wrapper for the Gemini API call that includes a retry mechanism for internal server errors.
@@ -87,7 +106,11 @@ async function generateWithGemini(imageDataUrl: string | null, prompt: string, a
         const imagePart = {
             inlineData: { mimeType, data: base64Data },
         };
-        const textPart = { text: prompt };
+        
+        // This instruction forces the model to re-imagine the scene, using the photo
+        // only as a reference for the person's face, not for clothes or pose.
+        const editInstruction = `IMPORTANT: Use the provided photo ONLY as a reference for the person's face. DO NOT copy the clothing, pose, or background. Create a completely new and different image based on the following creative brief, ensuring the face resembles the person in the photo.\n\n--- CREATIVE BRIEF ---\n${prompt}`;
+        const textPart = { text: editInstruction };
 
         const request = {
             model: 'gemini-2.5-flash-image',
@@ -98,7 +121,7 @@ async function generateWithGemini(imageDataUrl: string | null, prompt: string, a
         };
 
         try {
-            console.log("Attempting image modification with prompt:", prompt);
+            console.log("Attempting image re-imagination with prompt:", editInstruction);
             const response = await callGeminiApi(request, apiKey);
             return processGeminiResponse(response);
         } catch (error) {
@@ -196,56 +219,5 @@ export async function generateImage(
             return generateWithRevArt(imageDataUrl, prompt, revartKey);
         default:
             throw new Error(`Unknown or unsupported provider: ${provider}`);
-    }
-}
-
-
-/**
- * Edits an image based on a user-provided mask and text prompt.
- * This function uses the Gemini model.
- */
-export async function editImageWithMask(
-    originalImageUrl: string,
-    maskImageUrl: string,
-    prompt: string,
-    apiKey: string,
-): Promise<string> {
-    const originalMatch = originalImageUrl.match(/^data:(image\/\w+);base64,(.*)$/);
-    const maskMatch = maskImageUrl.match(/^data:(image\/\w+);base64,(.*)$/);
-
-    if (!originalMatch || !maskMatch) {
-        throw new Error("Invalid image data URL format for editing.");
-    }
-    const [, originalMimeType, originalBase64] = originalMatch;
-    const [, maskMimeType, maskBase64] = maskMatch;
-    
-    const originalImagePart = { inlineData: { mimeType: originalMimeType, data: originalBase64 } };
-    const maskImagePart = { inlineData: { mimeType: maskMimeType, data: maskBase64 } };
-    
-    // Construct a more directive prompt for the model
-    const detailedText = `You are an expert image editor. The user wants to modify an image.
-    User's instruction: "${prompt}".
-    You have been provided with two images: the original image and a black-and-white mask image.
-    Your task is to apply the user's instruction ONLY to the area of the original image corresponding to the WHITE part of the mask.
-    The BLACK part of the mask indicates the area that MUST remain completely unchanged.
-    Preserve the original image's style, lighting, and texture in the unmasked areas. Blend the changes in the masked area seamlessly.`;
-    const textPart = { text: detailedText };
-
-    const request = {
-        model: 'gemini-2.5-flash-image',
-        contents: { parts: [originalImagePart, maskImagePart, textPart] },
-        config: {
-            responseModalities: [Modality.IMAGE, Modality.TEXT],
-        },
-    };
-
-    try {
-        console.log("Attempting image edit with prompt:", prompt);
-        const response = await callGeminiApi(request, apiKey);
-        return processGeminiResponse(response);
-    } catch (error) {
-        console.error("An unrecoverable error occurred during image editing.", error);
-        const errorMessage = error instanceof Error ? error.message : String(error);
-        throw new Error(`The AI model failed to edit the image. Details: ${errorMessage}`);
     }
 }

@@ -4,7 +4,7 @@
 */
 import React from 'react';
 import { GeneratedImage, AppState } from '../pages/Editor';
-import { IconLoader, IconAlertTriangle, IconDownload, IconRefresh, IconBrush } from '@tabler/icons-react';
+import { IconLoader, IconAlertTriangle, IconDownload, IconRefresh } from '@tabler/icons-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 interface ImageGalleryProps {
@@ -14,10 +14,9 @@ interface ImageGalleryProps {
     handleDownloadSingleImage: (url: string, id: number) => void;
     handleRegenerateImage: (id: number) => void;
     setPreviewImage: (url: string) => void;
-    setEditingImage: (image: GeneratedImage) => void;
 }
 
-const ImageGallery: React.FC<ImageGalleryProps> = ({ generatedImages, appState, handleDownloadAlbum, handleDownloadSingleImage, handleRegenerateImage, setPreviewImage, setEditingImage }) => {
+const ImageGallery: React.FC<ImageGalleryProps> = ({ generatedImages, appState, handleDownloadAlbum, handleDownloadSingleImage, handleRegenerateImage, setPreviewImage }) => {
     const { t } = useLanguage();
 
     if (generatedImages.length === 0) {
@@ -41,17 +40,6 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ generatedImages, appState, 
                                         onClick={() => setPreviewImage(image.url!)}
                                     />
                                     <div className="absolute inset-0 bg-black/60 flex items-center justify-center gap-2 md:gap-4 md:opacity-0 group-hover:md:opacity-100 transition-opacity duration-300">
-                                        <button
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                setEditingImage(image);
-                                            }}
-                                            className="p-3 bg-black/50 rounded-full text-white hover:bg-amber-500 hover:text-black focus:outline-none focus:ring-2 focus:ring-amber-400 transition-colors"
-                                            aria-label={t('edit')}
-                                            title={t('edit')}
-                                        >
-                                            <IconBrush size={20} />
-                                        </button>
                                         <button
                                             onClick={(e) => {
                                                 e.stopPropagation();

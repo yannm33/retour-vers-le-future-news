@@ -5,6 +5,7 @@
 import React, { useState, ChangeEvent, useRef, useEffect, useCallback } from 'react';
 import { generateImage } from '../services/geminiService';
 import { getSpecializedPrompt } from '../services/promptLibrary';
+import { getEffectInstruction } from '../services/effectsLibrary';
 import { getDynamicEnhancements, buildPrompt } from '../services/promptEnhancer';
 import type { PhotoSettings } from '../services/promptEnhancer';
 import { MAGAZINE_PROMPT_DETAILS, MAGAZINE_STYLES } from '../lib/constants';
@@ -18,7 +19,6 @@ import ImageGallery from '../components/ImageGallery';
 import ImagePreviewModal from '../components/shared/ImagePreviewModal';
 import MainControls from '../components/controls/MainControls';
 import SettingsPanel from '../components/controls/SettingsPanel';
-import ImageEditorModal from '../components/ImageEditorModal';
 import ApiKeyManagerModal from '../components/ApiKeyManagerModal';
 import LanguageSwitcher from '../components/LanguageSwitcher';
 
@@ -32,6 +32,7 @@ export interface GeneratedImage {
     id: number;
     status: ImageStatus;
     url?: string;
+    originalUrl?: string;
     error?: string;
 }
 export type AppState = 'idle' | 'image-uploaded' | 'generating' | 'results-shown';
@@ -43,7 +44,6 @@ function Editor() {
     const [generatedImages, setGeneratedImages] = useState<GeneratedImage[]>([]);
     const [appState, setAppState] = useState<AppState>('idle');
     const [previewImage, setPreviewImage] = useState<string | null>(null);
-    const [editingImage, setEditingImage] = useState<GeneratedImage | null>(null);
     const [isSettingsPanelOpen, setIsSettingsPanelOpen] = useState(false);
     const [isApiKeyManagerModalOpen, setIsApiKeyManagerModalOpen] = useState(false);
 
@@ -53,7 +53,7 @@ function Editor() {
     const { 
         style, subStyle, aspectRatio, colorMode, renderQuality, upscale, focale,
         ouverture, vitesse, photoGrain, expression, framing, hairColor,
-        accessories, lutsCinema, dirt, customPrompt,
+        accessories, lutsCinema, effects, photographicEffect, customPrompt,
         signatureOn, signature, filmBrand, iso, timeTravelOn, year,
         provider,
     } = formState;
@@ -62,8 +62,6 @@ function Editor() {
     const headerClickTimeout = useRef<number | null>(null);
     const headerClickCount = useRef(0);
     
-    const effectiveApiKey = apiKeys.google;
-
     // Effect to manage the global app state based on the status of generated items.
     useEffect(() => {
         if (generatedImages.length > 0) {
@@ -146,6 +144,14 @@ function Editor() {
             if (styleInfo) promptParts.push(`Direction Créative : "${t(styleInfo.notesKey)}".`);
         }
 
+        if (photographicEffect) {
+            const effectInstruction = getEffectInstruction(photographicEffect);
+            if (effectInstruction) {
+                promptParts.push('//-- EFFET PHOTOGRAPHIQUE --');
+                promptParts.push(effectInstruction);
+            }
+        }
+
         promptParts.push('//-- TECHNIQUE & CAMÉRA --');
         promptParts.push(`Ratio d'aspect : ${aspectRatio}`);
         promptParts.push(`Qualité : ${renderQuality}`);
@@ -159,7 +165,7 @@ function Editor() {
         if (hairColor !== 'Noir Profond') creativeDetails.push(`Couleur de cheveux : '${hairColor}'.`);
         if (accessories !== 'Aucun') creativeDetails.push(`Accessoires : '${accessories}'.`);
         if (lutsCinema !== 'Aucun') creativeDetails.push(`Étalonnage (LUT) : '${lutsCinema}'.`);
-        if (dirt !== 'Aucune') creativeDetails.push(dirt === 'Sueur' ? `Ajouter des perles de sueur.` : `Effets : '${dirt}'.`);
+        if (effects !== 'Aucune') creativeDetails.push(effects === 'Sueur' ? `Ajouter des perles de sueur.` : `Effets : '${effects}'.`);
         
         if(creativeDetails.length > 0) {
             promptParts.push('//-- DÉTAILS CRÉATIFS --');
@@ -180,7 +186,7 @@ function Editor() {
     }, [
         style, subStyle, customPrompt, aspectRatio, colorMode, renderQuality,
         upscale, timeTravelOn, year, uploadedImage, expression, framing, hairColor,
-        accessories, lutsCinema, dirt, photoGrain, filmBrand, iso, signatureOn, signature, t
+        accessories, lutsCinema, effects, photographicEffect, photoGrain, filmBrand, iso, signatureOn, signature, t
     ]);
 
     const handleGenerateImageClick = async () => {
@@ -207,7 +213,7 @@ function Editor() {
                 
                 const resultUrl = await generateImage(imageInput, finalPrompt, provider, apiKeys);
                 
-                setGeneratedImages(prev => prev.map(img => img.id === image.id ? { ...img, status: 'done', url: resultUrl } : img));
+                setGeneratedImages(prev => prev.map(img => img.id === image.id ? { ...img, status: 'done', url: resultUrl, originalUrl: resultUrl } : img));
             } catch (err) {
                 const errorMessage = err instanceof Error ? err.message : "An unknown error occurred.";
                 setGeneratedImages(prev => prev.map(img => img.id === image.id ? { ...img, status: 'error', error: errorMessage } : img));
@@ -240,7 +246,7 @@ function Editor() {
 
         try {
             const resultUrl = await generateImage(imageInput, finalPrompt, provider, apiKeys);
-            setGeneratedImages(prev => prev.map(img => img.id === imageId ? { ...img, status: 'done', url: resultUrl } : img));
+            setGeneratedImages(prev => prev.map(img => img.id === imageId ? { ...img, status: 'done', url: resultUrl, originalUrl: resultUrl } : img));
         } catch (err) {
             const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred.';
             setGeneratedImages(prev => prev.map(img => img.id === imageId ? { ...img, status: 'error', error: errorMessage } : img));
@@ -274,10 +280,6 @@ function Editor() {
             }
         });
     };
-
-    const handleSaveEdit = (imageId: number, newUrl: string) => {
-        setGeneratedImages(prev => prev.map(img => img.id === imageId ? { ...img, url: newUrl } : img));
-    };
     
     const isLoading = appState === 'generating';
     const selectedStyleObject = STYLES_CONFIG.find(s => s.key === style);
@@ -308,7 +310,6 @@ function Editor() {
                     handleDownloadSingleImage={handleDownloadSingleImage}
                     handleRegenerateImage={handleRegenerateImage}
                     setPreviewImage={setPreviewImage}
-                    setEditingImage={setEditingImage}
                 />
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full mt-6">
@@ -366,12 +367,6 @@ function Editor() {
             <ImagePreviewModal 
                 previewImage={previewImage}
                 setPreviewImage={setPreviewImage}
-            />
-            <ImageEditorModal
-                image={editingImage}
-                onClose={() => setEditingImage(null)}
-                onSave={handleSaveEdit}
-                apiKey={effectiveApiKey}
             />
             <ApiKeyManagerModal
                 isOpen={isApiKeyManagerModalOpen}

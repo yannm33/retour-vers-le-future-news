@@ -3,7 +3,9 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 import React from 'react';
-import { HAIR_COLORS, EXPRESSIONS, ACCESSORIES, FRAMES, LUTS, DIRTS, GRAINS, FILM_STOCKS, ISO_SENSITIVITIES, ASPECT_RATIOS } from '../../lib/constants';
+// FIX: Import missing constants to resolve reference errors.
+import { HAIR_COLORS, EXPRESSIONS, ACCESSORIES, FRAMES, LUTS, EFFECTS, GRAINS, FILM_STOCKS, ISO_SENSITIVITIES, ASPECT_RATIOS } from '../../lib/constants';
+import { PHOTOGRAPHIC_EFFECTS_CONFIG } from '../../lib/effectsConfig';
 import type { Upscale } from '../../lib/constants';
 import { ControlSection } from './shared/ControlSection';
 import { StyledSelect } from './shared/StyledSelect';
@@ -23,7 +25,8 @@ const SettingsPanel = ({ formState, generationMode }) => {
         accessories, setAccessories,
         framing, setFraming,
         lutsCinema, setLutsCinema,
-        dirt, setDirt,
+        effects, setEffects,
+        photographicEffect, setPhotographicEffect,
         photoGrain, setPhotoGrain,
         filmBrand, setFilmBrand,
         iso, setIso,
@@ -32,10 +35,14 @@ const SettingsPanel = ({ formState, generationMode }) => {
         aspectRatio, setAspectRatio,
         timeTravelOn, setTimeTravelOn,
         year, setYear,
+        style,
         subStyle,
     } = formState;
 
     const isColorSelectionDisabled = subStyle === 'nb_dramatique';
+    const availablePhotographicEffects = (style === 'photos' && subStyle && PHOTOGRAPHIC_EFFECTS_CONFIG[subStyle])
+        ? PHOTOGRAPHIC_EFFECTS_CONFIG[subStyle]
+        : [];
 
     return (
         <div className="lg:col-span-1 bg-black p-4 rounded-lg flex flex-col gap-4">
@@ -63,6 +70,17 @@ const SettingsPanel = ({ formState, generationMode }) => {
             </ControlSection>
             
             {generationMode === 'image' && <PhotoSettingsPanel formState={formState} />}
+
+            {availablePhotographicEffects.length > 0 && (
+                <ControlSection title={t('photographicEffects')}>
+                    <StyledSelect value={photographicEffect} onChange={e => setPhotographicEffect(e.target.value)}>
+                        <option value="">{t('chooseEffect')}</option>
+                        {availablePhotographicEffects.map(effect => (
+                            <option key={effect.key} value={effect.key}>{t(effect.nameKey)}</option>
+                        ))}
+                    </StyledSelect>
+                </ControlSection>
+            )}
             
              <ControlSection title={t('timeTravel')}>
                 <div className="bg-neutral-900 p-4 rounded-lg flex flex-col gap-4">
@@ -122,7 +140,7 @@ const SettingsPanel = ({ formState, generationMode }) => {
 
                     <div className='grid grid-cols-2 gap-4'>
                     <ControlSection title={t('luts')}><StyledSelect value={lutsCinema} onChange={e => setLutsCinema(e.target.value)}>{LUTS.map(l=><option key={l} value={l}>{l}</option>)}</StyledSelect></ControlSection>
-                    <ControlSection title={t('dirt')}><StyledSelect value={dirt} onChange={e => setDirt(e.target.value)}>{DIRTS.map(d=><option key={d} value={d}>{d}</option>)}</StyledSelect></ControlSection>
+                    <ControlSection title={t('effects')}><StyledSelect value={effects} onChange={e => setEffects(e.target.value)}>{EFFECTS.map(d=><option key={d} value={d}>{d}</option>)}</StyledSelect></ControlSection>
                     </div>
 
                     <ControlSection title={t('signature')}>

@@ -47,7 +47,7 @@ export const FRAMES = [
 export const LUTS = [
     'Aucun', 'Vintage Kodachrome', 'Technicolor', 'Bleach Bypass', 'Teal & Orange', 'Film d\'Action', 'Film de Mariage', 'AR1', 'Blast', 'Couleur Cinéma', 'Film Classique', 'Film Cinématique', 'Vert Profond / Nature', 'Style Documentaire', 'Effet Film Mat', 'Film Noir Cinématique', 'Film d\'Horreur', 'Film Indépendant', 'Film Travel Buddha', 'Film Hero', 'Rétro', 'Charme Rustique', 'Science-Fiction Colorée', 'Slog', 'Cinéma Trois Mariages', 'Cinéma Urbain', 'Film Maudit Chaud', 'Wanderlust Rêveur'
 ];
-export const DIRTS = [
+export const EFFECTS = [
     'Aucune', 'Sueur', 'Sueur et Poussière', 'Boue séchée (éclaboussures)', 'Suie ou Cendres', 'Poussière épaisse', 'Terre humide', 'Motte', 'Incrustation d\'argile', 'Fibre', 'Vase', 'Peluche', 'Gouttelettes d\'eau', 'Éboulis', 'Graisse', 'Huile mécanique', 'Algues', 'Mousse ou Lichen', 'Sable fin', 'Résidu de fumée', 'Poussière de rouille', 'Taches d\'herbe écrasée', 'Rouille sur métal', 'Camouflage de visage (militaire)'
 ];
 export const GRAINS = [
@@ -62,6 +62,8 @@ export const ISO_SENSITIVITIES = [
 
 export const ASPECT_RATIOS = {
     Portrait: ['4:5', '3:4', '2:3', '10:16', '9:16', '1:2'],
-    Carré: ['1:1'],
-    Paysage: ['5:4', '4:3', '3:2', '16:10', '16:9', '2:1', '3:1'],
+    // FIX: Changed key to 'Square' to match translation key 'square' after toLowerCase().
+    Square: ['1:1'],
+    // FIX: Changed key to 'Landscape' to match translation key 'landscape' after toLowerCase().
+    Landscape: ['5:4', '4:3', '3:2', '16:10', '16:9', '2:1', '3:1'],
 };

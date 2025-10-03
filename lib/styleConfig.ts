@@ -68,10 +68,9 @@ export const STYLES_CONFIG: Style[] = [
             "Robert Farber",
             "Pat Brassington",
             "Rankin",
-            "Bettina Rheims",
-            "Arthur Tress",
             "Tom Ford",
-            "Marc Hoppe"
+            "Marc Hoppe",
+            "Robert Doisneau"
         ].map(name => ({ name, key: toKey(name) }))
     },
     {

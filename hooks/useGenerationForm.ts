@@ -21,7 +21,8 @@ export const useGenerationForm = () => {
     const [accessories, setAccessories] = useState('Aucun');
     const [framing, setFraming] = useState('Plan pied');
     const [lutsCinema, setLutsCinema] = useState('Aucun');
-    const [dirt, setDirt] = useState('Aucune');
+    const [effects, setEffects] = useState('Aucune');
+    const [photographicEffect, setPhotographicEffect] = useState('');
     const [photoGrain, setPhotoGrain] = useState('Aucun');
     const [filmBrand, setFilmBrand] = useState('Aucune');
     const [iso, setIso] = useState('Auto');
@@ -34,7 +35,12 @@ export const useGenerationForm = () => {
 
     useEffect(() => {
         setSubStyle('');
+        setPhotographicEffect(''); // Reset effect when style changes
     }, [style]);
+
+    useEffect(() => {
+        setPhotographicEffect(''); // Reset effect when substyle changes
+    }, [subStyle]);
 
     // Automatically set color mode for specific sub-styles
     useEffect(() => {
@@ -59,7 +65,8 @@ export const useGenerationForm = () => {
         accessories, setAccessories,
         framing, setFraming,
         lutsCinema, setLutsCinema,
-        dirt, setDirt,
+        effects, setEffects,
+        photographicEffect, setPhotographicEffect,
         photoGrain, setPhotoGrain,
         filmBrand, setFilmBrand,
         iso, setIso,
