@@ -4,7 +4,6 @@
 */
 import { PHOTOGRAPHER_LIBRARY } from './photographerLibrary';
 
-// FIX: Define and export PhotoSettings, buildPrompt, and getDynamicEnhancements.
 export interface PhotoSettings {
     focalLength?: string;
     aperture?: string;

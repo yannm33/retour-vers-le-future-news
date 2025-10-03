@@ -104,8 +104,8 @@ const MainControls = ({ formState, handleImageUpload, fileInputRef, handleGenera
              <ControlSection title={t('provider')}>
                 <StyledSelect value={provider} onChange={e => setProvider(e.target.value as any)}>
                     <option value="google">Google Gemini</option>
-                    <option value="ideogram">Ideogram</option>
-                    <option value="revart">RevArt</option>
+                    <option value="ideogram" disabled>Ideogram (bientôt)</option>
+                    <option value="revart" disabled>RevArt (bientôt)</option>
                 </StyledSelect>
             </ControlSection>
 

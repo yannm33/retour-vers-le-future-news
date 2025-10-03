@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 import React from 'react';
-// FIX: Import missing constants to resolve reference errors.
 import { HAIR_COLORS, EXPRESSIONS, ACCESSORIES, FRAMES, LUTS, EFFECTS, GRAINS, FILM_STOCKS, ISO_SENSITIVITIES, ASPECT_RATIOS } from '../../lib/constants';
 import { PHOTOGRAPHIC_EFFECTS_CONFIG } from '../../lib/effectsConfig';
 import type { Upscale } from '../../lib/constants';
@@ -90,7 +89,6 @@ const SettingsPanel = ({ formState, generationMode }) => {
                 <div className="bg-neutral-900 p-4 rounded-lg flex flex-col items-center gap-4">
                     <label className="font-semibold text-white select-none">{t('enableTimeTravel')}</label>
                     <div className="flex items-center justify-center gap-4">
-                        {/* FIX: Use the specific 'timeTravel_close' translation key to avoid conflict with the general 'close' key. */}
                         <span className="text-xs font-semibold text-neutral-400 uppercase">{t('timeTravel_close')}</span>
                         <label htmlFor="time-travel-toggle" className="time-travel-switch">
                             <input

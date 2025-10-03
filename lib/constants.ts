@@ -62,8 +62,6 @@ export const ISO_SENSITIVITIES = [
 
 export const ASPECT_RATIOS = {
     Portrait: ['4:5', '3:4', '2:3', '10:16', '9:16', '1:2'],
-    // FIX: Changed key to 'Square' to match translation key 'square' after toLowerCase().
     Square: ['1:1'],
-    // FIX: Changed key to 'Landscape' to match translation key 'landscape' after toLowerCase().
     Landscape: ['5:4', '4:3', '3:2', '16:10', '16:9', '2:1', '3:1'],
 };

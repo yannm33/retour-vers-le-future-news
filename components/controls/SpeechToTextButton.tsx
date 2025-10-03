@@ -6,10 +6,9 @@ import React, { useEffect, useRef } from 'react';
 import { IconMicrophone, IconMicrophoneOff } from '@tabler/icons-react';
 import { cn } from '../../lib/utils';
 
-// FIX: Cast window to `any` to access non-standard browser APIs and rename to avoid type conflicts.
 const SpeechRecognitionApi = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
 
-// FIX: Add a minimal type definition for the SpeechRecognition instance as it's a non-standard API.
+// Add a minimal type definition for the SpeechRecognition instance as it's a non-standard API.
 interface SpeechRecognition extends EventTarget {
     continuous: boolean;
     interimResults: boolean;
@@ -29,17 +28,16 @@ interface SpeechToTextButtonProps {
 }
 
 const SpeechToTextButton: React.FC<SpeechToTextButtonProps> = ({ onTranscript, onListeningChange, isListening, targetLang = 'fr-FR' }) => {
-    // FIX: Use the defined SpeechRecognition interface for the ref type.
+    // Use the defined SpeechRecognition interface for the ref type.
     const recognitionRef = useRef<SpeechRecognition | null>(null);
 
     useEffect(() => {
-        // FIX: Use the renamed API constructor.
         if (!SpeechRecognitionApi) {
             console.warn('Speech Recognition API not supported in this browser.');
             return;
         }
 
-        // FIX: Instantiate using the renamed API constructor.
+        // Instantiate using the renamed API constructor.
         const recognition: SpeechRecognition = new SpeechRecognitionApi();
         recognition.continuous = true;
         recognition.interimResults = true;
@@ -93,7 +91,7 @@ const SpeechToTextButton: React.FC<SpeechToTextButtonProps> = ({ onTranscript, o
         onListeningChange(!isListening);
     };
 
-    // FIX: Use the renamed API constructor for the check.
+    // Use the renamed API constructor for the check.
     if (!SpeechRecognitionApi) {
         return null; // Don't render if not supported
     }

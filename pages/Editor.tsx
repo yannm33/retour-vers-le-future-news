@@ -286,9 +286,23 @@ function Editor() {
     const availableSubStyles = selectedStyleObject ? selectedStyleObject.subStyles : [];
     
     const getAspectRatioClass = (ratio: string) => {
-        if (ratio === '1:1') return 'aspect-square';
-        const [w, h] = ratio.split(':');
-        return `aspect-[${w}/${h}]`;
+        switch (ratio) {
+            case '1:1': return 'aspect-square';
+            case '4:5': return 'aspect-[4/5]';
+            case '3:4': return 'aspect-[3/4]';
+            case '2:3': return 'aspect-[2/3]';
+            case '10:16': return 'aspect-[10/16]';
+            case '9:16': return 'aspect-[9/16]';
+            case '1:2': return 'aspect-[1/2]';
+            case '5:4': return 'aspect-[5/4]';
+            case '4:3': return 'aspect-[4/3]';
+            case '3:2': return 'aspect-[3/2]';
+            case '16:10': return 'aspect-[16/10]';
+            case '16:9': return 'aspect-[16/9]';
+            case '2:1': return 'aspect-[2/1]';
+            case '3:1': return 'aspect-[3/1]';
+            default: return 'aspect-square';
+        }
     };
 
     return (
