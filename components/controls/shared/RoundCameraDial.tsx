@@ -152,7 +152,7 @@ export const RoundCameraDial: React.FC<{
                             e.stopPropagation(); // Prevent the dial drag from starting
                             setValue('Auto');
                         }}
-                        className="w-6 h-6 rounded-full bg-neutral-600 hover:bg-neutral-500 active:bg-neutral-400 border-2 border-neutral-700/50 transition-colors cursor-pointer z-10"
+                        className="w-10 h-10 rounded-full bg-red-600 hover:bg-red-500 active:bg-red-700 transition-colors cursor-pointer z-10"
                         aria-label="Réinitialiser en Auto"
                         title="Cliquer pour réinitialiser en Auto"
                     ></button>

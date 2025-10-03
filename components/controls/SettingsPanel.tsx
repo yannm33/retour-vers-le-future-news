@@ -12,6 +12,7 @@ import { StyledSelect } from './shared/StyledSelect';
 import { StyledButton } from './shared/StyledButton';
 import PhotoSettingsPanel from './PhotoSettingsPanel';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { cn } from '../../lib/utils';
 
 
 const SettingsPanel = ({ formState, generationMode }) => {
@@ -43,6 +44,9 @@ const SettingsPanel = ({ formState, generationMode }) => {
     const availablePhotographicEffects = (style === 'photos' && subStyle && PHOTOGRAPHIC_EFFECTS_CONFIG[subStyle])
         ? PHOTOGRAPHIC_EFFECTS_CONFIG[subStyle]
         : [];
+    
+    const minYear = 1700;
+    const maxYear = 2030;
 
     return (
         <div className="lg:col-span-1 bg-black p-4 rounded-lg flex flex-col gap-4">
@@ -83,41 +87,42 @@ const SettingsPanel = ({ formState, generationMode }) => {
             )}
             
              <ControlSection title={t('timeTravel')}>
-                <div className="bg-neutral-900 p-4 rounded-lg flex flex-col gap-4">
-                    <div className="flex items-center justify-between">
-                        <label htmlFor="time-travel-toggle" className="font-semibold text-white cursor-pointer select-none">{t('enableTimeTravel')}</label>
-                        <label htmlFor="time-travel-toggle" className="relative cursor-pointer">
-                             <input
+                <div className="bg-neutral-900 p-4 rounded-lg flex flex-col items-center gap-4">
+                    <label className="font-semibold text-white select-none">{t('enableTimeTravel')}</label>
+                    <div className="flex items-center justify-center gap-4">
+                        {/* FIX: Use the specific 'timeTravel_close' translation key to avoid conflict with the general 'close' key. */}
+                        <span className="text-xs font-semibold text-neutral-400 uppercase">{t('timeTravel_close')}</span>
+                        <label htmlFor="time-travel-toggle" className="time-travel-switch">
+                            <input
                                 id="time-travel-toggle"
                                 type="checkbox"
                                 checked={timeTravelOn}
                                 onChange={() => setTimeTravelOn(!timeTravelOn)}
-                                className="sr-only peer" // Hide default checkbox
+                                className="time-travel-switch-checkbox"
                             />
-                            <div className="w-12 h-6 bg-neutral-700 rounded-full peer-checked:bg-amber-500 transition-colors duration-300"></div>
-                            <div className="absolute left-1 top-1 w-4 h-4 rounded-full bg-white peer-checked:translate-x-6 transition-transform duration-300"></div>
+                            <div className="time-travel-switch-slider">
+                                <div className="time-travel-switch-thumb"></div>
+                            </div>
                         </label>
+                        <span className="text-xs font-semibold text-neutral-400 uppercase">{t('open')}</span>
                     </div>
-                    <div className={`transition-opacity duration-300 ${timeTravelOn ? 'opacity-100' : 'opacity-50 pointer-events-none'}`}>
-                        <div className="flex items-center justify-between mb-2">
-                            <label htmlFor="year-slider" className="text-sm font-semibold text-neutral-400">{t('year')}</label>
-                            <input
-                                type="number"
-                                value={year}
-                                min={1418}
-                                max={2030}
-                                onChange={(e) => setYear(Math.max(1418, Math.min(2030, Number(e.target.value))))}
-                                className="w-24 bg-neutral-800 border border-neutral-700 rounded-md p-1 text-white text-center font-mono font-bold focus:outline-none focus:ring-2 focus:ring-amber-500 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                            />
+                    <div className="w-full max-w-xs">
+                        <div className={cn(
+                            "px-3 py-1 rounded text-center w-24 select-none transition-all duration-200 font-mono font-bold uppercase mx-auto mb-2",
+                            timeTravelOn 
+                                ? 'bg-amber-500 text-black shadow-amber-500/50 shadow-[0_0_15px_2px]' 
+                                : 'bg-neutral-800 text-white'
+                        )}>
+                            {year}
                         </div>
                         <input
                             id="year-slider"
                             type="range"
-                            min={1418}
-                            max={2030}
+                            min={minYear}
+                            max={maxYear}
                             value={year}
                             onChange={(e) => setYear(Number(e.target.value))}
-                            className="w-full h-2 bg-neutral-700 rounded-lg appearance-none cursor-pointer accent-amber-500"
+                            className="w-full appearance-none cursor-pointer year-slider"
                         />
                     </div>
                 </div>

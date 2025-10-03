@@ -47,8 +47,11 @@ export const translations = {
     aperture: "APERTURE",
     speed: "SPEED",
     timeTravel: "Time Travel",
-    enableTimeTravel: "Enable Time Travel",
+    enableTimeTravel: "Activate Back to the Future",
     year: "Year",
+    open: "OPEN",
+    // FIX: Renamed duplicate 'close' property to 'timeTravel_close' to avoid conflict.
+    timeTravel_close: "CLOSE",
     hairColor: "Hair Color",
     expression: "Expression",
     glasses: "Glasses",
@@ -557,8 +560,11 @@ export const translations = {
     aperture: "OUVERTURE",
     speed: "VITESSE",
     timeTravel: "Voyage Temporel",
-    enableTimeTravel: "Activer le Voyage Temporel",
+    enableTimeTravel: "Activer Retour vers le futur",
     year: "Année",
+    open: "OUVRIR",
+    // FIX: Renamed duplicate 'close' property to 'timeTravel_close' to avoid conflict.
+    timeTravel_close: "FERMER",
     hairColor: "Couleur des cheveux",
     expression: "Expression",
     glasses: "Lunettes",
@@ -889,7 +895,7 @@ export const translations = {
     // Substyles (Swimming)
     substyle_course_en_piscine: "Course en piscine",
     substyle_natation_synchronisee: "Natation synchronisée",
-    substyle_plongeon: "Plongeon",
+    substyle_plongeon: "Plongon",
     substyle_eau_libre: "Eau libre",
 
     // Substyles (Skydiving)
