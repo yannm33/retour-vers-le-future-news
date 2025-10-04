@@ -25,6 +25,8 @@ import MainControls from '../components/controls/MainControls';
 import SettingsPanel from '../components/controls/SettingsPanel';
 import ApiKeyManagerModal from '../components/ApiKeyManagerModal';
 import LanguageSwitcher from '../components/LanguageSwitcher';
+import CameraModal from '../components/CameraModal';
+
 
 import { IconPhoto, IconChevronDown } from '@tabler/icons-react';
 import { cn, getAspectRatioClass } from '../lib/utils';
@@ -154,14 +156,13 @@ function Editor() {
     const [isApiKeyManagerModalOpen, setIsApiKeyManagerModalOpen] = useState(false);
     const [isDraggingOver, setIsDraggingOver] = useState(false);
     const [isZipping, setIsZipping] = useState(false);
+    const [isCameraOpen, setIsCameraOpen] = useState(false);
 
     const { apiKeys, saveApiKeys } = useApiKeys();
     const formState = useGenerationForm();
     const { style, customPrompt, provider, aspectRatio } = formState;
 
     const fileInputRef = useRef<HTMLInputElement>(null);
-    const headerClickTimeout = useRef<number | null>(null);
-    const headerClickCount = useRef(0);
     
     useEffect(() => {
         if (generatedImages.length > 0) {
@@ -212,8 +213,14 @@ function Editor() {
             processImageFile(e.dataTransfer.files[0]);
         }
     };
+    
+    const handlePhotoCapture = (dataUrl: string) => {
+        setUploadedImage(dataUrl);
+        setAppState('image-uploaded');
+        setIsCameraOpen(false);
+    };
 
-    const runGeneration = async (imageInput: string | null, currentFormState: FormState, imageIdToUpdate?: number) => {
+    const runGeneration = async (imageInput: string | null, currentFormState: FormState, imageIdToUpdate: number) => {
         const finalPrompt = buildFullPrompt(currentFormState, imageInput, t);
         
         try {
@@ -221,7 +228,20 @@ function Editor() {
             setGeneratedImages(prev => prev.map(img => img.id === imageIdToUpdate ? { ...img, status: 'done', url: resultUrl, originalUrl: resultUrl } : img));
         } catch (err) {
             const errorMessage = err instanceof Error ? err.message : "An unknown error occurred.";
-            setGeneratedImages(prev => prev.map(img => img.id === imageIdToUpdate ? { ...img, status: 'error', error: errorMessage } : img));
+            let displayedError;
+
+            // Translate custom error keys from geminiService.
+            if (errorMessage === 'api_key_invalid') {
+                displayedError = t('api_key_invalid');
+            } else if (errorMessage === 'api_quota_exceeded') {
+                displayedError = t('api_quota_exceeded');
+            } else if (errorMessage === 'api_request_blocked') {
+                displayedError = t('api_request_blocked');
+            } else {
+                console.error("Unhandled generation error:", err); // Log full error for debugging
+                displayedError = t('api_generic_error');
+            }
+            setGeneratedImages(prev => prev.map(img => img.id === imageIdToUpdate ? { ...img, status: 'error', error: displayedError } : img));
         }
     };
 
@@ -229,7 +249,13 @@ function Editor() {
         const imageInput = uploadedImage;
         if (!imageInput && !customPrompt.trim()) return;
 
-        const initialImages: GeneratedImage[] = Array.from({ length: formState.numberOfImages }, (_, i) => ({ id: i, status: 'pending' }));
+        // Ensure an API key is set before proceeding.
+        if (!apiKeys.google) {
+            setIsApiKeyManagerModalOpen(true);
+            return;
+        }
+
+        const initialImages: GeneratedImage[] = Array.from({ length: formState.numberOfImages }, (_, i) => ({ id: Date.now() + i, status: 'pending' }));
         setGeneratedImages(initialImages);
 
         for (const image of initialImages) {
@@ -243,16 +269,6 @@ function Editor() {
         
         setGeneratedImages(prev => prev.map(img => img.id === imageId ? { ...img, status: 'pending', url: undefined, error: undefined } : img));
         runGeneration(imageInput, formState, imageId);
-    };
-    
-    const handleHeaderClick = () => {
-        if (headerClickTimeout.current) clearTimeout(headerClickTimeout.current);
-        headerClickCount.current += 1;
-        if (headerClickCount.current >= 5) {
-            setIsApiKeyManagerModalOpen(true);
-            headerClickCount.current = 0;
-        }
-        headerClickTimeout.current = window.setTimeout(() => { headerClickCount.current = 0; }, 1000);
     };
 
     const handleDownloadSingleImage = (url: string, imageId: number) => {
@@ -307,18 +323,27 @@ function Editor() {
     };
     
     const isLoading = appState === 'generating';
+    const isApiKeySet = !!apiKeys.google;
     const selectedStyleObject = STYLES_CONFIG.find(s => s.key === style);
     const availableSubStyles = selectedStyleObject ? selectedStyleObject.subStyles : [];
 
     return (
         <main className="bg-orange-500 text-neutral-800 min-h-screen w-full flex flex-col items-center py-4 font-sans selection:bg-amber-500 selection:text-black">
             <div className="w-full max-w-screen-2xl mx-auto z-10 relative px-4">
-                 <div className="absolute top-4 left-4 right-4 z-20 flex justify-end items-center">
+                 <div className="absolute top-4 left-4 right-4 z-20 flex justify-between items-center gap-4">
+                    <button
+                        onClick={() => setIsApiKeyManagerModalOpen(true)}
+                        className="flex items-center gap-2 px-4 py-2 rounded-md bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-500 hover:to-red-500 text-white font-semibold text-sm sm:text-base shadow-[0_0_10px_rgba(255,122,0,0.6)] transition-all duration-300"
+                    >
+                        <span role="img" aria-label="key">🔑</span>
+                        <span className="hidden sm:inline">{t('tryTheAppFull')}</span>
+                        <span className="inline sm:hidden">{t('tryTheAppShort')}</span>
+                    </button>
                     <LanguageSwitcher />
                 </div>
 
                 <header className="text-center my-6 md:my-8 pt-12">
-                    <h1 onClick={handleHeaderClick} className="font-open-sans text-4xl md:text-5xl font-bold text-neutral-900 uppercase tracking-widest text-outline-white cursor-pointer select-none">{t('title')}</h1>
+                    <h1 className="font-open-sans text-4xl md:text-5xl font-bold text-neutral-900 uppercase tracking-widest text-outline-white cursor-pointer select-none">{t('title')}</h1>
                     <p className="font-pixel text-white mt-2 text-lg uppercase tracking-[1px]">{t('subtitle')}</p>
                 </header>
 
@@ -341,9 +366,11 @@ function Editor() {
                             handleImageUpload={handleImageUpload}
                             fileInputRef={fileInputRef}
                             handleGenerateClick={handleGenerateImageClick}
+                            onTakePhotoClick={() => setIsCameraOpen(true)}
                             isLoading={isLoading}
                             uploadedImage={uploadedImage}
                             availableSubStyles={availableSubStyles}
+                            isApiKeySet={isApiKeySet}
                         />
 
                         {/* Mobile-only button to show settings */}
@@ -401,6 +428,11 @@ function Editor() {
                 onClose={() => setIsApiKeyManagerModalOpen(false)}
                 currentKeys={apiKeys}
                 onSave={saveApiKeys}
+            />
+             <CameraModal
+                isOpen={isCameraOpen}
+                onClose={() => setIsCameraOpen(false)}
+                onCapture={handlePhotoCapture}
             />
             <Footer />
         </main>

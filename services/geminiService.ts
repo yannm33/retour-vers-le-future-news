@@ -24,10 +24,8 @@ function processGeminiResponse(response: GenerateContentResponse): string {
     if (!response.candidates || response.candidates.length === 0) {
         const blockReason = response.promptFeedback?.blockReason;
         if (blockReason) {
-            const blockMessage = `Request was blocked due to ${blockReason}. See safety ratings for details.`;
-            console.error(blockMessage, response.promptFeedback);
-            // Provide a user-friendly error message.
-            throw new Error(`The AI model blocked the request for safety reasons (${blockReason}). Please adjust your prompt or image.`);
+            // Throw a specific key for the UI to translate.
+            throw new Error('api_request_blocked');
         }
         // Handle cases where there are no candidates without a specific block reason.
         throw new Error("The AI model returned an empty response. This may be due to a content filter or an internal server error. Please try a different prompt.");
@@ -59,6 +57,7 @@ function processGeminiResponse(response: GenerateContentResponse): string {
  */
 async function callGeminiApi(request: GenerateContentParameters, apiKey: string): Promise<GenerateContentResponse> {
     if (!apiKey) {
+        // This error is caught before the API call in `generateWithGemini`.
         throw new Error("Google API key is not configured.");
     }
     const ai = new GoogleGenAI({ apiKey });
@@ -71,6 +70,15 @@ async function callGeminiApi(request: GenerateContentParameters, apiKey: string)
         } catch (error) {
             console.error(`Error calling Gemini API (Attempt ${attempt}/${maxRetries}):`, error);
             const errorMessage = error instanceof Error ? error.message : JSON.stringify(error);
+            
+            // Handle specific user-facing errors by throwing translatable keys.
+            if (errorMessage.includes('API key not valid') || errorMessage.includes('PERMISSION_DENIED')) {
+                throw new Error('api_key_invalid');
+            }
+            if (errorMessage.includes('429') || errorMessage.includes('RESOURCE_EXHAUSTED')) {
+                throw new Error('api_quota_exceeded');
+            }
+
             const isInternalError = errorMessage.includes('"code":500') || errorMessage.includes('INTERNAL');
 
             if (isInternalError && attempt < maxRetries) {
@@ -79,7 +87,8 @@ async function callGeminiApi(request: GenerateContentParameters, apiKey: string)
                 await new Promise(resolve => setTimeout(resolve, delay));
                 continue;
             }
-            throw error; // Re-throw if not a retriable error or if max retries are reached.
+            // For other errors, re-throw the original to be handled generically.
+            throw error; 
         }
     }
     // This should be unreachable due to the loop and throw logic above.
@@ -92,7 +101,7 @@ async function callGeminiApi(request: GenerateContentParameters, apiKey: string)
  */
 async function generateWithGemini(imageDataUrl: string | null, prompt: string, apiKey: string): Promise<string> {
     if (!apiKey) {
-        throw new Error("Google API key is not configured.");
+        throw new Error('api_key_invalid'); // Use a key that can be translated
     }
 
     // Case 1: Image-to-Image generation/modification (using the provided image)
@@ -133,8 +142,11 @@ async function generateWithGemini(imageDataUrl: string | null, prompt: string, a
             return processGeminiResponse(response);
         } catch (error) {
             console.error("An unrecoverable error occurred during image modification.", error);
-            const errorMessage = error instanceof Error ? error.message : String(error);
-            throw new Error(`The AI model failed to modify the image. Details: ${errorMessage}`);
+             // Re-throw specific errors or a generic one if not already handled.
+            if (error instanceof Error && (error.message === 'api_key_invalid' || error.message === 'api_quota_exceeded' || error.message === 'api_request_blocked')) {
+                throw error;
+            }
+            throw new Error(`The AI model failed to modify the image.`);
         }
     }
     // Case 2: Text-to-Image generation (no image provided)
@@ -165,8 +177,10 @@ async function generateWithGemini(imageDataUrl: string | null, prompt: string, a
 
         } catch (error) {
             console.error("An unrecoverable error occurred during text-to-image generation.", error);
-            const errorMessage = error instanceof Error ? error.message : String(error);
-            throw new Error(`The AI model failed to generate an image from text. Details: ${errorMessage}`);
+            if (error instanceof Error && (error.message === 'api_key_invalid' || error.message === 'api_quota_exceeded')) {
+                throw error;
+            }
+            throw new Error(`The AI model failed to generate an image from text.`);
         }
     }
 }

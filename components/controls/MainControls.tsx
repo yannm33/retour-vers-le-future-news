@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 import React, { useState } from 'react';
-import { IconCamera, IconLoader, IconPlus, IconMinus } from '@tabler/icons-react';
+import { IconPhoto, IconCamera, IconLoader, IconPlus, IconMinus } from '@tabler/icons-react';
 import { ControlSection } from './shared/ControlSection';
 import { StyledSelect } from './shared/StyledSelect';
 import { STYLES_CONFIG } from '../../lib/styleConfig';
@@ -12,7 +12,7 @@ import { cn } from '../../lib/utils';
 import SpeechToTextButton from './SpeechToTextButton';
 import { useLanguage } from '../../contexts/LanguageContext';
 
-const MainControls = ({ formState, handleImageUpload, fileInputRef, handleGenerateClick, isLoading, uploadedImage, availableSubStyles }) => {
+const MainControls = ({ formState, handleImageUpload, fileInputRef, handleGenerateClick, isLoading, uploadedImage, availableSubStyles, onTakePhotoClick, isApiKeySet }) => {
     const { t, language } = useLanguage();
     const { 
         style, setStyle,
@@ -23,7 +23,10 @@ const MainControls = ({ formState, handleImageUpload, fileInputRef, handleGenera
     } = formState;
     const [isListening, setIsListening] = useState(false);
 
-    const isGenerationDisabled = (!uploadedImage && !customPrompt.trim()) || isLoading;
+    const isGenerationDisabled = (!uploadedImage && !customPrompt.trim()) || isLoading || !isApiKeySet;
+    const generateButtonTooltip = isApiKeySet
+        ? (isGenerationDisabled && !isLoading ? t('generateTooltip') : t('generate'))
+        : t('apiKeyMissingTooltip');
 
     const quantities = [1, 2, 3, 4, 5, 10, 20];
     
@@ -46,46 +49,54 @@ const MainControls = ({ formState, handleImageUpload, fileInputRef, handleGenera
     const isGrouped = availableSubStyles.length > 0 && 'subStyles' in availableSubStyles[0];
 
     return (
-        <div className="bg-black rounded-xl p-4 flex flex-col gap-4 flex-grow">
-            <div className="grid grid-cols-3 gap-2">
-                <div className="group col-span-1 bg-transparent rounded-xl border border-amber-500 text-amber-500 p-2 transition-colors duration-300 flex flex-col items-center justify-center h-full">
-                    <span className="text-xs font-bold uppercase select-none text-amber-500">{t('quantity')}</span>
-                    <div className="flex items-center justify-around w-full mt-1">
-                        <button 
-                            onClick={() => handleQuantityChange('decrease')} 
-                            className="p-1 rounded-full text-amber-500 hover:bg-amber-500/20 transition-colors"
-                            aria-label="Decrease quantity"
-                        >
-                            <IconMinus size={20} />
-                        </button>
-                        <span className="font-bold text-3xl text-white select-none mx-2">{numberOfImages}</span>
-                        <button 
-                            onClick={() => handleQuantityChange('increase')}
-                            className="p-1 rounded-full text-amber-500 hover:bg-amber-500/20 transition-colors"
-                            aria-label="Increase quantity"
-                        >
-                            <IconPlus size={20} />
-                        </button>
+        <div className="bg-black rounded-xl p-2 sm:p-4 flex flex-col gap-4 flex-grow">
+            <div className="grid grid-cols-[auto_1fr_auto] sm:grid-cols-3 gap-2 items-stretch">
+                <div className="group bg-transparent rounded-xl border border-amber-500 text-amber-500 px-2 py-1 sm:p-2 transition-colors duration-300 flex flex-col items-center justify-center">
+                    <span className="text-[10px] sm:text-xs font-bold uppercase select-none text-amber-500">{t('quantity')}</span>
+                    <div className="flex items-center justify-center w-full gap-2 mt-1">
+                        <span className="font-bold text-xl sm:text-3xl text-white select-none">{numberOfImages}</span>
+                        <div className="flex flex-col">
+                            <button 
+                                onClick={() => handleQuantityChange('increase')}
+                                className="p-0 rounded-full text-amber-500 hover:bg-amber-500/20 transition-colors"
+                                aria-label="Increase quantity"
+                            >
+                                <IconPlus size={18} />
+                            </button>
+                             <button 
+                                onClick={() => handleQuantityChange('decrease')} 
+                                className="p-0 rounded-full text-amber-500 hover:bg-amber-500/20 transition-colors"
+                                aria-label="Decrease quantity"
+                            >
+                                <IconMinus size={18} />
+                            </button>
+                        </div>
                     </div>
                 </div>
                 
                 <input type="file" ref={fileInputRef} className="hidden" accept="image/png, image/jpeg, image/webp" onChange={handleImageUpload} />
-                <button onClick={() => fileInputRef.current?.click()} className="col-span-1 bg-transparent border border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-black font-bold py-2 px-3 rounded-xl h-full flex flex-col items-center justify-center gap-1 transition-colors">
-                    <IconCamera size={24}/> 
-                    <span className="text-xs uppercase">{t('loadPortrait')}</span>
-                </button>
-                
+
+                <div className="flex gap-1">
+                    <button onClick={() => fileInputRef.current?.click()} className="flex-1 bg-transparent border border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-black font-bold py-2 px-1 rounded-xl flex flex-col items-center justify-center gap-1 transition-colors text-center">
+                        <IconPhoto size={20}/> 
+                        <span className="text-[10px] leading-tight">{t('upload_photo_label')}</span>
+                    </button>
+                    <button onClick={onTakePhotoClick} className="flex-1 bg-transparent border border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-black font-bold py-2 px-1 rounded-xl flex flex-col items-center justify-center gap-1 transition-colors text-center">
+                        <IconCamera size={20}/> 
+                        <span className="text-[10px] leading-tight">{t('takePhoto')}</span>
+                    </button>
+                </div>
+
                 <button 
                     onClick={() => !isGenerationDisabled && handleGenerateClick()}
-                    title={isGenerationDisabled && !isLoading ? t('generateTooltip') : t('generate')}
+                    title={generateButtonTooltip}
                     className={cn(
-                        "col-span-1 font-bold py-2 px-3 rounded-xl h-full flex items-center justify-center gap-2 transition-all duration-150 border-b-4", // Base layout
+                        "font-bold p-2 rounded-xl flex items-center justify-center gap-1 sm:gap-2 transition-all duration-150 border-b-4 text-center",
+                        "w-20 aspect-square sm:w-auto sm:aspect-auto", // Mobile: square, Desktop: auto
+                        "flex-col sm:flex-row", // Mobile: column, Desktop: row
                         "hover:shadow-lg hover:shadow-orange-400/50", // Glow effect is always active on hover
                         {
-                            // Styles for ENABLED state
                             'bg-gradient-to-b from-orange-400 to-orange-500 text-white border-orange-700 hover:text-black hover:brightness-110 active:translate-y-1 active:border-b-0': !isGenerationDisabled,
-                            
-                            // Styles for DISABLED state
                             'opacity-70 cursor-not-allowed bg-orange-400 border-orange-500 text-black/70 brightness-95': isGenerationDisabled
                         }
                     )}
@@ -93,10 +104,10 @@ const MainControls = ({ formState, handleImageUpload, fileInputRef, handleGenera
                 {isLoading ? (
                     <>
                         <IconLoader size={20} className='animate-spin'/>
-                        <span className="text-xs uppercase">{t('generating')}</span>
+                        <span className="text-[10px] sm:text-xs uppercase">{t('generating')}</span>
                     </>
                 ) : (
-                    <span className="uppercase">{t('generate')}</span>
+                    <span className="text-xs sm:text-base uppercase">{t('generate')}</span>
                 )}
                 </button>
             </div>

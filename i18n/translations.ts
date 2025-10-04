@@ -17,6 +17,9 @@ export const translations = {
     imageMode: "Image",
     quantity: "QTY",
     loadPortrait: "Portrait",
+    upload: "Upload",
+    upload_photo_label: "Photo",
+    takePhoto: "Camera",
     generate: "GENERATE",
     generating: "GENERATING...",
     generateTooltip: "Please upload an image or write a prompt to start",
@@ -38,6 +41,11 @@ export const translations = {
     close: "Close",
     generation_failed: "Generation Failed",
     upload_photo: "Upload Photo",
+    usePhoto: "Use Photo",
+    retakePhoto: "Retake",
+    cameraPermissionDenied: "Camera access was denied. Please allow access in your browser's site settings to use this feature.",
+    cameraNotFound: "No camera found. Check that a camera is connected and enabled.",
+    cameraGenericError: "Could not access the camera. Check permissions or try another browser.",
     
     // Settings Panel
     advancedSettings: "Advanced Settings",
@@ -79,6 +87,9 @@ export const translations = {
     chooseEffect: "Choose an effect",
 
     // API Key Modals
+    tryWithYourApiKey: "Test with your API key",
+    tryTheAppFull: "Try the App (Google AI API Key)",
+    tryTheAppShort: "Try",
     apiKeyManagerTitle: "API Key Manager",
     apiKeyManagerDesc: "These keys are required to use the different AI generation services (Google Gemini, Ideogram, RevArt). They are stored securely in your browser and are never sent to our servers.",
     ideogramApiKey: "Ideogram API Key",
@@ -88,8 +99,21 @@ export const translations = {
     revArtApiPlaceholder: "Enter your RevArt key...",
     googleApiPlaceholder: "Enter your Google Gemini key here",
     getApiKeyLink: 'Get your key from Google AI Studio',
+    createGoogleAccountLink: "Create a Google Account (if you don't have one)",
     cancel: "Cancel",
     lockApiKeys: "Lock Keys",
+    apiKeyMissingTooltip: "Please set your Google API key to enable generation.",
+    
+    apiKeyModalTitle_user: "Use your own API Key",
+    apiKeyModalDesc_user: "To test the application with your personal quota, you can use your own Google AI API key. A Google account is required to create one.",
+    apiKeyModalSecurity: "Your key is stored securely on your device (in your browser's local storage) and is never sent to our servers.",
+    apiKeyModalDelete: "Delete my key",
+    
+    // API Errors
+    api_key_invalid: "Your API key is invalid or has been revoked. Please check it and try again.",
+    api_quota_exceeded: "You have exceeded your API quota. Please check your Google AI Studio account.",
+    api_request_blocked: "The request was blocked for safety reasons. Please adjust your prompt.",
+    api_generic_error: "An unexpected error occurred with the AI service. Please try again later.",
 
     // Style Names
     style_photographers: "Photographers",
@@ -559,6 +583,9 @@ export const translations = {
     imageMode: "Image",
     quantity: "QTÉ",
     loadPortrait: "Portrait",
+    upload: "Uploader",
+    upload_photo_label: "Photo",
+    takePhoto: "Caméra",
     generate: "GÉNÉRER",
     generating: "GÉNÉRATION...",
     generateTooltip: "Veuillez charger une image ou écrire un prompt pour commencer",
@@ -580,6 +607,11 @@ export const translations = {
     close: "Fermer",
     generation_failed: "La génération a échoué",
     upload_photo: "Charger une Photo",
+    usePhoto: "Utiliser la photo",
+    retakePhoto: "Reprendre",
+    cameraPermissionDenied: "Accès caméra refusé. Veuillez autoriser l'accès dans les paramètres de votre navigateur pour utiliser cette fonction.",
+    cameraNotFound: "Aucune caméra détectée. Vérifiez qu'une caméra est bien connectée et activée.",
+    cameraGenericError: "Impossible d'accéder à la caméra. Vérifiez les autorisations ou essayez un autre navigateur.",
     
     // Settings Panel
     advancedSettings: "Réglages Avancés",
@@ -621,6 +653,9 @@ export const translations = {
     chooseEffect: "Choisir un effet",
     
     // API Key Modals
+    tryWithYourApiKey: "🔑 Tester avec votre clé API",
+    tryTheAppFull: "Essayer l’application (clé API Google AI)",
+    tryTheAppShort: "Essayer",
     apiKeyManagerTitle: "Gestionnaire de Clés API",
     apiKeyManagerDesc: "Ces clés sont nécessaires pour utiliser les différents services de génération IA (Google Gemini, Ideogram, RevArt). Elles sont stockées de manière sécurisée dans votre navigateur et ne sont jamais envoyées sur nos serveurs.",
     ideogramApiKey: "Clé API Ideogram",
@@ -630,8 +665,21 @@ export const translations = {
     revArtApiPlaceholder: "Entrez votre clé RevArt...",
     googleApiPlaceholder: "Entrez votre clé Google Gemini ici",
     getApiKeyLink: "Obtenez votre clé sur Google AI Studio",
+    createGoogleAccountLink: "Créer un compte Google (si vous n'en avez pas)",
     cancel: "Annuler",
     lockApiKeys: "Verrouiller les clés",
+    apiKeyMissingTooltip: "Veuillez définir votre clé API Google pour activer la génération.",
+
+    apiKeyModalTitle_user: "Utiliser votre propre Clé API",
+    apiKeyModalDesc_user: "Pour tester l'application avec votre quota personnel, vous pouvez utiliser votre propre clé API Google AI. Un compte Google est requis pour en créer une.",
+    apiKeyModalSecurity: "Votre clé est stockée de manière sécurisée sur votre appareil (dans le stockage local de votre navigateur) et n'est jamais envoyée à nos serveurs.",
+    apiKeyModalDelete: "Supprimer ma clé",
+
+    // API Errors
+    api_key_invalid: "Votre clé API est invalide ou a été révoquée. Veuillez la vérifier et réessayer.",
+    api_quota_exceeded: "Vous avez dépassé votre quota API. Veuillez consulter votre compte Google AI Studio.",
+    api_request_blocked: "La requête a été bloquée pour des raisons de sécurité. Veuillez ajuster votre prompt.",
+    api_generic_error: "Une erreur inattendue est survenue avec le service IA. Veuillez réessayer plus tard.",
 
     // Style Names
     style_photographers: "Photographes",

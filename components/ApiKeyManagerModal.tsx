@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 import React, { useState, useEffect } from 'react';
-import { IconX, IconDeviceFloppy } from '@tabler/icons-react';
+import { IconX, IconDeviceFloppy, IconTrash } from '@tabler/icons-react';
 import { ApiKeys } from '../services/geminiService';
 import { useLanguage } from '../contexts/LanguageContext';
 
@@ -17,14 +17,10 @@ interface ApiKeyManagerModalProps {
 const ApiKeyManagerModal: React.FC<ApiKeyManagerModalProps> = ({ isOpen, onClose, currentKeys, onSave }) => {
     const { t } = useLanguage();
     const [googleKey, setGoogleKey] = useState('');
-    const [ideogramKey, setIdeogramKey] = useState('');
-    const [revartKey, setRevartKey] = useState('');
-
+    
     useEffect(() => {
         if (isOpen) {
             setGoogleKey(currentKeys.google);
-            setIdeogramKey(currentKeys.ideogram);
-            setRevartKey(currentKeys.revart);
         }
     }, [isOpen, currentKeys]);
 
@@ -33,7 +29,14 @@ const ApiKeyManagerModal: React.FC<ApiKeyManagerModalProps> = ({ isOpen, onClose
     }
 
     const handleSave = () => {
-        onSave({ google: googleKey, ideogram: ideogramKey, revart: revartKey });
+        // Only saves the Google key, preserves others
+        onSave({ ...currentKeys, google: googleKey });
+        onClose();
+    };
+
+    const handleDelete = () => {
+        setGoogleKey('');
+        onSave({ ...currentKeys, google: '' });
         onClose();
     };
 
@@ -43,66 +46,57 @@ const ApiKeyManagerModal: React.FC<ApiKeyManagerModalProps> = ({ isOpen, onClose
             onClick={onClose}
         >
             <div 
-                className="bg-neutral-900 rounded-lg shadow-2xl w-full max-w-lg flex flex-col gap-4 p-6 relative text-white"
+                className="bg-gradient-to-br from-orange-700 to-red-800 rounded-lg shadow-2xl w-full max-w-lg flex flex-col gap-6 p-8 relative text-white border border-orange-500/50"
                 onClick={e => e.stopPropagation()}
             >
-                <button onClick={onClose} className="absolute top-3 right-3 text-white hover:text-amber-500 z-10" aria-label={t('close')}>
+                <button onClick={onClose} className="absolute top-4 right-4 text-white hover:text-amber-400 z-10 transition-colors" aria-label={t('close')}>
                     <IconX size={24} />
                 </button>
 
-                <h2 className="text-2xl font-bold border-b border-neutral-700 pb-3">{t('apiKeyManagerTitle')}</h2>
+                <h2 className="text-2xl font-bold border-b border-orange-400/30 pb-3">{t('apiKeyModalTitle_user')}</h2>
                 
-                <p className="text-sm text-neutral-400">
-                    {t('apiKeyManagerDesc')}
+                <p className="text-base text-orange-100">
+                    {t('apiKeyModalDesc_user')}
                 </p>
 
-                <div className="flex flex-col gap-4">
-                    <div className="flex flex-col gap-2">
-                        <label htmlFor="google-key" className="font-semibold text-neutral-300">{t('googleGeminiApiKey')}</label>
-                        <input 
-                            id="google-key"
-                            type="password" 
-                            value={googleKey} 
-                            onChange={e => setGoogleKey(e.target.value)}
-                            placeholder={t('googleApiPlaceholder')}
-                            className="bg-neutral-800 border border-neutral-700 rounded-md p-2 text-white w-full focus:outline-none focus:ring-2 focus:ring-amber-500"
-                        />
-                        <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" className="text-xs text-white font-bold underline self-end hover:text-amber-400 transition-colors">
-                            {t('getApiKeyLink')}
-                        </a>
-                    </div>
-                     <div className="flex flex-col gap-2">
-                        <label htmlFor="ideogram-key" className="font-semibold text-neutral-300">{t('ideogramApiKey')}</label>
-                        <input 
-                            id="ideogram-key"
-                            type="password" 
-                            value={ideogramKey} 
-                            onChange={e => setIdeogramKey(e.target.value)}
-                            placeholder={t('ideogramApiPlaceholder')}
-                            className="bg-neutral-800 border border-neutral-700 rounded-md p-2 text-white w-full focus:outline-none focus:ring-2 focus:ring-amber-500"
-                        />
-                    </div>
-                     <div className="flex flex-col gap-2">
-                        <label htmlFor="revart-key" className="font-semibold text-neutral-300">{t('revArtApiKey')}</label>
-                        <input 
-                            id="revart-key"
-                            type="password" 
-                            value={revartKey} 
-                            onChange={e => setRevartKey(e.target.value)}
-                            placeholder={t('revArtApiPlaceholder')}
-                            className="bg-neutral-800 border border-neutral-700 rounded-md p-2 text-white w-full focus:outline-none focus:ring-2 focus:ring-amber-500"
-                        />
-                    </div>
+                <div className="flex flex-col gap-2">
+                    <label htmlFor="google-key" className="font-semibold text-white">{t('googleGeminiApiKey')}</label>
+                    <input 
+                        id="google-key"
+                        type="password" 
+                        value={googleKey} 
+                        onChange={e => setGoogleKey(e.target.value)}
+                        placeholder={t('googleApiPlaceholder')}
+                        className="bg-black/40 border border-red-500 rounded-md p-2 text-white w-full focus:outline-none focus:ring-2 focus:ring-red-400 placeholder:text-orange-200/60"
+                    />
                 </div>
 
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-x-6 gap-y-2 text-center text-sm">
+                    <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" className="font-bold underline text-amber-300 hover:text-white transition-colors">
+                        {t('getApiKeyLink')}
+                    </a>
+                    <a href="https://accounts.google.com/signup" target="_blank" rel="noopener noreferrer" className="font-bold underline text-amber-300 hover:text-white transition-colors">
+                        {t('createGoogleAccountLink')}
+                    </a>
+                </div>
 
-                <div className="flex justify-end gap-3 mt-4">
-                     <button onClick={onClose} className="bg-neutral-700 hover:bg-neutral-600 text-white font-bold py-2 px-4 rounded-lg">
-                        {t('cancel')}
+                <p className="text-sm text-orange-200/80 italic mt-2">
+                    {t('apiKeyModalSecurity')}
+                </p>
+
+
+                <div className="flex justify-between items-center mt-4">
+                    <button onClick={handleDelete} className="bg-red-800/50 hover:bg-red-700/70 text-red-200 font-bold py-2 px-4 rounded-lg flex items-center gap-2 transition-colors">
+                        <IconTrash size={18} /> {t('apiKeyModalDelete')}
                     </button>
-                    <button onClick={handleSave} className="bg-amber-500 hover:bg-amber-600 text-black font-bold py-2 px-4 rounded-lg flex items-center gap-2">
-                        <IconDeviceFloppy size={20} /> {t('lockApiKeys')}
-                    </button>
+                    <div className="flex gap-3">
+                         <button onClick={onClose} className="bg-black/20 hover:bg-black/40 text-white font-bold py-2 px-4 rounded-lg transition-colors">
+                            {t('cancel')}
+                        </button>
+                        <button onClick={handleSave} className="bg-amber-500 hover:bg-amber-600 text-black font-bold py-2 px-4 rounded-lg flex items-center gap-2 transition-colors">
+                            <IconDeviceFloppy size={20} /> {t('lockApiKeys')}
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
