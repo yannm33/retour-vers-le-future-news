@@ -158,6 +158,10 @@ function Editor() {
     const [isZipping, setIsZipping] = useState(false);
     const [isCameraOpen, setIsCameraOpen] = useState(false);
 
+    // State for the hidden API key modal trigger
+    const [titleClickCount, setTitleClickCount] = useState(0);
+    const lastTitleClickTimeRef = useRef(0);
+
     const { apiKeys, saveApiKeys } = useApiKeys();
     const formState = useGenerationForm();
     const { style, customPrompt, provider, aspectRatio } = formState;
@@ -174,6 +178,24 @@ function Editor() {
             }
         }
     }, [generatedImages, appState]);
+    
+    const handleTitleClick = () => {
+        const now = Date.now();
+        // Reset if clicks are more than 500ms apart
+        if (now - lastTitleClickTimeRef.current > 500) {
+            setTitleClickCount(1);
+        } else {
+            setTitleClickCount(prev => prev + 1);
+        }
+        lastTitleClickTimeRef.current = now;
+    };
+
+    useEffect(() => {
+        if (titleClickCount === 5) {
+            setIsApiKeyManagerModalOpen(true);
+            setTitleClickCount(0); // Reset after triggering
+        }
+    }, [titleClickCount]);
 
     const processImageFile = (file: File) => {
         if (file && file.type.startsWith('image/')) {
@@ -343,7 +365,7 @@ function Editor() {
                 </div>
 
                 <header className="text-center my-6 md:my-8 pt-12">
-                    <h1 className="font-open-sans text-4xl md:text-5xl font-bold text-neutral-900 uppercase tracking-widest text-outline-white cursor-pointer select-none">{t('title')}</h1>
+                    <h1 onClick={handleTitleClick} className="font-open-sans text-4xl md:text-5xl font-bold text-neutral-900 uppercase tracking-widest text-outline-white cursor-pointer select-none">{t('title')}</h1>
                     <p className="font-pixel text-white mt-2 text-lg uppercase tracking-[1px]">{t('subtitle')}</p>
                 </header>
 

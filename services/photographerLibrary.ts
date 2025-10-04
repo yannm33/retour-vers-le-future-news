@@ -1588,3 +1588,11 @@ export const PRODUCT_FOCUSED_SUBSTYLES = [
     'luxe_tiffany',
     'luxe_moncler'
 ];
+
+export const ACTION_LIBRARY = {
+    lighting: ["moonlight", "flare lighting", "infrared vision glow", "dusty sunset", "blue dawn light", "explosion backlight", "strobe light flicker", "dramatic god rays through smoke"],
+    camera_angle: ["low", "medium", "over-shoulder", "drone high", "POV helmet", "dutch angle", "worm's eye view", "sniper scope view"],
+    motion: ["parachute descent", "slow motion water splash", "running with lens flare", "fast rope descent", "breaching explosion", "bullet time effect", "shaky cam (handheld)"],
+    time_of_day: ["night", "dawn", "sunset", "midday harsh sun"],
+    weather: ["fog", "rain", "storm", "dust storm", "clear sky", "snow blizzard"],
+};

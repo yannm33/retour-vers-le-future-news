@@ -479,15 +479,15 @@ export const translations = {
     substyle_victoire_celebree: "Celebrating Victory",
 
     // Substyles (Navy SEAL)
-    substyle_insertion_aeroportee: "Airborne Insertion",
     substyle_debarquement_amphibie: "Amphibious Landing",
     substyle_plongee_combat: "Combat Diving",
     substyle_sabotage_portuaire: "Harbor Sabotage",
-    substyle_operations_urbaines: "Urban Operations",
-    substyle_reconnaissance_desert: "Desert Reconnaissance",
-    substyle_operations_foret_jungle: "Forest/Jungle Operations",
-    substyle_operations_neige_montagne: "Snow/Mountain Operations",
-    substyle_raid_nocturne: "Night Raid",
+    substyle_operations_urbaines_cotieres: "Coastal Urban Operations",
+    substyle_abordage_de_navire: "Ship Boarding (VBSS)",
+    substyle_infiltration_sous_marine_sdv: "Underwater Infiltration (SDV)",
+    substyle_extraction_helicoptere_en_mer: "Helicopter Extraction at Sea",
+    substyle_reconnaissance_littorale: "Coastal Reconnaissance",
+    substyle_raid_nocturne_plateforme_petroliere: "Night Raid (Oil Rig)",
     substyle_tenue_ceremonie: "Dress Uniform",
     
     // Substyles (Military)
@@ -1045,15 +1045,15 @@ export const translations = {
     substyle_victoire_celebree: "Victoire célébrée",
 
     // Substyles (Navy SEAL)
-    substyle_insertion_aeroportee: "Insertion aéroportée",
     substyle_debarquement_amphibie: "Débarquement amphibie",
     substyle_plongee_combat: "Plongée de combat",
     substyle_sabotage_portuaire: "Sabotage portuaire",
-    substyle_operations_urbaines: "Opérations urbaines",
-    substyle_reconnaissance_desert: "Reconnaissance désert",
-    substyle_operations_foret_jungle: "Opérations forêt/jungle",
-    substyle_operations_neige_montagne: "Opérations neige/montagne",
-    substyle_raid_nocturne: "Raid nocturne",
+    substyle_operations_urbaines_cotieres: "Opérations Urbaines Côtières",
+    substyle_abordage_de_navire: "Abordage de Navire (VBSS)",
+    substyle_infiltration_sous_marine_sdv: "Infiltration Sous-Marine (SDV)",
+    substyle_extraction_helicoptere_en_mer: "Extraction Héliportée en Mer",
+    substyle_reconnaissance_littorale: "Reconnaissance Littorale",
+    substyle_raid_nocturne_plateforme_petroliere: "Raid Nocturne (Plateforme pétrolière)",
     substyle_tenue_ceremonie: "Tenue de cérémonie",
 
     // Substyles (Military)

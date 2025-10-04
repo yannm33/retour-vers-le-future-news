@@ -235,6 +235,88 @@ const PROMPT_DATABASE: Record<string, Record<string, (opts: PromptOptions) => st
             Requête principale : L'opérateur doit être une représentation fidèle de la personne sur la photo fournie.
             Spécifications techniques : Format ${opts.aspectRatio}. Mode couleur : ${opts.colorMode}. Qualité de rendu : ${opts.renderQuality}. Cible d'upscale : ${opts.upscale}.`,
     },
+    'Navy SEAL': {
+        'debarquement_amphibie': (opts) =>
+            `Créer une image 8k ultra-réaliste, style cinématique nocturne, grain de film prononcé.
+            Scène & Ambiance : Nuit, une plage sombre. Une équipe de Navy SEALs émerge silencieusement des vagues, l'eau ruisselant sur leur équipement de combat noir.
+            Personnage(s) : L'opérateur de tête, une représentation fidèle de la personne sur la photo, est à genoux dans le ressac, scrutant la plage avec des lunettes de vision nocturne (GPNVG-18).
+            Équipement : Armes avec silencieux (HK416), équipement de combat humide, sacs étanches.
+            Véhicules & Transport : En arrière-plan, la silhouette d'un bateau pneumatique à coque rigide (RHIB) est visible juste au-delà des brisants.
+            Requête principale : L'opérateur de tête doit être une représentation fidèle de la personne sur la photo fournie.
+            Spécifications techniques : Format ${opts.aspectRatio}. Mode couleur : ${opts.colorMode}. Qualité de rendu : ${opts.renderQuality}. Cible d'upscale : ${opts.upscale}.`,
+
+        'plongee_combat': (opts) =>
+            `Créer une image 8k ultra-réaliste, ambiance sous-marine verdâtre et trouble.
+            Scène & Ambiance : Sous l'eau, près de la coque d'un cargo ou d'un sous-marin. Des bulles s'échappent lentement du recycleur.
+            Personnage(s) : Un plongeur de combat, représentation fidèle de la personne sur la photo, vérifie sa boussole de poignet. Il porte un recycleur à circuit fermé (Draeger LAR V) pour ne pas faire de bulles.
+            Équipement : Palmes, boussole sous-marine, fusil d'assaut sous-marin (APS), mine magnétique (mine limpet) attachée à son équipement.
+            Requête principale : Le plongeur doit être une représentation fidèle de la personne sur la photo fournie.
+            Spécifications techniques : Format ${opts.aspectRatio}. Mode couleur : ${opts.colorMode}. Qualité de rendu : ${opts.renderQuality}. Cible d'upscale : ${opts.upscale}.`,
+
+        'sabotage_portuaire': (opts) =>
+            `Créer une image 8k ultra-réaliste, style film d'espionnage nocturne, très contrasté.
+            Scène & Ambiance : Nuit, un port industriel. Le SEAL vient d'émerger de l'eau sombre et huileuse le long d'un quai en béton.
+            Personnage(s) : Le SEAL, représentation fidèle de la personne sur la photo, retire son équipement de plongée. Il est en train de placer une charge de démolition sur un pilier du quai.
+            Équipement : Combinaison de plongée noire, charges explosives, détonateurs. La scène est éclairée uniquement par la lune et les lumières lointaines du port.
+            Requête principale : Le SEAL doit être une représentation fidèle de la personne sur la photo fournie.
+            Spécifications techniques : Format ${opts.aspectRatio}. Mode couleur : ${opts.colorMode}. Qualité de rendu : ${opts.renderQuality}. Cible d'upscale : ${opts.upscale}.`,
+
+        'operations_urbaines_cotieres': (opts) =>
+            `Créer une image 8k ultra-réaliste, style cinématique, lumière de fin de journée ("golden hour").
+            Scène & Ambiance : Une ville côtière méditerranéenne. L'équipe se déplace le long d'une ruelle étroite avec vue sur la mer.
+            Personnage(s) : L'opérateur de tête, représentation fidèle de la personne sur la photo, se penche à un coin de rue, son fusil (HK416) en position "low ready". Il porte un équipement léger et discret par-dessus des vêtements civils.
+            Équipement : Porte-plaques discret, casque balistique rapide, pistolet à la hanche.
+            Requête principale : L'opérateur doit être une représentation fidèle de la personne sur la photo fournie.
+            Spécifications techniques : Format ${opts.aspectRatio}. Mode couleur : ${opts.colorMode}. Qualité de rendu : ${opts.renderQuality}. Cible d'upscale : ${opts.upscale}.`,
+
+        'abordage_de_navire': (opts) =>
+            `Créer une image 8k ultra-réaliste, action dynamique, mer agitée.
+            Scène & Ambiance : Nuit, en pleine mer. Un hélicoptère MH-60 Black Hawk est en vol stationnaire au-dessus du pont d'un cargo. Le souffle du rotor soulève des embruns.
+            Personnage(s) : Un SEAL, représentation fidèle de la personne sur la photo, descend en rappel (fast rope) sur le pont du navire. L'équipe se déploie rapidement sur le pont.
+            Équipement : Équipement de VBSS (Visit, Board, Search, and Seizure), casques avec NVG, fusils d'assaut.
+            Requête principale : Le SEAL descendant en rappel doit être une représentation fidèle de la personne sur la photo fournie.
+            Spécifications techniques : Format ${opts.aspectRatio}. Mode couleur : ${opts.colorMode}. Qualité de rendu : ${opts.renderQuality}. Cible d'upscale : ${opts.upscale}.`,
+
+        'infiltration_sous_marine_sdv': (opts) =>
+            `Créer une image 8k ultra-réaliste, style cinématique sombre et granuleux.
+            Scène & Ambiance : Nuit. Deux plongeurs de combat émergent silencieusement d'une eau noire près d'une cible (quai, navire).
+            Personnage(s) : Le plongeur de tête, une représentation fidèle de la personne sur la photo, fait un signe de la main à son coéquipier.
+            Véhicules & Transport : En arrière-plan, la silhouette d'un mini-sous-marin (SDV - Swimmer Delivery Vehicle) est à peine visible sous la surface.
+            Requête principale : Le plongeur de tête doit être une représentation fidèle de la personne sur la photo fournie.
+            Spécifications techniques : Format ${opts.aspectRatio}. Mode couleur : ${opts.colorMode}. Qualité de rendu : ${opts.renderQuality}. Cible d'upscale : ${opts.upscale}.`,
+
+        'extraction_helicoptere_en_mer': (opts) =>
+            `Créer une image 8k ultra-réaliste, avec un flou de mouvement et des embruns.
+            Scène & Ambiance : Jour, mer agitée. Un hélicoptère MH-60 Black Hawk effectue une extraction par SPIE (Special Patrol Insertion/Extraction).
+            Personnage(s) : Une équipe de SEALs, dont l'un est une représentation fidèle de la personne sur la photo, est attachée à la corde SPIE et est soulevée hors de l'eau.
+            Équipement : Équipement de combat complet, harnais SPIE. L'eau s'écoule d'eux alors qu'ils s'élèvent.
+            Requête principale : Le SEAL au premier plan sur la corde doit être une représentation fidèle de la personne sur la photo fournie.
+            Spécifications techniques : Format ${opts.aspectRatio}. Mode couleur : ${opts.colorMode}. Qualité de rendu : ${opts.renderQuality}. Cible d'upscale : ${opts.upscale}.`,
+
+        'reconnaissance_littorale': (opts) =>
+            `Créer une image 8k ultra-réaliste, faible profondeur de champ.
+            Scène & Ambiance : Aube, une position d'observation dissimulée dans les rochers surplombant une plage ou un port ennemi.
+            Personnage(s) : Un sniper SEAL, une représentation fidèle de la personne sur la photo, est en position couchée, observant la cible à travers la lunette de son fusil de précision (Mk 13 Mod 7). Son visage est peint en camouflage.
+            Équipement : Fusil de sniper avec silencieux, tenue ghillie, jumelles, radio.
+            Requête principale : Le sniper doit être une représentation fidèle de la personne sur la photo fournie.
+            Spécifications techniques : Format ${opts.aspectRatio}. Mode couleur : ${opts.colorMode}. Qualité de rendu : ${opts.renderQuality}. Cible d'upscale : ${opts.upscale}.`,
+
+        'raid_nocturne_plateforme_petroliere': (opts) =>
+            `Créer une image 8k ultra-réaliste, style film d'action, éclairage industriel.
+            Scène & Ambiance : Nuit, une plateforme pétrolière en mer. L'ambiance est tendue, avec le bruit des machines et de la mer.
+            Personnage(s) : Un SEAL, une représentation fidèle de la personne sur la photo, se déplace le long d'une passerelle métallique, son arme pointée. Des ombres et des reflets métalliques partout.
+            Équipement : Équipement de CQB (Close Quarters Battle), NVG, fusils avec lampes tactiques.
+            Requête principale : Le SEAL doit être une représentation fidèle de la personne sur la photo fournie.
+            Spécifications techniques : Format ${opts.aspectRatio}. Mode couleur : ${opts.colorMode}. Qualité de rendu : ${opts.renderQuality}. Cible d'upscale : ${opts.upscale}.`,
+
+        'tenue_ceremonie': (opts) =>
+            `Créer une photo 8k ultra-réaliste, style portrait formel.
+            Scène & Ambiance : Intérieur, devant un drapeau américain ou sur le pont d'un navire de guerre. La lumière est douce et contrôlée.
+            Personnage(s) : Un officier Navy SEAL, une représentation fidèle de la personne sur la photo, dans son uniforme de cérémonie 'Service Dress White' impeccable.
+            Équipement : Rangée complète de médailles sur la poitrine, y compris le Trident des SEALs. L'expression est sérieuse et fière.
+            Requête principale : L'officier doit être une représentation hyper-réaliste de la personne sur la photo fournie.
+            Spécifications techniques : Format ${opts.aspectRatio}. Mode couleur : ${opts.colorMode}. Qualité de rendu : ${opts.renderQuality}. Cible d'upscale : ${opts.upscale}.`,
+    },
 };
 
 
