@@ -2,6 +2,7 @@
  * @license
  * SPDX-License-Identifier: Apache-2.0
 */
+import { LUTS_LIBRARY } from '../services/lutsLibrary';
 
 // --- Types ---
 export type ColorMode = 'Couleur' | 'N&B';
@@ -38,15 +39,13 @@ export const HAIR_COLORS = [
 export const EXPRESSIONS = [
     'Neutre', 'Sourire Doux', 'Sourire Standard', 'Large Sourire', 'Sourire Subtil', 'Sourire Enjoué', 'Sourire Malicieux', 'Clin d\'œil', 'Rire', 'Sérieux', 'Confiant', 'Tristesse', 'Tristesse Profonde', 'Colère Contenue', 'Colère Explosive / Rage', 'Peur Légère', 'Inquiétude', 'Peur Intense', 'Panique', 'Surprise Neutre', 'Surprise Émerveillée', 'Dégoût / Mépris', 'Fatigue', 'Lassitude', 'Concentration', 'Réflexion', 'Séduction Assurée'
 ];
-export const ACCESSORIES = [
-    'Aucun', 'Lunettes de soleil classiques', 'Lunettes de rallye / motocross', 'Lunettes de vue simples', 'Lunettes de vue de créateur', 'Lunettes fantaisie', 'Aviateur (style pilote)', 'Wafer carrées', 'Sportives enveloppantes', 'Rondes vintage', 'Casque de moto', 'Casque de pilote de course auto', 'Casque de pilote de rallye'
+export const GLASSES_OPTIONS = [
+    'Aucun', 'Lunettes de soleil classiques', 'Lunettes de rallye / motocross', 'Lunettes de vue simples', 'Lunettes de vue de créateur', 'Lunettes fantaisie', 'Aviateur (style pilote)', 'Wafer carrées', 'Sportives enveloppantes', 'Rondes vintage'
 ];
 export const FRAMES = [
     'Très gros plan', 'Gros plan', 'Plan poitrine', 'Plan taille', 'Plan italien', 'Plan américain', 'Plan moyen', 'Plan pied', 'Plan large', 'Contre-plongée', 'Vue de drone'
 ];
-export const LUTS = [
-    'Aucun', 'Vintage Kodachrome', 'Technicolor', 'Bleach Bypass', 'Teal & Orange', 'Film d\'Action', 'Film de Mariage', 'AR1', 'Blast', 'Couleur Cinéma', 'Film Classique', 'Film Cinématique', 'Vert Profond / Nature', 'Style Documentaire', 'Effet Film Mat', 'Film Noir Cinématique', 'Film d\'Horreur', 'Film Indépendant', 'Film Travel Buddha', 'Film Hero', 'Rétro', 'Charme Rustique', 'Science-Fiction Colorée', 'Slog', 'Cinéma Trois Mariages', 'Cinéma Urbain', 'Film Maudit Chaud', 'Wanderlust Rêveur'
-];
+export const LUTS = LUTS_LIBRARY;
 export const EFFECTS = [
     'Aucune', 'Sueur', 'Sueur et Poussière', 'Boue séchée (éclaboussures)', 'Suie ou Cendres', 'Poussière épaisse', 'Terre humide', 'Motte', 'Incrustation d\'argile', 'Fibre', 'Vase', 'Peluche', 'Gouttelettes d\'eau', 'Éboulis', 'Graisse', 'Huile mécanique', 'Algues', 'Mousse ou Lichen', 'Sable fin', 'Résidu de fumée', 'Poussière de rouille', 'Taches d\'herbe écrasée', 'Rouille sur métal', 'Camouflage de visage (militaire)'
 ];
@@ -65,3 +64,52 @@ export const ASPECT_RATIOS = {
     Square: ['1:1'],
     Landscape: ['5:4', '4:3', '3:2', '16:10', '16:9', '2:1', '3:1'],
 };
+
+
+export const UNIVERSAL_ACCESSORIES_CONFIG = [
+  {
+    nameKey: "accessories_group_luxury",
+    elements: [
+      "Montre Rolex Submariner", "Montre Jaeger-LeCoultre Reverso", "Sac Hermès Birkin",
+      "Sac Louis Vuitton Capucines", "Bracelet Cartier Love", "Foulard Hermès",
+      "Ceinture Gucci", "Stylo Montblanc", "Bague Bulgari Serpenti", "Cravate Dior Homme"
+    ]
+  },
+  {
+    nameKey: "accessories_group_clothing",
+    elements: [
+      "Chapeau Fedora", "Chapeau Panama", "Casquette rétro en tweed", "Gants en cuir",
+      "Écharpe en cachemire", "Noeud papillon soie", "Ceinture classique en cuir", "Bretelles vintage"
+    ]
+  },
+  {
+    nameKey: "accessories_group_equipment",
+    elements: [
+      "Casque de moto moderne", "Casque de pilote de course", "Casque de rallye", "Casque d’aviateur",
+      "Casque en cuir vintage", "Casque de pompier ancien", "Casque militaire", "Casque de scaphandrier ancien"
+    ]
+  },
+  {
+    nameKey: "accessories_group_personal",
+    elements: [
+      "Appareil photo Leica", "Caméra Super 8", "Cigarette allumée", "Journal plié",
+      "Livre ancien", "Verre à whisky", "Porte-cigarette argenté", "Briquet Dupont",
+      "Valise en cuir", "Téléphone vintage à cadran"
+    ]
+  },
+  {
+    nameKey: "accessories_group_action",
+    elements: [
+      "Revolver ancien", "Sabre de cavalerie", "Boussole en laiton", "Montre de poche gousset",
+      "Sac militaire", "Radio de terrain", "Lunette de visée", "Dague de cérémonie"
+    ]
+  },
+  {
+    nameKey: "accessories_group_decor",
+    elements: [
+      "Lampe de bureau vintage", "Tapis oriental", "Coffret à bijoux ouvert", "Tableau mural doré",
+      "Fleurs séchées", "Bouteille de parfum en verre", "Rideau en velours rouge", "Coussin brodé",
+      "Horloge murale en cuivre"
+    ]
+  }
+];

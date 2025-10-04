@@ -5,6 +5,7 @@
 import React, { useEffect, useRef } from 'react';
 import { IconMicrophone, IconMicrophoneOff } from '@tabler/icons-react';
 import { cn } from '../../lib/utils';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 const SpeechRecognitionApi = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
 
@@ -28,17 +29,25 @@ interface SpeechToTextButtonProps {
 }
 
 const SpeechToTextButton: React.FC<SpeechToTextButtonProps> = ({ onTranscript, onListeningChange, isListening, targetLang = 'fr-FR' }) => {
-    // Use the defined SpeechRecognition interface for the ref type.
+    const { t } = useLanguage();
     const recognitionRef = useRef<SpeechRecognition | null>(null);
 
+    // This effect synchronizes the speech recognition service with the `isListening` state.
     useEffect(() => {
         if (!SpeechRecognitionApi) {
             console.warn('Speech Recognition API not supported in this browser.');
             return;
         }
 
-        // Instantiate using the renamed API constructor.
+        // If the user is not supposed to be listening, do nothing.
+        // The cleanup function from a previous run will handle stopping the service.
+        if (!isListening) {
+            return;
+        }
+
+        // Create and configure a new recognition instance.
         const recognition: SpeechRecognition = new SpeechRecognitionApi();
+        recognitionRef.current = recognition;
         recognition.continuous = true;
         recognition.interimResults = true;
         recognition.lang = targetLang;
@@ -56,42 +65,55 @@ const SpeechToTextButton: React.FC<SpeechToTextButtonProps> = ({ onTranscript, o
         };
 
         recognition.onerror = (event) => {
-            console.error('Speech recognition error', event.error);
+            // The 'aborted' error is a non-fatal timeout. We ignore it, as the `onend`
+            // handler will gracefully restart the service.
+            if (event.error === 'aborted') {
+                return;
+            }
+            // For all other errors, log it and stop listening.
+            console.error('Speech recognition error:', event.error);
             onListeningChange(false);
         };
 
         recognition.onend = () => {
-            onListeningChange(false);
-        };
-
-        recognitionRef.current = recognition;
-
-        return () => {
-            if (recognitionRef.current) {
-                recognitionRef.current.stop();
-            }
-        };
-    }, [targetLang, onTranscript, onListeningChange]);
-
-    const handleToggleListening = () => {
-        const recognition = recognitionRef.current;
-        if (!recognition) return;
-
-        if (isListening) {
-            recognition.stop();
-        } else {
+            // The service has stopped (e.g., due to a browser timeout).
+            // As this effect is still active (isListening is true), we automatically
+            // restart it to provide a continuous listening experience.
             try {
                 recognition.start();
             } catch (e) {
-                console.error("Error starting speech recognition:", e);
-                onListeningChange(false);
-                return;
+                console.error("Error auto-restarting speech recognition:", e);
+                onListeningChange(false); // If restart fails, stop.
             }
+        };
+
+        // Start the service.
+        try {
+            recognition.start();
+        } catch (e) {
+            console.error("Error starting speech recognition:", e);
+            onListeningChange(false);
         }
+
+        // This cleanup function is critical. It runs when the component unmounts OR
+        // when `isListening` changes from true to false (i.e., the user clicks stop).
+        return () => {
+            // We must disable the onend handler *before* stopping. Otherwise, stop()
+            // would trigger onend(), which would immediately restart the service,
+            // preventing the service from ever stopping.
+            recognition.onend = null;
+            recognition.stop();
+            recognitionRef.current = null;
+        };
+    // This dependency array ensures the effect runs only when the listening state or language changes.
+    }, [isListening, targetLang, onTranscript, onListeningChange]);
+
+    const handleToggleListening = () => {
+        // The handler's only job is to toggle the state in the parent.
+        // The useEffect hook will handle the rest of the logic.
         onListeningChange(!isListening);
     };
 
-    // Use the renamed API constructor for the check.
     if (!SpeechRecognitionApi) {
         return null; // Don't render if not supported
     }
@@ -103,10 +125,10 @@ const SpeechToTextButton: React.FC<SpeechToTextButtonProps> = ({ onTranscript, o
             className={cn(
                 'p-2 rounded-full transition-colors duration-200',
                 isListening
-                    ? 'bg-red-500 text-white animate-pulse'
-                    : 'bg-neutral-700 text-white hover:bg-neutral-600'
+                    ? 'bg-orange-500 text-black animate-pulse'
+                    : 'bg-orange-500/30 text-white hover:bg-red-600'
             )}
-            title="Activer/Désactiver la saisie vocale"
+            title={t('speechToTextTitle')}
         >
             {isListening ? <IconMicrophoneOff size={18} /> : <IconMicrophone size={18} />}
         </button>

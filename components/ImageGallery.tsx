@@ -6,7 +6,7 @@ import React, { useState, useEffect } from 'react';
 import { GeneratedImage, AppState } from '../pages/Editor';
 import { IconLoader, IconAlertTriangle, IconDownload, IconRefresh } from '@tabler/icons-react';
 import { useLanguage } from '../contexts/LanguageContext';
-import { cn } from '../lib/utils';
+import { cn, getAspectRatioClass } from '../lib/utils';
 
 interface ImageGalleryProps {
     generatedImages: GeneratedImage[];
@@ -15,6 +15,8 @@ interface ImageGalleryProps {
     handleDownloadSingleImage: (url: string, id: number) => void;
     handleRegenerateImage: (id: number) => void;
     setPreviewImage: (url: string) => void;
+    aspectRatio: string;
+    isZipping: boolean;
 }
 
 const GalleryItem: React.FC<{
@@ -22,7 +24,8 @@ const GalleryItem: React.FC<{
     onRegenerate: (id: number) => void;
     onDownload: (url: string, id: number) => void;
     onPreview: (url: string) => void;
-}> = ({ image, onRegenerate, onDownload, onPreview }) => {
+    aspectRatio: string;
+}> = ({ image, onRegenerate, onDownload, onPreview, aspectRatio }) => {
     const { t } = useLanguage();
     const [isLoaded, setIsLoaded] = useState(false);
 
@@ -33,7 +36,10 @@ const GalleryItem: React.FC<{
     }, [image.status, image.url]);
 
     return (
-        <div className="aspect-square bg-neutral-800 rounded-lg p-1 shadow-lg border border-neutral-700 relative group">
+        <div className={cn(
+            "bg-neutral-800 rounded-lg p-1 shadow-lg border border-neutral-700 relative group",
+            getAspectRatioClass(aspectRatio)
+        )}>
             <div className="bg-black w-full h-full rounded flex items-center justify-center overflow-hidden">
                 {image.status === 'pending' && <IconLoader size={32} className="animate-spin text-neutral-500" />}
                 {image.status === 'error' && <IconAlertTriangle size={32} className="text-red-500" title={image.error} />}
@@ -43,7 +49,7 @@ const GalleryItem: React.FC<{
                             src={image.url} 
                             alt={`Generated image ${image.id + 1}`} 
                             className={cn(
-                                "w-full h-full object-contain cursor-pointer group-hover:scale-105 transition-all duration-500",
+                                "w-full h-full object-cover cursor-pointer group-hover:scale-105 transition-all duration-500",
                                 isLoaded ? "opacity-100 scale-100" : "opacity-0 scale-95"
                             )}
                             onClick={() => onPreview(image.url!)}
@@ -80,7 +86,7 @@ const GalleryItem: React.FC<{
     );
 };
 
-const ImageGallery: React.FC<ImageGalleryProps> = ({ generatedImages, appState, handleDownloadAlbum, handleDownloadSingleImage, handleRegenerateImage, setPreviewImage }) => {
+const ImageGallery: React.FC<ImageGalleryProps> = ({ generatedImages, appState, handleDownloadAlbum, handleDownloadSingleImage, handleRegenerateImage, setPreviewImage, aspectRatio, isZipping }) => {
     const { t } = useLanguage();
 
     if (generatedImages.length === 0) {
@@ -97,13 +103,27 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ generatedImages, appState, 
                         onRegenerate={handleRegenerateImage}
                         onDownload={handleDownloadSingleImage}
                         onPreview={setPreviewImage}
+                        aspectRatio={aspectRatio}
                     />
                 ))}
             </div>
             {appState === 'results-shown' && generatedImages.some(img => img.status === 'done') && (
                  <div className="text-center">
-                    <button onClick={handleDownloadAlbum} className="bg-amber-500 hover:bg-amber-600 text-black font-bold py-2 px-6 rounded-lg mt-8 flex items-center gap-2 transition-all duration-200 mx-auto shadow-amber-500/30 shadow-[0_0_15px_2px] hover:shadow-amber-500/50">
-                        <IconDownload size={20}/> {t('downloadAlbum')}
+                    <button 
+                        onClick={handleDownloadAlbum} 
+                        disabled={isZipping}
+                        className="bg-amber-500 hover:bg-amber-600 text-black font-bold py-2 px-6 rounded-lg mt-8 flex items-center gap-2 transition-all duration-200 mx-auto shadow-amber-500/30 shadow-[0_0_15px_2px] hover:shadow-amber-500/50 disabled:bg-neutral-500 disabled:shadow-none disabled:cursor-wait"
+                    >
+                        {isZipping ? (
+                            <>
+                                <IconLoader size={20} className="animate-spin" />
+                                {t('zipping')}...
+                            </>
+                        ) : (
+                            <>
+                                <IconDownload size={20}/> {t('downloadAlbum')}
+                            </>
+                        )}
                     </button>
                 </div>
             )}

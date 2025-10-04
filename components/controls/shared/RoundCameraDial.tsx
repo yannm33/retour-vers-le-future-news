@@ -11,8 +11,9 @@ export const RoundCameraDial: React.FC<{
     values: readonly string[];
 }> = ({ value, setValue, values }) => {
     const isDraggingRef = useRef(false);
-    const dragStartXRef = useRef(0);
+    const dragStartYRef = useRef(0);
     const valueIndexOnDragStartRef = useRef(0);
+    const dialContainerRef = useRef<HTMLDivElement>(null);
 
     const [displayValue, setDisplayValue] = useState(value);
 
@@ -21,75 +22,42 @@ export const RoundCameraDial: React.FC<{
         setDisplayValue(value);
     }, [value]);
     
-    const handleMouseDown = (e: React.MouseEvent) => {
-        e.preventDefault();
-        // Prevent drag if the click is on the center button
-        if ((e.target as HTMLElement).closest('button')) {
-            return;
-        }
-        isDraggingRef.current = true;
-        dragStartXRef.current = e.clientX;
-        
-        const currentIndex = values.indexOf(value);
-        valueIndexOnDragStartRef.current = currentIndex === -1 ? Math.floor(values.length / 2) : currentIndex;
-
-        document.body.style.cursor = 'ew-resize';
-        document.body.style.userSelect = 'none';
-
-        const handleMouseMove = (event: MouseEvent) => {
-            if (!isDraggingRef.current) return;
-
-            const sensitivity = 8; // Pixels moved per value change
-            const deltaX = event.clientX - dragStartXRef.current;
-            const valueChange = Math.round(deltaX / sensitivity);
-
-            const newIndex = Math.max(0, Math.min(values.length - 1, valueIndexOnDragStartRef.current + valueChange));
-            
-            setValue(values[newIndex]);
-        };
-
-        const handleMouseUp = () => {
-            isDraggingRef.current = false;
-            document.body.style.cursor = 'default';
-            document.body.style.userSelect = 'auto';
-            window.removeEventListener('mousemove', handleMouseMove);
-            window.removeEventListener('mouseup', handleMouseUp);
-        };
-
-        window.addEventListener('mousemove', handleMouseMove);
-        window.addEventListener('mouseup', handleMouseUp);
-    };
-
     const handleTouchStart = (e: React.TouchEvent) => {
         if ((e.target as HTMLElement).closest('button')) {
             return;
         }
         isDraggingRef.current = true;
-        dragStartXRef.current = e.touches[0].clientX;
+        dragStartYRef.current = e.touches[0].clientY;
         
         const currentIndex = values.indexOf(value);
         valueIndexOnDragStartRef.current = currentIndex === -1 ? Math.floor(values.length / 2) : currentIndex;
-
-        document.body.style.cursor = 'ew-resize';
-        document.body.style.userSelect = 'none';
 
         const handleTouchMove = (event: TouchEvent) => {
             if (!isDraggingRef.current) return;
             event.preventDefault(); // Prevent page scroll
 
-            const sensitivity = 8; // Pixels moved per value change
-            const deltaX = event.touches[0].clientX - dragStartXRef.current;
-            const valueChange = Math.round(deltaX / sensitivity);
-
-            const newIndex = Math.max(0, Math.min(values.length - 1, valueIndexOnDragStartRef.current + valueChange));
+            const sensitivity = 15; // Pixels moved per value change
+            const deltaY = event.touches[0].clientY - dragStartYRef.current;
             
-            setValue(values[newIndex]);
+            if (Math.abs(deltaY) > sensitivity) {
+                const direction = deltaY > 0 ? 1 : -1;
+                
+                setValue(prev => {
+                    const currentIndex = values.indexOf(prev);
+                    if (currentIndex === -1) {
+                        return values[Math.floor(values.length / 2)];
+                    }
+                    const newIndex = Math.max(0, Math.min(values.length - 1, currentIndex + direction));
+                    return values[newIndex];
+                });
+
+                // Reset start position for "ratcheting" feel
+                dragStartYRef.current = event.touches[0].clientY;
+            }
         };
 
         const handleTouchEnd = () => {
             isDraggingRef.current = false;
-            document.body.style.cursor = 'default';
-            document.body.style.userSelect = 'auto';
             window.removeEventListener('touchmove', handleTouchMove);
             window.removeEventListener('touchend', handleTouchEnd);
         };
@@ -98,20 +66,35 @@ export const RoundCameraDial: React.FC<{
         window.addEventListener('touchend', handleTouchEnd);
     };
 
-    const handleWheel = (e: React.WheelEvent) => {
-        e.preventDefault();
-        const direction = e.deltaY > 0 ? 1 : -1;
-        
-        setValue(prev => {
-            const currentIndex = values.indexOf(prev);
-            if (currentIndex === -1) { // If current is "Auto"
-                const midIndex = Math.floor(values.length / 2);
-                return values[midIndex];
-            }
-            const newIndex = Math.max(0, Math.min(values.length - 1, currentIndex + direction));
-            return values[newIndex];
-        });
-    };
+    useEffect(() => {
+        const dialNode = dialContainerRef.current;
+        if (!dialNode) return;
+
+        const handleWheel = (e: WheelEvent) => {
+            e.preventDefault(); // Prevent the browser's default scroll action
+            e.stopPropagation(); // Stop the event from bubbling up to other elements
+
+            const direction = e.deltaY > 0 ? 1 : -1;
+            
+            setValue(prev => {
+                const currentIndex = values.indexOf(prev);
+                if (currentIndex === -1) { // If current is "Auto"
+                    const midIndex = Math.floor(values.length / 2);
+                    return values[midIndex];
+                }
+                const newIndex = Math.max(0, Math.min(values.length - 1, currentIndex + direction));
+                return values[newIndex];
+            });
+        };
+
+        // Add event listener with { passive: false } to allow preventDefault()
+        dialNode.addEventListener('wheel', handleWheel, { passive: false });
+
+        // Cleanup function to remove the listener when the component unmounts
+        return () => {
+            dialNode.removeEventListener('wheel', handleWheel);
+        };
+    }, [values, setValue]); // Re-run effect if these change
 
     const isActive = value !== 'Auto';
 
@@ -130,10 +113,9 @@ export const RoundCameraDial: React.FC<{
                 {displayValue}
             </div>
             <div
-                className="relative w-20 h-20 flex items-center justify-center cursor-ew-resize group"
-                onMouseDown={handleMouseDown}
+                ref={dialContainerRef}
+                className="relative w-20 h-20 flex items-center justify-center cursor-ns-resize group"
                 onTouchStart={handleTouchStart}
-                onWheel={handleWheel}
             >
                 <div className="w-full h-full rounded-full bg-neutral-800 border border-amber-500 shadow-inner flex items-center justify-center relative overflow-hidden">
                     <div 
@@ -149,7 +131,7 @@ export const RoundCameraDial: React.FC<{
                     ></div>
                      <button
                         onClick={(e) => {
-                            e.stopPropagation(); // Prevent the dial drag from starting
+                            e.stopPropagation(); // Prevent any parent handlers
                             setValue('Auto');
                         }}
                         className="w-10 h-10 rounded-full bg-red-600 hover:bg-red-500 active:bg-red-700 transition-colors cursor-pointer z-10"

@@ -5,6 +5,9 @@
 
 export const translations = {
   en: {
+    // General
+    none: "None",
+
     // Header & Footer
     title: "Back to the Future",
     subtitle: "Cinematic & Photographic Preview",
@@ -23,11 +26,13 @@ export const translations = {
     chooseSubstyle: "Choose a sub-style",
     customPromptTitle: "Your custom prompt",
     customPromptPlaceholder: "Paste your prompt here (scene, style, lighting...)",
+    speechToTextTitle: "Enable/Disable voice input",
     
     // Gallery & Modals
     uploadPlaceholder: "Upload a portrait to start",
     dragAndDropPrompt: "or drag and drop an image here",
     downloadAlbum: "DOWNLOAD ALL",
+    zipping: "Zipping",
     download: "DOWNLOAD",
     regenerate: "Regenerate",
     close: "Close",
@@ -52,9 +57,11 @@ export const translations = {
     year: "Year",
     open: "OPEN",
     timeTravel_close: "CLOSE",
+    timeTravel_scroll_instruction: "Scroll with the mouse wheel to change the year",
     hairColor: "Hair Color",
     expression: "Expression",
     glasses: "Glasses",
+    accessories: "Accessories",
     framing: "Framing",
     luts: "Cinema LUTs",
     effects: "Effects",
@@ -89,6 +96,7 @@ export const translations = {
     style_photos: "Photos",
     style_portrait_glamour: "Glamour Portrait",
     style_portrait_minimaliste: "Minimalist Portrait",
+    style_luxe_evolupte: "Luxe Évolupté",
     style_mode_haute_couture: "Haute Couture Fashion",
     style_couverture_vogue: "Vogue Cover",
     style_couverture_elle: "Elle Cover",
@@ -225,6 +233,18 @@ export const translations = {
     substyle_noir_blanc_dramatique: "Dramatic Black & White",
     substyle_couleur_pastel: "Pastel Color",
     substyle_pop_art_vibrant: "Vibrant Pop Art",
+
+    // Substyle Names (Luxe Évolupté)
+    group_luxe_scenarios: "Scenarios",
+    group_maisons_francaises: "French Maisons",
+    group_maisons_suisses: "Swiss Maisons",
+    group_maisons_italiennes: "Italian Maisons",
+    group_maisons_internationales: "International Maisons",
+    substyle_luxe_boutique: "Luxury Boutique",
+    substyle_luxe_rue: "Luxury Street",
+    substyle_luxe_hotel: "Luxury Hotel",
+    substyle_luxe_studio: "Luxury Studio",
+    substyle_luxe_soiree: "Luxury Evening",
 
     // Substyle Names (Haute Couture)
     substyle_defile_parisien: "Parisian Catwalk",
@@ -499,6 +519,7 @@ export const translations = {
     photos_notes: "Capturer des moments réalistes, avec une lumière naturelle et des décors authentiques.",
     portrait_glamour_notes: "Varier les coiffures, les couleurs de robes, les accessoires discrets, éviter la répétition.",
     portrait_minimaliste_notes: "Variations minimalisme + pop-art, accessoires simples, fonds graphiques.",
+    luxe_evolupte_notes: "Style photographique haut de gamme inspiré des grandes marques de luxe internationales (Louis Vuitton, Dior, Cartier, Rolex, Chanel, Hermès, Balmain, etc.), avec rendu réaliste, cinématographique et lumière feutrée.",
     mode_haute_couture_notes: "Alterner les couleurs dominantes, les positions variées.",
     couverture_vogue_notes: "Toujours inclure une typographie réaliste, des angles variés.",
     couverture_elle_notes: "Ambiance lifestyle, sourires, looks accessibles.",
@@ -516,8 +537,19 @@ export const translations = {
     militaire_notes: "Scénarios militaires conventionnels, mettant l'accent sur l'équipement, les véhicules et les uniformes.",
     commando_notes: "Missions d'opérations spéciales, mettant l'accent sur la furtivité, l'équipement spécialisé et les environnements tactiques.",
     pilote_de_chasse_notes: "Scénarios centrés sur les missions et la vie des pilotes de chasse modernes, mettant l'accent sur la technologie, la vitesse et l'action.",
+    
+    // Universal Accessories
+    accessories_group_luxury: "Objets de luxe",
+    accessories_group_clothing: "Accessoires vestimentaires",
+    accessories_group_equipment: "Équipements & Casques",
+    accessories_group_personal: "Objets personnels & de tournage",
+    accessories_group_action: "Objets d’action & d’époque",
+    accessories_group_decor: "Décor & Ambiance",
   },
   fr: {
+    // General
+    none: "Aucun",
+    
     // Header & Footer
     title: "Retour vers le futur",
     subtitle: "Aperçu cinématique et photographique",
@@ -536,11 +568,13 @@ export const translations = {
     chooseSubstyle: "Choisir un sous-style",
     customPromptTitle: "Votre prompt personnalisé",
     customPromptPlaceholder: "Collez votre prompt ici (scène, style, lumière...)",
+    speechToTextTitle: "Activer/Désactiver la saisie vocale",
 
     // Gallery & Modals
     uploadPlaceholder: "Chargez un portrait pour commencer",
     dragAndDropPrompt: "ou glissez-déposez une image ici",
     downloadAlbum: "TOUT TÉLECHARGER",
+    zipping: "Compression",
     download: "TÉLECHARGER",
     regenerate: "Régénérer",
     close: "Fermer",
@@ -565,9 +599,11 @@ export const translations = {
     year: "Année",
     open: "OUVRIR",
     timeTravel_close: "FERMER",
+    timeTravel_scroll_instruction: "Faites défiler avec la molette pour changer l’année",
     hairColor: "Couleur des cheveux",
     expression: "Expression",
     glasses: "Lunettes",
+    accessories: "Accessoires",
     framing: "Cadrage",
     luts: "LUTs Cinéma",
     effects: "Effets",
@@ -602,6 +638,7 @@ export const translations = {
     style_photos: "Photos",
     style_portrait_glamour: "Portrait Glamour",
     style_portrait_minimaliste: "Portrait Minimaliste",
+    style_luxe_evolupte: "Luxe Évolupté",
     style_mode_haute_couture: "Mode Haute Couture",
     style_couverture_vogue: "Couverture Vogue",
     style_couverture_elle: "Couverture Elle",
@@ -738,6 +775,18 @@ export const translations = {
     substyle_noir_blanc_dramatique: "Noir & Blanc Dramatique",
     substyle_couleur_pastel: "Couleur Pastel",
     substyle_pop_art_vibrant: "Pop Art Vibrant",
+
+    // Substyle Names (Luxe Évolupté)
+    group_luxe_scenarios: "Scénarios",
+    group_maisons_francaises: "Maisons Françaises",
+    group_maisons_suisses: "Maisons Suisses",
+    group_maisons_italiennes: "Maisons Italiennes",
+    group_maisons_internationales: "Maisons Internationales",
+    substyle_luxe_boutique: "Luxe Boutique",
+    substyle_luxe_rue: "Luxe Rue",
+    substyle_luxe_hotel: "Luxe Hôtel",
+    substyle_luxe_studio: "Luxe Studio",
+    substyle_luxe_soiree: "Luxe Soirée",
 
     // Substyle Names (Haute Couture)
     substyle_defile_parisien: "Défilé Parisien",
@@ -1012,6 +1061,7 @@ export const translations = {
     photos_notes: "Capturer des moments réalistes, avec une lumière naturelle et des décors authentiques.",
     portrait_glamour_notes: "Varier les coiffures, les couleurs de robes, les accessoires discrets, éviter la répétition.",
     portrait_minimaliste_notes: "Variations minimalisme + pop-art, accessoires simples, fonds graphiques.",
+    luxe_evolupte_notes: "Style photographique haut de gamme inspiré des grandes marques de luxe internationales (Louis Vuitton, Dior, Cartier, Rolex, Chanel, Hermès, Balmain, etc.), avec rendu réaliste, cinématographique et lumière feutrée.",
     mode_haute_couture_notes: "Alterner les couleurs dominantes, les positions variées.",
     couverture_vogue_notes: "Toujours inclure une typographie réaliste, des angles variés.",
     couverture_elle_notes: "Ambiance lifestyle, sourires, looks accessibles.",
@@ -1029,5 +1079,13 @@ export const translations = {
     militaire_notes: "Scénarios militaires conventionnels, mettant l'accent sur l'équipement, les véhicules et les uniformes.",
     commando_notes: "Missions d'opérations spéciales, mettant l'accent sur la furtivité, l'équipement spécialisé et les environnements tactiques.",
     pilote_de_chasse_notes: "Scénarios centrés sur les missions et la vie des pilotes de chasse modernes, mettant l'accent sur la technologie, la vitesse et l'action.",
+    
+    // Universal Accessories
+    accessories_group_luxury: "Objets de luxe",
+    accessories_group_clothing: "Accessoires vestimentaires",
+    accessories_group_equipment: "Équipements & Casques",
+    accessories_group_personal: "Objets personnels & de tournage",
+    accessories_group_action: "Objets d’action & d’époque",
+    accessories_group_decor: "Décor & Ambiance",
   }
 };

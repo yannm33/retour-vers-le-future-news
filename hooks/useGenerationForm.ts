@@ -18,9 +18,10 @@ export const useGenerationForm = () => {
     const [vitesse, setVitesse] = useState('Auto');
     const [hairColor, setHairColor] = useState('Noir Profond');
     const [expression, setExpression] = useState('Neutre');
-    const [accessories, setAccessories] = useState('Aucun');
+    const [glasses, setGlasses] = useState('Aucun');
+    const [universalAccessory, setUniversalAccessory] = useState('');
     const [framing, setFraming] = useState('Plan pied');
-    const [lutsCinema, setLutsCinema] = useState('Aucun');
+    const [lutsCinema, setLutsCinema] = useState('none');
     const [effects, setEffects] = useState('Aucune');
     const [photographicEffect, setPhotographicEffect] = useState('');
     const [photoGrain, setPhotoGrain] = useState('Aucun');
@@ -62,7 +63,8 @@ export const useGenerationForm = () => {
         vitesse, setVitesse,
         hairColor, setHairColor,
         expression, setExpression,
-        accessories, setAccessories,
+        glasses, setGlasses,
+        universalAccessory, setUniversalAccessory,
         framing, setFraming,
         lutsCinema, setLutsCinema,
         effects, setEffects,
@@ -78,3 +80,5 @@ export const useGenerationForm = () => {
         year, setYear,
     };
 };
+
+export type FormState = ReturnType<typeof useGenerationForm>;

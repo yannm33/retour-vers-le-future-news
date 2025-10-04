@@ -70,7 +70,8 @@ export const STYLES_CONFIG: Style[] = [
             "Rankin",
             "Tom Ford",
             "Marc Hoppe",
-            "Robert Doisneau"
+            "Robert Doisneau",
+            "Henri Cartier-Bresson"
         ].map(name => ({ name, key: toKey(name) }))
     },
     {
@@ -115,6 +116,59 @@ export const STYLES_CONFIG: Style[] = [
             { key: "noir_blanc_dramatique" },
             { key: "couleur_pastel" },
             { key: "pop_art_vibrant" },
+        ]
+    },
+    {
+        key: "luxe_evolupte",
+        notesKey: "luxe_evolupte_notes",
+        subStyles: [
+            {
+                nameKey: 'group_luxe_scenarios',
+                subStyles: [
+                    { key: "luxe_boutique" },
+                    { key: "luxe_rue" },
+                    { key: "luxe_hotel" },
+                    { key: "luxe_studio" },
+                    { key: "luxe_soiree" },
+                ]
+            },
+            {
+                nameKey: 'group_maisons_francaises',
+                subStyles: [
+                    { key: 'luxe_dior', name: "Dior Éternel" },
+                    { key: 'luxe_chanel', name: "Chanel Intemporel" },
+                    { key: 'luxe_louis_vuitton', name: "Louis Vuitton Voyage" },
+                    { key: 'luxe_cartier', name: "Cartier Éclat" },
+                    { key: 'luxe_hermes', name: "Hermès Élégance" }
+                ]
+            },
+            {
+                nameKey: 'group_maisons_suisses',
+                subStyles: [
+                    { key: 'luxe_rolex', name: "Rolex Précision" },
+                    { key: 'luxe_patek_philippe', name: "Patek Héritage" },
+                    { key: 'luxe_audemars', name: "Audemars Piguet Modernité" },
+                    { key: 'luxe_jaeger', name: "Jaeger LeCoultre Épure" }
+                ]
+            },
+            {
+                nameKey: 'group_maisons_italiennes',
+                subStyles: [
+                    { key: 'luxe_gucci', name: "Gucci Attitude" },
+                    { key: 'luxe_prada', name: "Prada Architecture" },
+                    { key: 'luxe_versace', name: "Versace Glam" },
+                    { key: 'luxe_fendi', name: "Fendi Contemporain" }
+                ]
+            },
+            {
+                nameKey: 'group_maisons_internationales',
+                subStyles: [
+                    { key: 'luxe_balmain', name: "Balmain Force" },
+                    { key: 'luxe_bulgari', name: "Bulgari Lueur" },
+                    { key: 'luxe_tiffany', name: "Tiffany Pureté" },
+                    { key: 'luxe_moncler', name: "Moncler Élément" }
+                ]
+            }
         ]
     },
     {

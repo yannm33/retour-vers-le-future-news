@@ -2,17 +2,21 @@
  * @license
  * SPDX-License-Identifier: Apache-2.0
 */
-import React, { useState, ChangeEvent, useRef, useEffect, useCallback } from 'react';
+import React, { useState, ChangeEvent, useRef, useEffect } from 'react';
+import JSZip from 'jszip';
 import { generateImage } from '../services/geminiService';
-import { getSpecializedPrompt } from '../services/promptLibrary';
-import { getEffectInstruction } from '../services/effectsLibrary';
-import { getDynamicEnhancements, buildPrompt } from '../services/promptEnhancer';
-import type { PhotoSettings } from '../services/promptEnhancer';
-import { MAGAZINE_PROMPT_DETAILS, MAGAZINE_STYLES } from '../lib/constants';
-import { STYLES_CONFIG, SubStyle, SubStyleGroup } from '../lib/styleConfig';
+import { STYLES_CONFIG } from '../lib/styleConfig';
 import { useGenerationForm } from '../hooks/useGenerationForm';
+import type { FormState } from '../hooks/useGenerationForm';
 import { useApiKeys } from '../hooks/useApiKeys';
 import { useLanguage } from '../contexts/LanguageContext';
+
+import { getSpecializedPrompt } from '../services/promptLibrary';
+import { getDynamicEnhancements } from '../services/promptEnhancer';
+import { getEffectInstruction } from '../services/effectsLibrary';
+import { LUXE_EVOLUPTE_PROMPTS } from '../services/luxeEvolupteLibrary';
+import { LUTS_LIBRARY } from '../services/lutsLibrary';
+import { MAGAZINE_PROMPT_DETAILS } from '../lib/constants';
 
 import Footer from '../components/Footer';
 import ImageGallery from '../components/ImageGallery';
@@ -22,9 +26,8 @@ import SettingsPanel from '../components/controls/SettingsPanel';
 import ApiKeyManagerModal from '../components/ApiKeyManagerModal';
 import LanguageSwitcher from '../components/LanguageSwitcher';
 
-
 import { IconPhoto, IconChevronDown } from '@tabler/icons-react';
-import { cn } from '../lib/utils';
+import { cn, getAspectRatioClass } from '../lib/utils';
 
 // --- Types ---
 export type ImageStatus = 'pending' | 'done' | 'error';
@@ -37,6 +40,109 @@ export interface GeneratedImage {
 }
 export type AppState = 'idle' | 'image-uploaded' | 'generating' | 'results-shown';
 
+const buildFullPrompt = (
+    formState: FormState,
+    uploadedImage: string | null,
+    t: (key: string) => string
+): string => {
+    const {
+        style, subStyle, customPrompt, colorMode, upscale, focale, ouverture, vitesse,
+        hairColor, expression, glasses, universalAccessory, framing, lutsCinema, effects,
+        photographicEffect, photoGrain, filmBrand, iso, signature, signatureOn,
+        aspectRatio, renderQuality, timeTravelOn, year
+    } = formState;
+
+    let promptParts: string[] = [];
+    
+    // --- Directive Artistique Principale ---
+    if (style === 'luxe_evolupte') {
+        promptParts.push('//-- DIRECTIVE ARTISTIQUE PRINCIPALE : STYLE "MARKETING LUXE ÉVOLUPTÉ" --');
+        promptParts.push('Objectif: Créer des images réalistes, élégantes et hautement professionnelles dans un style publicitaire haut de gamme. Le rendu doit évoquer le luxe contemporain, la mode internationale, et la présentation de produits de prestige (parfum, montre, bijou, etc.). Style: Photographie ultra réaliste. Lumière douce, souvent dorée, ivoire ou neutre. Profondeur de champ naturelle. Décors: hôtels de luxe, boutiques parisiennes, palaces, etc. Tenues: haute couture. Expression naturelle, regard calme. Interdits: aucun effet "cyberpunk", "digital art", "illustration", pas de couleurs saturées ou de néons.');
+        
+        if (subStyle && LUXE_EVOLUPTE_PROMPTS[subStyle]) {
+            promptParts.push(`//-- SOUS-STYLE SPÉCIFIQUE --\n${LUXE_EVOLUPTE_PROMPTS[subStyle]}`);
+        }
+    } else {
+        promptParts.push('//-- DIRECTIVE ARTISTIQUE PRINCIPALE : STYLE "RETOUR VERS LE FUTUR" --');
+        promptParts.push('Objectif: Produire des images réalistes, cohérentes et variées. Style: Photographie pure : rendu naturel, textures de peau réalistes, lumière de studio ou naturelle. Ambiance cinéma réaliste : profondeur de champ maîtrisée, flou d’arrière-plan doux. Cohérence des corps et des visages. Composition naturelle. Interdits: tout ce qui touche au cyberpunk, digital art, couleurs bleues/violettes/néons, filtres SF, effets d’illustration.');
+    }
+    
+    // --- Prompts Spécialisés (Overriding) ---
+    const specializedPrompt = getSpecializedPrompt(style, subStyle, { aspectRatio, colorMode, renderQuality, upscale });
+    if (specializedPrompt) {
+        return specializedPrompt; // These are self-contained and override everything else.
+    }
+
+    // --- Améliorations Créatives Dynamiques ---
+    const dynamicEnhancements = getDynamicEnhancements(style, subStyle);
+    if (dynamicEnhancements) {
+        promptParts.push(`//-- AMÉLIORATIONS CRÉATIVES DYNAMIQUES --\n${dynamicEnhancements}`);
+    }
+
+    // --- Brief Magazine ---
+    const selectedStyleConfig = STYLES_CONFIG.find(s => s.key === style);
+    if (selectedStyleConfig && MAGAZINE_PROMPT_DETAILS[subStyle]) {
+        promptParts.push(`//-- BRIEF MAGAZINE --\nMasthead: ${MAGAZINE_PROMPT_DETAILS[subStyle].masthead}. Description: ${MAGAZINE_PROMPT_DETAILS[subStyle].description}.`);
+    }
+
+    // --- Prompt Utilisateur ---
+    if (customPrompt.trim()) {
+        promptParts.push(`//-- PROMPT UTILISATEUR --\n${customPrompt.trim()}`);
+    }
+
+    // --- Détails Créatifs ---
+    const creativeDetails: string[] = [];
+    if (timeTravelOn) creativeDetails.push(`Année de la scène : ${year}.`);
+    if (expression !== 'Neutre') creativeDetails.push(`Expression faciale : ${expression}.`);
+    if (hairColor !== 'Noir Profond') creativeDetails.push(`Couleur des cheveux : ${hairColor}.`);
+    if (glasses !== 'Aucun') creativeDetails.push(`Lunettes : ${glasses}.`);
+    if (universalAccessory) creativeDetails.push(`Accessoire : ${universalAccessory}.`);
+    if (framing !== 'Plan pied') creativeDetails.push(`Cadrage : ${framing}.`);
+    if (effects !== 'Aucune') creativeDetails.push(`Effet sur la peau/tenue : ${effects}.`);
+    
+    const effectInstruction = getEffectInstruction(photographicEffect);
+    if (effectInstruction) {
+        creativeDetails.push(`Effet photographique spécifique : ${effectInstruction}.`);
+    }
+
+    if (creativeDetails.length > 0) {
+        promptParts.push(`//-- DÉTAILS CRÉATIFS --\n${creativeDetails.join('\n')}`);
+    }
+    
+    // --- Spécifications Techniques ---
+    const techSpecs: string[] = [];
+    techSpecs.push(`Ratio d'aspect : ${style === 'luxe_evolupte' && subStyle === 'automobile_luxe_moderne' ? '21:9' : aspectRatio}.`);
+    techSpecs.push(`Qualité de rendu : ${renderQuality}.`);
+    techSpecs.push(`Niveau d'upscale : ${upscale}.`);
+    if (focale !== 'Auto') techSpecs.push(`Focale : ${focale}.`);
+    if (ouverture !== 'Auto') techSpecs.push(`Ouverture : ${ouverture}.`);
+    if (vitesse !== 'Auto') techSpecs.push(`Vitesse d'obturation : ${vitesse}.`);
+    if (iso !== 'Auto') techSpecs.push(`Sensibilité ISO : ${iso}.`);
+    if (photoGrain !== 'Aucun') techSpecs.push(`Grain photographique : ${photoGrain}.`);
+    if (filmBrand !== 'Aucune') techSpecs.push(`Pellicule photographique : ${filmBrand}.`);
+
+    const selectedLut = LUTS_LIBRARY.find(l => l.id === lutsCinema);
+    if (selectedLut) {
+        techSpecs.push(`Étalonnage Cinéma (LUT) : Appliquer un style de colorimétrie '${selectedLut.name}'. Description technique : ${selectedLut.description}. Idéal pour : ${selectedLut.usage}.`);
+    }
+
+    if (signatureOn && signature.trim()) {
+        techSpecs.push(`Signature : ${signature.trim()}.`);
+    }
+
+    // Final color mode enforcement
+    if (colorMode === 'N&B') {
+        techSpecs.push('Mode : IMPÉRATIVEMENT en Noir et Blanc (monochrome). Ne PAS générer en couleur.');
+    } else {
+        techSpecs.push('Mode : IMPÉRATIVEMENT en Couleur. Ne PAS générer en noir et blanc.');
+    }
+
+    promptParts.push(`//-- SPÉCIFICATIONS TECHNIQUES --\n${techSpecs.join('\n')}`);
+
+    return promptParts.join('\n\n');
+};
+
+
 function Editor() {
     // --- App State ---
     const { t } = useLanguage();
@@ -47,24 +153,16 @@ function Editor() {
     const [isSettingsPanelOpen, setIsSettingsPanelOpen] = useState(false);
     const [isApiKeyManagerModalOpen, setIsApiKeyManagerModalOpen] = useState(false);
     const [isDraggingOver, setIsDraggingOver] = useState(false);
-
+    const [isZipping, setIsZipping] = useState(false);
 
     const { apiKeys, saveApiKeys } = useApiKeys();
-
     const formState = useGenerationForm();
-    const { 
-        style, subStyle, aspectRatio, colorMode, renderQuality, upscale, focale,
-        ouverture, vitesse, photoGrain, expression, framing, hairColor,
-        accessories, lutsCinema, effects, photographicEffect, customPrompt,
-        signatureOn, signature, filmBrand, iso, timeTravelOn, year,
-        provider,
-    } = formState;
+    const { style, customPrompt, provider, aspectRatio } = formState;
 
     const fileInputRef = useRef<HTMLInputElement>(null);
     const headerClickTimeout = useRef<number | null>(null);
     const headerClickCount = useRef(0);
     
-    // Effect to manage the global app state based on the status of generated items.
     useEffect(() => {
         if (generatedImages.length > 0) {
             const isGenerating = generatedImages.some(item => item.status === 'pending');
@@ -94,7 +192,7 @@ function Editor() {
     };
     
     const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-        e.preventDefault(); // Necessary to allow dropping
+        e.preventDefault();
     };
 
     const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
@@ -115,169 +213,36 @@ function Editor() {
         }
     };
 
-    const buildCreativePrompt = useCallback(() => {
-        const promptOptions = { aspectRatio, colorMode, renderQuality, upscale };
-        const specializedPrompt = getSpecializedPrompt(style, subStyle, promptOptions);
-        if (specializedPrompt) {
-            return specializedPrompt;
-        }
-
-        const isMagazineCover = MAGAZINE_STYLES.includes(style);
-        let promptParts: string[] = [];
-
-        if (timeTravelOn) {
-            promptParts.push('//-- DIRECTIVE TEMPORELLE IMPÉRATIVE --');
-            promptParts.push(`L'esthétique visuelle DOIT impérativement recréer l'année ${year}. Cela inclut la mode, les coiffures, et surtout, le style et le rendu photographique/cinématographique de cette époque (grain, saturation, netteté). Cette directive est prioritaire.`);
-        }
-
-        promptParts.push('//-- OBJECTIF PRINCIPAL --');
-        if (style === 'Couverture Elle Deco') {
-             promptParts.push(`Générer une photo d'intérieur hyper-réaliste pour un magazine de décoration. L'image fournie sert uniquement de référence de style de base ; la personne ne doit PAS apparaître.`);
-        } else if (isMagazineCover) {
-            promptParts.push(`Générer une couverture de magazine hyper-réaliste avec la personne de la photo fournie, en assurant une ressemblance fidèle.`);
-        } else if (uploadedImage) {
-            promptParts.push(`Générer une image hyper-réaliste de la personne sur la photo fournie, en assurant une ressemblance fidèle.`);
-        } else {
-            promptParts.push(`Générer une image hyper-réaliste basé sur la description textuelle suivante.`);
-        }
-
-        promptParts.push('//-- INSTRUCTION ANTI-RÉPÉTITION --');
-        promptParts.push('IMPÉRATIF : Pour chaque item de ce lot, générer une composition, une pose, un cadrage et une direction du regard RADICALEMENT DIFFÉRENTS. Variété maximale.');
-
-
-        const styleInfo = STYLES_CONFIG.find(s => s.key === style);
-        let subStyleName = '';
-        if (subStyle && styleInfo) {
-            const allSubStyles: SubStyle[] = styleInfo.subStyles.flatMap(item => 'subStyles' in item ? (item as SubStyleGroup).subStyles : [item as SubStyle]);
-            const subStyleInfo = allSubStyles.find(ss => ss.key === subStyle);
-            if (subStyleInfo) {
-                 subStyleName = subStyleInfo.name || t(`substyle_${subStyleInfo.key}`);
-            }
-        }
-
-        if (isMagazineCover) {
-            const magazineDetails = MAGAZINE_PROMPT_DETAILS[style as keyof typeof MAGAZINE_PROMPT_DETAILS];
-            promptParts.push('//-- MAGAZINE & IDENTITÉ --');
-            promptParts.push(`L'image doit être une couverture professionnelle pour "${magazineDetails.masthead}", respectant son esthétique: ${magazineDetails.description}`);
-            if (subStyle) {
-                promptParts.push(`Le thème spécifique est : "${subStyle.replace(/_/g, ' ')}".`);
-            }
-            promptParts.push('//-- TYPOGRAPHIE & MISE EN PAGE --');
-            promptParts.push(`Incorporer le titre "${magazineDetails.masthead}" et plusieurs titres secondaires avec un texte de remplissage plausible.`);
-        } else {
-            promptParts.push('//-- STYLE & THÈME --');
-            promptParts.push(`Style Principal : "${t(`style_${style}`)}".`);
-            if (subStyleName) promptParts.push(`Variation : "${subStyleName}".`);
-            if (styleInfo) promptParts.push(`Direction Créative : "${t(styleInfo.notesKey)}".`);
-        }
-
-        if (photographicEffect) {
-            const effectInstruction = getEffectInstruction(photographicEffect);
-            if (effectInstruction) {
-                promptParts.push('//-- EFFET PHOTOGRAPHIQUE --');
-                promptParts.push(effectInstruction);
-            }
-        }
-
-        promptParts.push('//-- TECHNIQUE & CAMÉRA --');
-        promptParts.push(`Ratio d'aspect : ${aspectRatio}`);
-        promptParts.push(`Qualité : ${renderQuality}`);
-        if (photoGrain !== 'Aucun') promptParts.push(`Grain : '${photoGrain}'.`);
-        if (filmBrand !== 'Aucune') promptParts.push(`Film : '${filmBrand}'.`);
-        if (iso !== 'Auto') promptParts.push(`ISO : ${iso}.`);
-
-        const creativeDetails: string[] = [];
-        if (expression !== 'Neutre') creativeDetails.push(`Expression : '${expression}'.`);
-        if (framing !== 'Plan pied') creativeDetails.push(`Cadrage : '${framing}'.`);
-        if (hairColor !== 'Noir Profond') creativeDetails.push(`Couleur de cheveux : '${hairColor}'.`);
-        if (accessories !== 'Aucun') creativeDetails.push(`Accessoires : '${accessories}'.`);
-        if (lutsCinema !== 'Aucun') creativeDetails.push(`Étalonnage (LUT) : '${lutsCinema}'.`);
-        if (effects !== 'Aucune') creativeDetails.push(effects === 'Sueur' ? `Ajouter des perles de sueur.` : `Effets : '${effects}'.`);
+    const runGeneration = async (imageInput: string | null, currentFormState: FormState, imageIdToUpdate?: number) => {
+        const finalPrompt = buildFullPrompt(currentFormState, imageInput, t);
         
-        if(creativeDetails.length > 0) {
-            promptParts.push('//-- DÉTAILS CRÉATIFS --');
-            promptParts.push(...creativeDetails);
+        try {
+            const resultUrl = await generateImage(imageInput, finalPrompt, provider, apiKeys);
+            setGeneratedImages(prev => prev.map(img => img.id === imageIdToUpdate ? { ...img, status: 'done', url: resultUrl, originalUrl: resultUrl } : img));
+        } catch (err) {
+            const errorMessage = err instanceof Error ? err.message : "An unknown error occurred.";
+            setGeneratedImages(prev => prev.map(img => img.id === imageIdToUpdate ? { ...img, status: 'error', error: errorMessage } : img));
         }
-
-        if (customPrompt) {
-            promptParts.push('//-- CONSIGNE UTILISATEUR --');
-            promptParts.push(`"${customPrompt}".`);
-        }
-        
-        if (signatureOn && signature) {
-            promptParts.push('//-- SIGNATURE --');
-            promptParts.push(`Incruster subtilement la signature '${signature}' dans un coin.`);
-        }
-
-        return promptParts.join('\n');
-    }, [
-        style, subStyle, customPrompt, aspectRatio, colorMode, renderQuality,
-        upscale, timeTravelOn, year, uploadedImage, expression, framing, hairColor,
-        accessories, lutsCinema, effects, photographicEffect, photoGrain, filmBrand, iso, signatureOn, signature, t
-    ]);
+    };
 
     const handleGenerateImageClick = async () => {
         const imageInput = uploadedImage;
         if (!imageInput && !customPrompt.trim()) return;
 
-        const basePrompt = buildCreativePrompt();
-        const settings: PhotoSettings = {
-            focalLength: focale !== 'Auto' ? focale : undefined,
-            aperture: ouverture !== 'Auto' ? ouverture : undefined,
-            shutterSpeed: vitesse !== 'Auto' ? vitesse : undefined,
-            resolution: upscale,
-            colorMode: colorMode === 'N&B' ? 'b&w' : 'color',
-        };
-        
         const initialImages: GeneratedImage[] = Array.from({ length: formState.numberOfImages }, (_, i) => ({ id: i, status: 'pending' }));
         setGeneratedImages(initialImages);
 
         for (const image of initialImages) {
-            try {
-                const dynamicAdditions = getDynamicEnhancements(style, subStyle);
-                const userPrompt = `${basePrompt}\n\n//-- DIRECTION ARTISTIQUE UNIQUE --\n${dynamicAdditions}`;
-                const finalPrompt = buildPrompt(userPrompt, settings);
-                
-                const resultUrl = await generateImage(imageInput, finalPrompt, provider, apiKeys);
-                
-                setGeneratedImages(prev => prev.map(img => img.id === image.id ? { ...img, status: 'done', url: resultUrl, originalUrl: resultUrl } : img));
-            } catch (err) {
-                const errorMessage = err instanceof Error ? err.message : "An unknown error occurred.";
-                setGeneratedImages(prev => prev.map(img => img.id === image.id ? { ...img, status: 'error', error: errorMessage } : img));
-            }
+            runGeneration(imageInput, formState, image.id);
         }
-    };
-
-    const handleMasterGenerateClick = () => {
-        handleGenerateImageClick();
     };
 
     const handleRegenerateImage = async (imageId: number) => {
         const imageInput = uploadedImage;
         if (!imageInput && !customPrompt.trim()) return;
         
-        const basePrompt = buildCreativePrompt();
-        const settings: PhotoSettings = {
-            focalLength: focale !== 'Auto' ? focale : undefined,
-            aperture: ouverture !== 'Auto' ? ouverture : undefined,
-            shutterSpeed: vitesse !== 'Auto' ? vitesse : undefined,
-            resolution: upscale,
-            colorMode: colorMode === 'N&B' ? 'b&w' : 'color',
-        };
-
-        const dynamicAdditions = getDynamicEnhancements(style, subStyle);
-        const userPrompt = `${basePrompt}\n\n//-- DIRECTION ARTISTIQUE UNIQUE --\n${dynamicAdditions}`;
-        const finalPrompt = buildPrompt(userPrompt, settings);
-
         setGeneratedImages(prev => prev.map(img => img.id === imageId ? { ...img, status: 'pending', url: undefined, error: undefined } : img));
-
-        try {
-            const resultUrl = await generateImage(imageInput, finalPrompt, provider, apiKeys);
-            setGeneratedImages(prev => prev.map(img => img.id === imageId ? { ...img, status: 'done', url: resultUrl, originalUrl: resultUrl } : img));
-        } catch (err) {
-            const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred.';
-            setGeneratedImages(prev => prev.map(img => img.id === imageId ? { ...img, status: 'error', error: errorMessage } : img));
-        }
+        runGeneration(imageInput, formState, imageId);
     };
     
     const handleHeaderClick = () => {
@@ -292,36 +257,58 @@ function Editor() {
 
     const handleDownloadSingleImage = (url: string, imageId: number) => {
         if (!url) return;
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = `retour-vers-le-futur-${style.toLowerCase().replace(/\s/g, '-')}-${imageId + 1}.jpg`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        try {
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `retour-vers-le-futur-${style.toLowerCase().replace(/\s/g, '-')}-${imageId + 1}.jpg`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        } catch (e) {
+            console.error('Download failed', e);
+        }
     };
 
-    const handleDownloadAlbum = () => {
-        generatedImages.forEach((image) => {
-            if (image.status === 'done' && image.url) {
-                handleDownloadSingleImage(image.url, image.id);
+    const handleDownloadAlbum = async () => {
+        setIsZipping(true);
+        try {
+            const zip = new JSZip();
+            const imagesToZip = generatedImages.filter(img => img.status === 'done' && img.url);
+
+            if (imagesToZip.length === 0) {
+                return;
             }
-        });
+
+            for (const image of imagesToZip) {
+                try {
+                    const base64Data = image.url!.substring(image.url!.indexOf(',') + 1);
+                    const fileName = `retour-vers-le-futur-${style.toLowerCase().replace(/\s/g, '-')}-${image.id + 1}.jpg`;
+                    zip.file(fileName, base64Data, { base64: true });
+                } catch (e) {
+                    console.error(`Failed to add image ${image.id} to zip`, e);
+                }
+            }
+
+            const zipBlob = await zip.generateAsync({ type: 'blob' });
+            
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(zipBlob);
+            link.download = `album-retour-vers-le-futur.zip`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(link.href);
+
+        } catch (error) {
+            console.error('Error creating zip file:', error);
+        } finally {
+            setIsZipping(false);
+        }
     };
     
     const isLoading = appState === 'generating';
     const selectedStyleObject = STYLES_CONFIG.find(s => s.key === style);
     const availableSubStyles = selectedStyleObject ? selectedStyleObject.subStyles : [];
-    
-    const getAspectRatioClass = (ratio: string) => {
-        const aspectClasses: { [key: string]: string } = {
-            '1:1': 'aspect-square', '4:5': 'aspect-[4/5]', '3:4': 'aspect-[3/4]',
-            '2:3': 'aspect-[2/3]', '10:16': 'aspect-[10/16]', '9:16': 'aspect-[9/16]',
-            '1:2': 'aspect-[1/2]', '5:4': 'aspect-[5/4]', '4:3': 'aspect-[4/3]',
-            '3:2': 'aspect-[3/2]', '16:10': 'aspect-[16/10]', '16:9': 'aspect-[16/9]',
-            '2:1': 'aspect-[2/1]', '3:1': 'aspect-[3/1]'
-        };
-        return aspectClasses[ratio] || 'aspect-square';
-    };
 
     return (
         <main className="bg-orange-500 text-neutral-800 min-h-screen w-full flex flex-col items-center py-4 font-sans selection:bg-amber-500 selection:text-black">
@@ -342,6 +329,8 @@ function Editor() {
                     handleDownloadSingleImage={handleDownloadSingleImage}
                     handleRegenerateImage={handleRegenerateImage}
                     setPreviewImage={setPreviewImage}
+                    aspectRatio={aspectRatio}
+                    isZipping={isZipping}
                 />
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full mt-6">
@@ -351,7 +340,7 @@ function Editor() {
                             formState={formState}
                             handleImageUpload={handleImageUpload}
                             fileInputRef={fileInputRef}
-                            handleGenerateClick={handleMasterGenerateClick}
+                            handleGenerateClick={handleGenerateImageClick}
                             isLoading={isLoading}
                             uploadedImage={uploadedImage}
                             availableSubStyles={availableSubStyles}

@@ -107,9 +107,17 @@ async function generateWithGemini(imageDataUrl: string | null, prompt: string, a
             inlineData: { mimeType, data: base64Data },
         };
         
+        const aspectRatioMatch = prompt.match(/Ratio d'aspect : ([\d:]+)/);
+        const aspectRatio = aspectRatioMatch ? aspectRatioMatch[1] : '1:1';
+
         // This instruction forces the model to re-imagine the scene, using the photo
         // only as a reference for the person's face, not for clothes or pose.
-        const editInstruction = `IMPORTANT: Use the provided photo ONLY as a reference for the person's face. DO NOT copy the clothing, pose, or background. Create a completely new and different image based on the following creative brief, ensuring the face resembles the person in the photo.\n\n--- CREATIVE BRIEF ---\n${prompt}`;
+        // It now also includes a strong directive to respect the aspect ratio.
+        const editInstruction = `IMPORTANT: Use the provided photo ONLY as a reference for the person's face. DO NOT copy the clothing, pose, or background. Create a completely new and different image based on the following creative brief, ensuring the face resembles the person in the photo.
+        
+        CRITICAL FORMATTING INSTRUCTION: The final generated image MUST have an aspect ratio of ${aspectRatio}. Compose the scene to fill this format perfectly.
+        
+        --- CREATIVE BRIEF ---\n${prompt}`;
         const textPart = { text: editInstruction };
 
         const request = {
