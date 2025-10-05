@@ -4,7 +4,7 @@
 */
 import React, { useState, useEffect } from 'react';
 import { GeneratedImage, AppState } from '../pages/Editor';
-import { IconLoader, IconAlertTriangle, IconDownload, IconRefresh } from '@tabler/icons-react';
+import { IconLoader, IconDownload, IconRefresh } from '@tabler/icons-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { cn, getAspectRatioClass } from '../lib/utils';
 
@@ -35,51 +35,76 @@ const GalleryItem: React.FC<{
         }
     }, [image.status, image.url]);
 
+    const handleItemClick = () => {
+        if (image.status === 'error') {
+            onRegenerate(image.id);
+        } else if (image.status === 'done' && image.url) {
+            onPreview(image.url);
+        }
+    };
+    
     return (
-        <div className={cn(
-            "bg-neutral-800 rounded-lg p-1 shadow-lg border border-neutral-700 relative group",
-            getAspectRatioClass(aspectRatio)
-        )}>
+        <div
+            className={cn(
+                "bg-neutral-800 rounded-lg p-1 shadow-lg border border-neutral-700 relative group",
+                getAspectRatioClass(aspectRatio),
+                (image.status === 'done' || image.status === 'error') && "cursor-pointer"
+            )}
+            onClick={handleItemClick}
+        >
             <div className="bg-black w-full h-full rounded flex items-center justify-center overflow-hidden">
                 {image.status === 'pending' && <IconLoader size={32} className="animate-spin text-neutral-500" />}
-                {image.status === 'error' && <IconAlertTriangle size={32} className="text-red-500" title={image.error} />}
-                {image.status === 'done' && image.url && (
-                    <>
-                        <img 
-                            src={image.url} 
-                            alt={`Generated image ${image.id + 1}`} 
-                            className={cn(
-                                "w-full h-full object-cover cursor-pointer group-hover:scale-105 transition-all duration-500",
-                                isLoaded ? "opacity-100 scale-100" : "opacity-0 scale-95"
-                            )}
-                            onClick={() => onPreview(image.url!)}
-                            onLoad={() => setIsLoaded(true)}
-                        />
-                        <div className="absolute inset-0 bg-black/60 flex items-center justify-center gap-2 md:gap-4 md:opacity-0 group-hover:md:opacity-100 transition-opacity duration-300">
-                            <button
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    onRegenerate(image.id);
-                                }}
-                                className="p-3 bg-black/50 rounded-full text-white hover:bg-amber-500 hover:text-black focus:outline-none focus:ring-2 focus:ring-amber-400 transition-colors"
-                                aria-label={t('regenerate')}
-                                title={t('regenerate')}
-                            >
-                                <IconRefresh size={20} />
-                            </button>
-                            <button
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    onDownload(image.url!, image.id);
-                                }}
-                                className="p-3 bg-black/50 rounded-full text-white hover:bg-amber-500 hover:text-black focus:outline-none focus:ring-2 focus:ring-amber-400 transition-colors"
-                                aria-label={t('download')}
-                                title={t('download')}
-                            >
-                                <IconDownload size={20} />
-                            </button>
+                
+                {image.status === 'error' && (
+                    <div
+                        className="w-full h-full flex flex-col items-center justify-center gap-2 text-red-400 bg-red-900/20"
+                        title={image.error}
+                    >
+                        <div className="p-3 bg-black/50 rounded-full text-white hover:bg-amber-500 hover:text-black focus:outline-none focus:ring-2 focus:ring-amber-400 transition-colors">
+                            <IconRefresh size={24} />
                         </div>
-                    </>
+                        <span className="text-xs font-semibold">{t('refreshImage')}</span>
+                    </div>
+                )}
+
+                {image.status === 'done' && image.url && (
+                    <img 
+                        src={image.url} 
+                        alt={`Generated image ${image.id}`} 
+                        className={cn(
+                            "w-full h-full object-cover group-hover:scale-105 transition-all duration-500",
+                            isLoaded ? "opacity-100 scale-100" : "opacity-0 scale-95"
+                        )}
+                        onLoad={() => setIsLoaded(true)}
+                    />
+                )}
+
+                {/* Actions Overlay for successful images */}
+                {image.status === 'done' && image.url && (
+                    <div className="absolute inset-0 bg-black/60 flex items-center justify-center gap-2 md:gap-4 md:opacity-0 group-hover:md:opacity-100 transition-opacity duration-300">
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onRegenerate(image.id);
+                            }}
+                            className="p-3 bg-black/50 rounded-full text-white hover:bg-amber-500 hover:text-black focus:outline-none focus:ring-2 focus:ring-amber-400 transition-colors"
+                            aria-label={t('regenerate')}
+                            title={t('regenerate')}
+                        >
+                            <IconRefresh size={20} />
+                        </button>
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onDownload(image.url!, image.id);
+                            }}
+                            className="p-3 bg-black/50 rounded-full text-white hover:bg-amber-500 hover:text-black focus:outline-none focus:ring-2 focus:ring-amber-400 transition-colors"
+                            aria-label={t('download')}
+                            title={t('download')}
+                        >
+                            <IconDownload size={20} />
+                        </button>
+                    </div>
                 )}
             </div>
         </div>

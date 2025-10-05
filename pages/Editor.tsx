@@ -2,13 +2,13 @@
  * @license
  * SPDX-License-Identifier: Apache-2.0
 */
-import React, { useState, ChangeEvent, useRef, useEffect } from 'react';
+import React, { useState, ChangeEvent, useRef, useEffect, useCallback } from 'react';
 import JSZip from 'jszip';
 import { generateImage } from '../services/geminiService';
+import type { ApiKeys } from '../services/geminiService';
 import { STYLES_CONFIG } from '../lib/styleConfig';
 import { useGenerationForm } from '../hooks/useGenerationForm';
 import type { FormState } from '../hooks/useGenerationForm';
-import { useApiKeys } from '../hooks/useApiKeys';
 import { useLanguage } from '../contexts/LanguageContext';
 
 import { getSpecializedPrompt } from '../services/promptLibrary';
@@ -16,7 +16,7 @@ import { getDynamicEnhancements } from '../services/promptEnhancer';
 import { getEffectInstruction } from '../services/effectsLibrary';
 import { LUXE_EVOLUPTE_PROMPTS } from '../services/luxeEvolupteLibrary';
 import { LUTS_LIBRARY } from '../services/lutsLibrary';
-import { MAGAZINE_PROMPT_DETAILS } from '../lib/constants';
+import { MAGAZINE_PROMPT_DETAILS, GOOGLE_KEY_LS, IDEOGRAM_KEY_LS, REVART_KEY_LS } from '../lib/constants';
 
 import Footer from '../components/Footer';
 import ImageGallery from '../components/ImageGallery';
@@ -48,14 +48,49 @@ const buildFullPrompt = (
     t: (key: string) => string
 ): string => {
     const {
-        style, subStyle, customPrompt, colorMode, upscale, focale, ouverture, vitesse,
+        style, subStyle, customPrompt, colorMode, focale, ouverture, vitesse,
         hairColor, expression, glasses, universalAccessory, framing, lutsCinema, effects,
         photographicEffect, photoGrain, filmBrand, iso, signature, signatureOn,
-        aspectRatio, renderQuality, timeTravelOn, year
+        aspectRatio, timeTravelOn, year
     } = formState;
 
     let promptParts: string[] = [];
-    
+    let finalColorMode = colorMode;
+
+    // --- Time Travel Directives (Highest Priority) ---
+    if (timeTravelOn) {
+        if (year < 1940) {
+            const historicalDirectives = [];
+            historicalDirectives.push(`//-- DIRECTIVE TEMPORELLE IMPÉRATIVE (VOYAGE DANS LE TEMPS) --`);
+            historicalDirectives.push(`ORDRE ABSOLU : L'intégralité de la scène, y compris les vêtements, décors, technologies, et surtout les attitudes et poses, doit être réinterprétée pour être historiquement exacte pour l'année ${year}. Les poses doivent refléter l'étiquette sociale et les temps d'exposition plus longs de l'époque (plus formelles, moins spontanées).`);
+            historicalDirectives.push(`INTERDITS ANachroniques : Ne PAS inclure d'objets, de styles ou de technologies qui n'existaient pas en ${year}.`);
+
+            let photoStyleDirective = "Le rendu photographique doit impérativement imiter les procédés de l'époque : tons sépia ou noir et blanc, grain de film visible, et imperfections naturelles (vignettage, léger flou).";
+            if (year < 1860) {
+                photoStyleDirective = "Rendu photographique impératif de style Daguerréotype ou Calotype : image unique, tons froids ou sépia, détails très fins mais vignettage et imperfections sur les bords. Poses très rigides.";
+            } else if (year < 1900) {
+                photoStyleDirective = "Rendu photographique impératif de style procédé au collodion humide ou gélatino-argentique : tons sépia riches, grain visible, léger flou sur les bords, poses formelles dues aux temps d'exposition longs.";
+            } else if (year < 1940) {
+                photoStyleDirective = "Rendu photographique impératif de style pictorialiste ou début du 35mm : noir et blanc doux (soft focus), grain artistique, ou look de plaque autochromes avec des couleurs pastel primitives.";
+            }
+            historicalDirectives.push(photoStyleDirective);
+            
+            promptParts.unshift(...historicalDirectives);
+            finalColorMode = 'N&B'; // Override color mode for historical accuracy
+        } else if (year >= 2025) {
+            const futureDirectives = [];
+            futureDirectives.push(`//-- DIRECTIVE TEMPORELLE IMPÉRATIVE (VISION DU FUTUR RÉALISTE) --`);
+            futureDirectives.push(`ORDRE ABSOLU : Générer une vision réaliste et plausible de l'année ${year}. Le futur est une évolution subtile du présent, pas une science-fiction extravagante.`);
+            futureDirectives.push(`RÈGLES DU MONDE : 1. L'architecture historique est préservée (pas de nouveaux gratte-ciel à Paris). 2. Les technologies sont intégrées discrètement : un ou deux drones de service/livraison, des robots de livraison au sol, des vélos à éclairage amélioré, des véhicules plus petits et aérodynamiques. Les lunettes intelligentes remplacent les smartphones. 3. La mode est une évolution du style actuel avec des tissus innovants mais des coupes crédibles (jeans, robes).`);
+            futureDirectives.push(`INTERDITS FORMELS : PAS de voitures volantes. PAS de remplacement des bâtiments historiques. PAS de tenues de science-fiction (combinaisons argentées, etc.). L'objectif est un futur crédible, pas un cliché.`);
+            promptParts.unshift(...futureDirectives);
+            promptParts.push(`Année de la scène : ${year}.`);
+        } else {
+             promptParts.push(`Année de la scène : ${year}.`);
+        }
+    }
+
+
     // --- Directive Artistique Principale ---
     if (style === 'luxe_et_volupte') {
         promptParts.push('//-- DIRECTIVE ARTISTIQUE PRINCIPALE : STYLE "MARKETING LUXE & VOLUPTÉ" --');
@@ -70,9 +105,17 @@ const buildFullPrompt = (
     }
     
     // --- Prompts Spécialisés (Overriding) ---
-    const specializedPrompt = getSpecializedPrompt(style, subStyle, { aspectRatio, colorMode, renderQuality, upscale });
+    const specializedPrompt = getSpecializedPrompt(style, subStyle, { aspectRatio, colorMode: finalColorMode });
     if (specializedPrompt) {
-        return specializedPrompt; // These are self-contained and override everything else.
+        // We inject the time travel year even into specialized prompts
+        if (timeTravelOn && year < 1940) {
+             const historicalDirective = `ORDRE ABSOLU : Réinterpréter la scène suivante pour qu'elle soit historiquement exacte pour l'année ${year}.`;
+             return `${historicalDirective}\n\n${specializedPrompt}`;
+        }
+        if (timeTravelOn) {
+            return `Année de la scène : ${year}.\n\n${specializedPrompt}`;
+        }
+        return specializedPrompt;
     }
 
     // --- Améliorations Créatives Dynamiques ---
@@ -91,10 +134,10 @@ const buildFullPrompt = (
     if (customPrompt.trim()) {
         promptParts.push(`//-- PROMPT UTILISATEUR --\n${customPrompt.trim()}`);
     }
-
+    
     // --- Détails Créatifs ---
     const creativeDetails: string[] = [];
-    if (timeTravelOn) creativeDetails.push(`Année de la scène : ${year}.`);
+
     if (expression !== 'Neutre') creativeDetails.push(`Expression faciale : ${expression}.`);
     if (hairColor !== 'Noir Profond') creativeDetails.push(`Couleur des cheveux : ${hairColor}.`);
     if (glasses !== 'Aucun') creativeDetails.push(`Lunettes : ${glasses}.`);
@@ -114,8 +157,8 @@ const buildFullPrompt = (
     // --- Spécifications Techniques ---
     const techSpecs: string[] = [];
     techSpecs.push(`Ratio d'aspect : ${style === 'luxe_et_volupte' && subStyle === 'automobile_luxe_moderne' ? '21:9' : aspectRatio}.`);
-    techSpecs.push(`Qualité de rendu : ${renderQuality}.`);
-    techSpecs.push(`Niveau d'upscale : ${upscale}.`);
+    techSpecs.push(`Qualité de rendu : UHD (RÉALISME, 10K).`);
+    techSpecs.push(`Niveau d'upscale : 10K.`);
     if (focale !== 'Auto') techSpecs.push(`Focale : ${focale}.`);
     if (ouverture !== 'Auto') techSpecs.push(`Ouverture : ${ouverture}.`);
     if (vitesse !== 'Auto') techSpecs.push(`Vitesse d'obturation : ${vitesse}.`);
@@ -133,8 +176,8 @@ const buildFullPrompt = (
     }
 
     // Final color mode enforcement
-    if (colorMode === 'N&B') {
-        techSpecs.push('Mode : IMPÉRATIVEMENT en Noir et Blanc (monochrome). Ne PAS générer en couleur.');
+    if (finalColorMode === 'N&B') {
+        techSpecs.push('Mode : IMPÉRATIVEMENT en Noir et Blanc (monochrome) ou Sépia. Ne PAS générer en couleur vive.');
     } else {
         techSpecs.push('Mode : IMPÉRATIVEMENT en Couleur. Ne PAS générer en noir et blanc.');
     }
@@ -157,16 +200,32 @@ function Editor() {
     const [isDraggingOver, setIsDraggingOver] = useState(false);
     const [isZipping, setIsZipping] = useState(false);
     const [isCameraOpen, setIsCameraOpen] = useState(false);
+    const [apiKeys, setApiKeys] = useState<ApiKeys>({ google: '', ideogram: '', revart: '' });
 
     // State for the hidden API key modal trigger
     const [titleClickCount, setTitleClickCount] = useState(0);
     const lastTitleClickTimeRef = useRef(0);
+    const [modalMode, setModalMode] = useState<'public' | 'private'>('public');
 
-    const { apiKeys, saveApiKeys } = useApiKeys();
     const formState = useGenerationForm();
-    const { style, customPrompt, provider, aspectRatio } = formState;
+    const { style, customPrompt, provider, aspectRatio, numberOfImages } = formState;
 
     const fileInputRef = useRef<HTMLInputElement>(null);
+
+    // --- API Key Management ---
+    useEffect(() => {
+        const googleKey = localStorage.getItem(GOOGLE_KEY_LS) || '';
+        const ideogramKey = localStorage.getItem(IDEOGRAM_KEY_LS) || '';
+        const revartKey = localStorage.getItem(REVART_KEY_LS) || '';
+        setApiKeys({ google: googleKey, ideogram: ideogramKey, revart: revartKey });
+    }, []);
+
+    const saveApiKeys = useCallback((newKeys: ApiKeys) => {
+        localStorage.setItem(GOOGLE_KEY_LS, newKeys.google);
+        localStorage.setItem(IDEOGRAM_KEY_LS, newKeys.ideogram);
+        localStorage.setItem(REVART_KEY_LS, newKeys.revart);
+        setApiKeys(newKeys);
+    }, []);
     
     useEffect(() => {
         if (generatedImages.length > 0) {
@@ -192,6 +251,7 @@ function Editor() {
 
     useEffect(() => {
         if (titleClickCount === 5) {
+            setModalMode('private'); // Set private mode for 5-click trigger
             setIsApiKeyManagerModalOpen(true);
             setTitleClickCount(0); // Reset after triggering
         }
@@ -242,46 +302,73 @@ function Editor() {
         setIsCameraOpen(false);
     };
 
-    const runGeneration = async (imageInput: string | null, currentFormState: FormState, imageIdToUpdate: number) => {
+    const runSingleGeneration = async (imageInput: string | null, currentFormState: FormState, imageIdToUpdate: number) => {
         const finalPrompt = buildFullPrompt(currentFormState, imageInput, t);
         
         try {
-            const resultUrl = await generateImage(imageInput, finalPrompt, provider, apiKeys);
+            const result = await generateImage(imageInput, finalPrompt, provider, apiKeys, 1);
+            const resultUrl = Array.isArray(result) ? result[0] : result;
             setGeneratedImages(prev => prev.map(img => img.id === imageIdToUpdate ? { ...img, status: 'done', url: resultUrl, originalUrl: resultUrl } : img));
         } catch (err) {
-            const errorMessage = err instanceof Error ? err.message : "An unknown error occurred.";
-            let displayedError;
-
-            // Translate custom error keys from geminiService.
-            if (errorMessage === 'api_key_invalid') {
-                displayedError = t('api_key_invalid');
-            } else if (errorMessage === 'api_quota_exceeded') {
-                displayedError = t('api_quota_exceeded');
-            } else if (errorMessage === 'api_request_blocked') {
-                displayedError = t('api_request_blocked');
-            } else {
-                console.error("Unhandled generation error:", err); // Log full error for debugging
-                displayedError = t('api_generic_error');
-            }
-            setGeneratedImages(prev => prev.map(img => img.id === imageIdToUpdate ? { ...img, status: 'error', error: displayedError } : img));
+            handleGenerationError(err, imageIdToUpdate);
         }
     };
+    
+    const handleGenerationError = (err: unknown, imageId: number) => {
+        const errorMessage = err instanceof Error ? err.message : "An unknown error occurred.";
+        let displayedError;
+
+        // Translate custom error keys from geminiService.
+        if (errorMessage === 'api_key_invalid') {
+            displayedError = t('api_key_invalid');
+        } else if (errorMessage === 'api_quota_exceeded') {
+            displayedError = t('api_quota_exceeded');
+        } else if (errorMessage === 'api_request_blocked') {
+            displayedError = t('api_request_blocked');
+        } else {
+            console.error("Unhandled generation error:", err); // Log full error for debugging
+            displayedError = t('api_generic_error');
+        }
+        setGeneratedImages(prev => prev.map(img => img.id === imageId ? { ...img, status: 'error', error: displayedError } : img));
+    };
+
 
     const handleGenerateImageClick = async () => {
         const imageInput = uploadedImage;
         if (!imageInput && !customPrompt.trim()) return;
 
-        // Ensure an API key is set before proceeding.
         if (!apiKeys.google) {
             setIsApiKeyManagerModalOpen(true);
             return;
         }
 
-        const initialImages: GeneratedImage[] = Array.from({ length: formState.numberOfImages }, (_, i) => ({ id: Date.now() + i, status: 'pending' }));
+        const initialImages: GeneratedImage[] = Array.from({ length: numberOfImages }, (_, i) => ({ id: Date.now() + i, status: 'pending' }));
         setGeneratedImages(initialImages);
 
-        for (const image of initialImages) {
-            runGeneration(imageInput, formState, image.id);
+        // --- BATCHING LOGIC ---
+        // If it's a text-to-image generation, use the efficient batch endpoint.
+        if (!imageInput) {
+            const finalPrompt = buildFullPrompt(formState, null, t);
+            try {
+                const results = await generateImage(null, finalPrompt, provider, apiKeys, numberOfImages);
+                if (Array.isArray(results)) {
+                    setGeneratedImages(prev => prev.map((img, index) => 
+                        results[index] 
+                        ? { ...img, status: 'done', url: results[index], originalUrl: results[index] }
+                        : { ...img, status: 'error', error: t('api_generic_error') }
+                    ));
+                }
+            } catch (err) {
+                 // If the whole batch fails, mark all as errored
+                const errorMessage = err instanceof Error ? err.message : "An unknown error occurred.";
+                setGeneratedImages(prev => prev.map(img => ({ ...img, status: 'error', error: errorMessage })));
+            }
+        } 
+        // For image-to-image, the model doesn't support batching, so we loop.
+        else {
+            for (const image of initialImages) {
+                runSingleGeneration(imageInput, formState, image.id);
+            }
         }
     };
 
@@ -290,7 +377,7 @@ function Editor() {
         if (!imageInput && !customPrompt.trim()) return;
         
         setGeneratedImages(prev => prev.map(img => img.id === imageId ? { ...img, status: 'pending', url: undefined, error: undefined } : img));
-        runGeneration(imageInput, formState, imageId);
+        runSingleGeneration(imageInput, formState, imageId);
     };
 
     const handleDownloadSingleImage = (url: string, imageId: number) => {
@@ -354,7 +441,10 @@ function Editor() {
             <div className="w-full max-w-screen-2xl mx-auto z-10 relative px-4">
                  <div className="absolute top-4 left-4 right-4 z-20 flex justify-between items-center gap-4">
                     <button
-                        onClick={() => setIsApiKeyManagerModalOpen(true)}
+                        onClick={() => {
+                            setModalMode('public');
+                            setIsApiKeyManagerModalOpen(true);
+                        }}
                         className="flex items-center gap-2 px-4 py-2 rounded-md bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-500 hover:to-red-500 text-white font-semibold text-sm sm:text-base shadow-[0_0_10px_rgba(255,122,0,0.6)] transition-all duration-300"
                     >
                         <span role="img" aria-label="key">🔑</span>
@@ -450,6 +540,7 @@ function Editor() {
                 onClose={() => setIsApiKeyManagerModalOpen(false)}
                 currentKeys={apiKeys}
                 onSave={saveApiKeys}
+                mode={modalMode}
             />
              <CameraModal
                 isOpen={isCameraOpen}

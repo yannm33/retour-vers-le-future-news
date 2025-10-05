@@ -14,8 +14,8 @@ interface TimeTravelPanelProps {
 const TimeTravelPanel: React.FC<TimeTravelPanelProps> = ({ formState }) => {
     const { t } = useLanguage();
     const { timeTravelOn, setTimeTravelOn, year, setYear } = formState;
-    const minYear = 1700;
-    const maxYear = 2030;
+    const minYear = 1839;
+    const maxYear = 2050;
 
     const [flipped, setFlipped] = useState(false);
 
@@ -126,7 +126,7 @@ const TimeTravelPanel: React.FC<TimeTravelPanelProps> = ({ formState }) => {
             />
 
             {/* Instruction Text */}
-            <p className="text-xs text-white mt-3 italic text-center">
+            <p className="text-xs text-white mt-3 text-center">
                 {t('timeTravel_scroll_instruction')}
             </p>
         </div>

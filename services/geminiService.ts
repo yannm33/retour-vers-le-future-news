@@ -95,9 +95,104 @@ async function callGeminiApi(request: GenerateContentParameters, apiKey: string)
     throw new Error("Gemini API call failed after all retries.");
 }
 
+/**
+ * Cleans a detailed, structured prompt into a simpler format suitable for the Imagen model.
+ * It removes technical specs, comments, and verbose directives.
+ * @param prompt The original detailed prompt.
+ * @returns A cleaned-up string prompt.
+ */
+function cleanPromptForImagen(prompt: string): string {
+    // Remove verbose directives, comments, technical specs, and empty lines.
+    const cleanedPrompt = prompt
+        .replace(/Objectif:.*?Interdits:.*?\./g, '') // Remove the long "Directive Artistique Principale"
+        .split('\n')
+        .map(line => line.trim())
+        .filter(line => 
+            !line.startsWith('//--') &&
+            !line.startsWith("Ratio d'aspect") &&
+            !line.startsWith("Qualité de rendu") &&
+            !line.startsWith("Niveau d'upscale") &&
+            !line.startsWith("Focale") &&
+            !line.startsWith("Ouverture") &&
+            !line.startsWith("Vitesse d'obturation") &&
+            !line.startsWith("Sensibilité ISO") &&
+            !line.startsWith("Grain photographique") &&
+            !line.startsWith("Pellicule photographique") &&
+            !line.startsWith("Étalonnage Cinéma") &&
+            !line.startsWith("Signature") &&
+            !line.match(/Mode : IMPÉRATIVEMENT/) &&
+            line.trim() !== ''
+        )
+        .join(', '); // Join with commas for a more descriptive paragraph.
+    
+    return cleanedPrompt.trim();
+}
+
+/**
+ * Generates a batch of images from a single text prompt using the Imagen model.
+ * @param prompt The text prompt for generation.
+ * @param apiKey The Google API key.
+ * @param numberOfImages The number of images to generate in the batch.
+ * @returns An array of data URL strings for the generated images.
+ */
+export async function generateImagesInBatch(prompt: string, apiKey: string, numberOfImages: number): Promise<string[]> {
+    if (!apiKey) {
+        throw new Error('api_key_invalid');
+    }
+
+    const ai = new GoogleGenAI({ apiKey });
+    const aspectRatioMatch = prompt.match(/Ratio d'aspect : ([\d:]+)/);
+    const aspectRatio = aspectRatioMatch ? aspectRatioMatch[1] : '1:1';
+    const cleanedPrompt = cleanPromptForImagen(prompt);
+
+    const request = {
+        model: 'imagen-4.0-generate-001',
+        prompt: cleanedPrompt,
+        config: {
+            numberOfImages: numberOfImages,
+            outputMimeType: 'image/jpeg',
+            aspectRatio: aspectRatio,
+        },
+    };
+
+    try {
+        const response = await ai.models.generateImages(request);
+
+        if (response.generatedImages && response.generatedImages.length > 0) {
+            return response.generatedImages.map(img => {
+                if (img.image?.imageBytes) {
+                    return `data:image/jpeg;base64,${img.image.imageBytes}`;
+                }
+                throw new Error('API response included an image object without image data.');
+            });
+        }
+        
+        // If the response is empty, it's often due to safety filters.
+        throw new Error('api_request_blocked');
+
+    } catch (error) {
+        console.error("An unrecoverable error occurred during batch text-to-image generation.", error);
+        const errorMessage = error instanceof Error ? error.message : JSON.stringify(error);
+
+        if (errorMessage.includes('API key not valid') || errorMessage.includes('PERMISSION_DENIED')) {
+            throw new Error('api_key_invalid');
+        }
+        if (errorMessage.includes('429') || errorMessage.includes('RESOURCE_EXHAUSTED')) {
+            throw new Error('api_quota_exceeded');
+        }
+        if (errorMessage.includes('prompt was blocked') || errorMessage.includes('SAFETY') || errorMessage === 'api_request_blocked') {
+            throw new Error('api_request_blocked');
+        }
+        
+        throw new Error(`The AI model failed to generate images from text.`);
+    }
+}
+
 
 /**
  * Generates an image using Google's Gemini or Imagen models.
+ * Note: This function is now primarily for single image generation/modification (image-to-image).
+ * For text-to-image, prefer `generateImagesInBatch`.
  */
 async function generateWithGemini(imageDataUrl: string | null, prompt: string, apiKey: string): Promise<string> {
     if (!apiKey) {
@@ -119,9 +214,6 @@ async function generateWithGemini(imageDataUrl: string | null, prompt: string, a
         const aspectRatioMatch = prompt.match(/Ratio d'aspect : ([\d:]+)/);
         const aspectRatio = aspectRatioMatch ? aspectRatioMatch[1] : '1:1';
 
-        // This instruction forces the model to re-imagine the scene, using the photo
-        // only as a reference for the person's face, not for clothes or pose.
-        // It now also includes a strong directive to respect the aspect ratio.
         const editInstruction = `IMPORTANT: Use the provided photo ONLY as a reference for the person's face. DO NOT copy the clothing, pose, or background. Create a completely new and different image based on the following creative brief, ensuring the face resembles the person in the photo.
         
         CRITICAL FORMATTING INSTRUCTION: The final generated image MUST have an aspect ratio of ${aspectRatio}. Compose the scene to fill this format perfectly.
@@ -149,39 +241,13 @@ async function generateWithGemini(imageDataUrl: string | null, prompt: string, a
             throw new Error(`The AI model failed to modify the image.`);
         }
     }
-    // Case 2: Text-to-Image generation (no image provided)
+    // Case 2: Text-to-Image generation (single image) - should be replaced by batch where possible.
     else {
-        const ai = new GoogleGenAI({ apiKey });
-        const aspectRatioMatch = prompt.match(/Ratio d'aspect : ([\d:]+)/);
-        const aspectRatio = aspectRatioMatch ? aspectRatioMatch[1] : '1:1';
-
-        const request = {
-            model: 'imagen-4.0-generate-001',
-            prompt: prompt,
-            config: {
-                numberOfImages: 1,
-                outputMimeType: 'image/jpeg',
-                aspectRatio: aspectRatio,
-            },
-        };
-
-        try {
-            const response = await ai.models.generateImages(request);
-
-            if (response.generatedImages && response.generatedImages.length > 0 && response.generatedImages[0].image?.imageBytes) {
-                const base64ImageBytes: string = response.generatedImages[0].image.imageBytes;
-                return `data:image/jpeg;base64,${base64ImageBytes}`;
-            }
-
-            throw new Error("The AI model did not return any images.");
-
-        } catch (error) {
-            console.error("An unrecoverable error occurred during text-to-image generation.", error);
-            if (error instanceof Error && (error.message === 'api_key_invalid' || error.message === 'api_quota_exceeded')) {
-                throw error;
-            }
-            throw new Error(`The AI model failed to generate an image from text.`);
+        const results = await generateImagesInBatch(prompt, apiKey, 1);
+        if (results.length > 0) {
+            return results[0];
         }
+        throw new Error("Batch generation returned no images.");
     }
 }
 
@@ -217,7 +283,8 @@ export async function generateImage(
     prompt: string,
     provider: 'google' | 'ideogram' | 'revart',
     apiKeys?: ApiKeys,
-): Promise<string> {
+    numberOfImages: number = 1
+): Promise<string | string[]> { // Return type can be single or array
     if (!apiKeys) {
         throw new Error("API keys are missing.");
     }
@@ -226,7 +293,14 @@ export async function generateImage(
         case 'google':
             const googleKey = apiKeys?.google;
             if (!googleKey) throw new Error("A Google API key is required. Please set it in the API key manager.");
+            
+            // Use batch generation for text-to-image
+            if (!imageDataUrl) {
+                return generateImagesInBatch(prompt, googleKey, numberOfImages);
+            }
+            // Use single generation for image-to-image (batch not supported)
             return generateWithGemini(imageDataUrl, prompt, googleKey);
+
         case 'ideogram':
             const ideogramKey = apiKeys?.ideogram;
             if (!ideogramKey) throw new Error("An Ideogram API key is required. Please set it in the API key manager.");

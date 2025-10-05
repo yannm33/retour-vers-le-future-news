@@ -3,18 +3,21 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 import React, { useState, useEffect } from 'react';
-import { IconX, IconDeviceFloppy, IconTrash } from '@tabler/icons-react';
+import { IconX, IconDeviceFloppy, IconAlertTriangle } from '@tabler/icons-react';
 import { ApiKeys } from '../services/geminiService';
 import { useLanguage } from '../contexts/LanguageContext';
+import { GOOGLE_KEY_LS, IDEOGRAM_KEY_LS, REVART_KEY_LS } from '../../hooks/useApiKeys';
+import { LANGUAGE_KEY_LS } from '../../contexts/LanguageContext';
 
 interface ApiKeyManagerModalProps {
     isOpen: boolean;
     onClose: () => void;
     currentKeys: ApiKeys;
     onSave: (newKeys: ApiKeys) => void;
+    mode: 'public' | 'private';
 }
 
-const ApiKeyManagerModal: React.FC<ApiKeyManagerModalProps> = ({ isOpen, onClose, currentKeys, onSave }) => {
+const ApiKeyManagerModal: React.FC<ApiKeyManagerModalProps> = ({ isOpen, onClose, currentKeys, onSave, mode }) => {
     const { t } = useLanguage();
     const [googleKey, setGoogleKey] = useState('');
     
@@ -34,10 +37,17 @@ const ApiKeyManagerModal: React.FC<ApiKeyManagerModalProps> = ({ isOpen, onClose
         onClose();
     };
 
-    const handleDelete = () => {
-        setGoogleKey('');
-        onSave({ ...currentKeys, google: '' });
-        onClose();
+    const handleResetApp = () => {
+        if (window.confirm(t('resetAppConfirm'))) {
+            // Clear all known localStorage keys
+            localStorage.removeItem(GOOGLE_KEY_LS);
+            localStorage.removeItem(IDEOGRAM_KEY_LS);
+            localStorage.removeItem(REVART_KEY_LS);
+            localStorage.removeItem(LANGUAGE_KEY_LS);
+            
+            // Reload the page
+            window.location.reload();
+        }
     };
 
     return (
@@ -85,10 +95,12 @@ const ApiKeyManagerModal: React.FC<ApiKeyManagerModalProps> = ({ isOpen, onClose
                 </p>
 
 
-                <div className="flex justify-between items-center mt-4">
-                    <button onClick={handleDelete} className="bg-red-800/50 hover:bg-red-700/70 text-red-200 font-bold py-2 px-4 rounded-lg flex items-center gap-2 transition-colors">
-                        <IconTrash size={18} /> {t('apiKeyModalDelete')}
-                    </button>
+                <div className={`flex items-center mt-4 ${mode === 'private' ? 'justify-between' : 'justify-end'}`}>
+                    {mode === 'private' && (
+                         <button onClick={handleResetApp} className="bg-red-800/50 hover:bg-red-700/70 text-red-200 font-bold py-2 px-4 rounded-lg flex items-center gap-2 transition-colors">
+                            <IconAlertTriangle size={18} /> {t('resetApp')}
+                        </button>
+                    )}
                     <div className="flex gap-3">
                          <button onClick={onClose} className="bg-black/20 hover:bg-black/40 text-white font-bold py-2 px-4 rounded-lg transition-colors">
                             {t('cancel')}

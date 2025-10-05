@@ -6,8 +6,12 @@ import { LUTS_LIBRARY } from '../services/lutsLibrary';
 
 // --- Types ---
 export type ColorMode = 'Couleur' | 'N&B';
-export type Upscale = 'Standard' | '4K' | '6K' | '8K';
-export type RenderQuality = 'APERÇU (RAPIDE)' | 'HD (QUALITÉ)' | 'UHD (RÉALISME)';
+
+// --- Local Storage Keys ---
+export const GOOGLE_KEY_LS = 'googleApiKey';
+export const IDEOGRAM_KEY_LS = 'ideogramApiKey';
+export const REVART_KEY_LS = 'revartApiKey';
+export const LANGUAGE_KEY_LS = 'language';
 
 // --- Magazine Cover Prompt Details ---
 export const MAGAZINE_PROMPT_DETAILS = {
@@ -48,68 +52,4 @@ export const FRAMES = [
 export const LUTS = LUTS_LIBRARY;
 export const EFFECTS = [
     'Aucune', 'Sueur', 'Sueur et Poussière', 'Boue séchée (éclaboussures)', 'Suie ou Cendres', 'Poussière épaisse', 'Terre humide', 'Motte', 'Incrustation d\'argile', 'Fibre', 'Vase', 'Peluche', 'Gouttelettes d\'eau', 'Éboulis', 'Graisse', 'Huile mécanique', 'Algues', 'Mousse ou Lichen', 'Sable fin', 'Résidu de fumée', 'Poussière de rouille', 'Taches d\'herbe écrasée', 'Rouille sur métal', 'Camouflage de visage (militaire)'
-];
-export const GRAINS = [
-    'Aucun', 'Ultra Fin', 'Fin Standard', 'Moyen', 'Grossier', 'Très Grossier', 'Bruit ISO élevé', 'Vieux film 35mm', 'Finition Mate', 'Contrasté', 'Doux', 'Pointillé', 'Granuleux', 'Flou Doux', 'Cinéma', 'Vignetté'
-];
-export const FILM_STOCKS = [
-    'Aucune', 'Kodak Portra 400', 'Kodak Ektar 100', 'Kodak Gold 200', 'Kodak Tri-X 400', 'Kodak Vision3 500T', 'Fujifilm Pro 400H', 'Fujifilm Velvia 50', 'Fujifilm Superia 400', 'Fujifilm Acros 100', 'Ilford HP5 Plus 400', 'Ilford Delta 3200', 'Agfa Vista 200', 'CineStill 800T', 'CineStill 50D', 'Lomography Color Negative 800', 'Polaroid 600'
-];
-export const ISO_SENSITIVITIES = [
-    'Auto', '50', '100', '200', '400', '800', '1600', '3200', '6400'
-];
-
-export const ASPECT_RATIOS = {
-    Portrait: ['4:5', '3:4', '2:3', '10:16', '9:16', '1:2'],
-    Square: ['1:1'],
-    Landscape: ['5:4', '4:3', '3:2', '16:10', '16:9', '2:1', '3:1'],
-};
-
-
-export const UNIVERSAL_ACCESSORIES_CONFIG = [
-  {
-    nameKey: "accessories_group_luxury",
-    elements: [
-      "Montre Rolex Submariner", "Montre Jaeger-LeCoultre Reverso", "Sac Hermès Birkin",
-      "Sac Louis Vuitton Capucines", "Bracelet Cartier Love", "Foulard Hermès",
-      "Ceinture Gucci", "Stylo Montblanc", "Bague Bulgari Serpenti", "Cravate Dior Homme"
-    ]
-  },
-  {
-    nameKey: "accessories_group_clothing",
-    elements: [
-      "Chapeau Fedora", "Chapeau Panama", "Casquette rétro en tweed", "Gants en cuir",
-      "Écharpe en cachemire", "Noeud papillon soie", "Ceinture classique en cuir", "Bretelles vintage"
-    ]
-  },
-  {
-    nameKey: "accessories_group_equipment",
-    elements: [
-      "Casque de moto moderne", "Casque de pilote de course", "Casque de rallye", "Casque d’aviateur",
-      "Casque en cuir vintage", "Casque de pompier ancien", "Casque militaire", "Casque de scaphandrier ancien"
-    ]
-  },
-  {
-    nameKey: "accessories_group_personal",
-    elements: [
-      "Appareil photo Leica", "Caméra Super 8", "Cigarette allumée", "Journal plié",
-      "Livre ancien", "Verre à whisky", "Porte-cigarette argenté", "Briquet Dupont",
-      "Valise en cuir", "Téléphone vintage à cadran"
-    ]
-  },
-  {
-    nameKey: "accessories_group_action",
-    elements: [
-      "Revolver ancien", "Sabre de cavalerie", "Boussole en laiton", "Montre de poche gousset",
-      "Sac militaire", "Radio de terrain", "Lunette de visée", "Dague de cérémonie"
-    ]
-  },
-  {
-    nameKey: "accessories_group_decor",
-    elements: [
-      "Lampe de bureau vintage", "Tapis oriental", "Coffret à bijoux ouvert", "Tableau mural doré",
-      "Fleurs séchées", "Bouteille de parfum en verre", "Rideau en velours rouge", "Coussin brodé",
-      "Horloge murale en cuivre"
-    ]
-  }
 ];

@@ -5,9 +5,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import type { ApiKeys } from '../services/geminiService';
 
-const GOOGLE_KEY_LS = 'googleApiKey';
-const IDEOGRAM_KEY_LS = 'ideogramApiKey';
-const REVART_KEY_LS = 'revartApiKey';
+export const GOOGLE_KEY_LS = 'googleApiKey';
+export const IDEOGRAM_KEY_LS = 'ideogramApiKey';
+export const REVART_KEY_LS = 'revartApiKey';
 
 export const useApiKeys = () => {
     const [apiKeys, setApiKeys] = useState<ApiKeys>({

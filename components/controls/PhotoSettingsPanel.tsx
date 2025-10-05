@@ -85,11 +85,17 @@ const PhotoSettingsPanel = ({ formState }) => {
     return (
         <ControlSection title={t('photoSettings')}>
             {/* Desktop: Circular Dials (hidden on screens smaller than lg) */}
-            <div className="bg-neutral-900 p-4 rounded-lg hidden lg:grid grid-cols-3 gap-2 justify-items-center">
-                <RoundCameraDial value={focale} setValue={setFocale} values={FOCAL_LENGTHS} />
-                <RoundCameraDial value={ouverture} setValue={setOuverture} values={APERTURES} />
-                <RoundCameraDial value={vitesse} setValue={setVitesse} values={SHUTTER_SPEEDS} />
+            <div className="hidden lg:block">
+                <div className="bg-neutral-900 p-4 rounded-lg grid grid-cols-3 gap-2 justify-items-center">
+                    <RoundCameraDial value={focale} setValue={setFocale} values={FOCAL_LENGTHS} />
+                    <RoundCameraDial value={ouverture} setValue={setOuverture} values={APERTURES} />
+                    <RoundCameraDial value={vitesse} setValue={setVitesse} values={SHUTTER_SPEEDS} />
+                </div>
+                <p className="text-xs text-white mt-3 italic text-center">
+                    {t('photo_settings_scroll_instruction')}
+                </p>
             </div>
+
 
             {/* Mobile: Horizontal Sliders (only visible on screens smaller than lg) */}
             <div className="bg-neutral-900 p-4 rounded-lg flex flex-col gap-6 lg:hidden">

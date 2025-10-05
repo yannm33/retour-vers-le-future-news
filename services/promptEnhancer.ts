@@ -30,9 +30,13 @@ import {
     PRODUCT_FOCUSED_SUBSTYLES,
     FASHION_CAMERA_ANGLES,
     FASHION_LIGHTING_STYLES,
-    FASHION_ATMOSPHERES
+    FASHION_ATMOSPHERES,
+    EMOTIONAL_TONES,
+    PHOTOGRAPHER_STANCES,
+    ARTISTIC_IMPERFECTIONS
 } from './photographerLibrary';
 import { classifyStyle } from '../lib/styleClassifier';
+import { STYLES_CONFIG } from '../lib/styleConfig';
 
 
 export interface PhotoSettings {
@@ -191,6 +195,33 @@ export function getDynamicEnhancements(style: string, subStyle: string): string 
             enhancements.push(`Atmosphère: ${selectRandom(ATMOSPHERES)}.`);
         }
     }
+
+    // --- Creative Intent Engine (Modulated by realismWeight) ---
+    const styleConfig = STYLES_CONFIG.find(s => s.key === style);
+    const realismWeight = styleConfig?.realismWeight ?? 0.7; // Default to a moderate weight.
+
+    // Use the realismWeight to decide IF and HOW MUCH creative intent to add.
+    if (Math.random() < realismWeight) {
+        const creativeIntent: string[] = [];
+        creativeIntent.push(`//-- INTENTION CRÉATIVE & PSYCHOLOGIQUE --`);
+
+        // Always add an emotional tone if the block is active. This is the core.
+        creativeIntent.push(`Ton Émotionnel: ${selectRandom(EMOTIONAL_TONES)}.`);
+
+        // Add photographer's stance if weight is above a certain threshold.
+        if (realismWeight >= 0.5) {
+            creativeIntent.push(`Point de Vue du Photographe: ${selectRandom(PHOTOGRAPHER_STANCES)}.`);
+        }
+        
+        // The chance to add an artistic imperfection is directly proportional to the realismWeight.
+        // (e.g., weight 1.0 = 50% chance, weight 0.5 = 25% chance).
+        if (Math.random() < (realismWeight / 2)) {
+            creativeIntent.push(`Imperfection Artistique: ${selectRandom(ARTISTIC_IMPERFECTIONS)}.`);
+        }
+        
+        enhancements.push(creativeIntent.join('\n'));
+    }
+
 
     return enhancements.filter(e => e).join('\n');
 }

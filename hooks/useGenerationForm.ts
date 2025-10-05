@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 import { useState, useEffect } from 'react';
-import type { ColorMode, Upscale, RenderQuality } from '../lib/constants';
+import type { ColorMode } from '../lib/constants';
 
 export const useGenerationForm = () => {
     const [numberOfImages, setNumberOfImages] = useState(1);
@@ -12,7 +12,6 @@ export const useGenerationForm = () => {
     const [customPrompt, setCustomPrompt] = useState('');
     const [provider, setProvider] = useState<'google' | 'ideogram' | 'revart'>('google');
     const [colorMode, setColorMode] = useState<ColorMode>('Couleur');
-    const [upscale, setUpscale] = useState<Upscale>('8K');
     const [focale, setFocale] = useState('Auto');
     const [ouverture, setOuverture] = useState('Auto');
     const [vitesse, setVitesse] = useState('Auto');
@@ -30,9 +29,8 @@ export const useGenerationForm = () => {
     const [signature, setSignature] = useState('@PIXELSHOOT');
     const [signatureOn, setSignatureOn] = useState(true);
     const [aspectRatio, setAspectRatio] = useState('1:1');
-    const [renderQuality, setRenderQuality] = useState<RenderQuality>('UHD (RÉALISME)');
     const [timeTravelOn, setTimeTravelOn] = useState(false);
-    const [year, setYear] = useState(1985);
+    const [year, setYear] = useState(new Date().getFullYear());
 
     useEffect(() => {
         setSubStyle('');
@@ -57,7 +55,6 @@ export const useGenerationForm = () => {
         customPrompt, setCustomPrompt,
         provider, setProvider,
         colorMode, setColorMode,
-        upscale, setUpscale,
         focale, setFocale,
         ouverture, setOuverture,
         vitesse, setVitesse,
@@ -75,7 +72,6 @@ export const useGenerationForm = () => {
         signature, setSignature,
         signatureOn, setSignatureOn,
         aspectRatio, setAspectRatio,
-        renderQuality, setRenderQuality,
         timeTravelOn, setTimeTravelOn,
         year, setYear,
     };

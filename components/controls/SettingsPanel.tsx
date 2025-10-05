@@ -5,7 +5,6 @@
 import React from 'react';
 import { HAIR_COLORS, EXPRESSIONS, GLASSES_OPTIONS, FRAMES, LUTS, EFFECTS, GRAINS, FILM_STOCKS, ISO_SENSITIVITIES, ASPECT_RATIOS, UNIVERSAL_ACCESSORIES_CONFIG } from '../../lib/constants';
 import { PHOTOGRAPHIC_EFFECTS_CONFIG } from '../../lib/effectsConfig';
-import type { Upscale } from '../../lib/constants';
 import { ControlSection } from './shared/ControlSection';
 import { StyledSelect } from './shared/StyledSelect';
 import { StyledButton } from './shared/StyledButton';
@@ -16,9 +15,7 @@ import { useLanguage } from '../../contexts/LanguageContext';
 const SettingsPanel = ({ formState, generationMode }) => {
     const { t } = useLanguage();
     const {
-        renderQuality, setRenderQuality,
         colorMode, setColorMode,
-        upscale, setUpscale,
         hairColor, setHairColor,
         expression, setExpression,
         glasses, setGlasses,
@@ -44,26 +41,10 @@ const SettingsPanel = ({ formState, generationMode }) => {
     
     return (
         <div className="lg:col-span-1 bg-black p-4 rounded-lg flex flex-col gap-4">
-            <ControlSection title={t('renderQuality')}>
-                <div className="grid grid-cols-3 gap-2">
-                    <StyledButton onClick={() => setRenderQuality('APERÇU (RAPIDE)')} active={renderQuality === 'APERÇU (RAPIDE)'}>{t('preview')}</StyledButton>
-                    <StyledButton onClick={() => setRenderQuality('HD (QUALITÉ)')} active={renderQuality === 'HD (QUALITÉ)'}>{t('hd')}</StyledButton>
-                    <StyledButton onClick={() => setRenderQuality('UHD (RÉALISME)')} active={renderQuality === 'UHD (RÉALISME)'}>{t('uhd')}</StyledButton>
-                </div>
-            </ControlSection>
-
-            <div className='grid grid-cols-1 gap-4'>
-                <ControlSection title=''>
-                    <div className="flex gap-2">
-                        <StyledButton onClick={() => setColorMode('Couleur')} active={colorMode === 'Couleur'} disabled={isColorSelectionDisabled}>{t('color')}</StyledButton>
-                        <StyledButton onClick={() => setColorMode('N&B')} active={colorMode === 'N&B'} disabled={isColorSelectionDisabled}>{t('bw')}</StyledButton>
-                    </div>
-                </ControlSection>
-            </div>
-            
-            <ControlSection title={t('upscale')}>
-                <div className="grid grid-cols-4 gap-2">
-                    {(['Standard', '4K', '6K', '8K'] as Upscale[]).map(u => <StyledButton key={u} onClick={() => setUpscale(u)} active={upscale === u}>{u}</StyledButton>)}
+            <ControlSection title=''>
+                <div className="flex gap-2">
+                    <StyledButton onClick={() => setColorMode('Couleur')} active={colorMode === 'Couleur'} disabled={isColorSelectionDisabled}>{t('color')}</StyledButton>
+                    <StyledButton onClick={() => setColorMode('N&B')} active={colorMode === 'N&B'} disabled={isColorSelectionDisabled}>{t('bw')}</StyledButton>
                 </div>
             </ControlSection>
             

@@ -21,6 +21,7 @@ export interface SubStyleGroup {
 export interface Style {
     key: string;
     notesKey: string;
+    realismWeight?: number; // Modulates the density of sensory/narrative details. 0.0 (none) to 1.0 (max).
     subStyles: SubStyle[] | SubStyleGroup[];
 }
 
@@ -49,6 +50,7 @@ export const STYLES_CONFIG: Style[] = [
     {
         key: "photographers",
         notesKey: "photographers_notes",
+        realismWeight: 0.8,
         subStyles: [
             "Peter Lindbergh",
             "Richard Avedon",
@@ -77,6 +79,7 @@ export const STYLES_CONFIG: Style[] = [
     {
         key: "photos",
         notesKey: "photos_notes",
+        realismWeight: 0.7,
         subStyles: [
             { key: "portrait_studio" },
             { key: "lifestyle_exterieur" },
@@ -97,6 +100,7 @@ export const STYLES_CONFIG: Style[] = [
     {
         key: "portrait_glamour",
         notesKey: "portrait_glamour_notes",
+        realismWeight: 0.9,
         subStyles: [
             { key: "studio_classique" },
             { key: "festival_de_cannes" },
@@ -110,6 +114,7 @@ export const STYLES_CONFIG: Style[] = [
      {
         key: "portrait_minimaliste",
         notesKey: "portrait_minimaliste_notes",
+        realismWeight: 0.4,
         subStyles: [
             { key: "studio_blanc" },
             { key: "architecture_moderne" },
@@ -121,6 +126,7 @@ export const STYLES_CONFIG: Style[] = [
     {
         key: "luxe_et_volupte",
         notesKey: "luxe_et_volupte_notes",
+        realismWeight: 0.9,
         subStyles: [
             {
                 nameKey: 'group_luxe_scenarios',
@@ -183,6 +189,7 @@ export const STYLES_CONFIG: Style[] = [
     {
         key: "mode_haute_couture",
         notesKey: "mode_haute_couture_notes",
+        realismWeight: 1.0,
         subStyles: [
             {
                 nameKey: 'group_catwalk',
@@ -223,6 +230,7 @@ export const STYLES_CONFIG: Style[] = [
     {
         key: "couverture_vogue",
         notesKey: "couverture_vogue_notes",
+        realismWeight: 0.9,
         subStyles: [
             { key: "noir_blanc_iconique" },
             { key: "glamour_dore" },
@@ -236,6 +244,7 @@ export const STYLES_CONFIG: Style[] = [
     {
         key: "couverture_elle",
         notesKey: "couverture_elle_notes",
+        realismWeight: 0.8,
         subStyles: [
             { key: "plage_ete" },
             { key: "chic_decontracte" },
@@ -249,6 +258,7 @@ export const STYLES_CONFIG: Style[] = [
     {
         key: "couverture_elle_deco",
         notesKey: "couverture_elle_deco_notes",
+        realismWeight: 0.3,
         subStyles: [
             { key: "moderne_minimaliste" },
             { key: "boheme_chic" },
@@ -262,6 +272,7 @@ export const STYLES_CONFIG: Style[] = [
     {
         key: "journee_dun_mannequin",
         notesKey: "journee_dun_mannequin_notes",
+        realismWeight: 1.0,
         subStyles: [
             { key: "reveil_matinal" },
             { key: "preparation_salle_de_bain" },
@@ -273,6 +284,7 @@ export const STYLES_CONFIG: Style[] = [
     {
         key: "costume_de_film",
         notesKey: "costume_de_film_notes",
+        realismWeight: 1.0,
         subStyles: [
             {
                 nameKey: "group_prehistoire",
@@ -311,6 +323,7 @@ export const STYLES_CONFIG: Style[] = [
     {
         key: "punk",
         notesKey: "punk_notes",
+        realismWeight: 0.9,
         subStyles: [
             { key: "punk_urbain" },
             { key: "punk_uk_70s" },
@@ -323,6 +336,7 @@ export const STYLES_CONFIG: Style[] = [
     {
         key: "gothique",
         notesKey: "gothique_notes",
+        realismWeight: 1.0,
         subStyles: [
             { key: "medieval_sombre" },
             { key: "cimetiere_victorien" },
@@ -337,6 +351,7 @@ export const STYLES_CONFIG: Style[] = [
     {
         key: "viking",
         notesKey: "viking_notes",
+        realismWeight: 1.0,
         subStyles: [
             { key: "raid_marin" },
             { key: "crique_tresor" },
@@ -350,6 +365,7 @@ export const STYLES_CONFIG: Style[] = [
     {
         key: "boheme",
         notesKey: "boheme_notes",
+        realismWeight: 0.8,
         subStyles: [
             { key: "boheme_chic" },
             { key: "festival_boheme" },
@@ -363,6 +379,7 @@ export const STYLES_CONFIG: Style[] = [
     {
         key: "automobile",
         notesKey: "automobile_notes",
+        realismWeight: 0.9,
         subStyles: [
             { key: "course_circuit" },
             { key: "rallye_raid" },
@@ -376,6 +393,7 @@ export const STYLES_CONFIG: Style[] = [
     {
         key: "moto",
         notesKey: "moto_notes",
+        realismWeight: 0.9,
         subStyles: [
             { key: "moto_piste" },
             { key: "motocross" },
@@ -390,6 +408,7 @@ export const STYLES_CONFIG: Style[] = [
     {
         key: "sportif",
         notesKey: "sportif_notes",
+        realismWeight: 1.0,
         subStyles: [
             {
                 nameKey: "group_natation",
@@ -438,6 +457,7 @@ export const STYLES_CONFIG: Style[] = [
     {
         key: "navy_seal",
         notesKey: "navy_seal_notes",
+        realismWeight: 1.0,
         subStyles: [
             { key: "debarquement_amphibie" },
             { key: "plongee_combat" },
@@ -454,6 +474,7 @@ export const STYLES_CONFIG: Style[] = [
     {
         key: "militaire",
         notesKey: "militaire_notes",
+        realismWeight: 1.0,
         subStyles: [
             { key: "vehicule_blinde" },
             { key: "patrouille" },
@@ -476,6 +497,7 @@ export const STYLES_CONFIG: Style[] = [
     {
         key: "commando",
         notesKey: "commando_notes",
+        realismWeight: 1.0,
         subStyles: [
             { key: "sniper" },
             { key: "embarquement_helicoptere" },
@@ -497,6 +519,7 @@ export const STYLES_CONFIG: Style[] = [
     {
         key: "pilote_de_chasse",
         notesKey: "pilote_de_chasse_notes",
+        realismWeight: 1.0,
         subStyles: [
             "preparation_pre_vol",
             "decollage_porte_avions",

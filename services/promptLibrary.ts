@@ -7,8 +7,6 @@
 interface PromptOptions {
     aspectRatio: string;
     colorMode: string;
-    renderQuality: string;
-    upscale: string;
 }
 
 /**
@@ -310,6 +308,61 @@ const PROMPT_DATABASE: Record<string, Record<string, any>> = {
             ]
         },
     },
+    'pilote_de_chasse': {
+        'preparation_pre_vol': {
+            "scene": [
+                "Tarmac au crépuscule. La silhouette du sujet, pilote, se détache sur le ciel orangé alors qu'il marche vers son chasseur. Il tient son casque sous le bras, le regard concentré, une aura de calme et de détermination.",
+                "À l'intérieur du cockpit, le visage du sujet est illuminé par la lueur verte du HUD et des multiples écrans. Gros plan sur sa main gantée actionnant une série d'interrupteurs, un rituel précis avant le décollage.",
+                "Le sujet, debout sur l'échelle de son jet, échange un dernier regard avec son chef d'équipe au sol. Un salut de la tête, une confiance mutuelle absolue avant que la verrière ne se referme."
+            ]
+        },
+        'decollage_porte_avions': {
+            "scene": [
+                "L'instant de tension maximale. Le F/A-18 est accroché à la catapulte. Des nuages de vapeur enveloppent le train d'atterrissage. À l'intérieur, le sujet a la main sur la manette des gaz, attendant le signal de départ.",
+                "Vue extérieure, la catapulte propulse le chasseur de 0 à 250 km/h en 2 secondes. L'avion semble flotter un instant au-dessus de l'eau avant de prendre son envol dans un rugissement assourdissant.",
+                "Depuis le cockpit, la vue est un flash de pont d'envol, de vapeur et d'océan, suivi d'une montée vertigineuse dans le ciel. Le visage du sujet est impassible, concentré sur ses instruments."
+            ]
+        },
+        'dogfight': {
+            "scene": [
+                "Virage à haute-G. Le visage du sujet est déformé par la force, sa mâchoire serrée. La condensation se forme sur les ailes de son chasseur. À travers la verrière, on aperçoit un avion ennemi.",
+                "Le HUD affiche un verrouillage de missile. Le pouce du sujet est sur le bouton de tir. Son regard est intense, une goutte de sueur perle sur sa tempe.",
+                "Le sujet largue des leurres (flares) qui éclatent en boules de feu brillantes derrière son avion pour déjouer un missile, effectuant une manœuvre d'évasion spectaculaire."
+            ]
+        },
+        'vol_en_formation': {
+            "scene": [
+                "Quatre chasseurs volent en formation diamant parfaite au-dessus d'une mer de nuages, le soleil couchant peignant le ciel de couleurs incroyables. C'est un ballet aérien silencieux et majestueux.",
+                "Vue depuis l'aile d'un avion. On voit le cockpit du leader, le sujet, qui fait un léger signe de la main à son ailier. Un moment de camaraderie au milieu du danger.",
+                "La formation traverse un canyon étroit à basse altitude, les avions passant comme des flèches entre les parois rocheuses. Une démonstration de compétence et de sang-froid."
+            ]
+        },
+        'bombardement_precision': {
+            "scene": [
+                "La vue à travers le pod de désignation laser : une cible au sol est verrouillée. L'image est monochrome, les informations du HUD s'affichent en vert.",
+                "Le sujet appuie sur le bouton de largage. La bombe guidée se détache de l'avion, laissant une fine traînée de fumée.",
+                "L'avion effectue une manœuvre d'évasion serrée juste après le largage, tandis qu'au loin, une explosion silencieuse confirme que la cible est atteinte."
+            ]
+        },
+        'portrait_cockpit': {
+            "scene": [
+                "Portrait serré du sujet dans son cockpit, la nuit. Son visage est uniquement éclairé par la lueur des instruments, créant un contraste dramatique. Son regard est fatigué mais alerte.",
+                "Le reflet du ciel bleu et des nuages sur la visière de son casque. On ne voit pas ses yeux, mais on devine sa concentration intense.",
+                "Le sujet vole à travers un orage. Des éclairs illuminent brièvement le cockpit, révélant son visage tendu pour une fraction de seconde."
+            ]
+        },
+    },
+    'costume_de_film': {
+        'western': {
+            "scene": [
+                "Duel au soleil de midi. Le sujet, un pistolero, se tient dans la rue principale d'une ville poussiéreuse. Sa main plane au-dessus de son Colt Peacemaker. La tension est palpable.",
+                "Un cowboy solitaire (le sujet) chevauche à travers Monument Valley au coucher du soleil. Sa silhouette se découpe sur le paysage désertique et grandiose.",
+                "Dans un saloon enfumé, le sujet, un joueur de poker, abat ses cartes sur la table. Son visage est impassible sous son chapeau, seul un léger sourire se dessine.",
+                "Le shérif (le sujet), étoile sur la poitrine, se tient devant sa prison, un fusil Winchester à la main, prêt à défendre la ville contre les hors-la-loi.",
+                "Une rencontre tendue avec un chef amérindien (le sujet) au bord d'une rivière. Les costumes sont authentiques, les regards sont lourds de sens."
+            ]
+        }
+    }
 };
 
 
@@ -331,7 +384,7 @@ export const getSpecializedPrompt = (style: string, subStyle: string, options: P
             const randomScene = subStyleData.scene[Math.floor(Math.random() * subStyleData.scene.length)];
             
             // Construct the full prompt with the chosen scene and technical specs
-            const technicalSpecs = `Spécifications techniques : Format ${options.aspectRatio}. Mode couleur : ${options.colorMode}. Qualité de rendu : ${options.renderQuality}. Cible d'upscale : ${options.upscale}.`;
+            const technicalSpecs = `Spécifications techniques : Format ${options.aspectRatio}. Mode couleur : ${options.colorMode}. Qualité de rendu : UHD (RÉALISME, 10K). Cible d'upscale : 10K.`;
             
             // The prompt structure now directly uses the scene text.
             return `${randomScene}\n\n${technicalSpecs}`;

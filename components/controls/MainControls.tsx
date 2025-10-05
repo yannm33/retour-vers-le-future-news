@@ -2,7 +2,7 @@
  * @license
  * SPDX-License-Identifier: Apache-2.0
 */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IconPhoto, IconCamera, IconLoader, IconPlus, IconMinus } from '@tabler/icons-react';
 import { ControlSection } from './shared/ControlSection';
 import { StyledSelect } from './shared/StyledSelect';
@@ -11,6 +11,10 @@ import type { SubStyle, SubStyleGroup } from '../../lib/styleConfig';
 import { cn } from '../../lib/utils';
 import SpeechToTextButton from './SpeechToTextButton';
 import { useLanguage } from '../../contexts/LanguageContext';
+
+const BlinkingCursor = () => (
+    <span className="animate-pulse" style={{ animationDuration: '1s' }}>|</span>
+);
 
 const MainControls = ({ formState, handleImageUpload, fileInputRef, handleGenerateClick, isLoading, uploadedImage, availableSubStyles, onTakePhotoClick, isApiKeySet }) => {
     const { t, language } = useLanguage();
@@ -22,6 +26,14 @@ const MainControls = ({ formState, handleImageUpload, fileInputRef, handleGenera
         provider, setProvider,
     } = formState;
     const [isListening, setIsListening] = useState(false);
+    const [interimTranscript, setInterimTranscript] = useState('');
+
+     useEffect(() => {
+        if (!isListening) {
+            setInterimTranscript('');
+        }
+    }, [isListening]);
+
 
     const isGenerationDisabled = (!uploadedImage && !customPrompt.trim()) || isLoading || !isApiKeySet;
     const generateButtonTooltip = isApiKeySet
@@ -47,6 +59,7 @@ const MainControls = ({ formState, handleImageUpload, fileInputRef, handleGenera
     };
     
     const isGrouped = availableSubStyles.length > 0 && 'subStyles' in availableSubStyles[0];
+    const displayedPrompt = customPrompt + interimTranscript;
 
     return (
         <div className="bg-black rounded-xl p-2 sm:p-4 flex flex-col gap-4 flex-grow">
@@ -147,16 +160,22 @@ const MainControls = ({ formState, handleImageUpload, fileInputRef, handleGenera
                 <div className="relative w-full flex-grow h-full">
                     <textarea 
                         placeholder={t('customPromptPlaceholder')} 
-                        value={customPrompt} 
-                        onChange={e => setCustomPrompt(e.target.value)} 
+                        value={displayedPrompt} 
+                        onChange={e => {
+                            if (!isListening) {
+                                setCustomPrompt(e.target.value);
+                            }
+                        }}
                         className="bg-neutral-800 border border-neutral-700 rounded-md p-2 pr-12 text-white w-full h-full focus:outline-none focus:ring-2 focus:ring-amber-500"
                     />
+                    {isListening && <div className="absolute inset-0 p-2 pr-12 pointer-events-none text-white/50">{customPrompt}<span className="text-white">{interimTranscript}</span><BlinkingCursor/></div>}
                     <div className="absolute top-2 right-2">
                         <SpeechToTextButton 
                             isListening={isListening}
                             onListeningChange={setIsListening}
-                            onTranscript={(transcript) => {
-                                setCustomPrompt(prev => (prev ? prev + ' ' : '') + transcript);
+                            onInterimTranscript={setInterimTranscript}
+                            onFinalTranscript={(transcript) => {
+                                setCustomPrompt(prev => (prev ? prev.trim() + ' ' : '') + transcript);
                             }}
                             targetLang={language === 'en' ? 'en-US' : 'fr-FR'}
                         />
