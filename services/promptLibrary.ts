@@ -20,293 +20,293 @@ const PROMPT_DATABASE: Record<string, Record<string, any>> = {
     'militaire': {
         'vehicule_blinde': {
             "scene": [
-                "Scène : Véhicule blindé MRAP en position de surveillance dans une rue urbaine dévastée au crépuscule. L'officier au premier plan, une représentation fidèle de la personne sur la photo, est en tenue de cérémonie impeccable, créant un contraste saisissant.",
-                "Un convoi de véhicules blindés traverse un paysage désertique aride. L'officier, fidèle à la photo, est debout dans la tourelle du véhicule de tête, observant les environs avec des jumelles.",
-                "Maintenance d'un véhicule blindé dans un hangar faiblement éclairé. L'officier, fidèle à la photo, supervise l'opération, discutant avec un mécanicien, le visage taché de graisse."
+                "Contraste saisissant au crépuscule : un véhicule blindé MRAP monte la garde dans une rue dévastée. Devant, le sujet (officier), représentation fidèle de la photo, se tient dans un uniforme de cérémonie impeccable, son calme tranchant avec le chaos environnant.",
+                "Un instant capturé dans le désert aride : un convoi de blindés soulève un nuage de poussière dorée. Le sujet, fidèle à la photo, se tient dans la tourelle du véhicule de tête, le regard fixé sur l'horizon à travers des jumelles.",
+                "Gros plan sur les mains gantées et couvertes de graisse d'un mécanicien resserrant un boulon sur le moteur d'un blindé. En arrière-plan, dans la lumière crue du hangar, le sujet (officier), fidèle à la photo, observe la scène, une expression de confiance sur son visage fatigué."
             ]
         },
         'patrouille': {
             "scene": [
-                "Une équipe de feu de 4 hommes en patrouille dans une forêt tempérée dense au crépuscule. L'homme de tête, fidèle à la photo, est agenouillé, vérifiant une carte papier.",
-                "Patrouille à pied dans un village de montagne enneigé. Le chef de patrouille, fidèle à la photo, interagit avec un ancien du village.",
-                "Patrouille motorisée dans le désert. Le soldat, fidèle à la photo, est aux commandes de la mitrailleuse montée sur le véhicule, scrutant l'horizon."
+                "Un instant de silence dans une forêt dense au crépuscule. L'homme de tête (le sujet), agenouillé, trace une route du doigt sur une carte papier. La lumière filtrant à travers les arbres dessine des motifs de camouflage sur son visage concentré.",
+                "Dans un village de montagne enneigé, le chef de patrouille (le sujet) retire son gant pour serrer la main d'un ancien du village. Un geste de respect au milieu du froid glacial, la vapeur de leur souffle se mêlant dans l'air.",
+                "La caméra, fixée à l'intérieur d'un véhicule de patrouille, tremble sur une route désertique. Le sujet, aux commandes de la mitrailleuse, balaie l'horizon, ses yeux plissés pour se protéger du soleil et du sable."
             ]
         },
         'uniforme_parade': {
             "scene": [
-                "Un unique officier de haut rang, fidèle à la photo, dans un uniforme de cérémonie impeccable, se tenant au garde-à-vous dans un hall militaire formel devant un grand drapeau.",
-                "Portrait en buste d'un officier, fidèle à la photo, avec une rangée complète de médailles sur la poitrine. L'éclairage est doux et formel, style portrait officiel.",
-                "L'officier, fidèle à la photo, passe en revue les troupes lors d'une cérémonie en extérieur, son expression sérieuse et confiante."
+                "Dans un hall militaire imposant, un officier de haut rang (le sujet) se tient au garde-à-vous, seul. La lumière d'une haute fenêtre se reflète sur ses médailles et le sol en marbre poli, créant une atmosphère de solennité et de solitude du commandement.",
+                "Portrait serré, presque intime. La caméra se concentre sur la rangée de médailles sur la poitrine de l'officier (le sujet). L'éclairage de studio, doux et formel, révèle chaque détail de l'uniforme et la détermination tranquille dans son regard.",
+                "Le sujet passe les troupes en revue. La caméra, placée derrière les soldats au garde-à-vous, se concentre sur son visage concentré alors qu'il marche, son regard évaluant chaque homme."
             ]
         },
         'base_operationnelle_avancee': {
             "scene": [
-                "Un membre du personnel, fidèle à la photo, guide un avion cargo Cessna Caravan sur un aérodrome militaire improvisé au lever du soleil, la poussière en suspension.",
-                "À l'intérieur du centre d'opérations tactiques (TOC), l'officier, fidèle à la photo, est penché sur une carte, planifiant une mission avec son équipe.",
-                "Moment de repos sur la base. Le soldat, fidèle à la photo, est assis sur une caisse de munitions, lisant une lettre de chez lui."
+                "Au lever du soleil, la silhouette du sujet se dessine dans le nuage de poussière soulevé par les hélices d'un avion-cargo Cessna. Il guide l'appareil avec des gestes précis sur une piste d'atterrissage improvisée.",
+                "À l'intérieur du Centre d'Opérations Tactiques, la seule lumière provient des écrans et d'une carte holographique. Le sujet, le visage baigné d'une lueur bleue, est penché sur la carte, planifiant la prochaine mission avec son équipe.",
+                "Un rare moment de calme. Assis sur une caisse de munitions à l'extérieur de sa tente, le sujet lit une lettre froissée de chez lui. Le bruit de fond de la base est assourdi, l'instant est suspendu."
             ]
         },
         'salle_de_briefing': {
             "scene": [
-                "Un officier, fidèle à la photo, donne des instructions à une équipe d'opérateurs attentifs autour d'une table holographique affichant une carte 3D.",
-                "Dans une salle de briefing de la vieille école, l'officier, fidèle à la photo, pointe une carte murale avec une baguette, expliquant la stratégie.",
-                "Fin de briefing. L'officier, fidèle à la photo, serre la main de son commandant d'équipe, une expression de confiance mutuelle sur leurs visages."
+                "Le sujet, officier, se tient au-dessus d'une table holographique projetant une carte 3D du terrain. Ses mains bougent, manipulant l'hologramme, tandis qu'il donne ses ordres à une équipe d'opérateurs dont les visages concentrés sont illuminés par la lueur de la carte.",
+                "Ambiance 'vieille école' : le sujet pointe une carte murale jaunie avec une baguette, son ombre se projetant sur les plans. La salle est enfumée, la tension est palpable.",
+                "Fin du briefing. Le sujet serre fermement la main de son chef d'équipe. Un gros plan sur leurs mains et leurs regards échangés exprime une confiance mutuelle absolue avant la mission."
             ]
         },
         'checkpoint_sous_tension': {
             "scene": [
-                "Un soldat, fidèle à la photo, fait signe à un vieux pick-up d'avancer à un checkpoint improvisé sur une route désertique. La tension est palpable.",
-                "Nuit. Le soldat, fidèle à la photo, utilise une lampe de poche pour inspecter les papiers d'un conducteur, son coéquipier en couverture en arrière-plan.",
-                "Une tempête de sable s'approche. Le soldat, fidèle à la photo, plisse les yeux contre le vent, maintenant sa position au checkpoint."
+                "La chaleur déforme l'air sur une route désertique. Le sujet, soldat, fait signe à un vieux pick-up d'avancer vers le checkpoint. Sa main est posée, comme par inadvertance, sur son arme. La tension est visible dans son regard.",
+                "Nuit noire. Le faisceau de la lampe torche du sujet coupe l'obscurité, illuminant les papiers et le visage nerveux d'un conducteur. En arrière-plan, la silhouette de son coéquipier, prêt à intervenir.",
+                "Le vent d'une tempête de sable imminente fouette le checkpoint. Le sujet, le visage protégé par un shemagh, maintient sa position, une silhouette solitaire face aux éléments."
             ]
         },
         'feu_d_artillerie_nocturne': {
             "scene": [
-                "La lueur intense du départ d'un obus d'un obusier M777 illumine la scène. Un artilleur, fidèle à la photo, se bouche les oreilles juste après avoir tiré.",
-                "L'équipe d'artilleurs, dont l'un est fidèle à la photo, travaille en synchronisation pour charger le prochain obus dans l'obusier, sous la lumière blafarde de la lune.",
-                "Après le tir, l'artilleur, fidèle à la photo, observe la trajectoire de l'obus dans le ciel nocturne à travers des jumelles."
+                "L'explosion du départ d'obus d'un M777 illumine la nuit d'une lumière blanche et brutale, figeant la scène pour une fraction de seconde. Le sujet, artilleur, est surpris le corps contracté, se protégeant de l'onde de choc.",
+                "Dans un effort synchronisé, l'équipe charge le prochain obus. La caméra se concentre sur le visage en sueur du sujet, travaillant en parfaite harmonie avec ses camarades sous la faible lueur de la lune.",
+                "L'instant d'après le tir. Le sujet, à genoux, suit la trajectoire de l'obus dans le ciel nocturne à travers des jumelles, son souffle formant un nuage dans l'air froid."
             ]
         },
         'pilote_de_chasse_pre_vol': {
             "scene": [
-                "Un pilote de chasse, fidèle à la photo, marche vers son F-22 Raptor sur le tarmac au coucher du soleil, son casque de vol sous le bras, style 'Top Gun'.",
-                "Le pilote, fidèle à la photo, est dans le cockpit, effectuant les dernières vérifications avant le décollage. Son visage est illuminé par les écrans.",
-                "L'équipe au sol, dont un membre est fidèle à la photo, fait les derniers ajustements sur l'avion de chasse avant que le pilote ne monte à bord."
+                "Ambiance 'Top Gun' au coucher du soleil. La silhouette du sujet, pilote de chasse, se dessine alors qu'il marche sur le tarmac vers son F-22 Raptor. Il tient son casque sous le bras, le regard déjà fixé sur le ciel.",
+                "Vue depuis l'intérieur du cockpit. Le visage du sujet est illuminé par la myriade de lumières et d'écrans. Un gros plan sur sa main gantée actionnant un interrupteur, ultime vérification avant le décollage.",
+                "Au ras du sol, la caméra suit un membre de l'équipe au sol (le sujet) qui effectue une dernière inspection de l'avion, sa main glissant le long du fuselage froid du chasseur."
             ]
         },
         'medecin_de_combat_medevac': {
             "scene": [
-                "Un hélicoptère MEDEVAC atterrit, soulevant de la poussière. Un médecin de combat, fidèle à la photo, se précipite vers un soldat blessé sur une civière.",
-                "À l'intérieur de l'hélicoptère en vol, le médecin de combat, fidèle à la photo, administre les premiers soins à un soldat blessé, son visage concentré malgré le chaos.",
-                "Le médecin de combat, fidèle à la photo, réconforte un soldat blessé en attendant l'évacuation, lui tenant la main."
+                "Dans le chaos d'un atterrissage MEDEVAC qui soulève un tourbillon de poussière, le sujet, médecin de combat, court vers un soldat blessé sur une civière. Son visage exprime une urgence et une concentration absolues.",
+                "À l'intérieur de l'hélicoptère vibrant, le médecin (le sujet) travaille frénétiquement pour stabiliser un soldat blessé. La lumière rouge de l'intérieur baigne la scène, accentuant le drame.",
+                "Avant l'évacuation, un moment de compassion pure. Le sujet tient la main d'un soldat blessé, lui parlant doucement pour le rassurer, un îlot de calme au milieu de la guerre."
             ]
         },
         'combat_urbain_cqb': {
             "scene": [
-                "Un soldat, fidèle à la photo, se déplace prudemment le long d'un mur dans un bâtiment en ruine, son fusil d'assaut prêt à faire feu.",
-                "L'équipe d'assaut enfonce une porte. Le soldat de tête, fidèle à la photo, entre en premier dans la pièce sombre, éclairée uniquement par sa lampe tactique.",
-                "Sur un toit, le soldat, fidèle à la photo, fournit une couverture à son équipe en contrebas, tirant sur des cibles ennemies."
+                "Le sujet se déplace en silence le long d'un mur criblé de balles dans un bâtiment en ruine. La lumière du jour filtre à travers les trous, créant des faisceaux de poussière dansants. Son fusil est épaulé, prêt.",
+                "L'instant de la brèche. La porte explose. Le sujet, en tête de l'équipe d'assaut, plonge dans la pièce sombre, le faisceau de sa lampe tactique coupant l'obscurité comme une lame.",
+                "Sur un toit surplombant la ville, le sujet fournit un feu de couverture. Des douilles vides sont éjectées de son arme dans un mouvement ralenti, brillant dans la lumière du soleil."
             ]
         },
         'garde_d_honneur_ceremoniale': {
             "scene": [
-                "Un soldat de la garde d'honneur, fidèle à la photo, se tient au garde-à-vous impeccable devant un monument national, son expression stoïque.",
-                "La garde d'honneur effectue un salut au fusil parfaitement synchronisé lors d'une cérémonie. L'un des gardes est une représentation fidèle de la personne sur la photo.",
-                "Gros plan sur le visage concentré du garde, fidèle à la photo, pendant qu'il effectue sa ronde au Tombeau du Soldat Inconnu."
+                "Immobilité parfaite. La caméra fait un lent travelling sur le visage stoïque du sujet, garde d'honneur devant un monument national. Seul un cillement trahit sa concentration intense.",
+                "Un salut au fusil parfaitement synchronisé. La caméra capture le reflet du ciel sur les baïonnettes alignées. Le sujet est un élément d'une machine cérémoniale sans faille.",
+                "Gros plan sur la botte parfaitement cirée du sujet qui frappe le sol avec une précision millimétrée lors de sa ronde au Tombeau du Soldat Inconnu. Le son claque dans le silence respectueux."
             ]
         },
         'vie_en_caserne': {
             "scene": [
-                "Un soldat, fidèle à la photo, est assis sur son lit dans une chambrée, nettoyant méticuleusement son fusil.",
-                "Moment de camaraderie. Le soldat, fidèle à la photo, joue aux cartes avec ses camarades dans la salle commune de la caserne.",
-                "Préparation pour l'inspection. Le soldat, fidèle à la photo, fait son lit au carré avec une précision militaire."
+                "Dans la lumière tamisée d'une chambrée, le sujet est assis sur son lit, nettoyant méticuleusement son fusil. Chaque geste est précis, presque méditatif. C'est un rituel personnel.",
+                "Un éclat de rire suspendu. Le sujet est surpris au milieu d'une partie de cartes avec ses camarades, un rare moment de détente et de camaraderie franche.",
+                "La tension de l'inspection. Le sujet se tient au garde-à-vous à côté de son lit fait au carré, son regard fixé droit devant, attendant le passage de l'officier."
             ]
         },
         'maintenance_de_blinde_hangar': {
             "scene": [
-                "Un mécanicien, fidèle à la photo, en combinaison de travail graisseuse, travaille sur le moteur exposé d'un char M1 Abrams dans un grand hangar de maintenance.",
-                "L'équipe de maintenance, dont un membre est fidèle à la photo, utilise une grue pour soulever la tourelle d'un char pour des réparations.",
-                "Le mécanicien, fidèle à la photo, effectue des soudures sur le blindage d'un véhicule, des étincelles jaillissant autour de lui."
+                "Le visage du sujet, mécanicien, est maculé de graisse. Il est penché sur le moteur exposé d'un char M1 Abrams, concentré, la lumière d'une baladeuse jetant de longues ombres dans le hangar immense.",
+                "Sous le ventre d'un char, le sujet est en train de souder. Des gerbes d'étincelles illuminent son masque et la fosse de maintenance, créant une scène industrielle et brute.",
+                "L'équipe de maintenance utilise une grue pour soulever la tourelle massive d'un char. Le sujet guide l'opération avec des signaux manuels, criant des ordres pour couvrir le bruit des machines."
             ]
         },
         'operations_en_milieu_arctique': {
             "scene": [
-                "Un soldat, fidèle à la photo, en équipement de camouflage d'hiver, regarde à travers des jumelles dans un paysage enneigé et venteux.",
-                "L'équipe progresse à skis, tirant des traîneaux de matériel à travers une forêt enneigée. L'un des soldats est une représentation fidèle de la personne sur la photo.",
-                "Le soldat, fidèle à la photo, construit un abri de neige (quinzhee) pour se protéger d'une tempête de blizzard imminente."
+                "Le sujet, vêtu d'un camouflage d'hiver, est allongé dans la neige, presque invisible. Seul le nuage de sa respiration trahit sa présence alors qu'il observe l'horizon à travers des jumelles.",
+                "L'effort silencieux. Le sujet, à skis, tire un traîneau lourd de matériel à travers une forêt enneigée. La seule bande son est le crissement de la neige et sa propre respiration saccadée.",
+                "Dans l'urgence d'une tempête de blizzard imminente, le sujet creuse frénétiquement la neige pour construire un abri de fortune, le vent fouettant son visage."
             ]
         },
         'guerre_en_jungle': {
             "scene": [
-                "Un soldat, fidèle à la photo, traverse une rivière à gué, de l'eau jusqu'à la taille, son fusil tenu haut, dans une jungle dense et humide.",
-                "Le soldat, fidèle à la photo, utilise une machette pour se frayer un chemin à travers une végétation dense, son visage peint en camouflage.",
-                "L'équipe fait une pause, en alerte, dans une clairière de la jungle. Le soldat, fidèle à la photo, est à l'écoute des bruits de la jungle."
+                "Le sujet traverse une rivière boueuse, de l'eau jusqu'à la taille, son fusil tenu au-dessus de sa tête. L'humidité est palpable, chaque goutte d'eau sur son visage est visible.",
+                "Un rayon de soleil perce la canopée dense, illuminant le sujet alors qu'il se fraie un chemin à la machette. Son visage, peint en camouflage, est un masque de concentration.",
+                "Pendant une pause, le sujet est accroupi, parfaitement immobile, son regard balayant la jungle. Il ne fait qu'un avec l'environnement, à l'écoute du moindre bruit suspect."
             ]
         },
         'operateur_de_drone_gcs': {
             "scene": [
-                "Un opérateur de drone, fidèle à la photo, est assis devant un grand écran affichant la vue d'un drone Predator dans une station de contrôle au sol sombre.",
-                "Le visage de l'opérateur, fidèle à la photo, est illuminé par la lueur des moniteurs, son expression concentrée alors qu'il pilote le drone avec un joystick.",
-                "L'équipe de la station de contrôle, dont un membre est fidèle à la photo, observe une cible sur l'écran principal, attendant l'ordre de faire feu."
+                "Dans l'obscurité d'une station de contrôle au sol, le visage du sujet est la seule chose visible, illuminé par la lueur froide de l'écran affichant la vue d'un drone Predator.",
+                "Gros plan sur la main du sujet qui serre le joystick. Son pouce survole le bouton de tir. Son expression est un mélange de concentration intense et de distance émotionnelle.",
+                "L'instant de la décision. Le sujet et son coéquipier échangent un regard silencieux devant l'écran principal, attendant la confirmation de l'ordre de frappe."
             ]
         },
     },
     'commando': {
         'sniper': {
             "scene": [
-                "Une équipe de sniper commando de deux hommes en tenue ghillie est en position de tir dissimulée sur le toit d'un bâtiment en ruine. Le tireur, fidèle à la photo, regarde à travers la lunette d'un fusil M110 SASS.",
-                "Infiltration nocturne. L'équipe de sniper, dont le chef est fidèle à la photo, progresse furtivement à travers une forêt dense, sous la lueur de la lune.",
-                "Dans une planque sécurisée, l'opérateur, fidèle à la photo, nettoie et calibre méticuleusement son fusil de précision, entouré de cartes et d'équipement."
+                "Immobile depuis des heures. Le sujet, tireur d'élite, est camouflé sur le toit d'un bâtiment en ruine. La caméra se concentre sur son œil dans la lunette du fusil M110 SASS, un monde de détails dans cette petite fenêtre.",
+                "Infiltration nocturne. Le sujet rampe silencieusement dans une forêt dense. Une branche craque au loin. Il se fige, son souffle suspendu, une silhouette à peine visible sous la lueur de la lune.",
+                "Le rituel du nettoyage. Dans une planque sécurisée, à la lueur d'une seule ampoule, le sujet démonte et nettoie méticuleusement son fusil de précision. Chaque pièce est un objet sacré."
             ]
         },
         'embarquement_helicoptere': {
             "scene": [
-                "Extraction nocturne par corde lisse depuis un hélicoptère MH-60 Black Hawk en vol stationnaire. Un commando, fidèle à la photo, est sur la corde, à mi-hauteur.",
-                "Embarquement rapide dans un hélicoptère sur le point de décoller d'une zone chaude. L'opérateur, fidèle à la photo, aide un coéquipier à monter à bord.",
-                "Assis sur le bord de la soute ouverte d'un Black Hawk en vol, les pieds dans le vide, le commando, fidèle à la photo, observe le paysage défiler en dessous."
+                "Extraction par corde lisse. Le sujet descend de l'hélicoptère Black Hawk en vol stationnaire. Pour un instant, il est suspendu entre le ciel et la terre, une silhouette se découpant sur la ville nocturne.",
+                "Zone chaude. Le sujet, déjà à bord, se penche pour attraper la main de son coéquipier et le hisser à l'intérieur de l'hélicoptère qui décolle déjà, les balles traçantes illuminant la nuit.",
+                "Les pieds dans le vide. Assis sur le bord de la soute ouverte d'un Black Hawk en vol, le sujet observe le paysage défiler, un rare moment de calme avant la prochaine action."
             ]
         },
         'infiltration_plage': {
             "scene": [
-                "Une équipe de nageurs de combat sort des vagues sur une plage sombre. Le chef d'équipe, fidèle à la photo, donne des signaux manuels à ses hommes.",
-                "Le commando, fidèle à la photo, est à moitié immergé dans l'eau, utilisant des jumelles pour observer la côte avant de débarquer.",
-                "Après l'atterrissage, l'équipe se cache derrière des rochers. L'opérateur, fidèle à la photo, consulte une carte étanche à la lueur d'une lampe rouge."
+                "Un instant capté au ras de l'eau : le visage dégoulinant du sujet émerge du ressac nocturne. Le silence est seulement brisé par le clapotis de l'eau sur son équipement. Son regard est fixé sur la côte.",
+                "À moitié immergé, le sujet observe la côte à travers des jumelles. Dans les lentilles, on devine la silhouette d'une sentinelle ennemie. Il reste parfaitement immobile.",
+                "Caché derrière des rochers après le débarquement, le sujet déplie une carte étanche. La seule lumière est la lueur rouge de sa lampe, qui illumine son visage concentré et les gouttes d'eau sur la carte."
             ]
         },
         'plongee_de_combat': {
             "scene": [
-                "Deux plongeurs de combat émergent silencieusement d'une eau noire près des piliers d'un quai industriel. Le plongeur de tête, fidèle à la photo, retire son recycleur.",
-                "Sous l'eau, le plongeur, fidèle à la photo, utilise un scooter sous-marin pour se déplacer rapidement vers sa cible.",
-                "Le plongeur, fidèle à la photo, place une charge de démolition sur la coque d'un navire ennemi, travaillant dans l'obscurité quasi totale."
+                "Deux têtes émergent sans un bruit de l'eau noire d'un port industriel. Le sujet retire son recycleur, son regard balayant immédiatement les quais. Pas un son, pas une éclaboussure.",
+                "Sous l'eau, le faisceau du scooter sous-marin du sujet coupe l'obscurité trouble. Des silhouettes de poissons passent rapidement, effrayés par cette présence silencieuse et rapide.",
+                "Dans l'obscurité quasi totale sous la coque d'un navire, le 'clic' magnétique de la charge de démolition que le sujet vient de poser est le seul son audible."
             ]
         },
         'raid_en_zodiac_nocturne': {
             "scene": [
-                "Un Zodiac noir file à toute vitesse sur une mer agitée. L'opérateur à la proue, fidèle à la photo, scrute l'horizon avec des jumelles de vision nocturne.",
-                "L'équipe de commandos aborde un autre navire depuis leur Zodiac en mouvement. L'un des opérateurs, fidèle à la photo, est le premier à monter à bord.",
-                "Moteur coupé, le Zodiac dérive silencieusement vers une cible. L'opérateur, fidèle à la photo, prépare son équipement pour l'assaut."
+                "Le Zodiac fend les vagues à toute vitesse. À la proue, le sujet est une silhouette tendue, fouettée par les embruns, scrutant l'horizon à travers des jumelles de vision nocturne.",
+                "L'instant de l'abordage. Le sujet saute du Zodiac en mouvement sur l'échelle d'un navire plus grand. C'est un ballet de force et de précision au-dessus des vagues sombres.",
+                "Le moteur du Zodiac est coupé. L'embarcation dérive en silence vers sa cible. Le sujet vérifie une dernière fois son arme, le bruit métallique du chargeur qui s'enclenche brisant le silence."
             ]
         },
         'liberation_d_otage_cqb': {
             "scene": [
-                "L'opérateur en tête de colonne ('point man'), fidèle à la photo, entre dans une pièce après que la porte ait été enfoncée, son fusil HK416 à canon court pointé.",
-                "Le commando, fidèle à la photo, escorte un otage libéré à travers un couloir, le protégeant de son corps.",
-                "L'équipe se prépare à entrer. L'opérateur, fidèle à la photo, place une charge de brèche sur une porte."
+                "La porte explose en un nuage de débris. Le sujet, en tête, plonge dans la pièce, son fusil HK416 balayant chaque coin en une fraction de seconde. Le faisceau de sa lampe danse dans la poussière.",
+                "Le sujet enveloppe un otage terrifié de son corps, le guidant à travers un couloir tandis que des tirs éclatent derrière eux. Son visage est un masque de concentration protectrice.",
+                "Gros plan sur les mains du sujet qui pose délicatement une charge de brèche sur une porte. Ses doigts bougent avec une précision chirurgicale, un calme mortel avant la tempête."
             ]
         },
         'saut_operationnel_halo': {
             "scene": [
-                "Un opérateur commando en chute libre, fidèle à la photo, à très haute altitude, au-dessus d'une mer de nuages illuminée par la lune.",
-                "Juste avant le saut, l'opérateur, fidèle à la photo, se tient sur la rampe ouverte d'un C-130, attendant le signal vert.",
-                "Sous voile, après avoir ouvert son parachute, l'opérateur, fidèle à la photo, navigue vers sa zone d'atterrissage, observant le sol en contrebas."
+                "Chute libre à 30 000 pieds. Le sujet est un point minuscule au-dessus d'une mer de nuages illuminée par la lune. Le seul son est le hurlement du vent. C'est un moment de solitude absolue et de liberté intense.",
+                "Sur la rampe ouverte d'un C-130, le sujet se tient au bord du vide, le vent glacial fouettant son visage. Il attend le signal vert, son regard fixé sur l'obscurité en dessous.",
+                "Sous voile, le silence est roi. Après la violence de la chute libre, le sujet navigue calmement vers sa zone d'atterrissage, une ombre planant au-dessus d'un paysage endormi."
             ]
         },
         'extraction_vip': {
             "scene": [
-                "Un opérateur commando en civil, fidèle à la photo, escorte fermement un VIP à travers une foule chaotique dans une rue d'une ville du Moyen-Orient.",
-                "L'opérateur, fidèle à la photo, pousse le VIP à l'intérieur d'un véhicule blindé alors que des tirs éclatent en arrière-plan.",
-                "Sur un toit, l'opérateur, fidèle à la photo, fournit une couverture avec un fusil de précision pendant que le VIP est extrait par hélicoptère."
+                "En civil, le sujet se fraie un chemin à travers une foule hostile dans un marché bondé, son bras fermement enroulé autour d'un VIP. Son regard balaye constamment la foule, cherchant la menace.",
+                "Des tirs éclatent. Le sujet pousse violemment le VIP à l'intérieur d'un véhicule blindé, se retournant pour riposter avant même que la porte ne soit fermée.",
+                "Sur un toit, le sujet est allongé, l'œil dans la lunette de son fusil de précision. Il couvre l'extraction du VIP par hélicoptère en contrebas, son doigt effleurant la détente."
             ]
         },
         'sabotage_d_infrastructure': {
             "scene": [
-                "Un commando, fidèle à la photo, fixe des charges explosives C4 sur la poutre structurelle d'un pont ferroviaire, à la lueur d'une lampe frontale rouge.",
-                "L'opérateur, fidèle à la photo, utilise un ordinateur portable pour pirater le système de contrôle d'une antenne radar.",
-                "Depuis un poste d'observation éloigné, l'opérateur, fidèle à la photo, s'apprête à déclencher les explosifs, regardant la cible à travers des jumelles."
+                "Suspendu sous un pont ferroviaire dans l'obscurité, le sujet fixe des charges de C4 sur une poutre en acier. La seule lumière est celle, rouge et discrète, de sa lampe frontale.",
+                "Dans une salle de contrôle, le sujet tape frénétiquement sur un ordinateur portable, piratant le système d'une antenne radar. Des lignes de code défilent sur l'écran et se reflètent dans ses lunettes.",
+                "À des kilomètres de distance, depuis un poste d'observation, le sujet regarde sa cible à travers des jumelles. Sa main se lève, prête à appuyer sur le détonateur."
             ]
         },
         'poste_d_observation': {
             "scene": [
-                "Un observateur, fidèle à la photo, visage peint en camouflage, regarde à travers des jumelles à très longue portée depuis une position dissimulée dans la végétation.",
-                "Dans un poste d'observation urbain ('nid de corbeau'), l'opérateur, fidèle à la photo, dessine des croquis de la zone cible dans un carnet.",
-                "L'opérateur, fidèle à la photo, utilise un désignateur laser pour marquer une cible pour une frappe aérienne, son visage illuminé par la lueur verte de l'appareil."
+                "Parfaitement camouflé dans la végétation, le sujet est immobile depuis des heures. La caméra fait un gros plan sur son œil qui regarde à travers des jumelles à très longue portée. Il ne fait qu'un avec la nature.",
+                "Dans un 'nid de corbeau' urbain, un appartement abandonné, le sujet dessine méticuleusement la disposition des gardes dans un carnet. C'est un travail de patience et de précision.",
+                "La lueur verte du désignateur laser illumine le visage concentré du sujet alors qu'il marque une cible pour une frappe aérienne. Un pouvoir immense contenu dans un petit point de lumière."
             ]
         },
         'assaut_vertical_rappel': {
             "scene": [
-                "Une équipe de commandos descend en rappel sur la façade d'un gratte-ciel en verre. L'un d'eux, fidèle à la photo, est en position 'australienne' (face au sol).",
-                "L'opérateur, fidèle à la photo, se prépare à descendre, vérifiant son harnais et sa corde au bord du toit d'un bâtiment.",
-                "Le commando, fidèle à la photo, se balance pour passer à travers une fenêtre en plein milieu de sa descente en rappel."
+                "Le sujet descend en rappel 'à l'australienne' (face au sol) le long d'une façade de gratte-ciel en verre, la ville se reflétant sous lui. C'est une danse verticale défiant la gravité.",
+                "Au bord du toit, le sujet vérifie une dernière fois son harnais et sa corde, jetant un regard dans le vide avant de basculer en arrière dans la nuit.",
+                "À mi-descente, le sujet se balance avec force pour percuter une fenêtre, entrant dans le bâtiment dans une pluie de verre."
             ]
         },
         'guerre_en_tunnel': {
             "scene": [
-                "Le commando de tête, fidèle à la photo, progresse lentement dans un tunnel souterrain étroit et humide, son fusil à canon court balayant les angles.",
-                "L'opérateur, fidèle à la photo, utilise un robot de reconnaissance pour explorer le tunnel avant d'avancer.",
-                "L'équipe fait une pause à une intersection de tunnels. L'opérateur, fidèle à la photo, consulte un plan sur une tablette tactique."
+                "Le faisceau de la lampe tactique du sujet coupe l'obscurité d'un tunnel souterrain étroit et suintant. Chaque goutte d'eau qui tombe résonne dans le silence tendu.",
+                "Le sujet déploie un petit robot de reconnaissance à roues qui s'enfonce dans le tunnel. Il observe la progression du robot sur une tablette attachée à son poignet.",
+                "À une intersection de tunnels, l'équipe fait une pause. Le sujet consulte un plan sur une tablette, la lumière de l'écran révélant les visages fatigués et tendus de ses coéquipiers."
             ]
         },
         'capture_de_cible_hvt': {
             "scene": [
-                "Un commando, fidèle à la photo, extrait de force une cible de grande valeur (HVT) d'une berline noire qui a été bloquée dans une intersection.",
-                "L'opérateur, fidèle à la photo, menotte la cible au sol, pendant que ses coéquipiers assurent la sécurité.",
-                "L'équipe exfiltre la cible vers un hélicoptère qui attend. L'opérateur, fidèle à la photo, tient fermement le bras de la HVT."
+                "L'instant du chaos. Le sujet extrait violemment une cible de grande valeur (HVT) d'une berline noire après un accident orchestré. Les cris et le bruit de tôle froissée remplissent l'air.",
+                "Le sujet maintient fermement la cible au sol, passant rapidement des menottes en plastique. Son regard ne quitte jamais les alentours, évaluant les menaces pendant que son équipe sécurise la zone.",
+                "Pendant l'exfiltration vers l'hélicoptère, le sujet ne lâche pas le bras de la HVT, le traînant presque. C'est une course contre la montre."
             ]
         },
         'demolition_sous_marine': {
             "scene": [
-                "Un plongeur de combat, fidèle à la photo, place une mine magnétique (mine limpet) sur la coque d'un navire. Il porte un recycleur à circuit fermé.",
-                "L'équipe de démolition, dont un membre est fidèle à la photo, travaille ensemble pour couper un câble sous-marin avec des outils spécialisés.",
-                "Le plongeur, fidèle à la photo, active le détonateur à retardement de la charge avant de s'éloigner rapidement."
+                "Dans une eau trouble, le sujet, plongeur de combat, pose une mine magnétique sur la coque d'un navire. Les bulles de son recycleur sont la seule indication de sa présence.",
+                "En utilisant des outils hydrauliques qui semblent massifs sous l'eau, l'équipe coupe un câble de communication sous-marin. L'effort est visible malgré la lenteur des mouvements.",
+                "Gros plan sur la main gantée du sujet qui tourne le minuteur d'un détonateur. Il jette un dernier regard à la charge avant de s'éloigner d'un coup de palmes puissant."
             ]
         },
         'preparation_clandestine': {
             "scene": [
-                "Un opérateur, fidèle à la photo, est assis sur un lit dans une chambre d'hôtel miteuse, assemblant et vérifiant son fusil à la lueur d'une seule lampe.",
-                "L'opérateur, fidèle à la photo, étudie une carte de la ville, planifiant son itinéraire d'infiltration.",
-                "En civil, l'opérateur, fidèle à la photo, est assis à la terrasse d'un café, observant discrètement sa cible de l'autre côté de la rue."
+                "Dans la lumière jaunâtre d'une chambre d'hôtel miteuse, le sujet est assis sur le lit, assemblant son fusil avec une efficacité froide et silencieuse. Chaque pièce s'emboîte avec un clic métallique.",
+                "Le sujet, en civil, est assis à la terrasse d'un café. Derrière ses lunettes de soleil, son regard n'est pas sur son café, mais sur le bâtiment de l'autre côté de la rue, sa cible.",
+                "Étendu sur le sol de sa chambre, le sujet étudie une carte de la ville, traçant des itinéraires avec un marqueur rouge. Son visage est un masque de concentration absolue."
             ]
         },
     },
     'navy_seal': {
         'debarquement_amphibie': {
             "scene": [
-                "Une équipe de Navy SEALs émerge silencieusement des vagues sur une plage sombre. L'opérateur de tête, fidèle à la photo, est à genoux dans le ressac, scrutant la plage avec des lunettes de vision nocturne.",
-                "Le débarquement se fait depuis un bateau pneumatique à coque rigide (RHIB) qui s'échoue sur la plage. L'opérateur, fidèle à la photo, est le premier à sauter et à sécuriser la zone.",
-                "Après le débarquement, l'équipe se regroupe derrière la dune de sable. L'opérateur, fidèle à la photo, communique par radio avec le commandement."
+                "Émergeant des vagues comme des fantômes, l'équipe prend position. Le sujet, à genoux dans le ressac, lève ses lunettes de vision nocturne, révélant un regard intense qui balaie la plage sombre.",
+                "Le bateau pneumatique heurte le sable avec un bruit sourd. Avant même qu'il ne s'arrête, le sujet saute dans l'eau jusqu'à la taille, son arme déjà en position, sécurisant la zone de débarquement en quelques secondes.",
+                "Regroupés derrière une dune, à l'abri des regards, le sujet chuchote dans sa radio. Sa voix est calme, contrastant avec le bruit des vagues et le sifflement du vent."
             ]
         },
         'plongee_combat': {
             "scene": [
-                "Opération sous-marine nocturne. Le plongeur de combat, fidèle à la photo, portant une cagoule de plongée et un recycleur, fixe une mine magnétique sur la coque d'un sous-marin ennemi. La scène est éclairée par la lueur verte de sa montre tactique.",
-                "Infiltration via un mini-sous-marin (SDV). Le leader de l'équipe, fidèle à la photo, se prépare à quitter le véhicule pour approcher une installation portuaire. Lumière bleue faible provenant du cockpit.",
-                "Le plongeur, fidèle à la photo, navigue à l'aide d'une boussole sous-marine à travers une forêt de piliers de quai, son fusil d'assaut sous-marin en main."
+                "Sous l'eau, dans une obscurité presque totale, le sujet pose une mine magnétique sur la coque d'un sous-marin. La seule lumière est la lueur verte de sa montre tactique, qui illumine ses mains et la surface métallique.",
+                "L'écoutille du mini-sous-marin (SDV) s'ouvre, libérant une colonne de bulles. Le sujet, en tête, se glisse à l'extérieur, une silhouette se découpant dans la faible lumière bleue du cockpit.",
+                "Naviguant dans une forêt de piliers de quai couverts d'algues, le sujet se déplace avec une grâce prédatrice, son fusil d'assaut sous-marin prêt à faire feu."
             ]
         },
         'sabotage_portuaire': {
             "scene": [
-                "Le SEAL, fidèle à la photo, vient d'émerger de l'eau sombre et huileuse le long d'un quai en béton et place une charge de démolition sur un pilier.",
-                "Depuis un point d'observation sur un toit, l'opérateur, fidèle à la photo, utilise des jumelles pour surveiller les gardes du port avant l'opération.",
-                "Le SEAL, fidèle à la photo, se déplace furtivement dans l'ombre des conteneurs d'expédition dans une zone portuaire animée."
+                "Le sujet émerge de l'eau huileuse le long d'un quai, sans une éclaboussure. Des gouttes d'eau perlent sur son visage alors qu'il place une charge de démolition contre un pilier en béton.",
+                "Caché dans l'ombre d'un conteneur, le sujet se déplace avec une furtivité féline à travers la zone portuaire. Les lumières des grues balaient la zone, mais il reste invisible.",
+                "Depuis un toit surplombant le port, le sujet observe les rondes des gardes à travers des jumelles. Il est une statue immobile, attendant le moment parfait pour agir."
             ]
         },
         'operations_urbaines_cotieres': {
             "scene": [
-                "L'équipe se déplace le long d'une ruelle étroite dans une ville côtière méditerranéenne. L'opérateur de tête, fidèle à la photo, se penche à un coin de rue, son fusil en position 'low ready'.",
-                "Surveillance depuis un appartement surplombant le port. Le SEAL, fidèle à la photo, utilise une lunette de détection pour observer un navire cible.",
-                "L'équipe effectue une descente en rappel depuis un toit sur un balcon, dans une ville côtière. L'un des opérateurs est une représentation fidèle de la personne sur la photo."
+                "Le sujet, en tête de son équipe, se penche au coin d'une ruelle étroite dans une ville méditerranéenne. Il tient son fusil en position 'low ready', prêt à engager la menace à tout moment.",
+                "Dans un appartement surplombant le port, le sujet observe un navire cible à travers une lunette de détection. Son œil ne cligne pas, sa concentration est totale.",
+                "L'équipe descend en rappel le long d'un mur pour atteindre un balcon. Le sujet est à mi-descente, une ombre se déplaçant rapidement sur la façade du bâtiment."
             ]
         },
         'abordage_de_navire': {
             "scene": [
-                "Un hélicoptère MH-60 Black Hawk est en vol stationnaire au-dessus du pont d'un cargo en pleine mer. Un SEAL, fidèle à la photo, descend en rappel (fast rope) sur le pont.",
-                "L'équipe d'abordage monte à bord du navire cible depuis un RHIB à l'aide d'une échelle de spéléologie. Le premier homme à monter, fidèle à la photo, sécurise le pont.",
-                "À l'intérieur du navire, l'équipe se déplace dans des couloirs étroits. L'opérateur de tête, fidèle à la photo, utilise un miroir d'angle pour vérifier les coins."
+                "Le sujet descend en rappel d'un hélicoptère Black Hawk sur le pont d'un cargo qui tangue en pleine mer. Il atterrit avec une agilité féline, immédiatement en position de combat.",
+                "Le sujet est le premier à atteindre le pont du navire cible depuis une échelle de spéléologie. Il se hisse par-dessus le bastingage, son arme déjà pointée vers l'avant.",
+                "À l'intérieur du navire, l'équipe progresse dans des couloirs étroits et métalliques. Le sujet utilise un miroir d'angle pour vérifier un coin, son visage un masque de tension contrôlée."
             ]
         },
         'infiltration_sous_marine_sdv': {
             "scene": [
-                "Deux plongeurs de combat, dont le leader est fidèle à la photo, émergent silencieusement de l'eau près d'une cible, la silhouette de leur mini-sous-marin (SDV) visible sous la surface.",
-                "À l'intérieur du SDV, le pilote, fidèle à la photo, navigue à travers des eaux dangereuses, son visage illuminé par les instruments.",
-                "L'équipe attache le SDV à la coque d'un navire plus grand pour une infiltration clandestine."
+                "Deux silhouettes émergent de l'eau, la forme de leur mini-sous-marin (SDV) à peine visible sous la surface. Le sujet, en tête, fait un signe de la main à son coéquipier : 'zone claire'.",
+                "À l'intérieur du cockpit exigu du SDV, le visage du sujet est illuminé par les instruments de navigation. Il pilote l'engin avec une précision millimétrique à travers des eaux dangereuses.",
+                "L'équipe attache son SDV à la coque d'un sous-marin ennemi. C'est une opération délicate, effectuée dans un silence presque total, uniquement perturbé par le bruit de leur propre respiration."
             ]
         },
         'extraction_helicoptere_en_mer': {
             "scene": [
-                "Un hélicoptère MH-60 Black Hawk effectue une extraction par SPIE. Une équipe de SEALs, dont l'un est fidèle à la photo, est attachée à la corde et est soulevée hors de l'eau.",
-                "Un SEAL, fidèle à la photo, est treuillé à bord de l'hélicoptère depuis la surface de l'océan.",
-                "L'équipe est extraite d'un sous-marin en surface par un hélicoptère. L'un des SEALs, fidèle à la photo, est le dernier à accrocher la corde."
+                "Une corde tombe du ciel. Le sujet et son équipe s'y accrochent. L'hélicoptère les arrache à l'eau dans une gerbe d'écume. Ils sont suspendus au-dessus de l'océan, une grappe humaine s'élevant vers la sécurité.",
+                "Le sujet est treuillé à bord de l'hélicoptère. L'eau s'écoule de son équipement alors qu'il est hissé, fatigué mais en sécurité.",
+                "Sur le pont d'un sous-marin en surface, le sujet est le dernier à s'accrocher à la corde de l'hélicoptère, jetant un dernier regard en arrière avant d'être soulevé dans les airs."
             ]
         },
         'reconnaissance_littorale': {
             "scene": [
-                "Un sniper SEAL, fidèle à la photo, est en position couchée dans les rochers surplombant une plage ennemie, observant la cible à travers la lunette de son fusil de précision.",
-                "Le SEAL, fidèle à la photo, utilise une caméra à longue portée pour photographier les défenses ennemies depuis une position d'observation dissimulée.",
-                "L'équipe de reconnaissance débarque discrètement d'un kayak sur une côte rocheuse pour une mission d'observation de 24 heures. L'un des SEALs est une représentation fidèle de la personne sur la photo."
+                "Allongé dans les rochers surplombant une plage, le sujet est un fantôme. Il observe sa cible à travers la lunette de son fusil de précision, son doigt effleurant la détente.",
+                "Le sujet utilise une caméra à longue portée pour photographier les défenses ennemies. Chaque clic de l'obturateur est un son assourdissant dans le silence de sa cachette.",
+                "Débarquant d'un kayak sur une côte rocheuse, le sujet et son équipe se fondent dans l'ombre. Leur mission d'observation de 24 heures ne fait que commencer."
             ]
         },
         'raid_nocturne_plateforme_petroliere': {
             "scene": [
-                "Un SEAL, fidèle à la photo, se déplace le long d'une passerelle métallique sur une plateforme pétrolière, son arme pointée, dans un dédale de tuyaux et de machines.",
-                "L'équipe monte à bord de la plateforme pétrolière depuis la mer, en grimpant sur l'un de ses piliers. L'opérateur de tête est une représentation fidèle de la personne sur la photo.",
-                "Sur l'héliport de la plateforme, le SEAL, fidèle à la photo, place des charges pour neutraliser un hélicoptère ennemi."
+                "Le sujet se déplace dans un labyrinthe de tuyaux et de passerelles métalliques sur une plateforme pétrolière. Chaque pas est calculé pour ne faire aucun bruit.",
+                "L'équipe grimpe le long d'un des piliers massifs de la plateforme, émergeant de la mer comme des créatures de la nuit. Le sujet est le premier à atteindre une passerelle.",
+                "Sur l'héliport de la plateforme, le sujet place des charges explosives sur un hélicoptère ennemi. Ses mouvements sont rapides et efficaces dans l'obscurité."
             ]
         },
         'tenue_ceremonie': {
             "scene": [
-                "Un officier Navy SEAL, fidèle à la photo, dans son uniforme de cérémonie 'Service Dress White' impeccable, debout sur le pont d'un navire de guerre.",
-                "Portrait formel d'un Navy SEAL décoré, fidèle à la photo, avec sa rangée complète de médailles, y compris le Trident des SEALs.",
-                "Le SEAL, fidèle à la photo, reçoit une médaille des mains d'un amiral lors d'une cérémonie officielle."
+                "Impeccable dans son uniforme 'Service Dress White', le sujet se tient sur le pont d'un navire de guerre, le vent faisant claquer le drapeau derrière lui. Son regard est fixé sur l'horizon.",
+                "Portrait formel. Le sujet nous fait face, sa poitrine couverte de médailles. Le Trident des SEALs est visible, un symbole de son appartenance à l'élite.",
+                "L'instant de la reconnaissance. Un amiral épingle une médaille sur l'uniforme du sujet. Son visage reste humble mais fier."
             ]
         },
     },

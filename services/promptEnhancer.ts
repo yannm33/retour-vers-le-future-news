@@ -27,8 +27,12 @@ import {
     LUXE_LIGHTING,
     LUXE_COMPOSITION,
     JEWELRY_SUBSTYLES,
-    PRODUCT_FOCUSED_SUBSTYLES
+    PRODUCT_FOCUSED_SUBSTYLES,
+    FASHION_CAMERA_ANGLES,
+    FASHION_LIGHTING_STYLES,
+    FASHION_ATMOSPHERES
 } from './photographerLibrary';
+import { classifyStyle } from '../lib/styleClassifier';
 
 
 export interface PhotoSettings {
@@ -175,9 +179,17 @@ export function getDynamicEnhancements(style: string, subStyle: string): string 
 
     // Fallback to generic enhancements if no specific ones were found, or for general styles.
     if (!specificEnhancementsFound || style === 'photos') {
-        enhancements.push(`Angle de caméra: ${selectRandom(CAMERA_ANGLES)}.`);
-        enhancements.push(`Style d'éclairage: ${selectRandom(LIGHTING_STYLES)}.`);
-        enhancements.push(`Atmosphère: ${selectRandom(ATMOSPHERES)}.`);
+        const category = classifyStyle(style);
+        
+        if (category === 'MODE') {
+            enhancements.push(`Angle de caméra: ${selectRandom(FASHION_CAMERA_ANGLES)}.`);
+            enhancements.push(`Style d'éclairage: ${selectRandom(FASHION_LIGHTING_STYLES)}.`);
+            enhancements.push(`Atmosphère: ${selectRandom(FASHION_ATMOSPHERES)}.`);
+        } else {
+            enhancements.push(`Angle de caméra: ${selectRandom(CAMERA_ANGLES)}.`);
+            enhancements.push(`Style d'éclairage: ${selectRandom(LIGHTING_STYLES)}.`);
+            enhancements.push(`Atmosphère: ${selectRandom(ATMOSPHERES)}.`);
+        }
     }
 
     return enhancements.filter(e => e).join('\n');
