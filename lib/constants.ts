@@ -53,3 +53,51 @@ export const LUTS = LUTS_LIBRARY;
 export const EFFECTS = [
     'Aucune', 'Sueur', 'Sueur et Poussière', 'Boue séchée (éclaboussures)', 'Suie ou Cendres', 'Poussière épaisse', 'Terre humide', 'Motte', 'Incrustation d\'argile', 'Fibre', 'Vase', 'Peluche', 'Gouttelettes d\'eau', 'Éboulis', 'Graisse', 'Huile mécanique', 'Algues', 'Mousse ou Lichen', 'Sable fin', 'Résidu de fumée', 'Poussière de rouille', 'Taches d\'herbe écrasée', 'Rouille sur métal', 'Camouflage de visage (militaire)'
 ];
+
+// FIX: Add missing constant exports to resolve import errors.
+export const GRAINS = ['Aucun', 'Fin et subtil', 'Standard (ISO 400)', 'Prononcé (ISO 1600+)', 'Très gros (look Lomo)'];
+
+export const FILM_STOCKS = [
+    'Aucune',
+    // Couleur
+    'Kodak Portra 400', 'Kodak Ektar 100', 'Kodak Gold 200', 'Fuji Pro 400H', 'Fuji Superia 400', 'CineStill 800T',
+    // N&B
+    'Kodak Tri-X 400', 'Ilford HP5 Plus 400', 'Ilford Delta 3200',
+    // Cinéma
+    'Kodak Vision3 50D', 'Kodak Vision3 500T'
+];
+
+export const ISO_SENSITIVITIES = ['Auto', '100', '200', '400', '800', '1600', '3200', '6400'];
+
+export const ASPECT_RATIOS: { [key: string]: string[] } = {
+    portrait: ['10:16', '9:16'],
+    square: ['1:1'],
+    landscape: ['16:10', '16:9', '21:9', '3:1']
+};
+
+export const UNIVERSAL_ACCESSORIES_CONFIG = [
+    {
+        nameKey: "accessories_group_luxury",
+        elements: ["Montre de luxe", "Bijoux en or", "Sac à main de créateur", "Stylo-plume", "Verre de whisky"]
+    },
+    {
+        nameKey: "accessories_group_clothing",
+        elements: ["Chapeau fedora", "Écharpe en soie", "Gants en cuir", "Bretelles vintage", "Foulard noué"]
+    },
+    {
+        nameKey: "accessories_group_equipment",
+        elements: ["Casque de pilote", "Casque de moto", "Casque de soldat", "Masque à gaz", "Lunettes de vision nocturne"]
+    },
+    {
+        nameKey: "accessories_group_personal",
+        elements: ["Appareil photo vintage", "Pipe", "Cigare", "Jeu de cartes", "Livre ancien", "Caméra Super 8"]
+    },
+    {
+        nameKey: "accessories_group_action",
+        elements: ["Pistolet (type film noir)", "Épée médiévale", "Revolver de western", "Katana", "Talkie-walkie"]
+    },
+    {
+        nameKey: "accessories_group_decor",
+        elements: ["Néon d'enseigne", "Fumée de cigarette", "Pluie battante", "Vent dans les cheveux", "Pétales de fleurs"]
+    }
+];

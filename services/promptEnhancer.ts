@@ -18,23 +18,28 @@ import {
     BOHEME_LIBRARY,
     AUTOMOBILE_LIBRARY,
     MOTO_LIBRARY,
-    CAMERA_ANGLES,
-    LIGHTING_STYLES,
-    ATMOSPHERES,
-    CONTEXTUAL_ENVIRONMENTS,
-    LUXE_POSES,
-    LUXE_EXPRESSIONS,
     LUXE_LIGHTING,
     LUXE_COMPOSITION,
     JEWELRY_SUBSTYLES,
-    PRODUCT_FOCUSED_SUBSTYLES,
-    FASHION_CAMERA_ANGLES,
-    FASHION_LIGHTING_STYLES,
-    FASHION_ATMOSPHERES,
+    PRODUCT_FOCUSED_SUBSTYLES
+} from './photographerLibrary';
+// FIX: Import the missing `LUXE_POSES_STUDIO` constant.
+import {
     EMOTIONAL_TONES,
     PHOTOGRAPHER_STANCES,
-    ARTISTIC_IMPERFECTIONS
-} from './photographerLibrary';
+    ARTISTIC_IMPERFECTIONS,
+    CAMERA_ANGLES,
+    LIGHTING_STYLES,
+    ATMOSPHERES,
+    CANDID_MOMENTS_POSES,
+    CONTEXTUAL_ENVIRONMENTS,
+    LUXE_POSES,
+    LUXE_POSES_STUDIO,
+    LUXE_EXPRESSIONS,
+    FASHION_CAMERA_ANGLES,
+    FASHION_LIGHTING_STYLES,
+    FASHION_ATMOSPHERES
+} from '../data/systematik_master';
 import { classifyStyle } from '../lib/styleClassifier';
 import { STYLES_CONFIG } from '../lib/styleConfig';
 
@@ -117,14 +122,16 @@ const keyToPrefix: Record<string, string> = {
  * Generates a unique set of creative directions for a prompt based on style and sub-style.
  * @param style The main style category.
  * @param subStyle The specific sub-style.
+ * @param colorMode The selected color mode ('Couleur' or 'N&B').
  * @returns A string of dynamic creative enhancements to be added to the prompt.
  */
-export function getDynamicEnhancements(style: string, subStyle: string): string {
+export function getDynamicEnhancements(style: string, subStyle: string, colorMode: string): string {
     const enhancements: string[] = [];
     let specificEnhancementsFound = false;
 
     if (style === 'luxe_et_volupte') {
-        enhancements.push(`Pose: ${selectRandom(LUXE_POSES)}.`);
+        const poses = subStyle === 'luxe_studio_photo' ? LUXE_POSES_STUDIO : LUXE_POSES;
+        enhancements.push(`Pose: ${selectRandom(poses)}.`);
         enhancements.push(`Expression: ${selectRandom(LUXE_EXPRESSIONS)}.`);
         enhancements.push(`Posture: corps relâché mais élégant, mains utilisées pour soutenir la narration visuelle.`);
         enhancements.push(`Type de lumière: ${selectRandom(LUXE_LIGHTING.type)}.`);
@@ -185,13 +192,22 @@ export function getDynamicEnhancements(style: string, subStyle: string): string 
     if (!specificEnhancementsFound || style === 'photos') {
         const category = classifyStyle(style);
         
+        // Define filtered lists for B&W mode to avoid conflicting prompts
+        let lightingStyles = LIGHTING_STYLES;
+        let fashionLightingStyles = FASHION_LIGHTING_STYLES;
+        if (colorMode === 'N&B') {
+            lightingStyles = LIGHTING_STYLES.filter(s => !/colorés/i.test(s));
+            fashionLightingStyles = FASHION_LIGHTING_STYLES.filter(s => !/or/i.test(s)); // Filters out "or" (gold)
+        }
+
         if (category === 'MODE') {
             enhancements.push(`Angle de caméra: ${selectRandom(FASHION_CAMERA_ANGLES)}.`);
-            enhancements.push(`Style d'éclairage: ${selectRandom(FASHION_LIGHTING_STYLES)}.`);
+            enhancements.push(`Style d'éclairage: ${selectRandom(fashionLightingStyles)}.`);
             enhancements.push(`Atmosphère: ${selectRandom(FASHION_ATMOSPHERES)}.`);
         } else {
+            enhancements.push(`Pose / Moment Décisif: ${selectRandom(CANDID_MOMENTS_POSES)}.`);
             enhancements.push(`Angle de caméra: ${selectRandom(CAMERA_ANGLES)}.`);
-            enhancements.push(`Style d'éclairage: ${selectRandom(LIGHTING_STYLES)}.`);
+            enhancements.push(`Style d'éclairage: ${selectRandom(lightingStyles)}.`);
             enhancements.push(`Atmosphère: ${selectRandom(ATMOSPHERES)}.`);
         }
     }

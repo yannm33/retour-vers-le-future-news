@@ -1,3 +1,5 @@
+
+
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
@@ -521,18 +523,14 @@ export const STYLES_CONFIG: Style[] = [
         notesKey: "pilote_de_chasse_notes",
         realismWeight: 1.0,
         subStyles: [
-            "preparation_pre_vol",
-            "decollage_porte_avions",
-            "dogfight",
-            "vol_en_formation",
-            "bombardement_precision",
-            "retour_mission",
-            "vol_tres_basse_altitude",
-            "ravitaillement_en_vol",
-            "ejection_urgence",
-            "portrait_cockpit",
-            "vol_acrobatique",
-            "maintenance_hangar",
-        ].map(name => ({ key: toKey(name) }))
+            { key: "s01-arrivee-checkpoint", name: "Arrivée à la base — Checkpoint" },
+            { key: "s02-vestiaire-preparation", name: "Vestiaires — Préparation" },
+            { key: "s03-briefing-capitaine", name: "Briefing — Le Capitaine" },
+            { key: "s04-prevol-mecanos-complicite", name: "Inspection pré-vol — 'La main sur le métal'" },
+            { key: "s05-embarquement-cockpit", name: "Embarquement — Cockpit & checks internes" },
+            { key: "s06-decollage-formation", name: "Décollage — Formation" },
+            { key: "s07-mission-rasemode-montagne", name: "Mission — Rase-mottes / Montagne / Escadrille" },
+            { key: "s08-atterrissage-debrief", name: "Atterrissage & Débrief" },
+        ]
     },
 ];

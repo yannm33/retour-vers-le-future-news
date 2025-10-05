@@ -1,13 +1,19 @@
+
+
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
 */
-import React, { useState, ChangeEvent, useRef, useEffect, useCallback } from 'react';
+import React, { useState, ChangeEvent, useRef, useEffect } from 'react';
 import JSZip from 'jszip';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 import { generateImage } from '../services/geminiService';
 import type { ApiKeys } from '../services/geminiService';
 import { STYLES_CONFIG } from '../lib/styleConfig';
+import type { SubStyle } from '../lib/styleConfig';
 import { useGenerationForm } from '../hooks/useGenerationForm';
+import { useApiKeys } from '../hooks/useApiKeys';
 import type { FormState } from '../hooks/useGenerationForm';
 import { useLanguage } from '../contexts/LanguageContext';
 
@@ -16,7 +22,7 @@ import { getDynamicEnhancements } from '../services/promptEnhancer';
 import { getEffectInstruction } from '../services/effectsLibrary';
 import { LUXE_EVOLUPTE_PROMPTS } from '../services/luxeEvolupteLibrary';
 import { LUTS_LIBRARY } from '../services/lutsLibrary';
-import { MAGAZINE_PROMPT_DETAILS, GOOGLE_KEY_LS, IDEOGRAM_KEY_LS, REVART_KEY_LS } from '../lib/constants';
+import { MAGAZINE_PROMPT_DETAILS } from '../lib/constants';
 
 import Footer from '../components/Footer';
 import ImageGallery from '../components/ImageGallery';
@@ -26,6 +32,8 @@ import SettingsPanel from '../components/controls/SettingsPanel';
 import ApiKeyManagerModal from '../components/ApiKeyManagerModal';
 import LanguageSwitcher from '../components/LanguageSwitcher';
 import CameraModal from '../components/CameraModal';
+import PilotLibraryModal from '../components/PilotLibraryModal';
+import PdfFiche from '../components/PdfFiche';
 
 
 import { IconPhoto, IconChevronDown } from '@tabler/icons-react';
@@ -39,6 +47,7 @@ export interface GeneratedImage {
     url?: string;
     originalUrl?: string;
     error?: string;
+    prompt?: string;
 }
 export type AppState = 'idle' | 'image-uploaded' | 'generating' | 'results-shown';
 
@@ -100,61 +109,57 @@ const buildFullPrompt = (
             promptParts.push(`//-- SOUS-STYLE SPÉCIFIQUE --\n${LUXE_EVOLUPTE_PROMPTS[subStyle]}`);
         }
     } else {
-        promptParts.push('//-- DIRECTIVE ARTISTIQUE PRINCIPALE : STYLE "RETOUR VERS LE FUTUR" --');
+        const selectedStyleConfig = STYLES_CONFIG.find(s => s.key === style);
+        const styleName = selectedStyleConfig ? t(`style_${style}`) : style;
+        promptParts.push(`//-- DIRECTIVE ARTISTIQUE PRINCIPALE : STYLE "${styleName}" --`);
         promptParts.push('Objectif: Produire des images réalistes, cohérentes et variées. Style: Photographie pure : rendu naturel, textures de peau réalistes, lumière de studio ou naturelle. Ambiance cinéma réaliste : profondeur de champ maîtrisée, flou d’arrière-plan doux. Cohérence des corps et des visages. Composition naturelle. Interdits: tout ce qui touche au cyberpunk, digital art, couleurs bleues/violettes/néons, filtres SF, effets d’illustration.');
     }
     
-    // --- Prompts Spécialisés (Overriding) ---
+    // --- Prompts Spécialisés & Contenu Principal ---
     const specializedPrompt = getSpecializedPrompt(style, subStyle, { aspectRatio, colorMode: finalColorMode });
     if (specializedPrompt) {
-        // We inject the time travel year even into specialized prompts
-        if (timeTravelOn && year < 1940) {
-             const historicalDirective = `ORDRE ABSOLU : Réinterpréter la scène suivante pour qu'elle soit historiquement exacte pour l'année ${year}.`;
-             return `${historicalDirective}\n\n${specializedPrompt}`;
+        // If a specialized prompt exists, it dictates the scene. We'll use it and then append the standard technical specs at the end.
+        // This ensures consistency for color mode, signature, etc.
+        promptParts.push(`//-- SCÉNARIO SPÉCIALISÉ --\n${specializedPrompt}`);
+    } else {
+        // --- Améliorations Créatives Dynamiques ---
+        const dynamicEnhancements = getDynamicEnhancements(style, subStyle, finalColorMode);
+        if (dynamicEnhancements) {
+            promptParts.push(`//-- AMÉLIORATIONS CRÉATIVES DYNAMIQUES --\n${dynamicEnhancements}`);
         }
-        if (timeTravelOn) {
-            return `Année de la scène : ${year}.\n\n${specializedPrompt}`;
+
+        // --- Brief Magazine ---
+        const selectedStyleConfig = STYLES_CONFIG.find(s => s.key === style);
+        if (selectedStyleConfig && MAGAZINE_PROMPT_DETAILS[subStyle]) {
+            promptParts.push(`//-- BRIEF MAGAZINE --\n${t(`substyle_${subStyle}`)}: ${MAGAZINE_PROMPT_DETAILS[subStyle].description}.`);
         }
-        return specializedPrompt;
-    }
 
-    // --- Améliorations Créatives Dynamiques ---
-    const dynamicEnhancements = getDynamicEnhancements(style, subStyle);
-    if (dynamicEnhancements) {
-        promptParts.push(`//-- AMÉLIORATIONS CRÉATIVES DYNAMIQUES --\n${dynamicEnhancements}`);
-    }
+        // --- Prompt Utilisateur ---
+        if (customPrompt.trim()) {
+            promptParts.push(`//-- PROMPT UTILISATEUR --\n${customPrompt.trim()}`);
+        }
+        
+        // --- Détails Créatifs ---
+        const creativeDetails: string[] = [];
 
-    // --- Brief Magazine ---
-    const selectedStyleConfig = STYLES_CONFIG.find(s => s.key === style);
-    if (selectedStyleConfig && MAGAZINE_PROMPT_DETAILS[subStyle]) {
-        promptParts.push(`//-- BRIEF MAGAZINE --\nMasthead: ${MAGAZINE_PROMPT_DETAILS[subStyle].masthead}. Description: ${MAGAZINE_PROMPT_DETAILS[subStyle].description}.`);
-    }
+        if (expression !== 'Neutre') creativeDetails.push(`Expression faciale : ${expression}.`);
+        if (hairColor !== 'Noir Profond') creativeDetails.push(`Couleur des cheveux : ${hairColor}.`);
+        if (glasses !== 'Aucun') creativeDetails.push(`Lunettes : ${glasses}.`);
+        if (universalAccessory) creativeDetails.push(`Accessoire : ${universalAccessory}.`);
+        if (framing !== 'Plan pied') creativeDetails.push(`Cadrage : ${framing}.`);
+        if (effects !== 'Aucune') creativeDetails.push(`Effet sur la peau/tenue : ${effects}.`);
+        
+        const effectInstruction = getEffectInstruction(photographicEffect);
+        if (effectInstruction) {
+            creativeDetails.push(`Effet photographique spécifique : ${effectInstruction}.`);
+        }
 
-    // --- Prompt Utilisateur ---
-    if (customPrompt.trim()) {
-        promptParts.push(`//-- PROMPT UTILISATEUR --\n${customPrompt.trim()}`);
+        if (creativeDetails.length > 0) {
+            promptParts.push(`//-- DÉTAILS CRÉATIFS --\n${creativeDetails.join('\n')}`);
+        }
     }
     
-    // --- Détails Créatifs ---
-    const creativeDetails: string[] = [];
-
-    if (expression !== 'Neutre') creativeDetails.push(`Expression faciale : ${expression}.`);
-    if (hairColor !== 'Noir Profond') creativeDetails.push(`Couleur des cheveux : ${hairColor}.`);
-    if (glasses !== 'Aucun') creativeDetails.push(`Lunettes : ${glasses}.`);
-    if (universalAccessory) creativeDetails.push(`Accessoire : ${universalAccessory}.`);
-    if (framing !== 'Plan pied') creativeDetails.push(`Cadrage : ${framing}.`);
-    if (effects !== 'Aucune') creativeDetails.push(`Effet sur la peau/tenue : ${effects}.`);
-    
-    const effectInstruction = getEffectInstruction(photographicEffect);
-    if (effectInstruction) {
-        creativeDetails.push(`Effet photographique spécifique : ${effectInstruction}.`);
-    }
-
-    if (creativeDetails.length > 0) {
-        promptParts.push(`//-- DÉTAILS CRÉATIFS --\n${creativeDetails.join('\n')}`);
-    }
-    
-    // --- Spécifications Techniques ---
+    // --- Spécifications Techniques (Applied to all prompts for consistency) ---
     const techSpecs: string[] = [];
     techSpecs.push(`Ratio d'aspect : ${style === 'luxe_et_volupte' && subStyle === 'automobile_luxe_moderne' ? '21:9' : aspectRatio}.`);
     techSpecs.push(`Qualité de rendu : UHD (RÉALISME, 10K).`);
@@ -199,8 +204,11 @@ function Editor() {
     const [isApiKeyManagerModalOpen, setIsApiKeyManagerModalOpen] = useState(false);
     const [isDraggingOver, setIsDraggingOver] = useState(false);
     const [isZipping, setIsZipping] = useState(false);
+    const [isPdfGenerating, setIsPdfGenerating] = useState(false);
+    const [pdfFichesToRender, setPdfFichesToRender] = useState<GeneratedImage[]>([]);
     const [isCameraOpen, setIsCameraOpen] = useState(false);
-    const [apiKeys, setApiKeys] = useState<ApiKeys>({ google: '', ideogram: '', revart: '' });
+    const [isPilotLibraryOpen, setIsPilotLibraryOpen] = useState(false);
+    const { apiKeys, saveApiKeys } = useApiKeys();
 
     // State for the hidden API key modal trigger
     const [titleClickCount, setTitleClickCount] = useState(0);
@@ -208,24 +216,11 @@ function Editor() {
     const [modalMode, setModalMode] = useState<'public' | 'private'>('public');
 
     const formState = useGenerationForm();
-    const { style, customPrompt, provider, aspectRatio, numberOfImages } = formState;
+    const { style, subStyle, customPrompt, provider, aspectRatio, numberOfImages, colorMode } = formState;
 
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     // --- API Key Management ---
-    useEffect(() => {
-        const googleKey = localStorage.getItem(GOOGLE_KEY_LS) || '';
-        const ideogramKey = localStorage.getItem(IDEOGRAM_KEY_LS) || '';
-        const revartKey = localStorage.getItem(REVART_KEY_LS) || '';
-        setApiKeys({ google: googleKey, ideogram: ideogramKey, revart: revartKey });
-    }, []);
-
-    const saveApiKeys = useCallback((newKeys: ApiKeys) => {
-        localStorage.setItem(GOOGLE_KEY_LS, newKeys.google);
-        localStorage.setItem(IDEOGRAM_KEY_LS, newKeys.ideogram);
-        localStorage.setItem(REVART_KEY_LS, newKeys.revart);
-        setApiKeys(newKeys);
-    }, []);
     
     useEffect(() => {
         if (generatedImages.length > 0) {
@@ -302,23 +297,10 @@ function Editor() {
         setIsCameraOpen(false);
     };
 
-    const runSingleGeneration = async (imageInput: string | null, currentFormState: FormState, imageIdToUpdate: number) => {
-        const finalPrompt = buildFullPrompt(currentFormState, imageInput, t);
-        
-        try {
-            const result = await generateImage(imageInput, finalPrompt, provider, apiKeys, 1);
-            const resultUrl = Array.isArray(result) ? result[0] : result;
-            setGeneratedImages(prev => prev.map(img => img.id === imageIdToUpdate ? { ...img, status: 'done', url: resultUrl, originalUrl: resultUrl } : img));
-        } catch (err) {
-            handleGenerationError(err, imageIdToUpdate);
-        }
-    };
-    
     const handleGenerationError = (err: unknown, imageId: number) => {
         const errorMessage = err instanceof Error ? err.message : "An unknown error occurred.";
         let displayedError;
 
-        // Translate custom error keys from geminiService.
         if (errorMessage === 'api_key_invalid') {
             displayedError = t('api_key_invalid');
         } else if (errorMessage === 'api_quota_exceeded') {
@@ -326,55 +308,57 @@ function Editor() {
         } else if (errorMessage === 'api_request_blocked') {
             displayedError = t('api_request_blocked');
         } else {
-            console.error("Unhandled generation error:", err); // Log full error for debugging
+            console.error("Unhandled generation error:", err);
             displayedError = t('api_generic_error');
         }
         setGeneratedImages(prev => prev.map(img => img.id === imageId ? { ...img, status: 'error', error: displayedError } : img));
     };
 
+    const runSingleGeneration = async (imageInput: string | null, currentFormState: FormState, imageIdToUpdate: number) => {
+        // Build a unique prompt for this specific generation
+        const prompt = buildFullPrompt(currentFormState, imageInput, t);
+        
+        // Update the specific image's prompt in the state
+        setGeneratedImages(prev => prev.map(img => img.id === imageIdToUpdate ? { ...img, prompt } : img));
+
+        try {
+            const result = await generateImage(imageInput, prompt, provider, apiKeys, 1);
+            const resultUrl = Array.isArray(result) ? result[0] : result;
+            setGeneratedImages(prev => prev.map(img => img.id === imageIdToUpdate ? { ...img, status: 'done', url: resultUrl, originalUrl: resultUrl } : img));
+        } catch (err) {
+            handleGenerationError(err, imageIdToUpdate);
+        }
+    };
 
     const handleGenerateImageClick = async () => {
         const imageInput = uploadedImage;
-        if (!imageInput && !customPrompt.trim()) return;
+        const hasSubStyle = !!subStyle;
+        if (!imageInput && !customPrompt.trim() && !hasSubStyle) return;
 
         if (!apiKeys.google) {
             setIsApiKeyManagerModalOpen(true);
             return;
         }
 
-        const initialImages: GeneratedImage[] = Array.from({ length: numberOfImages }, (_, i) => ({ id: Date.now() + i, status: 'pending' }));
+        // Create placeholder states for all images to be generated.
+        const initialImages: GeneratedImage[] = Array.from({ length: numberOfImages }, (_, i) => ({
+            id: Date.now() + i,
+            status: 'pending',
+            prompt: '', // Prompt will be generated individually
+        }));
         setGeneratedImages(initialImages);
 
-        // --- BATCHING LOGIC ---
-        // If it's a text-to-image generation, use the efficient batch endpoint.
-        if (!imageInput) {
-            const finalPrompt = buildFullPrompt(formState, null, t);
-            try {
-                const results = await generateImage(null, finalPrompt, provider, apiKeys, numberOfImages);
-                if (Array.isArray(results)) {
-                    setGeneratedImages(prev => prev.map((img, index) => 
-                        results[index] 
-                        ? { ...img, status: 'done', url: results[index], originalUrl: results[index] }
-                        : { ...img, status: 'error', error: t('api_generic_error') }
-                    ));
-                }
-            } catch (err) {
-                 // If the whole batch fails, mark all as errored
-                const errorMessage = err instanceof Error ? err.message : "An unknown error occurred.";
-                setGeneratedImages(prev => prev.map(img => ({ ...img, status: 'error', error: errorMessage })));
-            }
-        } 
-        // For image-to-image, the model doesn't support batching, so we loop.
-        else {
-            for (const image of initialImages) {
-                runSingleGeneration(imageInput, formState, image.id);
-            }
+        // Generate each image individually with its own unique prompt.
+        for (const image of initialImages) {
+            // No need to await here, let them run in parallel.
+            runSingleGeneration(imageInput, formState, image.id);
         }
     };
 
     const handleRegenerateImage = async (imageId: number) => {
         const imageInput = uploadedImage;
-        if (!imageInput && !customPrompt.trim()) return;
+        const hasSubStyle = !!subStyle;
+        if (!imageInput && !customPrompt.trim() && !hasSubStyle) return;
         
         setGeneratedImages(prev => prev.map(img => img.id === imageId ? { ...img, status: 'pending', url: undefined, error: undefined } : img));
         runSingleGeneration(imageInput, formState, imageId);
@@ -400,9 +384,7 @@ function Editor() {
             const zip = new JSZip();
             const imagesToZip = generatedImages.filter(img => img.status === 'done' && img.url);
 
-            if (imagesToZip.length === 0) {
-                return;
-            }
+            if (imagesToZip.length === 0) return;
 
             for (const image of imagesToZip) {
                 try {
@@ -431,13 +413,76 @@ function Editor() {
         }
     };
     
+    const handleCopyPrompt = (promptToCopy: string) => {
+        if (promptToCopy) {
+            navigator.clipboard.writeText(promptToCopy);
+        }
+    };
+
+    const handleDownloadPdf = () => {
+        const imagesToProcess = generatedImages.filter(img => img.status === 'done' && img.url);
+        if (imagesToProcess.length > 0) {
+            setIsPdfGenerating(true);
+            setPdfFichesToRender(imagesToProcess);
+        }
+    };
+
+    useEffect(() => {
+        if (!isPdfGenerating || pdfFichesToRender.length === 0) return;
+
+        const generatePdf = async () => {
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const pageWidth = 210;
+            const margin = 10;
+            const contentWidth = pageWidth - margin * 2;
+            
+            for (let i = 0; i < pdfFichesToRender.length; i++) {
+                const image = pdfFichesToRender[i];
+                const ficheElement = document.getElementById(`pdf-fiche-${image.id}`);
+
+                if (ficheElement) {
+                    const canvas = await html2canvas(ficheElement, { scale: 2 });
+                    const imgData = canvas.toDataURL('image/jpeg', 0.9);
+                    const imgProps = pdf.getImageProperties(imgData);
+                    const imgHeight = (imgProps.height * contentWidth) / imgProps.width;
+                    
+                    if (i > 0) pdf.addPage();
+                    pdf.addImage(imgData, 'JPEG', margin, margin, contentWidth, imgHeight, undefined, 'FAST');
+                }
+            }
+            pdf.save('album-retour-vers-le-futur.pdf');
+            setIsPdfGenerating(false);
+            setPdfFichesToRender([]);
+        };
+
+        setTimeout(generatePdf, 100);
+    }, [isPdfGenerating, pdfFichesToRender]);
+
+    const getPdfTitle = () => {
+        const styleName = t(`style_${style}`);
+        
+        const styleConfig = STYLES_CONFIG.find(s => s.key === style);
+        if (!styleConfig || !subStyle) return styleName;
+
+        const flatSubStyles: SubStyle[] = styleConfig.subStyles.flatMap(item => 'subStyles' in item ? item.subStyles : [item]);
+        const subStyleConfig = flatSubStyles.find(ss => ss.key === subStyle);
+
+        if (subStyleConfig) {
+            const subStyleName = subStyleConfig.name || t(`substyle_${subStyle}`);
+            return `${styleName} - ${subStyleName}`;
+        }
+        return styleName;
+    };
+
     const isLoading = appState === 'generating';
     const isApiKeySet = !!apiKeys.google;
     const selectedStyleObject = STYLES_CONFIG.find(s => s.key === style);
     const availableSubStyles = selectedStyleObject ? selectedStyleObject.subStyles : [];
+    
+    const isGenerationDisabled = isLoading || !isApiKeySet || (!uploadedImage && !customPrompt.trim() && !subStyle);
 
     return (
-        <main className="bg-orange-500 text-neutral-800 min-h-screen w-full flex flex-col items-center py-4 font-sans selection:bg-amber-500 selection:text-black">
+        <main className="text-neutral-300 min-h-screen w-full flex flex-col items-center py-4 font-sans selection:bg-amber-500 selection:text-black">
             <div className="w-full max-w-screen-2xl mx-auto z-10 relative px-4">
                  <div className="absolute top-4 left-4 right-4 z-20 flex justify-between items-center gap-4">
                     <button
@@ -445,7 +490,7 @@ function Editor() {
                             setModalMode('public');
                             setIsApiKeyManagerModalOpen(true);
                         }}
-                        className="flex items-center gap-2 px-4 py-2 rounded-md bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-500 hover:to-red-500 text-white font-semibold text-sm sm:text-base shadow-[0_0_10px_rgba(255,122,0,0.6)] transition-all duration-300"
+                        className="flex items-center gap-2 px-4 py-2 rounded-md bg-black/20 backdrop-blur-sm border border-white/30 text-white font-semibold hover:bg-black/40 text-sm sm:text-base shadow-lg transition-all duration-300"
                     >
                         <span role="img" aria-label="key">🔑</span>
                         <span className="hidden sm:inline">{t('tryTheAppFull')}</span>
@@ -455,8 +500,8 @@ function Editor() {
                 </div>
 
                 <header className="text-center my-6 md:my-8 pt-12">
-                    <h1 onClick={handleTitleClick} className="font-open-sans text-4xl md:text-5xl font-bold text-neutral-900 uppercase tracking-widest text-outline-white cursor-pointer select-none">{t('title')}</h1>
-                    <p className="font-pixel text-white mt-2 text-lg uppercase tracking-[1px]">{t('subtitle')}</p>
+                    <h1 onClick={handleTitleClick} className="font-open-sans text-4xl md:text-5xl font-bold text-black uppercase tracking-widest cursor-pointer select-none">{t('title')}</h1>
+                    <p className="font-pixel text-neutral-800 mt-2 text-lg uppercase tracking-[1px]">{t('subtitle')}</p>
                 </header>
 
                 <ImageGallery
@@ -466,12 +511,13 @@ function Editor() {
                     handleDownloadSingleImage={handleDownloadSingleImage}
                     handleRegenerateImage={handleRegenerateImage}
                     setPreviewImage={setPreviewImage}
-                    aspectRatio={aspectRatio}
                     isZipping={isZipping}
+                    isPdfGenerating={isPdfGenerating}
+                    handleDownloadPdf={handleDownloadPdf}
+                    handleCopyPrompt={handleCopyPrompt}
                 />
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full mt-6">
-                    {/* Left Column */}
                     <div className="lg:col-span-1 flex flex-col gap-4">
                         <MainControls
                             formState={formState}
@@ -479,13 +525,14 @@ function Editor() {
                             fileInputRef={fileInputRef}
                             handleGenerateClick={handleGenerateImageClick}
                             onTakePhotoClick={() => setIsCameraOpen(true)}
+                            onOpenPilotLibrary={() => setIsPilotLibraryOpen(true)}
                             isLoading={isLoading}
+                            isGenerationDisabled={isGenerationDisabled}
                             uploadedImage={uploadedImage}
                             availableSubStyles={availableSubStyles}
                             isApiKeySet={isApiKeySet}
                         />
 
-                        {/* Mobile-only button to show settings */}
                         <div className="lg:hidden">
                             <button 
                                 onClick={() => setIsSettingsPanelOpen(!isSettingsPanelOpen)}
@@ -521,7 +568,6 @@ function Editor() {
                         </div>
                     </div>
 
-                    {/* Right Column / Mobile collapsible panel */}
                     <div id="settings-panel" className={cn(
                         "lg:block",
                         isSettingsPanelOpen ? "block" : "hidden"
@@ -529,6 +575,18 @@ function Editor() {
                         <SettingsPanel formState={formState} generationMode="image" />
                     </div>
                 </div>
+            </div>
+
+            <div className="absolute -left-[9999px] top-0">
+                {pdfFichesToRender.map((image, index) => (
+                    <PdfFiche
+                        key={image.id}
+                        id={`pdf-fiche-${image.id}`}
+                        title={`${getPdfTitle()} #${index + 1}`}
+                        imageUrl={image.url!}
+                        prompt={image.prompt!}
+                    />
+                ))}
             </div>
 
             <ImagePreviewModal 
@@ -546,6 +604,10 @@ function Editor() {
                 isOpen={isCameraOpen}
                 onClose={() => setIsCameraOpen(false)}
                 onCapture={handlePhotoCapture}
+            />
+            <PilotLibraryModal
+                isOpen={isPilotLibraryOpen}
+                onClose={() => setIsPilotLibraryOpen(false)}
             />
             <Footer />
         </main>

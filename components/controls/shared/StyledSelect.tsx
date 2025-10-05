@@ -13,9 +13,10 @@ interface StyledSelectProps {
     value?: string | number | readonly string[] | undefined;
     onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
     disabled?: boolean;
+    dropdownClassName?: string;
 }
 
-export const StyledSelect: React.FC<StyledSelectProps> = ({ children, value, onChange, disabled }) => {
+export const StyledSelect: React.FC<StyledSelectProps> = ({ children, value, onChange, disabled, dropdownClassName }) => {
     const [isOpen, setIsOpen] = useState(false);
     const selectRef = useRef<HTMLDivElement>(null);
 
@@ -88,7 +89,10 @@ export const StyledSelect: React.FC<StyledSelectProps> = ({ children, value, onC
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute z-10 w-full mt-1 bg-neutral-900 border border-neutral-700 rounded-md shadow-lg max-h-60 overflow-y-auto"
+                        className={cn(
+                            "absolute z-10 w-full mt-1 bg-neutral-900 border border-neutral-700 rounded-md shadow-lg max-h-60 overflow-y-auto",
+                            dropdownClassName
+                        )}
                     >
                         <ul>
                             {options.map((option, index) => {

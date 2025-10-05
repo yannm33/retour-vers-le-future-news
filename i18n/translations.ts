@@ -58,7 +58,7 @@ export const translations = {
     bw: "B&W",
     upscale: "Upscale",
     photoSettings: "Photographic Settings",
-    photo_settings_scroll_instruction: "Scroll with the mouse wheel on the red circle to change the setting",
+    photo_settings_scroll_instruction: "Scroll with your mouse wheel on the red circle.",
     focal: "FOCAL",
     aperture: "APERTURE",
     speed: "SPEED",
@@ -467,7 +467,7 @@ export const translations = {
     substyle_plongee_bouteille: "Scuba Diving",
     substyle_apnee: "Freediving",
     substyle_plongee_combinaison: "Full Suit Diving",
-    substyle_plongee_speleologique: "Cave Diving",
+    substyle_speleologique: "Cave Diving",
     
     // Substyles (Running)
     substyle_sprint: "Sprint",
@@ -546,20 +546,6 @@ export const translations = {
     substyle_capture_de_cible_hvt: "Target Capture (HVT)",
     substyle_demolition_sous_marine: "Underwater Demolition",
     substyle_preparation_clandestine: "Clandestine Preparation",
-
-    // Substyles (Fighter Pilot)
-    substyle_preparation_pre_vol: "Pre-Flight Prep (Tarmac)",
-    substyle_decollage_porte_avions: "Carrier Takeoff",
-    substyle_dogfight: "Dogfight (Aerial Combat)",
-    substyle_vol_en_formation: "Formation Flying",
-    substyle_bombardement_precision: "Precision Bombing",
-    substyle_retour_mission: "Mission Return (Debriefing)",
-    substyle_vol_tres_basse_altitude: "Very Low-Altitude Flight",
-    substyle_ravitaillement_en_vol: "In-Flight Refueling",
-    substyle_ejection_urgence: "Emergency Ejection",
-    substyle_portrait_cockpit: "Cockpit Portrait",
-    substyle_vol_acrobatique: "Aerobatic Flight (Airshow)",
-    substyle_maintenance_hangar: "Maintenance (Hangar)",
     
     // Creative Direction Notes
     photographers_notes: "S'inspirer du style visuel, de l'éclairage et de la composition des grands maîtres de la photographie.",
@@ -647,7 +633,7 @@ export const translations = {
     bw: "N&B",
     upscale: "Upscale",
     photoSettings: "Réglages Photographiques",
-    photo_settings_scroll_instruction: "Faites défiler avec la molette sur le cercle rouge pour changer le réglage",
+    photo_settings_scroll_instruction: "Faites défiler avec la molette de votre souris sur le cercle rouge.",
     focal: "FOCALE",
     aperture: "OUVERTURE",
     speed: "VITESSE",
@@ -1135,20 +1121,6 @@ export const translations = {
     substyle_capture_de_cible_hvt: "Capture de Cible (HVT)",
     substyle_demolition_sous_marine: "Démolition Sous-Marine",
     substyle_preparation_clandestine: "Préparation Clandestine",
-
-    // Substyles (Fighter Pilot)
-    substyle_preparation_pre_vol: "Préparation Pré-Vol (Tarmac)",
-    substyle_decollage_porte_avions: "Décollage Porte-Avions",
-    substyle_dogfight: "Dogfight (Combat Aérien)",
-    substyle_vol_en_formation: "Vol en Formation",
-    substyle_bombardement_precision: "Bombardement de Précision",
-    substyle_retour_mission: "Retour de Mission (Débriefing)",
-    substyle_vol_tres_basse_altitude: "Vol Très Basse Altitude",
-    substyle_ravitaillement_en_vol: "Ravitaillement en Vol",
-    substyle_ejection_urgence: "Éjection d'Urgence",
-    substyle_portrait_cockpit: "Portrait en Cockpit",
-    substyle_vol_acrobatique: "Vol Acrobatique (Airshow)",
-    substyle_maintenance_hangar: "Maintenance (Hangar)",
     
     // Creative Direction Notes
     photographers_notes: "S'inspirer du style visuel, de l'éclairage et de la composition des grands maîtres de la photographie.",

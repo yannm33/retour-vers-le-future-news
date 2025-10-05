@@ -1,9 +1,10 @@
+
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
 */
 import React, { useState, useEffect } from 'react';
-import { IconPhoto, IconCamera, IconLoader, IconPlus, IconMinus } from '@tabler/icons-react';
+import { IconPhoto, IconCamera, IconLoader, IconPlus, IconMinus, IconBook2 } from '@tabler/icons-react';
 import { ControlSection } from './shared/ControlSection';
 import { StyledSelect } from './shared/StyledSelect';
 import { STYLES_CONFIG } from '../../lib/styleConfig';
@@ -16,7 +17,7 @@ const BlinkingCursor = () => (
     <span className="animate-pulse" style={{ animationDuration: '1s' }}>|</span>
 );
 
-const MainControls = ({ formState, handleImageUpload, fileInputRef, handleGenerateClick, isLoading, uploadedImage, availableSubStyles, onTakePhotoClick, isApiKeySet }) => {
+const MainControls = ({ formState, handleImageUpload, fileInputRef, handleGenerateClick, isLoading, isGenerationDisabled, uploadedImage, availableSubStyles, onTakePhotoClick, onOpenPilotLibrary, isApiKeySet }) => {
     const { t, language } = useLanguage();
     const { 
         style, setStyle,
@@ -34,8 +35,6 @@ const MainControls = ({ formState, handleImageUpload, fileInputRef, handleGenera
         }
     }, [isListening]);
 
-
-    const isGenerationDisabled = (!uploadedImage && !customPrompt.trim()) || isLoading || !isApiKeySet;
     const generateButtonTooltip = isApiKeySet
         ? (isGenerationDisabled && !isLoading ? t('generateTooltip') : t('generate'))
         : t('apiKeyMissingTooltip');
@@ -51,9 +50,9 @@ const MainControls = ({ formState, handleImageUpload, fileInputRef, handleGenera
 
         let newIndex;
         if (direction === 'increase') {
-            newIndex = (currentIndex + 1) % quantities.length;
+            newIndex = Math.min(currentIndex + 1, quantities.length - 1);
         } else {
-            newIndex = (currentIndex - 1 + quantities.length) % quantities.length;
+            newIndex = Math.max(currentIndex - 1, 0);
         }
         setNumberOfImages(quantities[newIndex]);
     };
@@ -71,15 +70,17 @@ const MainControls = ({ formState, handleImageUpload, fileInputRef, handleGenera
                         <div className="flex flex-col">
                             <button 
                                 onClick={() => handleQuantityChange('increase')}
-                                className="p-0 rounded-full text-amber-500 hover:bg-amber-500/20 transition-colors"
+                                className="p-0 rounded-full text-amber-500 hover:bg-amber-500/20 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                                 aria-label="Increase quantity"
+                                disabled={numberOfImages === quantities[quantities.length - 1]}
                             >
                                 <IconPlus size={18} />
                             </button>
                              <button 
                                 onClick={() => handleQuantityChange('decrease')} 
-                                className="p-0 rounded-full text-amber-500 hover:bg-amber-500/20 transition-colors"
+                                className="p-0 rounded-full text-amber-500 hover:bg-amber-500/20 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                                 aria-label="Decrease quantity"
+                                disabled={numberOfImages === quantities[0]}
                             >
                                 <IconMinus size={18} />
                             </button>
@@ -107,10 +108,10 @@ const MainControls = ({ formState, handleImageUpload, fileInputRef, handleGenera
                         "font-bold p-2 rounded-xl flex items-center justify-center gap-1 sm:gap-2 transition-all duration-150 border-b-4 text-center",
                         "w-20 aspect-square sm:w-auto sm:aspect-auto", // Mobile: square, Desktop: auto
                         "flex-col sm:flex-row", // Mobile: column, Desktop: row
-                        "hover:shadow-lg hover:shadow-orange-400/50", // Glow effect is always active on hover
+                        "hover:shadow-lg hover:shadow-amber-400/50", // Glow effect is always active on hover
                         {
-                            'bg-gradient-to-b from-orange-400 to-orange-500 text-white border-orange-700 hover:text-black hover:brightness-110 active:translate-y-1 active:border-b-0': !isGenerationDisabled,
-                            'opacity-70 cursor-not-allowed bg-orange-400 border-orange-500 text-black/70 brightness-95': isGenerationDisabled
+                            'bg-gradient-to-b from-amber-400 to-amber-500 text-black border-amber-700 hover:brightness-110 active:translate-y-1 active:border-b-0': !isGenerationDisabled,
+                            'opacity-70 cursor-not-allowed bg-neutral-700 border-neutral-800 text-neutral-400 brightness-95': isGenerationDisabled
                         }
                     )}
                 >
@@ -135,25 +136,37 @@ const MainControls = ({ formState, handleImageUpload, fileInputRef, handleGenera
 
             <div className="grid grid-cols-2 gap-4">
                 <ControlSection title={t('style')}>
-                    <StyledSelect value={style} onChange={e => setStyle(e.target.value)}>
+                    <StyledSelect value={style} onChange={e => setStyle(e.target.value)} dropdownClassName="max-h-none">
                         {STYLES_CONFIG.map(s => <option key={s.key} value={s.key}>{t(`style_${s.key}`)}</option>)}
                     </StyledSelect>
                 </ControlSection>
                 <ControlSection title={t('substyle')}>
-                    <StyledSelect value={subStyle} onChange={e => setSubStyle(e.target.value)} disabled={availableSubStyles.length === 0}>
-                        <option value="">{t('chooseSubstyle')}</option>
-                        {isGrouped ? (
-                             (availableSubStyles as SubStyleGroup[]).map(group => (
-                                <optgroup key={group.nameKey} label={t(group.nameKey)}>
-                                    {group.subStyles.map(sub => (
-                                        <option key={sub.key} value={sub.key}>{sub.name || t(`substyle_${sub.key}`)}</option>
-                                    ))}
-                                </optgroup>
-                            ))
-                        ) : (
-                            (availableSubStyles as SubStyle[]).map(s => <option key={s.key} value={s.key}>{s.name || t(`substyle_${s.key}`)}</option>)
+                     <div className="flex items-center gap-2">
+                        <StyledSelect value={subStyle} onChange={e => setSubStyle(e.target.value)} disabled={availableSubStyles.length === 0} dropdownClassName="max-h-none">
+                            <option value="">{t('chooseSubstyle')}</option>
+                            {isGrouped ? (
+                                (availableSubStyles as SubStyleGroup[]).map(group => (
+                                    <optgroup key={group.nameKey} label={t(group.nameKey)}>
+                                        {group.subStyles.map(sub => (
+                                            <option key={sub.key} value={sub.key}>{sub.name || t(`substyle_${sub.key}`)}</option>
+                                        ))}
+                                    </optgroup>
+                                ))
+                            ) : (
+                                (availableSubStyles as SubStyle[]).map(s => <option key={s.key} value={s.key}>{s.name || t(`substyle_${s.key}`)}</option>)
+                            )}
+                        </StyledSelect>
+                         {style === 'pilote_de_chasse' && (
+                             <button
+                                onClick={onOpenPilotLibrary}
+                                className="p-2 h-full bg-neutral-800 border border-neutral-700 text-amber-500 rounded-md hover:bg-neutral-700 hover:border-amber-500 transition-colors"
+                                title="Ouvrir la librairie de scénarios"
+                                aria-label="Ouvrir la librairie de scénarios"
+                            >
+                                <IconBook2 size={20} />
+                            </button>
                         )}
-                    </StyledSelect>
+                    </div>
                 </ControlSection>
             </div>
             <ControlSection title={t('customPromptTitle')} className="flex flex-col flex-grow">

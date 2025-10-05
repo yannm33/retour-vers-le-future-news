@@ -91,7 +91,7 @@ const PhotoSettingsPanel = ({ formState }) => {
                     <RoundCameraDial value={ouverture} setValue={setOuverture} values={APERTURES} />
                     <RoundCameraDial value={vitesse} setValue={setVitesse} values={SHUTTER_SPEEDS} />
                 </div>
-                <p className="text-xs text-white mt-3 italic text-center">
+                <p className="text-xs text-white mt-3 text-center">
                     {t('photo_settings_scroll_instruction')}
                 </p>
             </div>

@@ -214,11 +214,24 @@ async function generateWithGemini(imageDataUrl: string | null, prompt: string, a
         const aspectRatioMatch = prompt.match(/Ratio d'aspect : ([\d:]+)/);
         const aspectRatio = aspectRatioMatch ? aspectRatioMatch[1] : '1:1';
 
-        const editInstruction = `IMPORTANT: Use the provided photo ONLY as a reference for the person's face. DO NOT copy the clothing, pose, or background. Create a completely new and different image based on the following creative brief, ensuring the face resembles the person in the photo.
-        
-        CRITICAL FORMATTING INSTRUCTION: The final generated image MUST have an aspect ratio of ${aspectRatio}. Compose the scene to fill this format perfectly.
-        
-        --- CREATIVE BRIEF ---\n${prompt}`;
+        const editInstruction = `//-- ABSOLUTE DIRECTIVE: FACIAL ANALYSIS --//
+ANALYZE AND REPLICATE THE FACE FROM THE PROVIDED PHOTO WITH EXTREME FIDELITY.
+Your primary objective is to ensure the generated person is IDENTIFIABLE as the person in the source image.
+Analyze these critical features from the source photo and reproduce them:
+- Face shape (oval, square, round, etc.)
+- Eye shape, color, and spacing.
+- Nose structure (bridge, tip, width).
+- Mouth shape and lip thickness.
+- Jawline and chin definition.
+- Unique features like moles or scars if present.
+
+//-- SECONDARY DIRECTIVE: CREATIVE SCENE --//
+While maintaining perfect facial resemblance, place this person in a completely new scene based on the creative brief below.
+DO NOT copy the original photo's background, lighting, clothing, or pose. Only the facial identity is sacred.
+
+CRITICAL FORMATTING INSTRUCTION: The final generated image MUST have an aspect ratio of ${aspectRatio}. Compose the scene to fill this format perfectly.
+
+--- CREATIVE BRIEF ---\n${prompt}`;
         const textPart = { text: editInstruction };
 
         const request = {

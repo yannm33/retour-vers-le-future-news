@@ -6,6 +6,7 @@ import React, { useState, useEffect } from 'react';
 import { DraggableCardContainer, DraggableCardBody } from './ui/draggable-card';
 import { cn } from '../lib/utils';
 import { useLanguage } from '../contexts/LanguageContext';
+import { IconClipboard, IconCheck } from '@tabler/icons-react';
 
 type ImageStatus = 'pending' | 'done' | 'error';
 
@@ -15,9 +16,11 @@ interface PolaroidCardProps {
     status: ImageStatus;
     error?: string;
     dragConstraintsRef?: React.RefObject<HTMLElement>;
-    onRegenerate?: (caption: string) => void;
-    onDownload?: (caption: string) => void;
+    onRegenerate?: () => void;
+    onDownload?: () => void;
     isMobile?: boolean;
+    prompt?: string;
+    onCopyPrompt?: (prompt: string) => void;
 }
 
 const LoadingSpinner = () => (
@@ -60,9 +63,10 @@ const Placeholder = () => {
 };
 
 
-const PolaroidCard: React.FC<PolaroidCardProps> = ({ imageUrl, caption, status, error, dragConstraintsRef, onRegenerate, onDownload, isMobile }) => {
+const PolaroidCard: React.FC<PolaroidCardProps> = ({ imageUrl, caption, status, error, dragConstraintsRef, onRegenerate, onDownload, isMobile, prompt, onCopyPrompt }) => {
     const [isDeveloped, setIsDeveloped] = useState(false);
     const [isImageLoaded, setIsImageLoaded] = useState(false);
+    const [copied, setCopied] = useState(false);
 
     // Reset states when the image URL changes or status goes to pending.
     useEffect(() => {
@@ -85,6 +89,14 @@ const PolaroidCard: React.FC<PolaroidCardProps> = ({ imageUrl, caption, status, 
             return () => clearTimeout(timer);
         }
     }, [isImageLoaded]);
+    
+    const handleCopy = () => {
+        if (prompt && onCopyPrompt) {
+            onCopyPrompt(prompt);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        }
+    };
 
     const cardInnerContent = (
         <>
@@ -97,11 +109,24 @@ const PolaroidCard: React.FC<PolaroidCardProps> = ({ imageUrl, caption, status, 
                             "absolute top-2 right-2 z-20 flex flex-col gap-2 transition-opacity duration-300",
                             !isMobile && "opacity-0 group-hover:opacity-100",
                         )}>
+                             {onCopyPrompt && prompt && (
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleCopy();
+                                    }}
+                                    className="p-2 bg-black/50 rounded-full text-white hover:bg-black/75 focus:outline-none focus:ring-2 focus:ring-white"
+                                    aria-label={`Copy prompt for ${caption}`}
+                                    disabled={copied}
+                                >
+                                    {copied ? <IconCheck size={18} className="text-green-400"/> : <IconClipboard size={18} />}
+                                </button>
+                            )}
                             {onDownload && (
                                 <button
                                     onClick={(e) => {
                                         e.stopPropagation(); // Prevent drag from starting on click
-                                        onDownload(caption);
+                                        onDownload();
                                     }}
                                     className="p-2 bg-black/50 rounded-full text-white hover:bg-black/75 focus:outline-none focus:ring-2 focus:ring-white"
                                     aria-label={`Download image for ${caption}`}
@@ -111,11 +136,11 @@ const PolaroidCard: React.FC<PolaroidCardProps> = ({ imageUrl, caption, status, 
                                     </svg>
                                 </button>
                             )}
-                             {isMobile && onRegenerate && (
+                             {onRegenerate && (
                                 <button
                                     onClick={(e) => {
                                         e.stopPropagation();
-                                        onRegenerate(caption);
+                                        onRegenerate();
                                     }}
                                     className="p-2 bg-black/50 rounded-full text-white hover:bg-black/75 focus:outline-none focus:ring-2 focus:ring-white"
                                     aria-label={`Regenerate image for ${caption}`}
@@ -130,7 +155,7 @@ const PolaroidCard: React.FC<PolaroidCardProps> = ({ imageUrl, caption, status, 
 
                         {/* The developing chemical overlay - fades out */}
                         <div
-                            className={`absolute inset-0 z-10 bg-[#3a322c] transition-opacity duration-[3500ms] ease-out ${
+                            className={`absolute inset-0 z-10 bg-[#3a322c] transition-opacity duration-[1000ms] ease-out ${
                                 isDeveloped ? 'opacity-0' : 'opacity-100'
                             }`}
                             aria-hidden="true"
@@ -142,7 +167,7 @@ const PolaroidCard: React.FC<PolaroidCardProps> = ({ imageUrl, caption, status, 
                             src={imageUrl}
                             alt={caption}
                             onLoad={() => setIsImageLoaded(true)}
-                            className={`w-full h-full object-cover transition-all duration-[4000ms] ease-in-out ${
+                            className={`w-full h-full object-cover transition-all duration-[1200ms] ease-in-out ${
                                 isDeveloped 
                                 ? 'opacity-100 filter-none' 
                                 : 'opacity-80 filter sepia(1) contrast(0.8) brightness(0.8)'

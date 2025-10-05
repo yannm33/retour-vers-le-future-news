@@ -3,11 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 import { useState, useEffect, useCallback } from 'react';
+import { GOOGLE_KEY_LS, IDEOGRAM_KEY_LS, REVART_KEY_LS } from '../lib/constants';
 import type { ApiKeys } from '../services/geminiService';
-
-export const GOOGLE_KEY_LS = 'googleApiKey';
-export const IDEOGRAM_KEY_LS = 'ideogramApiKey';
-export const REVART_KEY_LS = 'revartApiKey';
 
 export const useApiKeys = () => {
     const [apiKeys, setApiKeys] = useState<ApiKeys>({

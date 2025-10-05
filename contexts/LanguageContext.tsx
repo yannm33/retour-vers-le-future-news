@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 import React, { createContext, useState, useContext, useEffect, useMemo, useCallback } from 'react';
+import { LANGUAGE_KEY_LS } from '../lib/constants';
 import { translations } from '../i18n/translations';
 
 type Language = 'en' | 'fr';
@@ -14,8 +15,6 @@ interface LanguageContextType {
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
-
-export const LANGUAGE_KEY_LS = 'language';
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [language, setLanguageState] = useState<Language>(() => {

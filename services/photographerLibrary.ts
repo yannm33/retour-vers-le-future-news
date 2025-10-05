@@ -1,36 +1,12 @@
+
+
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
 */
 
-// FIX: Export missing constants to resolve import errors.
-// This library contains detailed stylistic scenarios for emulating famous photographers and other creative styles.
-// Each entry provides a rich set of options to ensure variety and stylistic accuracy.
-
-export const EMOTIONAL_TONES = [
-  "Joyeux et optimiste",
-  "Mélancolique et introspectif",
-  "Puissant et confiant",
-  "Serein et paisible",
-  "Mystérieux et tendu",
-  "Nostalgique et rêveur",
-];
-
-export const PHOTOGRAPHER_STANCES = [
-  "Observateur distant, capturant la scène sans intervenir.",
-  "Participant intime, créant une connexion proche avec le sujet.",
-  "Metteur en scène, contrôlant chaque détail de la composition.",
-  "Documentariste, recherchant l'authenticité brute du moment.",
-];
-
-export const ARTISTIC_IMPERFECTIONS = [
-  "Léger flou de bougé, ajoutant une sensation de mouvement et d'urgence.",
-  "Grain de film prononcé, pour une texture organique et rétro.",
-  "Lens flare subtil et naturel, ajoutant une touche de magie lumineuse.",
-  "Vignetage doux, pour centrer l'attention sur le sujet.",
-  "Couleurs légèrement désaturées, pour une ambiance nostalgique.",
-  "Aberration chromatique subtile sur les bords.",
-];
+// This library contains detailed stylistic scenarios and specific creative configurations.
+// Global creative lists (angles, lights, moods) are now managed in `data/systematik_master.ts`.
 
 // Placeholder Libraries for styles
 export const PHOTOGRAPHER_LIBRARY = {
@@ -66,6 +42,33 @@ export const JOURNEE_MANNEQUIN_LIBRARY = {
 export const COUVERTURE_VOGUE_LIBRARY = {
     noir_blanc_iconique: {
         scene: "Portrait en studio, noir et blanc iconique, pose puissante et regard direct.",
+    },
+    vogue_de_rue: {
+        lieux: [
+            "Une rue pavée et calme d'un quartier historique, avec des maisons en briques rouges en arrière-plan.",
+            "Devant la vitrine d'une boutique de luxe dans un quartier chic, avec des reflets urbains.",
+            "Sur un passage piéton d'une grande avenue, capturant le mouvement de la ville.",
+            "Assise sur les marches d'un perron en pierre d'un bâtiment haussmannien.",
+            "Dans une ruelle animée, avec des néons et des passants en arrière-plan flou."
+        ],
+        tenues: [
+            "Un trench-coat élégant sur un tailleur-pantalon, style effortless chic.",
+            "Une robe d'avant-garde avec des bottes hautes, créant un contraste avec le décor urbain.",
+            "Un look superposé avec un long manteau, un jean et des accessoires audacieux.",
+            "Une tenue de soirée portée en plein jour, pour un effet dramatique et décalé."
+        ],
+        lumieres: [
+            "Lumière naturelle douce de fin d'après-midi, créant de longues ombres.",
+            "Reflets des néons et des lumières de la ville sur le sol humide après la pluie.",
+            "Lumière vive et contrastée d'un soleil de midi, pour un look audacieux.",
+            "Lumière filtrée par les arbres d'une avenue."
+        ],
+        poses: [
+            "Marchant d'un pas décidé vers la caméra.",
+            "Arrêtée au milieu de la rue, regardant par-dessus son épaule.",
+            "Appuyée nonchalamment contre un mur en briques.",
+            "Consultant son téléphone ou attendant quelqu'un, une pose naturelle et spontanée."
+        ]
     }
 };
 export const COUVERTURE_ELLE_LIBRARY = {
@@ -114,69 +117,8 @@ export const MOTO_LIBRARY = {
     }
 };
 
-// --- Generic Creative Enhancements ---
-export const CAMERA_ANGLES = [
-  "Plan très large, montrant le sujet minuscule dans un vaste paysage.",
-  "Plan large, montrant le sujet de la tête aux pieds avec son environnement.",
-  "Plan moyen, cadré à la taille, pour se concentrer sur le langage corporel.",
-  "Gros plan, se concentrant sur le visage pour capturer l'émotion.",
-  "Très gros plan, isolant un détail (un œil, une bouche).",
-  "Contre-plongée, pour donner au sujet un air de puissance et de domination.",
-  "Plongée, pour donner au sujet un air de vulnérabilité ou pour montrer le contexte.",
-  "Plan hollandais (dutch angle), inclinant la caméra pour créer une tension ou un malaise.",
-  "Vue à travers quelque chose (through-the-lens), cadrant à travers une fenêtre, un feuillage."
-];
 
-export const LIGHTING_STYLES = [
-  "Éclairage Rembrandt, avec un petit triangle de lumière sur la joue ombragée.",
-  "High-key, avec une lumière vive et peu d'ombres pour une ambiance optimiste.",
-  "Low-key, avec des ombres profondes pour une atmosphère dramatique et mystérieuse.",
-  "Contre-jour, plaçant la source de lumière derrière le sujet pour créer une silhouette ou un halo.",
-  "Lumière latérale, pour sculpter les formes et accentuer les textures.",
-  "Lumière douce et diffuse, pour un rendu flatteur et sans défaut.",
-  "Lumière dure et directe, pour des ombres nettes et un contraste élevé.",
-  "Utilisation de gels colorés (rouge, bleu) pour teinter la scène.",
-  "Lumière naturelle provenant d'une fenêtre, pour un rendu doux et authentique."
-];
-
-export const ATMOSPHERES = [
-  "Rêveur et éthéré, avec une légère brume ou un flou artistique.",
-  "Sombre et mélancolique, avec une palette de couleurs froides.",
-  "Énergique et vibrant, avec des couleurs saturées et du mouvement.",
-  "Serein et contemplatif, dans un environnement calme.",
-  "Brut et réaliste, sans artifice, montrant la vérité du moment.",
-  "Cinématique et narratif, comme une scène tirée d'un film.",
-  "Mystérieux et inquiétant, jouant avec les ombres et le non-dit.",
-  "Romantique et doux, avec des tons chauds et une lumière caressante."
-];
-
-export const CONTEXTUAL_ENVIRONMENTS: Record<string, string[]> = {
-  'portrait_studio': ["un cyclorama blanc infini", "un fond en toile peinte texturée", "un décor minimaliste avec un seul accessoire (chaise, cube)"],
-  'lifestyle_exterieur': ["un café en terrasse animé", "un parc en automne avec des feuilles mortes", "un marché de producteurs coloré"],
-  'photographie_rue': ["un passage piéton bondé à New York", "une ruelle étroite et pluvieuse à Tokyo", "devant une fresque de street art à Berlin"],
-  'corporate_affaires': ["un bureau moderne avec une baie vitrée surplombant la ville", "une salle de réunion design", "le hall d'entrée d'un gratte-ciel en verre et acier"]
-};
-
-// --- 'Luxe & Volupté' Style Enhancements ---
-export const LUXE_POSES = [
-  "Appuyé nonchalamment contre une voiture de sport, le regard au loin.",
-  "Assis dans un fauteuil en cuir profond, un verre à la main.",
-  "Marchant d'un pas assuré sur une avenue prestigieuse, sac de luxe à la main.",
-  "Regardant par la fenêtre d'une suite de palace, contemplant la ville.",
-  "Ajustant le bouton de manchette de sa chemise, un geste subtil et confiant.",
-  "Descendant un grand escalier en marbre, avec élégance.",
-  "Le corps de profil, la tête tournée vers l'objectif, une pose sculpturale."
-];
-
-export const LUXE_EXPRESSIONS = [
-  "Un léger sourire en coin, confiant et énigmatique.",
-  "Un regard intense et direct, plein d'assurance.",
-  "Une expression neutre mais puissante, presque arrogante.",
-  "Un air détendu et serein, comme si le luxe était naturel.",
-  "Un regard contemplatif, perdu dans des pensées profondes.",
-  "Une expression de satisfaction subtile."
-];
-
+// --- 'Luxe & Volupté' Style Specifics ---
 export const LUXE_LIGHTING = {
   type: [
     "Lumière douce et enveloppante d'une grande softbox.",
@@ -201,7 +143,7 @@ export const LUXE_COMPOSITION = {
     "sac à main",
     "voiture",
     "stylo",
-    "verre de spiritueux"
+    "lunettes de soleil de créateur"
   ],
   cadrage: [
     "Plan large laissant de l'espace négatif pour du texte publicitaire.",
@@ -231,27 +173,4 @@ export const PRODUCT_FOCUSED_SUBSTYLES = [
   'luxe_bulgari',
   'luxe_tiffany',
   'luxe_moncler',
-];
-
-// --- FASHION Category Enhancements ---
-export const FASHION_CAMERA_ANGLES = [
-  "Plan en pied (full-length shot) pour montrer l'intégralité de la tenue.",
-  "Contre-plongée pour allonger la silhouette et donner un air puissant.",
-  "Plan rapproché sur un détail du vêtement ou un accessoire.",
-  "Vue de profil, pour souligner la coupe et la structure du vêtement.",
-  "Plan capturé en mouvement, pour montrer la fluidité du tissu.",
-  "Plan de dos, pour révéler un détail inattendu ou une coupe audacieuse."
-];
-
-export const FASHION_LIGHTING_STYLES = [
-  "Éclairage 'beauty dish', pour un rendu contrasté mais flatteur sur la peau.",
-  "Flash direct et dur, pour un look 'éditorial' brut et moderne.",
-  "Lumière très douce d'une grande boîte à lumière, pour un look éthéré.",
-  "Contre-jour puissant pour une silhouette dramatique.",
-  "Utilisation de réflecteurs (or ou argent) pour sculpter la lumière."
-];
-
-export const FASHION_ATMOSPHERES = [
-  "Minimaliste et conceptuel, dans un studio épuré.",
-  "Urbain et 'edgy', dans les rues d'une métropole.",
 ];

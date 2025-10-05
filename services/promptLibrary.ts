@@ -309,48 +309,30 @@ const PROMPT_DATABASE: Record<string, Record<string, any>> = {
         },
     },
     'pilote_de_chasse': {
-        'preparation_pre_vol': {
-            "scene": [
-                "Tarmac au crépuscule. La silhouette du sujet, pilote, se détache sur le ciel orangé alors qu'il marche vers son chasseur. Il tient son casque sous le bras, le regard concentré, une aura de calme et de détermination.",
-                "À l'intérieur du cockpit, le visage du sujet est illuminé par la lueur verte du HUD et des multiples écrans. Gros plan sur sa main gantée actionnant une série d'interrupteurs, un rituel précis avant le décollage.",
-                "Le sujet, debout sur l'échelle de son jet, échange un dernier regard avec son chef d'équipe au sol. Un salut de la tête, une confiance mutuelle absolue avant que la verrière ne se referme."
-            ]
+        's01-arrivee-checkpoint': {
+            "scene": ["Matin sec, lumière dorée. Les véhicules arrivent. Contrôle au checkpoint, mécanos notent les plaques. Sons moteurs, drapeaux qui claquent."]
         },
-        'decollage_porte_avions': {
-            "scene": [
-                "L'instant de tension maximale. Le F/A-18 est accroché à la catapulte. Des nuages de vapeur enveloppent le train d'atterrissage. À l'intérieur, le sujet a la main sur la manette des gaz, attendant le signal de départ.",
-                "Vue extérieure, la catapulte propulse le chasseur de 0 à 250 km/h en 2 secondes. L'avion semble flotter un instant au-dessus de l'eau avant de prendre son envol dans un rugissement assourdissant.",
-                "Depuis le cockpit, la vue est un flash de pont d'envol, de vapeur et d'océan, suivi d'une montée vertigineuse dans le ciel. Le visage du sujet est impassible, concentré sur ses instruments."
-            ]
+        's02-vestiaire-preparation': {
+            "scene": ["Bancs, odeur de cuir et de détergent. Geste méthodique. Casques posés côté, visières relevées. Sens du rituel."]
         },
-        'dogfight': {
-            "scene": [
-                "Virage à haute-G. Le visage du sujet est déformé par la force, sa mâchoire serrée. La condensation se forme sur les ailes de son chasseur. À travers la verrière, on aperçoit un avion ennemi.",
-                "Le HUD affiche un verrouillage de missile. Le pouce du sujet est sur le bouton de tir. Son regard est intense, une goutte de sueur perle sur sa tempe.",
-                "Le sujet largue des leurres (flares) qui éclatent en boules de feu brillantes derrière son avion pour déjouer un missile, effectuant une manœuvre d'évasion spectaculaire."
-            ]
+        's03-briefing-capitaine': {
+            "scene": ["Ecran tactique, voix posée du capitaine, mention radio en alpha-seven. Ambiance concentrée."]
         },
-        'vol_en_formation': {
-            "scene": [
-                "Quatre chasseurs volent en formation diamant parfaite au-dessus d'une mer de nuages, le soleil couchant peignant le ciel de couleurs incroyables. C'est un ballet aérien silencieux et majestueux.",
-                "Vue depuis l'aile d'un avion. On voit le cockpit du leader, le sujet, qui fait un léger signe de la main à son ailier. Un moment de camaraderie au milieu du danger.",
-                "La formation traverse un canyon étroit à basse altitude, les avions passant comme des flèches entre les parois rocheuses. Une démonstration de compétence et de sang-froid."
-            ]
+        's04-prevol-mecanos-complicite': {
+            "scene": ["Mécanos tachés d'huile, gestes précis. Le pilote pose la main sur la carlingue comme un rituel. Tablette de check-list. Échanges brefs, humour sec."]
         },
-        'bombardement_precision': {
-            "scene": [
-                "La vue à travers le pod de désignation laser : une cible au sol est verrouillée. L'image est monochrome, les informations du HUD s'affichent en vert.",
-                "Le sujet appuie sur le bouton de largage. La bombe guidée se détache de l'avion, laissant une fine traînée de fumée.",
-                "L'avion effectue une manœuvre d'évasion serrée juste après le largage, tandis qu'au loin, une explosion silencieuse confirme que la cible est atteinte."
-            ]
+        's05-embarquement-cockpit': {
+            "scene": ["tarmac de base aérienne ou pont d’envol de porte-avions, pilote montant à bord de son avion de chasse moderne (Rafale, F-18, F-35). Mécano en combinaison bleue l’aide à sécuriser le harnais, cockpit ouvert, verrière brillante, instruments visibles. Lumière naturelle froide, vent léger, drapeau de la base en arrière-plan, réalisme cinématique 10K, --no guerre, no explosion, no poussière"]
         },
-        'portrait_cockpit': {
-            "scene": [
-                "Portrait serré du sujet dans son cockpit, la nuit. Son visage est uniquement éclairé par la lueur des instruments, créant un contraste dramatique. Son regard est fatigué mais alerte.",
-                "Le reflet du ciel bleu et des nuages sur la visière de son casque. On ne voit pas ses yeux, mais on devine sa concentration intense.",
-                "Le sujet vole à travers un orage. Des éclairs illuminent brièvement le cockpit, révélant son visage tendu pour une fraction de seconde."
-            ]
+        's06-decollage-formation': {
+            "scene": ["séquence de décollage depuis piste terrestre ou porte-avions, plusieurs avions de chasse modernes alignés, turbines en post-combustion, traînées de condensation, fumée légère sur tarmac, mer visible pour la version navale, hangar de commandement à distance. Caméra latérale ou depuis le cockpit, lumière de matin ou de fin de journée, réalisme photographique 10K, --no guerre, no missiles, no explosion, no fumée épaisse"]
         },
+        's07-mission-rasemode-montagne': {
+            "scene": ["vol en formation serrée au-dessus de la mer, entre des montagnes ou en rase-mottes sur plaine, avions modernes (Rafale, F-18, F-35), lignes de condensation, ciel bleu profond, lumière rasante, caméra en poursuite, impression de vitesse, réalisme 10K, --no guerre, no tir, no explosion"]
+        },
+        's08-atterrissage-debrief': {
+            "scene": ["retour de mission, avions en phase d’atterrissage sur piste terrestre ou sur pont d’envol de porte-avions, crochet d’appontage visible pour la version navale, fumée légère des pneus, mécanos attendant à distance. Ensuite, débrief dans hangar vitré ou salle sobre : pilotes retirant leur casque, mécanos récupérant données de vol. Lumière du soir, ambiance calme et professionnelle, réalisme photographique 10K, --no guerre, no blessés, no explosion"]
+        }
     },
     'costume_de_film': {
         'western': {
@@ -383,11 +365,8 @@ export const getSpecializedPrompt = (style: string, subStyle: string, options: P
         if (subStyleData.scene && Array.isArray(subStyleData.scene) && subStyleData.scene.length > 0) {
             const randomScene = subStyleData.scene[Math.floor(Math.random() * subStyleData.scene.length)];
             
-            // Construct the full prompt with the chosen scene and technical specs
-            const technicalSpecs = `Spécifications techniques : Format ${options.aspectRatio}. Mode couleur : ${options.colorMode}. Qualité de rendu : UHD (RÉALISME, 10K). Cible d'upscale : 10K.`;
-            
-            // The prompt structure now directly uses the scene text.
-            return `${randomScene}\n\n${technicalSpecs}`;
+            // Return only the scene text. The main prompt builder will add technical specs.
+            return randomScene;
         }
     }
     return null;

@@ -5,9 +5,8 @@
 import React, { useState, useEffect } from 'react';
 import { IconX, IconDeviceFloppy, IconAlertTriangle } from '@tabler/icons-react';
 import { ApiKeys } from '../services/geminiService';
-import { useLanguage } from '../contexts/LanguageContext';
-import { GOOGLE_KEY_LS, IDEOGRAM_KEY_LS, REVART_KEY_LS } from '../../hooks/useApiKeys';
-import { LANGUAGE_KEY_LS } from '../../contexts/LanguageContext';
+import { useLanguage } from '../../contexts/LanguageContext';
+import { GOOGLE_KEY_LS, IDEOGRAM_KEY_LS, REVART_KEY_LS, LANGUAGE_KEY_LS } from '../../lib/constants';
 
 interface ApiKeyManagerModalProps {
     isOpen: boolean;
