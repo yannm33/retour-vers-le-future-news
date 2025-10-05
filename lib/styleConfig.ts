@@ -119,8 +119,8 @@ export const STYLES_CONFIG: Style[] = [
         ]
     },
     {
-        key: "luxe_evolupte",
-        notesKey: "luxe_evolupte_notes",
+        key: "luxe_et_volupte",
+        notesKey: "luxe_et_volupte_notes",
         subStyles: [
             {
                 nameKey: 'group_luxe_scenarios',
@@ -128,7 +128,7 @@ export const STYLES_CONFIG: Style[] = [
                     { key: "luxe_boutique" },
                     { key: "luxe_rue" },
                     { key: "luxe_hotel" },
-                    { key: "luxe_studio" },
+                    { key: "luxe_studio_photo" },
                     { key: "luxe_soiree" },
                 ]
             },
@@ -168,6 +168,15 @@ export const STYLES_CONFIG: Style[] = [
                     { key: 'luxe_tiffany', name: "Tiffany Pureté" },
                     { key: 'luxe_moncler', name: "Moncler Élément" }
                 ]
+            },
+            {
+                nameKey: 'group_elements',
+                subStyles: [
+                    { key: 'luxe_element_feu' },
+                    { key: 'luxe_element_eau' },
+                    { key: 'luxe_element_air' },
+                    { key: 'luxe_element_terre' },
+                ]
             }
         ]
     },
@@ -175,9 +184,40 @@ export const STYLES_CONFIG: Style[] = [
         key: "mode_haute_couture",
         notesKey: "mode_haute_couture_notes",
         subStyles: [
-            { key: "defile_parisien" },
-            { key: "studio_editorial" },
-            { key: "couture_exterieure" },
+            {
+                nameKey: 'group_catwalk',
+                subStyles: [
+                    { key: "defile_parisien" },
+                    { key: "defile_international_milan" },
+                    { key: "defile_new_york" },
+                    { key: "defile_londres" },
+                ]
+            },
+            {
+                nameKey: 'group_editorial',
+                subStyles: [
+                    { key: "studio_editorial" },
+                    { key: "shooting_editorial_exterieur" },
+                    { key: "lookbook_creatif_conceptuel" },
+                ]
+            },
+            {
+                nameKey: 'group_backstage_concepts',
+                subStyles: [
+                    { key: "backstage_preparation" },
+                    { key: "couture_futuriste_metallique" },
+                    { key: "couture_exterieure" },
+                ]
+            },
+            {
+                nameKey: 'group_designers',
+                subStyles: [
+                    { key: "style_mcqueen_theatral" },
+                    { key: "style_iris_van_herpen_organique" },
+                    { key: "style_gaultier_iconoclaste" },
+                    { key: "style_balenciaga_sculptural" },
+                ]
+            }
         ]
     },
     {

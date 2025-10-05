@@ -100,6 +100,7 @@ const keyToPrefix: Record<string, string> = {
     poses: 'Pose',
     vehicules: 'Véhicule',
     ambiance: 'Ambiance',
+    ambiances: 'Ambiance',
     scenes: 'Scène',
     lighting: 'Éclairage',
 };
@@ -114,7 +115,7 @@ export function getDynamicEnhancements(style: string, subStyle: string): string 
     const enhancements: string[] = [];
     let specificEnhancementsFound = false;
 
-    if (style === 'luxe_evolupte') {
+    if (style === 'luxe_et_volupte') {
         enhancements.push(`Pose: ${selectRandom(LUXE_POSES)}.`);
         enhancements.push(`Expression: ${selectRandom(LUXE_EXPRESSIONS)}.`);
         enhancements.push(`Posture: corps relâché mais élégant, mains utilisées pour soutenir la narration visuelle.`);

@@ -57,8 +57,8 @@ const buildFullPrompt = (
     let promptParts: string[] = [];
     
     // --- Directive Artistique Principale ---
-    if (style === 'luxe_evolupte') {
-        promptParts.push('//-- DIRECTIVE ARTISTIQUE PRINCIPALE : STYLE "MARKETING LUXE ÉVOLUPTÉ" --');
+    if (style === 'luxe_et_volupte') {
+        promptParts.push('//-- DIRECTIVE ARTISTIQUE PRINCIPALE : STYLE "MARKETING LUXE & VOLUPTÉ" --');
         promptParts.push('Objectif: Créer des images réalistes, élégantes et hautement professionnelles dans un style publicitaire haut de gamme. Le rendu doit évoquer le luxe contemporain, la mode internationale, et la présentation de produits de prestige (parfum, montre, bijou, etc.). Style: Photographie ultra réaliste. Lumière douce, souvent dorée, ivoire ou neutre. Profondeur de champ naturelle. Décors: hôtels de luxe, boutiques parisiennes, palaces, etc. Tenues: haute couture. Expression naturelle, regard calme. Interdits: aucun effet "cyberpunk", "digital art", "illustration", pas de couleurs saturées ou de néons.');
         
         if (subStyle && LUXE_EVOLUPTE_PROMPTS[subStyle]) {
@@ -113,7 +113,7 @@ const buildFullPrompt = (
     
     // --- Spécifications Techniques ---
     const techSpecs: string[] = [];
-    techSpecs.push(`Ratio d'aspect : ${style === 'luxe_evolupte' && subStyle === 'automobile_luxe_moderne' ? '21:9' : aspectRatio}.`);
+    techSpecs.push(`Ratio d'aspect : ${style === 'luxe_et_volupte' && subStyle === 'automobile_luxe_moderne' ? '21:9' : aspectRatio}.`);
     techSpecs.push(`Qualité de rendu : ${renderQuality}.`);
     techSpecs.push(`Niveau d'upscale : ${upscale}.`);
     if (focale !== 'Auto') techSpecs.push(`Focale : ${focale}.`);

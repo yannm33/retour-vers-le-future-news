@@ -153,7 +153,7 @@ export const PHOTOGRAPHER_LIBRARY = {
   },
   'tom_ford': {
     "lieux": [`intérieur luxueux et minimaliste`, `suite d'hôtel design`, `paysage désertique et architectural`, `studio avec un éclairage très contrôlé`],
-    "tenues": [`costume parfaitement coupé`, `robe de soirée sexy et révélatrice`, `corps nu huilé`, `lunettes de soleil iconiques`],
+    "tenues": [`costume perfectly coupé`, `robe de soirée sexy et révélatrice`, `corps nu huilé`, `lunettes de soleil iconiques`],
     "expressions": [`regard intense et séducteur`, `air de confiance et de pouvoir`, `sensualité sophistiquée`, `provocation glaciale`],
     "lumieres": [`lumière dure et très contrastée, inspirée de Helmut Newton`, `éclairage qui sculpte le corps et crée des ombres nettes`, `palette de couleurs limitée (noir, blanc, touches de couleurs vives)`, `cinématographique et dramatique`],
     "ambiance": [`glamour sexy et provocateur`, `luxe et sophistication`, `esthétique cinématographique et contrôlée`, `tension érotique`],
@@ -196,8 +196,9 @@ export const HAUTE_COUTURE_LIBRARY = {
       "tenues": ["robe de soirée dorée", "smoking couture femme", "robe noire sculpturale", "ensemble futuriste"],
       "expressions": ["regard intense", "pose sérieuse", "expression mystérieuse", "air assuré"],
       "lumieres": ["spotlights défilé", "flashs photographes", "éclairage latéral", "contre-jour dramatique"],
+      "ambiances": ["prestige parisien", "effervescence du défilé", "élégance intemporelle"],
       "accessoires": ["pochette haute couture", "chapeau extravagant", "bijoux luxueux", "aucun"],
-      "poses": ["En pleine marche puissante sur le podium, la robe flottant derrière elle.", "Un tour spectaculaire au bout du podium, capturant le mouvement du vêtement.", "Une pose statique et sculpturale, mettant en valeur l'architecture de la tenue.", "Un regard intense vers les photographes depuis le podium."]
+      "poses": ["Marche puissante sur le podium, la robe flottant derrière elle.", "Tour spectaculaire au bout du podium, capturant le mouvement du vêtement.", "Pose statique et sculpturale, mettant en valeur l'architecture de la tenue.", "Regard intense vers les photographes depuis le podium."]
     },
     "studio_editorial": {
       "lieux": [
@@ -209,6 +210,7 @@ export const HAUTE_COUTURE_LIBRARY = {
       "tenues": ["robe sculpturale", "tailleur noir chic", "robe asymétrique", "ensemble couture pastel"],
       "expressions": ["sourire subtil", "pose sérieuse", "regard assuré", "expression dramatique"],
       "lumieres": ["softbox diffuse", "éclairage 3 points", "projecteur unique", "éclairage coloré fashion"],
+      "ambiances": ["focus artistique", "pureté conceptuelle", "élégance contrôlée"],
       "accessoires": ["boucles d’oreilles voyantes", "bracelet haute couture", "aucun", "lunettes mode"],
        "poses": ["Assise sur une chaise design, une jambe croisée sur l'autre, posture impeccable.", "Debout, de profil, le corps dessinant une courbe élégante.", "En mouvement, sautant légèrement, capturant un moment de légèreté.", "Allongée au sol dans une composition artistique."]
     },
@@ -227,10 +229,111 @@ export const HAUTE_COUTURE_LIBRARY = {
       ],
       "expressions": ["sourire glamour", "regard perçant", "air mystérieux", "pose assurée"],
       "lumieres": ["golden hour", "lumière urbaine nocturne", "flashs paparazzi", "contre-jour soleil"],
+      "ambiances": ["contraste urbain", "romantisme cinématique", "grandeur architecturale"],
       "accessoires": ["bijoux diamants", "pochette soirée", "écharpe élégante", "aucun"],
       "poses": ["Descendant un grand escalier, une main sur la rampe.", "Regardant au loin depuis un balcon, le vent faisant bouger sa robe.", "Marchant dans une rue bondée, créant un contraste entre la haute couture et le quotidien.", "Posant à côté d'une statue ou d'une fontaine, intégrant l'environnement."]
+    },
+    "backstage_preparation": {
+      "lieux": ["coulisses chaotiques", "zone maquillage avec miroirs éclairés", "cabine d'essayage encombrée de vêtements", "près d'un portant de tenues haute couture"],
+      "tenues": ["peignoir en soie luxueux", "robe en cours d'ajustement par un styliste", "look final juste avant de monter sur scène", "tenue décontractée de mannequin"],
+      "expressions": ["concentration intense", "rire nerveux entre mannequins", "regard stressé vers le régisseur", "expression sereine les yeux fermés pendant le maquillage"],
+      "lumieres": ["néons durs de backstage", "lumière crue des miroirs de maquillage", "éclairage fonctionnel et peu flatteur", "faisceaux de lumière provenant de la scène"],
+      "ambiances": ["chaos créatif", "tension palpable avant le défilé", "effervescence et énergie brute", "intimité du processus créatif"],
+      "accessoires": ["pinceaux de maquillage", "épingles de couturière", "une bouteille d'eau", "un smartphone"],
+      "poses": ["Se faisant maquiller, le visage immobile.", "Enfilant une robe complexe avec l'aide de plusieurs personnes.", "Ajustant un dernier détail de sa tenue devant un miroir.", "Attendant en file indienne avant d'entrer sur le podium."]
+    },
+    "shooting_editorial_exterieur": {
+      "lieux": ["pont Alexandre III à Paris à l'aube", "désert de sel de Bolivie", "toit d'un gratte-ciel à Tokyo", "château abandonné en Écosse", "champ de lavande en Provence"],
+      "tenues": ["robe de bal spectaculaire contrastant avec le décor", "tailleur avant-gardiste sur un monument historique", "longue cape flottant au vent", "création conceptuelle"],
+      "expressions": ["regard puissant défiant l'horizon", "mélancolie romantique", "assurance et solitude", "pose dramatique et théâtrale"],
+      "lumieres": ["lumière dorée de la golden hour", "lumière dure de midi créant des ombres fortes", "contre-jour cinématique", "flash puissant en plein jour pour un look surréaliste"],
+      "ambiances": ["contraste narratif puissant", "mode épique et grandiose", "solitude chic", "beauté sauvage"],
+      "accessoires": ["aucun, le décor est l'accessoire", "un seul bijou spectaculaire", "un cheval majestueux", "un accessoire inattendu (un vieux livre, un télescope)"],
+      "poses": ["Marchant seule dans un paysage grandiose.", "Posant sur un monument emblématique.", "Interagissant avec les éléments naturels (vent, eau).", "Regardant directement la caméra avec une intensité dramatique."]
+    },
+    "defile_international_milan": {
+      "lieux": ["podium de la Fashion Week de Milan", "décor industriel chic", "palais historique milanais transformé en podium", "salle avec un design audacieux"],
+      "tenues": ["créations de designers italiens (Versace, Prada, Gucci)", "couleurs vives et imprimés audacieux", "coupes sexy et glamour", "mélange de textures luxueuses"],
+      "expressions": ["attitude puissante et confiante", "regard félin et séducteur", "démarche rapide et assurée", "air de supériorité"],
+      "lumieres": ["projecteurs intenses et colorés", "éclairage stroboscopique", "lumière dramatique qui sculpte le corps", "jeux d'ombres et de lumière"],
+      "ambiances": ["énergie vibrante de Milan", "glamour audacieux et sans complexe", "luxe et désir", "théâtralité de la mode italienne"],
+      "accessoires": ["sacs à main iconiques", "lunettes de soleil surdimensionnées", "bijoux en or voyants", "talons aiguilles spectaculaires"],
+      "poses": ["Marche rapide et puissante, les hanches se balançant.", "Arrêt brusque et pose provocante en bout de podium.", "Regard défiant vers les photographes.", "Demi-tour rapide et énergique."]
+    },
+    "lookbook_creatif_conceptuel": {
+      "lieux": ["studio avec fond texturé (béton, toile peinte)", "installation d'art contemporain", "décor minimaliste avec un seul objet surréaliste (une chaise géante, un miroir déformant)"],
+      "tenues": ["vêtements déconstruits", "silhouettes expérimentales et volumineuses", "focus sur les textures (plissés, tricots, drapés)", "tenues monochromes"],
+      "expressions": ["expression neutre ou absente", "regard introspectif", "curiosité enfantine", "air androgyne"],
+      "lumieres": ["éclairage latéral doux qui révèle la texture", "ombres graphiques et géométriques", "lumière naturelle de fenêtre", "une seule source de lumière directionnelle"],
+      "ambiances": ["artistique et intellectuelle", "focus sur le vêtement et la forme", "calme et contemplation", "étrangeté poétique"],
+      "accessoires": ["aucun accessoire", "un objet d'art", "un chapeau sculptural", "des chaussures conceptuelles"],
+      "poses": ["Poses statiques et sculpturales, comme une statue.", "Interaction étrange et poétique avec un objet.", "Composition géométrique du corps dans l'espace.", "Gros plan sur un détail du vêtement ou une texture."]
+    },
+    "couture_futuriste_metallique": {
+      "lieux": ["tunnel de néons", "décor de film de science-fiction (vaisseau spatial, laboratoire)", "architecture brutaliste en béton", "salle de miroirs infinis"],
+      "tenues": ["robes métalliques argentées ou dorées", "tissus holographiques et iridescents", "armures de couture", "éléments en PVC transparent ou en plexiglas"],
+      "expressions": ["regard froid et distant", "expression androgyne ou robotique", "air mystérieux et inhumain", "aucune émotion visible"],
+      "lumieres": ["néons bleus, violets ou rouges", "reflets multiples sur les surfaces métalliques", "faisceaux de lumière laser", "éclairage clinique et froid"],
+      "ambiances": ["futuriste et cyber-chic", "dystopie élégante", "avant-garde technologique", "beauté extraterrestre"],
+      "accessoires": ["visières futuristes", "bijoux en métal chromé", "maquillage métallique", "gants en latex"],
+      "poses": ["Démarche rigide et robotique.", "Pose angulaire et géométrique.", "Interaction avec des écrans holographiques ou des interfaces lumineuses.", "Immobile, comme un mannequin ou un cyborg en exposition."]
+    },
+    "defile_new_york": {
+        "lieux": ["podium de la Fashion Week de New York, décor urbain et brut", "loft industriel de SoHo transformé en podium", "rue de Manhattan fermée pour le défilé", "décor minimaliste et conceptuel"],
+        "tenues": ["prêt-à-porter de luxe", "sportswear couture", "silhouettes épurées et modernes", "couleurs monochromes (noir, blanc, gris) avec des touches vives"],
+        "expressions": ["attitude cool et détachée", "démarche rapide et puissante", "regard direct et confiant", "air androgyne"],
+        "lumieres": ["éclairage cru et direct", "lumière naturelle d'une verrière", "projecteurs industriels", "flashs puissants"],
+        "ambiances": ["énergie urbaine de New York", "modernité et avant-garde", "luxe pragmatique", "cool et sans effort"],
+        "accessoires": ["sneakers de luxe", "sacs fonctionnels et chics", "lunettes de soleil oversized", "casquettes de baseball en cuir"],
+        "poses": ["Marche rapide et déterminée, mains dans les poches.", "Regard droit devant, sans interaction avec le public.", "Attitude minimaliste, focus sur le vêtement.", "Pose finale forte et graphique."]
+    },
+    "defile_londres": {
+        "lieux": ["podium de la Fashion Week de Londres, décor excentrique", "bâtiment historique réaménagé", "galerie d'art contemporain", "jardin anglais pour un défilé en plein air"],
+        "tenues": ["créations avant-gardistes et expérimentales", "influence punk et rebelle", "mélange d'imprimés et de textures", "coupes asymétriques et déconstruites"],
+        "expressions": ["attitude théâtrale et expressive", "regard provocateur", "expression non conventionnelle", "air excentrique"],
+        "lumieres": ["éclairage coloré et dramatique", "jeux d'ombres et de lumière", "projections vidéo sur le podium", "lumière stroboscopique"],
+        "ambiances": ["créativité débridée", "avant-garde et subversion", "excentricité britannique", "théâtralité et performance"],
+        "accessoires": ["chapeaux spectaculaires", "maquillage artistique et extrême", "chaussures conceptuelles", "bijoux non conventionnels"],
+        "poses": ["Démarche théâtrale, incarnant un personnage.", "Interaction avec le décor.", "Pose figée et sculpturale en milieu de podium.", "Regard défiant vers le public."]
+    },
+    "style_mcqueen_theatral": {
+        "lieux": ["décor de conte de fées sombre (forêt enchantée, château en ruine)", "paysage naturel sauvage et dramatique (falaises écossaises, plage volcanique)", "scène théâtrale avec une installation artistique complexe"],
+        "tenues": ["robes spectaculaires avec des silhouettes historiques réinventées", "utilisation de matériaux inattendus (plumes, coquillages, métal)", "imprimés inspirés de la nature (papillons, fleurs, animaux)", "corseterie et tailoring impeccables"],
+        "expressions": ["beauté tragique et romantique", "regard puissant et mélancolique", "air de guerrière ou de reine déchue", "vulnérabilité et force mêlées"],
+        "lumieres": ["clair-obscur dramatique, inspiré de la peinture baroque", "lumière spectrale et brumeuse", "contre-jour puissant créant des silhouettes iconiques", "éclairage qui révèle la texture des matériaux"],
+        "ambiances": ["romantisme noir", "narration théâtrale et émotionnelle", "beauté sauvage et sublime", "tension entre la nature et la technologie"],
+        "accessoires": ["coiffures et maquillages extrêmes et conceptuels", "masques ornés", "chaussures Armadillo", "bijoux inspirés de la nature ou de l'anatomie"],
+        "poses": ["Pose puissante et statique, comme une statue.", "Allongée de manière dramatique, comme une héroïne tragique.", "Interagissant avec un décor hostile (vent, pluie, feu).", "Regard tourmenté fixant l'objectif."]
+    },
+    "style_iris_van_herpen_organique": {
+        "lieux": ["décor minimaliste et blanc pour mettre en valeur la tenue", "environnement aquatique ou subaquatique", "laboratoire futuriste", "installation d'art cinétique"],
+        "tenues": ["robes sculpturales créées par impression 3D", "tissus plissés et texturés qui imitent des formes naturelles (vagues, ailes d'insectes, coraux)", "utilisation de matériaux transparents et iridescents", "silhouettes qui semblent flotter ou être en mouvement"],
+        "expressions": ["expression éthérée et sereine", "regard calme et distant", "air de créature d'un autre monde", "aucune émotion, focus sur la forme"],
+        "lumieres": ["lumière douce et diffuse qui enveloppe le corps", "éclairage qui traverse les matériaux transparents", "projections de motifs lumineux (eau, données)", "lumière clinique et uniforme"],
+        "ambiances": ["fusion de la nature et de la technologie", "beauté organique et futuriste", "poésie et innovation", "mouvement et fluidité"],
+        "accessoires": ["aucun, la robe est l'unique centre d'attention", "chaussures sculpturales imprimées en 3D", "maquillage minimaliste et lumineux"],
+        "poses": ["Pose en lévitation ou flottante.", "Mouvement lent et gracieux, comme une danseuse.", "Corps formant une symbiose avec la robe.", "Immobile, laissant la complexité de la tenue parler d'elle-même."]
+    },
+    "style_gaultier_iconoclaste": {
+        "lieux": ["rue parisienne animée", "podium de défilé spectaculaire et théâtral", "backstage d'un cabaret", "studio avec un casting diversifié"],
+        "tenues": ["marinière (pull marin) réinventée", "corset conique iconique", "jupe pour homme", "mélange de streetwear et de haute couture", "imprimés tatouage en trompe-l'œil"],
+        "expressions": ["attitude provocante et joueuse", "regard confiant et irrévérencieux", "joie de vivre et exubérance", "androgynie et fluidité"],
+        "lumieres": ["lumière de défilé théâtrale", "flash direct et brut, style paparazzi", "éclairage de studio propre et lumineux", "néons de rue"],
+        "ambiances": ["subversion des codes", "célébration de la diversité et de l'individualité", "joie et extravagance", "théâtre de la mode"],
+        "accessoires": ["béret de marin", "bijoux ethniques et religieux détournés", "éventails", "maquillage audacieux"],
+        "poses": ["Démarche exubérante et théâtrale sur le podium.", "Pose provocante, main sur la hanche.", "Interaction ludique avec d'autres mannequins.", "Regard direct et complice vers la caméra."]
+    },
+    "style_balenciaga_sculptural": {
+        "lieux": ["décor minimaliste et brutaliste (béton, métal)", "espace vide et immense", "tunnel ou couloir sans fin", "studio avec un fond uni"],
+        "tenues": ["silhouettes oversize et architecturales", "manteaux et vestes aux épaules carrées et exagérées", "sneakers Triple S ou autres chaussures volumineuses", "vêtements qui cachent et transforment le corps"],
+        "expressions": ["visage entièrement masqué par des lunettes de soleil, un casque ou un tissu", "expression neutre et anonyme", "regard caché ou absent", "attitude distante et froide"],
+        "lumieres": ["lumière dure et clinique", "éclairage uniforme sans ombres flatteuses", "flash direct et frontal", "contre-jour qui dessine une silhouette abstraite"],
+        "ambiances": ["dystopie moderne", "anonymat et surveillance", "luxe conceptuel et austère", "réflexion sur la célébrité et l'image"],
+        "accessoires": ["sacs inspirés d'objets du quotidien (sac poubelle, sac de shopping)", "lunettes de soleil futuristes qui couvrent tout le visage", "casques intégraux", "gants noirs"],
+        "poses": ["Démarche lourde et déterminée.", "Immobile, comme une sculpture moderne.", "Le corps entièrement enveloppé dans le vêtement.", "Tournant le dos à la caméra, focus sur la silhouette."]
     }
 };
+
 
 export const COSTUME_DE_FILM_LIBRARY = {
     "renaissance_italienne": {
@@ -710,15 +813,16 @@ export const COUVERTURE_ELLE_DECO_LIBRARY = {
 
 export const PORTRAIT_MINIMALISTE_LIBRARY = {
     'studio_blanc': {
-      "lieux": ["fond blanc infini", "studio avec cyclorama blanc", "mur blanc texturé", "décor blanc avec une seule chaise design"],
-      "tenues": ["chemise blanche oversize", "robe noire simple", "tenue ton sur ton beige", "costume minimaliste"],
-      "expressions": ["regard direct et neutre", "sourire subtil", "expression sereine", "pose sculpturale"],
-      "lumieres": ["lumière douce et diffuse", "éclairage high-key sans ombres", "contre-jour doux", "une seule source de lumière dure"],
+      "lieux": ["fond blanc infini", "studio avec cyclorama blanc", "mur blanc texturé", "décor blanc avec une seule chaise design", "arrière-plan beige doux avec ombres naturelles", "pièce vide avec lumière rasante"],
+      "tenues": ["chemise blanche oversize", "robe noire simple", "tenue ton sur ton beige", "costume minimaliste", "t-shirt uni couleur sable", "robe minimaliste beige", "costume lin clair sans cravate", "haut noir minimal en coton"],
+      "expressions": ["regard direct et neutre", "sourire subtil", "expression sereine", "pose sculpturale", "expression légère, presque absente", "visage détendu, yeux dans le vide", "léger sourire intérieur", "regard fixe vers la lumière"],
+      "lumieres": ["lumière douce et diffuse", "éclairage high-key sans ombres", "contre-jour doux", "une seule source de lumière dure", "lumière douce directionnelle depuis la gauche", "lumière naturelle diffuse par une fenêtre", "éclairage zénithal très doux", "ombre rasante sur fond clair"],
+      "ambiances": ["contraste doux, style magazine", "ambiance calme et contemplative", "lumière d’aube intérieure", "silence visuel absolu"],
       "accessoires": ["aucun", "un seul bijou géométrique", "lunettes conceptuelles", "un simple tabouret en bois"],
-      "poses": ["Debout, profil pur.", "Assis au sol, composition géométrique.", "Gros plan sur le visage avec une expression neutre.", "Jeu d'ombres et de lumière sur le corps."]
+      "poses": ["Debout, profil pur.", "Assis au sol, composition géométrique.", "Gros plan sur le visage avec une expression neutre.", "Jeu d'ombres et de lumière sur le corps.", "assis sur un cube blanc minimaliste", "regard tourné à demi profil", "mains jointes, posture neutre", "silhouette de dos avec lumière rasante"]
     },
     'architecture_moderne': {
-      "lieux": ["devant un mur en béton brut", "près d'une grande baie vitrée", "dans un escalier en colimaçon moderne", "sur un toit avec des lignes architecturales épurées"],
+      "lieux": ["devant un mur en béton brut", "près d'une grande baie vitrée", "dans un escalier en colimaçon moderne", "sur un toit avec des lignes architecturales épurées", "mur de béton clair au rendu artistique"],
       "tenues": ["robe rouge contrastante", "ensemble noir structuré", "manteau long minimaliste", "tenue qui complète les lignes du décor"],
       "expressions": ["regard confiant", "expression pensive", "pose qui interagit avec l'architecture", "air sophistiqué"],
       "lumieres": ["lumière naturelle dure créant des ombres graphiques", "lumière rasante sur le béton", "reflets dans les surfaces vitrées", "contre-jour avec la silhouette de la ville"],
@@ -734,10 +838,11 @@ export const PORTRAIT_MINIMALISTE_LIBRARY = {
       "poses": ["Le visage émergeant de l'obscurité.", "Silhouette se découpant sur un fond clair.", "Pose contorsionnée créant des formes abstraites.", "Portrait serré avec un contraste extrême."]
     },
     'couleur_pastel': {
-      "lieux": ["fond rose poudré", "mur bleu ciel", "décor géométrique avec des blocs pastel", "studio avec des rideaux en voile pastel"],
+      "lieux": ["fond rose poudré", "mur bleu ciel", "décor géométrique avec des blocs pastel", "studio avec des rideaux en voile pastel", "mur pastel texturé minimaliste"],
       "tenues": ["robe jaune pastel", "ensemble monochrome lavande", "chemise vert d'eau", "tenue blanche sur fond pastel"],
       "expressions": ["sourire doux et rêveur", "expression sereine et calme", "regard innocent", "air léger et joyeux"],
       "lumieres": ["lumière douce et uniforme", "éclairage high-key", "lumière diffuse à travers un tissu coloré", "reflets colorés subtils"],
+      "ambiances": ["ton pastel harmonieux"],
       "accessoires": ["une seule fleur pastel", "ballon de baudruche pastel", "sucette colorée", "bijoux en acrylique pastel"],
       "poses": ["Tenant une fleur devant son visage.", "Assis sur un cube de couleur pastel.", "Soufflant des bulles de savon.", "Profil délicat sur un fond coloré."]
     },
